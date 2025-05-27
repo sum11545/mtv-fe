@@ -23,7 +23,7 @@ export default function Home() {
     };
 
     loadData();
-  }, [fetchHomePageData]);
+  }, []);
 
   return (
     <Layout>

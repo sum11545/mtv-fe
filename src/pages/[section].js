@@ -27,7 +27,7 @@ export default function SectionPage() {
     };
 
     loadData();
-  }, [fetchSectionPageData]);
+  }, []);
 
   return (
     <Layout>
