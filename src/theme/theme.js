@@ -21,6 +21,7 @@ export const getDesignTokens = (mode) => ({
           },
           custom: {
             brandBlue: "#001691",
+            adText: "rgba(0, 0, 0, 0.7)",
           },
         }
       : {
@@ -40,6 +41,7 @@ export const getDesignTokens = (mode) => ({
           },
           custom: {
             lightBlue: "#1a2152",
+            adText: "rgba(0, 0, 0, 0.7)",
           },
           action: {
             selected: "#1a2152",

@@ -16,18 +16,19 @@ export default function SectionPage() {
   const { loading, error, fetchSectionPageData } = useMain();
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const res = await fetchSectionPageData(section);
-        const sections = res?.data?.response?.sections;
-        setSectionData(sections);
-      } catch (err) {
-        console.error("Error fetching section list data:", err);
-      }
-    };
-
-    loadData();
-  }, []);
+    if (section) {
+      const loadData = async () => {
+        try {
+          const res = await fetchSectionPageData(section);
+          const sections = res?.data?.response?.sections;
+          setSectionData(sections);
+        } catch (err) {
+          console.error("Error fetching section list data:", err);
+        }
+      };
+      loadData();
+    }
+  }, [section]);
 
   return (
     <Layout>

@@ -21,9 +21,9 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, styles }) => {
 
   const { contentConfigurations } = useMain();
 
-  // Finding the content type and then applying height and width according to configuration
+  // Finding the content type id and then applying height and width according to configuration
   const layout = contentConfigurations?.find(
-    (item) => item.label == short?.content_details[0]?.content_type
+    (item) => item.content_type_id == short?.content_details[0]?.content_type_id
   );
 
   let height = layout?.layout?.height;

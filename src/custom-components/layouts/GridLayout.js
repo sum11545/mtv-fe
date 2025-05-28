@@ -76,13 +76,15 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
         >
           {section.name}
         </Typography>
-        <Button
-          endIcon={<ChevronRightIcon />}
-          sx={{ textTransform: "none" }}
-          onClick={handleViewMore}
-        >
-          View More
-        </Button>
+        {section.total_contents > section.contents.length && (
+          <Button
+            endIcon={<ChevronRightIcon />}
+            sx={{ textTransform: "none" }}
+            onClick={handleViewMore}
+          >
+            View More
+          </Button>
+        )}
       </Box>
 
       {/* <Box sx={{ position: "relative" }}> */}

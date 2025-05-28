@@ -14,6 +14,7 @@ import { mainArr } from "../../data/homeData";
 import ShareDialog from "../ShareDialog";
 import CopyButton from "../CopyButton";
 import { useMain } from "@/context/MainContext";
+import AdCard from "./AdCard";
 
 const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
   <Box
@@ -86,10 +87,11 @@ const GridCard = ({ video, id, sectionData }) => {
   const router = useRouter();
   const [shareUrl, setShareUrl] = useState("");
   const { contentConfigurations } = useMain();
+  let isAd = [10, 21, 22].includes(video?.content_details[0]?.content_type_id);
 
-  // Finding the content type and then applying height and width according to configuration
+  // Finding the content type id and then applying height and width according to configuration
   const layout = contentConfigurations?.find(
-    (item) => item.label == video.content_details[0].content_type
+    (item) => item.content_type_id == video?.content_details[0]?.content_type_id
   );
 
   let height = layout?.layout?.height;
@@ -121,7 +123,7 @@ const GridCard = ({ video, id, sectionData }) => {
       if (typeof id === "number") {
         return index === id;
       }
-      return s.content.some((v) => v.id === video.id);
+      return s.contents.some((v) => v.id === video.id);
     });
 
     if (section) {
@@ -165,83 +167,92 @@ const GridCard = ({ video, id, sectionData }) => {
             },
           }}
         >
-          <CardMedia
-            component="img"
-            image={video.content_details[0].thumbnail_url} // currently we don't have to show carousel in each content that's why mapping 0th element
-            alt={video.name}
-            sx={{
-              // position: "absolute",
-              // top: 0,
-              // left: 0,
-              width: "100%",
-              height: "100%",
-              borderRadius: 2,
-            }}
-          />
-        </Box>
-        <CardContent
-          sx={{
-            flexGrow: 1,
-            p: 1,
-            display: "flex",
-            flexDirection: "column",
-            height: "90px",
-            "&:last-child": {
-              paddingBottom: 1.5,
-            },
-          }}
-        >
-          <Typography
-            variant="subtitle1"
-            component="div"
-            sx={{
-              fontWeight: 500,
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              display: "-webkit-box",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-              lineHeight: 1.2,
-              minHeight: "2.5em",
-              maxHeight: "2.5em",
-            }}
-          >
-            {video.name}
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              gap: 2,
-              mb: 1,
-            }}
-          >
-            <Box
-              sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}
-            >
-              <ActionButton
-                icon={<WhatsApp sx={{ fontSize: "1.3rem" }} />}
-                label="Send"
-                onClick={handleWhatsApp}
-              />
-              <CopyButton text={video?.content_details[0]?.url} />
-            </Box>
-            <ActionButton
-              icon={
-                <Reply
-                  sx={{
-                    fontSize: "1.3rem",
-                    transform: "rotate(180deg) scaleY(-1)",
-                  }}
-                />
-              }
-              label="Share"
-              onClick={handleShare}
-              isReversed={true}
+          {/* if my content is ad then i am showing ad card */}
+          {isAd ? (
+            <AdCard ad={video} />
+          ) : (
+            <CardMedia
+              component="img"
+              image={video.content_details[0].thumbnail_url} // currently we don't have to show carousel in each content that's why mapping 0th element
+              alt={video.name}
+              sx={{
+                // position: "absolute",
+                // top: 0,
+                // left: 0,
+                width: "100%",
+                height: "100%",
+                borderRadius: 2,
+              }}
             />
-          </Box>
-        </CardContent>
+          )}
+        </Box>
+
+        {/* Not showing send, copy and share buttons for ad */}
+        {!isAd && (
+          <CardContent
+            sx={{
+              flexGrow: 1,
+              p: 1,
+              display: "flex",
+              flexDirection: "column",
+              height: "90px",
+              "&:last-child": {
+                paddingBottom: 1.5,
+              },
+            }}
+          >
+            <Typography
+              variant="subtitle1"
+              component="div"
+              sx={{
+                fontWeight: 500,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                lineHeight: 1.2,
+                minHeight: "2.5em",
+                maxHeight: "2.5em",
+              }}
+            >
+              {video.name}
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 2,
+                mb: 1,
+              }}
+            >
+              <Box
+                sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}
+              >
+                <ActionButton
+                  icon={<WhatsApp sx={{ fontSize: "1.3rem" }} />}
+                  label="Send"
+                  onClick={handleWhatsApp}
+                />
+                <CopyButton text={video?.content_details[0]?.url} />
+              </Box>
+              <ActionButton
+                icon={
+                  <Reply
+                    sx={{
+                      fontSize: "1.3rem",
+                      transform: "rotate(180deg) scaleY(-1)",
+                    }}
+                  />
+                }
+                label="Share"
+                onClick={handleShare}
+                isReversed={true}
+              />
+            </Box>
+          </CardContent>
+        )}
       </Card>
 
       <ShareDialog

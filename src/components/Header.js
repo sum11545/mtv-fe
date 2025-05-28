@@ -103,8 +103,8 @@ const Header = ({ toggleSidebar }) => {
           backgroundColor: "background.paper",
           color: "text.primary",
           boxShadow: "none",
-          borderBottom: theme.palette.mode === "light" && "1px solid",
-          borderColor: theme.palette.mode === "light" && "divider",
+          // borderBottom: theme.palette.mode === "light" && "1px solid",
+          // borderColor: theme.palette.mode === "light" && "divider",
         }}
         elevation={0}
       >
@@ -201,8 +201,8 @@ const Header = ({ toggleSidebar }) => {
         color: "text.primary",
         paddingLeft: 3,
         boxShadow: "none",
-        borderBottom: theme.palette.mode === "light" && "1px solid",
-        borderColor: theme.palette.mode === "light" && "divider",
+        // borderBottom: theme.palette.mode === "light" && "1px solid",
+        // borderColor: theme.palette.mode === "light" && "divider",
       }}
       elevation={0}
     >
