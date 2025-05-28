@@ -145,6 +145,7 @@ const GridCard = ({ video, id, sectionData }) => {
           },
           border: "none",
           boxShadow: "none",
+          borderRadius: 0,
         }}
         onClick={handleCardClick}
       >
@@ -192,7 +193,8 @@ const GridCard = ({ video, id, sectionData }) => {
           <CardContent
             sx={{
               flexGrow: 1,
-              p: 1,
+              py: 1,
+              px: 0,
               display: "flex",
               flexDirection: "column",
               height: "90px",
@@ -223,12 +225,17 @@ const GridCard = ({ video, id, sectionData }) => {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                gap: 2,
+                // gap: 2,
                 mb: 1,
               }}
             >
               <Box
-                sx={{ display: "flex", alignItems: "center", gap: 1, mt: 0.5 }}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  mt: 0.5,
+                  marginLeft: "-5px",
+                }}
               >
                 <ActionButton
                   icon={<WhatsApp sx={{ fontSize: "1.3rem" }} />}

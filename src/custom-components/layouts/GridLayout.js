@@ -25,6 +25,7 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
   const [showRightScroll, setShowRightScroll] = useState(true);
   const size = section.layout_config.size;
   const height = section?.layout_config?.height;
+  const spacing = section?.layout_config?.spacing;
   // console.log({ section });
   // console.log({ sectionData });
 
@@ -119,7 +120,7 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
         > */}
       <Grid
         container
-        spacing={2}
+        spacing={spacing ?? 2}
         sx={
           {
             // flexWrap: "nowrap",

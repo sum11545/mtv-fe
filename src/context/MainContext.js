@@ -18,7 +18,7 @@ export const useMain = () => {
   return context;
 };
 
-const baseUrl = `https://textiles-friend-ps-shade.trycloudflare.com/api/v1`;
+const baseUrl = `https://relatively-conventional-disco-mary.trycloudflare.com/api/v1`;
 
 export const MainProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
