@@ -16,6 +16,7 @@ import {
   Search as SearchIcon,
   Notifications as NotificationsIcon,
 } from "@mui/icons-material";
+import Image from "next/image";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -94,6 +95,16 @@ const PostfixIconWrapper = styled("div")(({ theme }) => ({
 const Header = ({ toggleSidebar }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isDarkMode = theme.palette.mode === "dark";
+
+  const LogoWrapper = styled(Box)({
+    display: "flex",
+    alignItems: "center",
+    position: "relative",
+    height: "40px",
+    // border: "1px solid green",
+    marginLeft: " -14px",
+  });
 
   if (isMobile) {
     return (
@@ -110,6 +121,7 @@ const Header = ({ toggleSidebar }) => {
       >
         <Toolbar
           sx={{
+            display: "flex",
             flexDirection: "column",
             py: 1,
             gap: 1,
@@ -126,18 +138,20 @@ const Header = ({ toggleSidebar }) => {
             }}
           >
             {/* Logo */}
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                fontWeight: "bold",
-                fontSize: "1.5rem",
-                color: "primary.main",
-              }}
-            >
-              MONEY
-              <span style={{ fontSize: "1rem", fontWeight: "400" }}>TV</span>
-            </Box>
+            <LogoWrapper>
+              <Image
+                src={
+                  isDarkMode
+                    ? "/images/logos/header-logo-light.png"
+                    : "/images/logos/header-logo-dark.png"
+                }
+                alt="Money TV Logo"
+                height={170}
+                width={170}
+                style={{ objectFit: "contain" }}
+                priority
+              />
+            </LogoWrapper>
 
             {/* Right side icons */}
             <Box sx={{ display: "flex" }}>
@@ -181,8 +195,6 @@ const Header = ({ toggleSidebar }) => {
                 inputProps={{ "aria-label": "search" }}
               />
               <PostfixIconWrapper>
-                {/* <Divider orientation="vertical" flexItem /> */}
-                {/* <PostAddIcon color="action" /> */}
                 <SearchIcon />
               </PostfixIconWrapper>
             </Search>
@@ -192,7 +204,7 @@ const Header = ({ toggleSidebar }) => {
     );
   }
 
-  // Desktop view - keeping the original layout
+  // Desktop view
   return (
     <AppBar
       position="fixed"
@@ -207,20 +219,29 @@ const Header = ({ toggleSidebar }) => {
       elevation={0}
     >
       <Toolbar>
-        <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
-          {/* Logo */}
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
-              fontWeight: "bold",
-              fontSize: "1.5rem",
-              color: "primary.main",
+            flex: 1,
+            gap: 2,
             }}
           >
-            MONEY
-            <span style={{ fontSize: "1rem", fontWeight: "400" }}>TV</span>
-          </Box>
+          {/* Logo */}
+          <LogoWrapper>
+            <Image
+              src={
+                isDarkMode
+                  ? "/images/logos/header-logo-light.png"
+                  : "/images/logos/header-logo-dark.png"
+              }
+              alt="Money TV Logo"
+              height={170}
+              width={170}
+              style={{ objectFit: "contain" }}
+              priority
+            />
+          </LogoWrapper>
 
           {/* Search Bar */}
           <Search>
@@ -230,7 +251,6 @@ const Header = ({ toggleSidebar }) => {
             />
             <PostfixIconWrapper>
               <Divider orientation="vertical" flexItem />
-              {/* <PostAddIcon color="action" /> */}
               <SearchIcon />
             </PostfixIconWrapper>
           </Search>

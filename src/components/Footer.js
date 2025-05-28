@@ -20,6 +20,18 @@ import {
   Feedback,
   YouTube,
 } from "@mui/icons-material";
+import Image from "next/image";
+import styled from "@emotion/styled";
+
+const LogoWrapper = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  position: "relative",
+  // width: "120px",
+  height: "40px",
+  marginLeft: " -25px",
+  // border: "1px solid green",
+});
 
 // Mobile Footer Component
 const MobileFooter = (props) => {
@@ -32,6 +44,7 @@ const MobileFooter = (props) => {
     validateForm,
   } = props;
   const theme = useTheme();
+  const isDarkMode = theme.palette.mode === "dark";
 
   return (
     <Box
@@ -46,18 +59,20 @@ const MobileFooter = (props) => {
     >
       {/* Logo first */}
       <Box sx={{ mb: 4 }}>
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            fontWeight: "bold",
-            fontSize: "2.5rem",
-            color: "primary.main",
-          }}
-        >
-          MONEY
-          <span style={{ fontSize: "1rem", fontWeight: "400" }}>TV</span>
-        </Box>
+        <LogoWrapper>
+          <Image
+            src={
+              isDarkMode
+                ? "/images/logos/footer-logo-light.png"
+                : "/images/logos/footer-logo-dark.png"
+            }
+            alt="Money TV Logo"
+            height={230}
+            width={230}
+            style={{ objectFit: "contain" }}
+            priority
+          />
+        </LogoWrapper>
       </Box>
 
       {/* Form second */}
@@ -294,6 +309,7 @@ const MobileFooter = (props) => {
 const Footer = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isDarkMode = theme.palette.mode === "dark";
 
   const [formData, setFormData] = useState({
     name: "",
@@ -391,19 +407,20 @@ const Footer = () => {
       {/* Left Side */}
       <Box sx={{ flex: 1, paddingY: 4 }}>
         <Box sx={{ mb: 3 }}>
-          {/* Replace with your actual logo */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              fontWeight: "bold",
-              fontSize: "2.5rem",
-              color: "primary.main",
-            }}
-          >
-            MONEY
-            <span style={{ fontSize: "1rem", fontWeight: "400" }}>TV</span>
-          </Box>
+          <LogoWrapper>
+            <Image
+              src={
+                isDarkMode
+                  ? "/images/logos/footer-logo-light.png"
+                  : "/images/logos/footer-logo-dark.png"
+              }
+              alt="Money TV Logo"
+              height={230}
+              width={230}
+              style={{ objectFit: "contain" }}
+              priority
+            />
+          </LogoWrapper>
         </Box>
 
         {/* <Divider sx={{ mb: 3 }} /> */}
