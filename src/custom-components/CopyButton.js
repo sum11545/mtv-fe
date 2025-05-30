@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Typography, Snackbar } from "@mui/material";
 import { ContentCopy } from "@mui/icons-material";
+import { fontStyles } from "../theme/theme";
 
 const CopyButton = ({ text, label = "Copy" }) => {
   const [copied, setCopied] = useState(false);
@@ -52,6 +53,7 @@ const CopyButton = ({ text, label = "Copy" }) => {
             userSelect: "none",
             ml: 0.5,
             transition: "color 0.2s ease-in-out",
+            ...fontStyles.sfPro.condensed.regular,
           }}
         >
           {copied ? "Copied!" : label}

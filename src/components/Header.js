@@ -17,6 +17,7 @@ import {
   Notifications as NotificationsIcon,
 } from "@mui/icons-material";
 import Image from "next/image";
+import { fontStyles } from "../theme/theme";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -66,6 +67,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create("width"),
     width: "100%",
     fontSize: "0.875rem",
+    ...fontStyles.sfPro.text.regular,
     [theme.breakpoints.down("sm")]: {
       fontSize: "0.875rem",
     },
@@ -219,14 +221,14 @@ const Header = ({ toggleSidebar }) => {
       elevation={0}
     >
       <Toolbar>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
             flex: 1,
             gap: 2,
-            }}
-          >
+          }}
+        >
           {/* Logo */}
           <LogoWrapper>
             <Image

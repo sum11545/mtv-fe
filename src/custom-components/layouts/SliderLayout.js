@@ -14,6 +14,7 @@ import {
 } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import { mainArr } from "../../data/homeData";
+import { fontStyles } from "../../theme/theme";
 
 const SliderLayout = ({
   title,
@@ -74,18 +75,25 @@ const SliderLayout = ({
         <Typography
           variant="h6"
           component="h2"
-          fontWeight="bold"
-          color="primary.main"
+          sx={{
+            color: "primary.main",
+            ...fontStyles.montserrat.bold,
+          }}
         >
           {section.name}
         </Typography>
-        <Button
-          endIcon={<ChevronRightIcon />}
-          sx={{ textTransform: "none" }}
-          onClick={handleViewMore}
-        >
-          View More
-        </Button>
+        {section.total_contents > section.contents.length && (
+          <Button
+            endIcon={<ChevronRightIcon />}
+            sx={{
+              textTransform: "none",
+              ...fontStyles.openSans.regular,
+            }}
+            onClick={handleViewMore}
+          >
+            View More
+          </Button>
+        )}
       </Box>
 
       <Box sx={{ position: "relative" }}>

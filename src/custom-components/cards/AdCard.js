@@ -6,6 +6,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { ChevronRight as ChevronRightIcon } from "@mui/icons-material";
+import { fontStyles } from "@/theme/theme";
 
 const AdCard = ({ ad }) => {
   const theme = useTheme();
@@ -57,6 +58,7 @@ const AdCard = ({ ad }) => {
               lineHeight: 1.1,
               color: theme.palette.custom.adText,
               fontSize: "0.875rem",
+              ...fontStyles.montserrat.bold,
             }}
           >
             {ad.content_details[0].description}
@@ -66,7 +68,7 @@ const AdCard = ({ ad }) => {
             variant="outlined"
             color="primary"
             size="small"
-            endIcon={<ChevronRightIcon />}
+            // endIcon={<ChevronRightIcon />}
             onClick={() => adRedirection(ad.content_details[0]?.url)}
             sx={{
               width: "fit-content",
@@ -80,6 +82,7 @@ const AdCard = ({ ad }) => {
                 borderColor: theme.palette.custom.adText,
                 backgroundColor: "rgba(0, 0, 0, 0.04)",
               },
+              ...fontStyles.sfPro.display.bold,
             }}
           >
             Learn More

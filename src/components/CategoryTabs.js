@@ -12,6 +12,7 @@ import {
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
 } from "@mui/icons-material";
+import { fontStyles } from "../theme/theme";
 
 const categories = [
   "All",
@@ -86,7 +87,7 @@ const StyledTab = styled(Tab)(({ theme }) => ({
   color: theme.palette.text.secondary,
   textTransform: "none",
   fontSize: "0.8rem",
-  fontWeight: 500,
+  ...fontStyles.montserrat.bold,
   "&:hover": {
     backgroundColor:
       theme.palette.mode === "dark"

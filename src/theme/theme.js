@@ -1,77 +1,198 @@
 import { createTheme } from "@mui/material/styles";
 
+// Font variables
+export const fontStyles = {
+  montserrat: {
+    bold: {
+      fontFamily: "Montserrat",
+      fontWeight: 700,
+    },
+    semibold: {
+      fontFamily: "Montserrat",
+      fontWeight: 600,
+    },
+    medium: {
+      fontFamily: "Montserrat",
+      fontWeight: 500,
+    },
+    regular: {
+      fontFamily: "Montserrat",
+      fontWeight: 400,
+    },
+  },
+  openSans: {
+    bold: {
+      fontFamily: "Open Sans",
+      fontWeight: 700,
+    },
+    semibold: {
+      fontFamily: "Open Sans",
+      fontWeight: 600,
+    },
+    regular: {
+      fontFamily: "Open Sans",
+      fontWeight: 400,
+    },
+  },
+  sfPro: {
+    text: {
+      bold: {
+        fontFamily: "SFProText",
+        fontWeight: 700,
+      },
+      regular: {
+        fontFamily: "SFProText",
+        fontWeight: 400,
+      },
+    },
+    condensed: {
+      bold: {
+        fontFamily: "SF Pro Condensed",
+        fontWeight: 700,
+      },
+      regular: {
+        fontFamily: "SF Pro Condensed",
+        fontWeight: 400,
+      },
+    },
+    display: {
+      regular: {
+        fontFamily: "SFProDisplay",
+        fontWeight: 400,
+      },
+      bold: {
+        fontFamily: "SFProDisplay",
+        fontWeight: 700,
+      },
+    },
+  },
+};
+
+// Color palette configuration
+const palette = {
+  light: {
+    primary: {
+      main: "#001691",
+      light: "#1a2f9f",
+      dark: "#001066",
+    },
+    background: {
+      default: "#ffffff",
+      paper: "#ffffff",
+    },
+    text: {
+      primary: "#000000",
+      secondary: "rgba(0, 0, 0, 0.7)",
+    },
+    custom: {
+      brandBlue: "#001691",
+      adText: "rgba(0, 0, 0, 0.7)",
+    },
+  },
+  dark: {
+    primary: {
+      main: "#ffffff",
+      light: "#ffffff",
+      dark: "#e0e0e0",
+    },
+    background: {
+      default: "#040C38",
+      paper: "#0a1445",
+    },
+    text: {
+      primary: "#ffffff",
+      secondary: "rgba(255, 255, 255, 0.7)",
+    },
+    custom: {
+      lightBlue: "#1a2152",
+      adText: "rgba(0, 0, 0, 0.7)",
+    },
+    action: {
+      selected: "#1a2152",
+      hover: "#232b5e",
+    },
+  },
+};
+
+// Breakpoint configuration
+const breakpoints = {
+  values: {
+    xs: 0,
+    sm: 600,
+    md: 960,
+    lg: 1280,
+    xl: 1920,
+  },
+};
+
+// Typography configuration
+const typography = {
+  fontFamily: ["Montserrat", "Open Sans", "SFProText", "sans-serif"].join(","),
+  h1: {
+    ...fontStyles.montserrat.bold,
+    fontSize: "2.5rem",
+  },
+  h2: {
+    ...fontStyles.montserrat.semibold,
+    fontSize: "2rem",
+  },
+  h3: {
+    ...fontStyles.montserrat.semibold,
+    fontSize: "1.75rem",
+  },
+  h4: {
+    ...fontStyles.montserrat.medium,
+    fontSize: "1.5rem",
+  },
+  h5: {
+    ...fontStyles.montserrat.medium,
+    fontSize: "1.25rem",
+  },
+  h6: {
+    ...fontStyles.montserrat.medium,
+    fontSize: "1rem",
+  },
+  subtitle1: {
+    ...fontStyles.openSans.semibold,
+    fontSize: "0.875rem",
+  },
+  subtitle2: {
+    ...fontStyles.openSans.regular,
+    fontSize: "0.875rem",
+  },
+  body1: {
+    ...fontStyles.sfPro.text.regular,
+    fontSize: "1rem",
+  },
+  body2: {
+    ...fontStyles.sfPro.text.regular,
+    fontSize: "0.875rem",
+  },
+  button: {
+    ...fontStyles.openSans.semibold,
+    fontSize: "0.875rem",
+    textTransform: "none",
+  },
+  caption: {
+    ...fontStyles.sfPro.condensed.regular,
+    fontSize: "0.7rem",
+    letterSpacing: "0.01em",
+  },
+  overline: {
+    ...fontStyles.openSans.regular,
+    fontSize: "0.75rem",
+    textTransform: "uppercase",
+  },
+};
+
+// Theme configuration
 export const getDesignTokens = (mode) => ({
   palette: {
     mode,
-    ...(mode === "light"
-      ? {
-          // Light mode
-          primary: {
-            main: "#001691",
-            light: "#1a2f9f",
-            dark: "#001066",
-          },
-          background: {
-            default: "#ffffff",
-            paper: "#ffffff",
-          },
-          text: {
-            primary: "#000000",
-            secondary: "rgba(0, 0, 0, 0.7)",
-          },
-          custom: {
-            brandBlue: "#001691",
-            adText: "rgba(0, 0, 0, 0.7)",
-          },
-        }
-      : {
-          // Dark mode
-          primary: {
-            main: "#ffffff",
-            light: "#ffffff",
-            dark: "#e0e0e0",
-          },
-          background: {
-            default: "#040C38",
-            paper: "#0a1445",
-          },
-          text: {
-            primary: "#ffffff",
-            secondary: "rgba(255, 255, 255, 0.7)",
-          },
-          custom: {
-            lightBlue: "#1a2152",
-            adText: "rgba(0, 0, 0, 0.7)",
-          },
-          action: {
-            selected: "#1a2152",
-            hover: "#232b5e",
-          },
-        }),
+    ...(mode === "light" ? palette.light : palette.dark),
   },
-  typography: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    h1: {
-      fontSize: "2.5rem",
-      fontWeight: 600,
-      "@media (max-width:600px)": {
-        fontSize: "2rem",
-      },
-    },
-    h2: {
-      fontSize: "2rem",
-      fontWeight: 500,
-      "@media (max-width:600px)": {
-        fontSize: "1.75rem",
-      },
-    },
-    body1: {
-      fontSize: "1rem",
-      "@media (max-width:600px)": {
-        fontSize: "0.95rem",
-      },
-    },
-  },
+  breakpoints,
+  typography,
   components: {
     MuiContainer: {
       styleOverrides: {
@@ -150,7 +271,6 @@ export const getDesignTokens = (mode) => ({
         }),
       },
     },
-
     MuiTypography: {
       styleOverrides: {
         root: ({ theme, ownerState }) => ({
@@ -176,18 +296,9 @@ export const getDesignTokens = (mode) => ({
       },
     },
   },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 960,
-      lg: 1280,
-      xl: 1920,
-    },
-  },
 });
 
-// Create a theme instance
+// Create theme instance
 const createAppTheme = (mode) => {
   return createTheme(getDesignTokens(mode));
 };

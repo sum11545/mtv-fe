@@ -25,6 +25,7 @@ import {
   ContentCopy,
   Check,
 } from "@mui/icons-material";
+import { fontStyles } from "../theme/theme";
 
 const socialPlatforms = [
   // {
@@ -168,7 +169,10 @@ const ShareDialog = ({ open, onClose, url, title }) => {
                   />
                   <Typography
                     variant="caption"
-                    sx={{ color: "text.secondary" }}
+                    sx={{
+                      color: "text.secondary",
+                      ...fontStyles.sfPro.condensed.regular,
+                    }}
                   >
                     {platform.name}
                   </Typography>

@@ -22,6 +22,7 @@ import {
 } from "@mui/icons-material";
 import Image from "next/image";
 import styled from "@emotion/styled";
+import { fontStyles } from "../theme/theme";
 
 const LogoWrapper = styled(Box)({
   display: "flex",
@@ -85,6 +86,7 @@ const MobileFooter = (props) => {
             alignItems: "center",
             gap: 1,
             fontSize: "1rem",
+            ...fontStyles.openSans.semibold,
           }}
         >
           <Feedback sx={{ fontSize: "1.2rem" }} /> Send Feedback
@@ -109,9 +111,11 @@ const MobileFooter = (props) => {
               },
               "& .MuiInputLabel-root": {
                 fontSize: "0.85rem",
+                ...fontStyles.openSans.regular,
               },
               "& .MuiInputBase-input": {
                 fontSize: "0.85rem",
+                ...fontStyles.openSans.regular,
               },
               "& .MuiFormHelperText-root": {
                 fontSize: "0.7rem",
@@ -139,9 +143,11 @@ const MobileFooter = (props) => {
               },
               "& .MuiInputLabel-root": {
                 fontSize: "0.85rem",
+                ...fontStyles.openSans.regular,
               },
               "& .MuiInputBase-input": {
                 fontSize: "0.85rem",
+                ...fontStyles.openSans.regular,
               },
               "& .MuiFormHelperText-root": {
                 fontSize: "0.7rem",
@@ -171,9 +177,11 @@ const MobileFooter = (props) => {
               },
               "& .MuiInputLabel-root": {
                 fontSize: "0.85rem",
+                ...fontStyles.openSans.regular,
               },
               "& .MuiInputBase-input": {
                 fontSize: "0.85rem",
+                ...fontStyles.openSans.regular,
               },
               "& .MuiFormHelperText-root": {
                 fontSize: "0.7rem",
@@ -197,6 +205,7 @@ const MobileFooter = (props) => {
               marginRight: "auto",
               marginLeft: "auto",
               fontSize: "0.85rem",
+              ...fontStyles.sfPro.display.bold,
             }}
           >
             Send Message
@@ -219,13 +228,25 @@ const MobileFooter = (props) => {
         <Typography
           variant="h6"
           color="primary.main"
-          sx={{ fontSize: "0.95rem", mb: 1 }}
+          sx={{
+            fontSize: "0.95rem",
+            mb: 1,
+            ...fontStyles.montserrat.bold,
+          }}
         >
           Let's 'find true value here.'
         </Typography>
 
         {/* 2. grow@moneytv.live link */}
-        <Link href="#" sx={{ display: "block", mb: 2, fontSize: "0.85rem" }}>
+        <Link
+          href="#"
+          sx={{
+            display: "block",
+            mb: 2,
+            fontSize: "0.85rem",
+            ...fontStyles.openSans.regular,
+          }}
+        >
           grow@moneytv.live
         </Link>
 
@@ -290,13 +311,31 @@ const MobileFooter = (props) => {
 
         {/* 4. Privacy, Terms, Help links in a row */}
         <Stack direction="row" spacing={2}>
-          <Link href="#" sx={{ fontSize: "0.85rem" }}>
+          <Link
+            href="#"
+            sx={{
+              fontSize: "0.85rem",
+              ...fontStyles.openSans.regular,
+            }}
+          >
             Privacy Policy
           </Link>
-          <Link href="#" sx={{ fontSize: "0.85rem" }}>
+          <Link
+            href="#"
+            sx={{
+              fontSize: "0.85rem",
+              ...fontStyles.openSans.regular,
+            }}
+          >
             Terms of Use
           </Link>
-          <Link href="#" sx={{ fontSize: "0.85rem" }}>
+          <Link
+            href="#"
+            sx={{
+              fontSize: "0.85rem",
+              ...fontStyles.openSans.regular,
+            }}
+          >
             Help
           </Link>
         </Stack>
@@ -437,9 +476,11 @@ const Footer = () => {
           {/* Left section after divider */}
           <Box>
             <Typography
-              variant="h6"
               color="primary.main"
-              sx={{ fontSize: "0.95rem" }}
+              sx={{
+                fontSize: "0.95rem",
+                ...fontStyles.montserrat.bold,
+              }}
             >
               Let's 'find true value here.'
             </Typography>
@@ -538,6 +579,7 @@ const Footer = () => {
             alignItems: "center",
             gap: 1,
             fontSize: "1rem",
+            ...fontStyles.openSans.semibold,
           }}
         >
           <Feedback sx={{ fontSize: "1.2rem" }} /> Send Feedback
@@ -563,9 +605,11 @@ const Footer = () => {
                 },
                 "& .MuiInputLabel-root": {
                   fontSize: "0.85rem",
+                  ...fontStyles.openSans.regular,
                 },
                 "& .MuiInputBase-input": {
                   fontSize: "0.85rem",
+                  ...fontStyles.openSans.regular,
                 },
                 "& .MuiFormHelperText-root": {
                   fontSize: "0.7rem",
@@ -593,9 +637,11 @@ const Footer = () => {
                 },
                 "& .MuiInputLabel-root": {
                   fontSize: "0.85rem",
+                  ...fontStyles.openSans.regular,
                 },
                 "& .MuiInputBase-input": {
                   fontSize: "0.85rem",
+                  ...fontStyles.openSans.regular,
                 },
                 "& .MuiFormHelperText-root": {
                   fontSize: "0.7rem",
@@ -626,9 +672,11 @@ const Footer = () => {
               },
               "& .MuiInputLabel-root": {
                 fontSize: "0.85rem",
+                ...fontStyles.openSans.regular,
               },
               "& .MuiInputBase-input": {
                 fontSize: "0.85rem",
+                ...fontStyles.openSans.regular,
               },
               "& .MuiFormHelperText-root": {
                 fontSize: "0.7rem",
@@ -652,6 +700,7 @@ const Footer = () => {
               marginRight: "auto",
               marginLeft: "auto",
               fontSize: "0.85rem",
+              ...fontStyles.sfPro.display.bold,
             }}
           >
             Send Message

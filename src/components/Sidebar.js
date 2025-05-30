@@ -25,6 +25,7 @@ import {
   Settings as SettingsIcon,
 } from "@mui/icons-material";
 import { useState } from "react";
+import { fontStyles } from "../theme/theme";
 
 const DRAWER_WIDTH = 300;
 const MINI_DRAWER_WIDTH = 70;
@@ -173,7 +174,15 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
             justifyContent: "space-between",
           }}
         >
-          <Typography variant="h6" component="div">
+          <Typography
+            variant="h6"
+            component="div"
+            color="primary.main"
+            sx={{
+              ...fontStyles.sfPro.condensed.bold,
+              textTransform: "uppercase",
+            }}
+          >
             Welcome, User!
           </Typography>
           <IconButton onClick={onClose} edge="end">
@@ -198,7 +207,15 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
               <ListItem key={item.text} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.text} />
+                  <ListItemText
+                    primary={item.text}
+                    sx={{
+                      "& .MuiListItemText-primary": {
+                        ...fontStyles.sfPro.condensed.regular,
+                        textTransform: "uppercase",
+                      },
+                    }}
+                  />
                 </ListItemButton>
               </ListItem>
             ))}
@@ -213,7 +230,13 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                     {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
                   </ListItemIcon>
                   <ListItemText
-                    primary={isDarkMode ? "Light Mode" : "Dark Mode"}
+                    primary={isDarkMode ? "Switch to Light" : "Switch to Dark"}
+                    sx={{
+                      "& .MuiListItemText-primary": {
+                        ...fontStyles.sfPro.condensed.regular,
+                        textTransform: "uppercase",
+                      },
+                    }}
                   />
                 </ListItemButton>
               </ListItem>
@@ -221,7 +244,15 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                 <ListItem key={item.text} disablePadding>
                   <ListItemButton>
                     <ListItemIcon>{item.icon}</ListItemIcon>
-                    <ListItemText primary={item.text} />
+                    <ListItemText
+                      primary={item.text}
+                      sx={{
+                        "& .MuiListItemText-primary": {
+                          ...fontStyles.sfPro.condensed.regular,
+                          textTransform: "uppercase",
+                        },
+                      }}
+                    />
                   </ListItemButton>
                 </ListItem>
               ))}
@@ -232,9 +263,12 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
               color="primary"
               fullWidth
               startIcon={<SubscriptionsIcon />}
-              sx={{ mb: 2 }}
+              sx={{
+                mb: 2,
+                ...fontStyles.sfPro.condensed.bold,
+              }}
             >
-              Subscribe
+              Subscribe To YouTube
             </Button>
           </Box>
         </Box>

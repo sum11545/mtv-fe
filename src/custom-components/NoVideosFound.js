@@ -11,6 +11,7 @@ import {
   Paper,
 } from "@mui/material";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
+import { fontStyles } from "@/theme/theme";
 
 const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
   const theme = useTheme();
@@ -95,7 +96,13 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
           >
             <SadEmoji />
           </Box>
-          <Typography variant={isMobile ? "h6" : "h5"} align="center">
+          <Typography
+            variant={isMobile ? "h6" : "h5"}
+            align="center"
+            sx={{
+              ...fontStyles.sfPro.display.regular,
+            }}
+          >
             No Videos found for
           </Typography>
           <Typography
@@ -103,7 +110,10 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
             gutterBottom
             align="center"
             color="primary"
-            sx={{ fontWeight: 500 }}
+            sx={{
+              fontWeight: 500,
+              ...fontStyles.sfPro.display.regular,
+            }}
           >
             "{searchQuery}"
           </Typography>
@@ -136,19 +146,32 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
           >
             <Typography
               variant={isMobile ? "body1" : "h6"}
-              sx={{ fontWeight: 400, mb: 0.5 }}
+              sx={{
+                fontWeight: 400,
+                mb: 0.5,
+                ...fontStyles.sfPro.display.regular,
+              }}
             >
               We're working hard to fulfil
             </Typography>
             <Typography
               variant={isMobile ? "body1" : "h6"}
-              sx={{ fontWeight: 400, mb: 0.5, mt: -0.5 }}
+              sx={{
+                fontWeight: 400,
+                mb: 0.5,
+                mt: -0.5,
+                ...fontStyles.sfPro.display.regular,
+              }}
             >
               your video request.
             </Typography>
             <Typography
               variant={isMobile ? "body1" : "h6"}
-              sx={{ fontWeight: 600, mt: -0.5 }}
+              sx={{
+                fontWeight: 600,
+                mt: -0.5,
+                ...fontStyles.sfPro.display.regular,
+              }}
             >
               You'll have the video soon!
             </Typography>
@@ -159,7 +182,10 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
             <Typography
               variant="body2"
               color="primary"
-              sx={{ mt: isMobile ? 1 : 4, fontWeight: 600 }}
+              sx={{
+                mt: isMobile ? 1 : 4,
+                ...fontStyles.sfPro.display.bold,
+              }}
             >
               Notify me when it's there.
             </Typography>
@@ -190,7 +216,6 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
                 error={Boolean(emailError)}
                 helperText={emailError}
                 sx={{
-                  // mb: isMobile ? 1.5 : 2,
                   width: "100%",
                   "& .MuiOutlinedInput-root": {
                     backgroundColor:
@@ -202,9 +227,11 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
                     },
                     borderRadius: 0,
                     fontSize: "0.9rem",
+                    ...fontStyles.sfPro.text.regular,
                   },
                   "& .MuiInputBase-input": {
                     fontSize: "0.9rem",
+                    ...fontStyles.sfPro.text.regular,
                   },
                   "& .MuiFormHelperText-root": {
                     fontSize: "0.7rem",
@@ -221,6 +248,7 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
                   textTransform: "none",
                   width: "100%",
                   borderRadius: 0,
+                  ...fontStyles.sfPro.display.bold,
                 }}
               >
                 Submit

@@ -19,6 +19,7 @@ import GridLayout from "../../custom-components/layouts/GridLayout";
 import SliderLayout from "../../custom-components/layouts/SliderLayout";
 import ShareDialog from "../../custom-components/ShareDialog";
 import CopyButton from "../../custom-components/CopyButton";
+import { fontStyles } from "../../theme/theme";
 
 const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
   <Box
@@ -297,8 +298,10 @@ const VideoDetailPage = () => {
             <Typography
               variant="h5"
               component="h1"
-              fontWeight="bold"
-              gutterBottom
+              sx={{
+                mb: 1,
+                ...fontStyles.openSans.bold,
+              }}
             >
               {videoData.name || videoData.title}
             </Typography>
@@ -500,11 +503,11 @@ const VideoDetailPage = () => {
                             lineHeight: 1.2,
                             mb: 0.5,
                             fontSize: "0.75rem",
-                            fontWeight: 500,
                             color: (theme) =>
                               theme.palette.mode === "light"
                                 ? "black"
                                 : "inherit",
+                            ...fontStyles.openSans.bold,
                           }}
                         >
                           {video.name}
@@ -593,11 +596,11 @@ const VideoDetailPage = () => {
                             lineHeight: 1.2,
                             mb: 0.5,
                             fontSize: "0.75rem",
-                            fontWeight: 500,
                             color: (theme) =>
                               theme.palette.mode === "light"
                                 ? "black"
                                 : "inherit",
+                            ...fontStyles.openSans.bold,
                           }}
                         >
                           {video.name}
@@ -773,11 +776,11 @@ const VideoDetailPage = () => {
                             lineHeight: 1.2,
                             mb: 0.5,
                             fontSize: "0.75rem",
-                            fontWeight: 500,
                             color: (theme) =>
                               theme.palette.mode === "light"
                                 ? "black"
                                 : "inherit",
+                            ...fontStyles.openSans.bold,
                           }}
                         >
                           {video.name}

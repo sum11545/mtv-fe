@@ -15,6 +15,7 @@ import ShareDialog from "../ShareDialog";
 import CopyButton from "../CopyButton";
 import { useMain } from "@/context/MainContext";
 import AdCard from "./AdCard";
+import { fontStyles } from "../../theme/theme";
 
 const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
   <Box
@@ -45,6 +46,7 @@ const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
             userSelect: "none",
             mr: 0.5,
             transition: "color 0.2s ease-in-out",
+            ...fontStyles.sfPro.condensed.regular,
           }}
         >
           {label}
@@ -74,6 +76,7 @@ const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
             userSelect: "none",
             ml: 0.5,
             transition: "color 0.2s ease-in-out",
+            ...fontStyles.sfPro.condensed.regular,
           }}
         >
           {label}
@@ -207,7 +210,6 @@ const GridCard = ({ video, id, sectionData }) => {
               variant="subtitle1"
               component="div"
               sx={{
-                fontWeight: 500,
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 display: "-webkit-box",
@@ -216,6 +218,7 @@ const GridCard = ({ video, id, sectionData }) => {
                 lineHeight: 1.2,
                 minHeight: "2.5em",
                 maxHeight: "2.5em",
+                ...fontStyles.openSans.bold,
               }}
             >
               {video.name}

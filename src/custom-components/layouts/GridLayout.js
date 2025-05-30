@@ -15,6 +15,7 @@ import {
 } from "@mui/icons-material";
 import { useRouter } from "next/router";
 import { mainArr } from "@/data/homeData";
+import { fontStyles } from "../../theme/theme";
 
 const GridLayout = ({ name, contents, id, sectionData, section }) => {
   const router = useRouter();
@@ -72,15 +73,20 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
         <Typography
           variant="h6"
           component="h2"
-          fontWeight="bold"
-          color="primary.main"
+          sx={{
+            color: "primary.main",
+            ...fontStyles.montserrat.bold,
+          }}
         >
           {section.name}
         </Typography>
         {section.total_contents > section.contents.length && (
           <Button
             endIcon={<ChevronRightIcon />}
-            sx={{ textTransform: "none" }}
+            sx={{
+              textTransform: "none",
+              ...fontStyles.openSans.regular,
+            }}
             onClick={handleViewMore}
           >
             View More
