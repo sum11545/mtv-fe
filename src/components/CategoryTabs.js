@@ -36,10 +36,10 @@ const ScrollContainer = styled(Box)(({ theme }) => ({
   position: "relative",
   display: "flex",
   alignItems: "center",
-  backgroundColor:
-    theme.palette.mode === "dark"
-      ? "rgba(15, 23, 42, 0.6)"
-      : theme.palette.background.paper,
+  // backgroundColor:
+  //   theme.palette.mode === "dark"
+  //     ? "rgba(15, 23, 42, 0.6)"
+  //     : theme.palette.background.paper,
   padding: theme.spacing(1, 1),
 }));
 

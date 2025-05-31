@@ -121,6 +121,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                   </ListItemIcon>
                 </ListItemButton>
               </ListItem>
+
               {bottomSidebarItems.map((item) => (
                 <ListItem key={item.text} disablePadding>
                   <ListItemButton
@@ -144,6 +145,32 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                   </ListItemButton>
                 </ListItem>
               ))}
+
+              <ListItem disablePadding>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: "center",
+                    px: 2.5,
+                  }}
+                  onClick={() =>
+                    window.open("https://www.youtube.com/@fireship", "_blank")
+                  }
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      justifyContent: "center",
+                      "& .MuiSvgIcon-root": {
+                        fontSize: fontSize.icon.medium,
+                        color: "#FF0000",
+                      },
+                    }}
+                  >
+                    <SubscriptionsIcon />
+                  </ListItemIcon>
+                </ListItemButton>
+              </ListItem>
             </List>
           </Box>
         </Drawer>
@@ -301,22 +328,35 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
               ))}
             </List>
 
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              startIcon={
-                <SubscriptionsIcon sx={{ fontSize: fontSize.icon.medium }} />
-              }
-              sx={{
-                mb: 2,
-                ...fontStyles.sfPro.condensed.bold,
-                fontSize: fontSize.button.medium,
-                textTransform: "uppercase",
-              }}
-            >
-              Subscribe To YouTube
-            </Button>
+            <ListItem disablePadding>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                onClick={() =>
+                  window.open("https://www.youtube.com/@fireship", "_blank")
+                }
+                startIcon={
+                  <SubscriptionsIcon sx={{ fontSize: fontSize.icon.medium }} />
+                }
+                sx={{
+                  mb: 2,
+                  ...fontStyles.sfPro.condensed.bold,
+                  fontSize: fontSize.button.medium,
+                  textTransform: "uppercase",
+                  backgroundColor: "#FF0000",
+                  color: "#FFFFFF",
+                  "& .MuiSvgIcon-root": {
+                    color: "#FFFFFF",
+                  },
+                  "&:hover": {
+                    backgroundColor: "#CC0000",
+                  },
+                }}
+              >
+                Subscribe To YouTube
+              </Button>
+            </ListItem>
           </Box>
         </Box>
       </Drawer>

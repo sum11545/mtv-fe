@@ -149,6 +149,7 @@ const GridCard = ({ video, id, sectionData }) => {
           border: "none",
           boxShadow: "none",
           borderRadius: 0,
+          background: "none",
         }}
         onClick={handleCardClick}
       >
