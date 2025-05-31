@@ -6,7 +6,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { ChevronRight as ChevronRightIcon } from "@mui/icons-material";
-import { fontStyles } from "@/theme/theme";
+import { fontStyles, fontSize } from "@/theme/theme";
 
 const AdCard = ({ ad }) => {
   const theme = useTheme();
@@ -57,7 +57,7 @@ const AdCard = ({ ad }) => {
             sx={{
               lineHeight: 1.1,
               color: theme.palette.custom.adText,
-              fontSize: "0.875rem",
+              fontSize: fontSize.typography.body2,
               ...fontStyles.montserrat.bold,
             }}
           >
@@ -75,7 +75,7 @@ const AdCard = ({ ad }) => {
               textTransform: "none",
               px: 2,
               borderRadius: 2,
-              fontSize: "0.9rem",
+              fontSize: fontSize.button.large,
               color: theme.palette.custom.adText,
               borderColor: theme.palette.custom.adText,
               "&:hover": {

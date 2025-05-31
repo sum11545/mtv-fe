@@ -17,7 +17,7 @@ import {
   Notifications as NotificationsIcon,
 } from "@mui/icons-material";
 import Image from "next/image";
-import { fontStyles } from "../theme/theme";
+import { fontStyles, fontSize } from "../theme/theme";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -66,10 +66,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     paddingLeft: `calc(1em + ${theme.spacing(1)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
-    fontSize: "0.875rem",
+    fontSize: fontSize.form.label,
     ...fontStyles.sfPro.text.regular,
     [theme.breakpoints.down("sm")]: {
-      fontSize: "0.875rem",
+      fontSize: fontSize.form.label,
     },
   },
 }));
@@ -86,10 +86,10 @@ const PostfixIconWrapper = styled("div")(({ theme }) => ({
     marginRight: theme.spacing(2),
   },
   "& .MuiSvgIcon-root": {
-    fontSize: "1.2rem",
+    fontSize: fontSize.icon.small,
     color: theme.palette.text.secondary,
     [theme.breakpoints.down("sm")]: {
-      fontSize: "1.2rem",
+      fontSize: fontSize.icon.small,
     },
   },
 }));
@@ -163,7 +163,7 @@ const Header = ({ toggleSidebar }) => {
                 color="inherit"
                 sx={{
                   "& .MuiSvgIcon-root": {
-                    fontSize: "1.8rem",
+                    fontSize: fontSize.icon.large,
                   },
                 }}
               >
@@ -180,7 +180,7 @@ const Header = ({ toggleSidebar }) => {
                 sx={{
                   ml: 1,
                   "& .MuiSvgIcon-root": {
-                    fontSize: "1.8rem",
+                    fontSize: fontSize.icon.large,
                   },
                 }}
               >
@@ -266,7 +266,7 @@ const Header = ({ toggleSidebar }) => {
             color="inherit"
             sx={{
               "& .MuiSvgIcon-root": {
-                fontSize: "1.8rem",
+                fontSize: fontSize.icon.large,
               },
             }}
           >
@@ -283,7 +283,7 @@ const Header = ({ toggleSidebar }) => {
             sx={{
               ml: 1,
               "& .MuiSvgIcon-root": {
-                fontSize: "1.8rem",
+                fontSize: fontSize.icon.large,
               },
             }}
           >

@@ -25,7 +25,7 @@ import {
   ContentCopy,
   Check,
 } from "@mui/icons-material";
-import { fontStyles } from "../theme/theme";
+import { fontStyles, fontSize } from "../theme/theme";
 
 const socialPlatforms = [
   // {
@@ -165,7 +165,11 @@ const ShareDialog = ({ open, onClose, url, title }) => {
                   }}
                 >
                   <platform.icon
-                    sx={{ color: platform.color, fontSize: "2rem", mb: 1 }}
+                    sx={{
+                      color: platform.color,
+                      fontSize: fontSize.icon.large,
+                      mb: 1,
+                    }}
                   />
                   <Typography
                     variant="caption"

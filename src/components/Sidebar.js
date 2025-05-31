@@ -25,7 +25,7 @@ import {
   Settings as SettingsIcon,
 } from "@mui/icons-material";
 import { useState } from "react";
-import { fontStyles } from "../theme/theme";
+import { fontSize, fontStyles } from "../theme/theme";
 
 const DRAWER_WIDTH = 300;
 const MINI_DRAWER_WIDTH = 70;
@@ -84,6 +84,9 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                     sx={{
                       minWidth: 0,
                       justifyContent: "center",
+                      "& .MuiSvgIcon-root": {
+                        fontSize: fontSize.icon.medium,
+                      },
                     }}
                   >
                     {item.icon}
@@ -109,6 +112,9 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                     sx={{
                       minWidth: 0,
                       justifyContent: "center",
+                      "& .MuiSvgIcon-root": {
+                        fontSize: fontSize.icon.medium,
+                      },
                     }}
                   >
                     {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
@@ -128,6 +134,9 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                       sx={{
                         minWidth: 0,
                         justifyContent: "center",
+                        "& .MuiSvgIcon-root": {
+                          fontSize: fontSize.icon.medium,
+                        },
                       }}
                     >
                       {item.icon}
@@ -180,12 +189,21 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
             color="primary.main"
             sx={{
               ...fontStyles.sfPro.condensed.bold,
+              fontSize: fontSize.typography.h6,
               textTransform: "uppercase",
             }}
           >
             Welcome, User!
           </Typography>
-          <IconButton onClick={onClose} edge="end">
+          <IconButton
+            onClick={onClose}
+            edge="end"
+            sx={{
+              "& .MuiSvgIcon-root": {
+                fontSize: fontSize.icon.medium,
+              },
+            }}
+          >
             <CloseIcon />
           </IconButton>
         </Box>
@@ -206,12 +224,21 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
             {mainSidebarItems.map((item) => (
               <ListItem key={item.text} disablePadding>
                 <ListItemButton>
-                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemIcon
+                    sx={{
+                      "& .MuiSvgIcon-root": {
+                        fontSize: fontSize.icon.medium,
+                      },
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
                   <ListItemText
                     primary={item.text}
                     sx={{
                       "& .MuiListItemText-primary": {
                         ...fontStyles.sfPro.condensed.regular,
+                        fontSize: fontSize.nav.primary,
                         textTransform: "uppercase",
                       },
                     }}
@@ -226,7 +253,13 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
             <List>
               <ListItem disablePadding>
                 <ListItemButton onClick={onToggleTheme}>
-                  <ListItemIcon>
+                  <ListItemIcon
+                    sx={{
+                      "& .MuiSvgIcon-root": {
+                        fontSize: fontSize.icon.medium,
+                      },
+                    }}
+                  >
                     {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
                   </ListItemIcon>
                   <ListItemText
@@ -234,6 +267,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                     sx={{
                       "& .MuiListItemText-primary": {
                         ...fontStyles.sfPro.condensed.regular,
+                        fontSize: fontSize.nav.primary,
                         textTransform: "uppercase",
                       },
                     }}
@@ -243,12 +277,21 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
               {bottomSidebarItems.map((item) => (
                 <ListItem key={item.text} disablePadding>
                   <ListItemButton>
-                    <ListItemIcon>{item.icon}</ListItemIcon>
+                    <ListItemIcon
+                      sx={{
+                        "& .MuiSvgIcon-root": {
+                          fontSize: fontSize.icon.medium,
+                        },
+                      }}
+                    >
+                      {item.icon}
+                    </ListItemIcon>
                     <ListItemText
                       primary={item.text}
                       sx={{
                         "& .MuiListItemText-primary": {
                           ...fontStyles.sfPro.condensed.regular,
+                          fontSize: fontSize.nav.primary,
                           textTransform: "uppercase",
                         },
                       }}
@@ -262,10 +305,14 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
               variant="contained"
               color="primary"
               fullWidth
-              startIcon={<SubscriptionsIcon />}
+              startIcon={
+                <SubscriptionsIcon sx={{ fontSize: fontSize.icon.medium }} />
+              }
               sx={{
                 mb: 2,
                 ...fontStyles.sfPro.condensed.bold,
+                fontSize: fontSize.button.medium,
+                textTransform: "uppercase",
               }}
             >
               Subscribe To YouTube

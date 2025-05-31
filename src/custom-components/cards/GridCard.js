@@ -15,7 +15,7 @@ import ShareDialog from "../ShareDialog";
 import CopyButton from "../CopyButton";
 import { useMain } from "@/context/MainContext";
 import AdCard from "./AdCard";
-import { fontStyles } from "../../theme/theme";
+import { fontStyles, fontSize } from "../../theme/theme";
 
 const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
   <Box
@@ -42,7 +42,7 @@ const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
           variant="caption"
           sx={{
             color: "grey.500",
-            fontSize: "0.7rem",
+            fontSize: fontSize.typography.caption,
             userSelect: "none",
             mr: 0.5,
             transition: "color 0.2s ease-in-out",
@@ -72,7 +72,7 @@ const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
           variant="caption"
           sx={{
             color: "grey.500",
-            fontSize: "0.7rem",
+            fontSize: fontSize.typography.caption,
             userSelect: "none",
             ml: 0.5,
             transition: "color 0.2s ease-in-out",
@@ -207,7 +207,6 @@ const GridCard = ({ video, id, sectionData }) => {
             }}
           >
             <Typography
-              variant="subtitle1"
               component="div"
               sx={{
                 overflow: "hidden",
@@ -218,6 +217,7 @@ const GridCard = ({ video, id, sectionData }) => {
                 lineHeight: 1.2,
                 minHeight: "2.5em",
                 maxHeight: "2.5em",
+                fontSize: fontSize.typography.body2,
                 ...fontStyles.openSans.bold,
               }}
             >
@@ -241,7 +241,7 @@ const GridCard = ({ video, id, sectionData }) => {
                 }}
               >
                 <ActionButton
-                  icon={<WhatsApp sx={{ fontSize: "1.3rem" }} />}
+                  icon={<WhatsApp sx={{ fontSize: fontSize.icon.small }} />}
                   label="Send"
                   onClick={handleWhatsApp}
                 />
@@ -251,7 +251,7 @@ const GridCard = ({ video, id, sectionData }) => {
                 icon={
                   <Reply
                     sx={{
-                      fontSize: "1.3rem",
+                      fontSize: fontSize.icon.small,
                       transform: "rotate(180deg) scaleY(-1)",
                     }}
                   />

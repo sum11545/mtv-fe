@@ -68,6 +68,62 @@ export const fontStyles = {
   },
 };
 
+// Font size configuration
+export const fontSize = {
+  // Typography variants
+  typography: {
+    h1: "2.5rem", // 40px
+    h2: "2rem", // 32px
+    h3: "1.75rem", // 28px
+    h4: "1.5rem", // 24px
+    h5: "1.25rem", // 20px
+    h6: "1rem", // 16px
+    subtitle1: "1.125rem", // 18px
+    subtitle2: "1rem", // 16px
+    body1: "1rem", // 16px
+    body2: "0.875rem", // 14px
+    caption: "0.75rem", // 12px
+    overline: "0.625rem", // 10px
+  },
+
+  // Icons
+  icon: {
+    large: "2rem", // 32px
+    medium: "1.5rem", // 24px
+    small: "1.25rem", // 20px
+    tiny: "1rem", // 16px
+  },
+
+  // Form elements
+  form: {
+    label: "0.875rem", // 14px
+    input: "1rem", // 16px
+    helper: "0.75rem", // 12px
+    error: "0.75rem", // 12px
+  },
+
+  // Navigation
+  nav: {
+    primary: "0.875rem", // 14px
+    secondary: "0.75rem", // 12px
+  },
+
+  // Buttons
+  button: {
+    large: "1rem", // 16px
+    medium: "0.875rem", // 14px
+    small: "0.75rem", // 12px
+  },
+
+  // Special cases
+  display: {
+    hero: "4rem", // 64px
+    large: "3rem", // 48px
+    medium: "2.5rem", // 40px
+    small: "2rem", // 32px
+  },
+};
+
 // Color palette configuration
 const palette = {
   light: {
@@ -130,57 +186,57 @@ const typography = {
   fontFamily: ["Montserrat", "Open Sans", "SFProText", "sans-serif"].join(","),
   h1: {
     ...fontStyles.montserrat.bold,
-    fontSize: "2.5rem",
+    fontSize: fontSize.typography.h1,
   },
   h2: {
     ...fontStyles.montserrat.semibold,
-    fontSize: "2rem",
+    fontSize: fontSize.typography.h2,
   },
   h3: {
     ...fontStyles.montserrat.semibold,
-    fontSize: "1.75rem",
+    fontSize: fontSize.typography.h3,
   },
   h4: {
     ...fontStyles.montserrat.medium,
-    fontSize: "1.5rem",
+    fontSize: fontSize.typography.h4,
   },
   h5: {
     ...fontStyles.montserrat.medium,
-    fontSize: "1.25rem",
+    fontSize: fontSize.typography.h5,
   },
   h6: {
     ...fontStyles.montserrat.medium,
-    fontSize: "1rem",
+    fontSize: fontSize.typography.h6,
   },
   subtitle1: {
     ...fontStyles.openSans.semibold,
-    fontSize: "0.875rem",
+    fontSize: fontSize.typography.subtitle1,
   },
   subtitle2: {
     ...fontStyles.openSans.regular,
-    fontSize: "0.875rem",
+    fontSize: fontSize.typography.subtitle2,
   },
   body1: {
     ...fontStyles.sfPro.text.regular,
-    fontSize: "1rem",
+    fontSize: fontSize.typography.body1,
   },
   body2: {
     ...fontStyles.sfPro.text.regular,
-    fontSize: "0.875rem",
+    fontSize: fontSize.typography.body2,
   },
   button: {
     ...fontStyles.openSans.semibold,
-    fontSize: "0.875rem",
+    fontSize: fontSize.button.medium,
     textTransform: "none",
   },
   caption: {
     ...fontStyles.sfPro.condensed.regular,
-    fontSize: "0.7rem",
+    fontSize: fontSize.typography.caption,
     letterSpacing: "0.01em",
   },
   overline: {
     ...fontStyles.openSans.regular,
-    fontSize: "0.75rem",
+    fontSize: fontSize.typography.overline,
     textTransform: "uppercase",
   },
 };

@@ -12,7 +12,7 @@ import {
   ChevronLeft as ChevronLeftIcon,
   ChevronRight as ChevronRightIcon,
 } from "@mui/icons-material";
-import { fontStyles } from "../theme/theme";
+import { fontStyles, fontSize } from "../theme/theme";
 
 const categories = [
   "All",
@@ -86,7 +86,7 @@ const StyledTab = styled(Tab)(({ theme }) => ({
       : theme.palette.grey[100],
   color: theme.palette.text.secondary,
   textTransform: "none",
-  fontSize: "0.8rem",
+  fontSize: fontSize.typography.caption,
   ...fontStyles.montserrat.bold,
   "&:hover": {
     backgroundColor:
@@ -103,7 +103,7 @@ const StyledTab = styled(Tab)(({ theme }) => ({
     },
   },
   [theme.breakpoints.down("sm")]: {
-    fontSize: "0.85rem",
+    fontSize: fontSize.typography.caption,
     padding: theme.spacing(0.5, 1.5),
   },
 }));

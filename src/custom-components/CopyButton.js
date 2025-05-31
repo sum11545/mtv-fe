@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Box, Typography, Snackbar } from "@mui/material";
 import { ContentCopy } from "@mui/icons-material";
-import { fontStyles } from "../theme/theme";
+import { fontSize, fontStyles } from "../theme/theme";
 
 const CopyButton = ({ text, label = "Copy" }) => {
   const [copied, setCopied] = useState(false);
@@ -40,7 +40,7 @@ const CopyButton = ({ text, label = "Copy" }) => {
       >
         <ContentCopy
           sx={{
-            fontSize: "1.3rem",
+            fontSize: fontSize.icon.small,
             color: copied ? "success.main" : "grey.500",
             transition: "color 0.2s ease-in-out",
           }}
@@ -49,7 +49,7 @@ const CopyButton = ({ text, label = "Copy" }) => {
           variant="caption"
           sx={{
             color: copied ? "success.main" : "grey.500",
-            fontSize: "0.7rem",
+            fontSize: fontSize.typography.caption,
             userSelect: "none",
             ml: 0.5,
             transition: "color 0.2s ease-in-out",

@@ -19,7 +19,7 @@ import GridLayout from "../../custom-components/layouts/GridLayout";
 import SliderLayout from "../../custom-components/layouts/SliderLayout";
 import ShareDialog from "../../custom-components/ShareDialog";
 import CopyButton from "../../custom-components/CopyButton";
-import { fontStyles } from "../../theme/theme";
+import { fontSize, fontStyles } from "../../theme/theme";
 
 const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
   <Box
@@ -45,10 +45,11 @@ const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
           variant="caption"
           sx={{
             color: "grey.500",
-            fontSize: "0.7rem",
+            fontSize: fontSize.typography.caption,
             userSelect: "none",
             mr: 0.5,
             transition: "color 0.2s ease-in-out",
+            ...fontStyles.sfPro.condensed.regular,
           }}
         >
           {label}
@@ -74,10 +75,11 @@ const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
           variant="caption"
           sx={{
             color: "grey.500",
-            fontSize: "0.7rem",
+            fontSize: fontSize.typography.caption,
             userSelect: "none",
             ml: 0.5,
             transition: "color 0.2s ease-in-out",
+            ...fontStyles.sfPro.condensed.regular,
           }}
         >
           {label}
@@ -318,7 +320,7 @@ const VideoDetailPage = () => {
             >
               <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <ActionButton
-                  icon={<WhatsApp sx={{ fontSize: "1.3rem" }} />}
+                  icon={<WhatsApp sx={{ fontSize: fontSize.icon.small }} />}
                   label="Send"
                   onClick={handleWhatsApp}
                 />
@@ -328,7 +330,7 @@ const VideoDetailPage = () => {
                 icon={
                   <Reply
                     sx={{
-                      fontSize: "1.3rem",
+                      fontSize: fontSize.icon.small,
                       transform: "rotate(180deg) scaleY(-1)",
                     }}
                   />
@@ -345,7 +347,7 @@ const VideoDetailPage = () => {
                 variant="body1"
                 sx={{
                   whiteSpace: "pre-wrap",
-                  fontSize: "0.875rem",
+                  fontSize: fontSize.typography.body2,
                   color: "text.secondary",
                 }}
               >
@@ -502,7 +504,7 @@ const VideoDetailPage = () => {
                             WebkitBoxOrient: "vertical",
                             lineHeight: 1.2,
                             mb: 0.5,
-                            fontSize: "0.75rem",
+                            fontSize: fontSize.typography.caption,
                             color: (theme) =>
                               theme.palette.mode === "light"
                                 ? "black"
@@ -595,7 +597,7 @@ const VideoDetailPage = () => {
                             WebkitBoxOrient: "vertical",
                             lineHeight: 1.2,
                             mb: 0.5,
-                            fontSize: "0.75rem",
+                            fontSize: fontSize.typography.caption,
                             color: (theme) =>
                               theme.palette.mode === "light"
                                 ? "black"
@@ -775,7 +777,7 @@ const VideoDetailPage = () => {
                             WebkitBoxOrient: "vertical",
                             lineHeight: 1.2,
                             mb: 0.5,
-                            fontSize: "0.75rem",
+                            fontSize: fontSize.typography.caption,
                             color: (theme) =>
                               theme.palette.mode === "light"
                                 ? "black"

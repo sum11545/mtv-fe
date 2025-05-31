@@ -22,7 +22,7 @@ import {
 } from "@mui/icons-material";
 import Image from "next/image";
 import styled from "@emotion/styled";
-import { fontStyles } from "../theme/theme";
+import { fontStyles, fontSize } from "../theme/theme";
 
 const LogoWrapper = styled(Box)({
   display: "flex",
@@ -85,11 +85,12 @@ const MobileFooter = (props) => {
             display: "flex",
             alignItems: "center",
             gap: 1,
-            fontSize: "1rem",
+            fontSize: fontSize.typography.body1,
             ...fontStyles.openSans.semibold,
           }}
         >
-          <Feedback sx={{ fontSize: "1.2rem" }} /> Send Feedback
+          <Feedback sx={{ fontSize: fontSize.typography.subtitle1 }} /> Send
+          Feedback
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate>
           <TextField
@@ -110,15 +111,15 @@ const MobileFooter = (props) => {
                     : "1px solid rgba(0, 0, 0, 0.42)",
               },
               "& .MuiInputLabel-root": {
-                fontSize: "0.85rem",
+                fontSize: fontSize.form.label,
                 ...fontStyles.openSans.regular,
               },
               "& .MuiInputBase-input": {
-                fontSize: "0.85rem",
+                fontSize: fontSize.form.label,
                 ...fontStyles.openSans.regular,
               },
               "& .MuiFormHelperText-root": {
-                fontSize: "0.7rem",
+                fontSize: fontSize.form.helper,
                 marginTop: "3px",
               },
             }}
@@ -142,15 +143,15 @@ const MobileFooter = (props) => {
                     : "1px solid rgba(0, 0, 0, 0.42)",
               },
               "& .MuiInputLabel-root": {
-                fontSize: "0.85rem",
+                fontSize: fontSize.form.label,
                 ...fontStyles.openSans.regular,
               },
               "& .MuiInputBase-input": {
-                fontSize: "0.85rem",
+                fontSize: fontSize.form.label,
                 ...fontStyles.openSans.regular,
               },
               "& .MuiFormHelperText-root": {
-                fontSize: "0.7rem",
+                fontSize: fontSize.form.helper,
                 marginTop: "3px",
               },
             }}
@@ -176,15 +177,15 @@ const MobileFooter = (props) => {
                     : "1px solid rgba(0, 0, 0, 0.42)",
               },
               "& .MuiInputLabel-root": {
-                fontSize: "0.85rem",
+                fontSize: fontSize.form.label,
                 ...fontStyles.openSans.regular,
               },
               "& .MuiInputBase-input": {
-                fontSize: "0.85rem",
+                fontSize: fontSize.form.label,
                 ...fontStyles.openSans.regular,
               },
               "& .MuiFormHelperText-root": {
-                fontSize: "0.7rem",
+                fontSize: fontSize.form.helper,
                 marginTop: "3px",
               },
             }}
@@ -204,7 +205,7 @@ const MobileFooter = (props) => {
               width: "100%",
               marginRight: "auto",
               marginLeft: "auto",
-              fontSize: "0.85rem",
+              fontSize: fontSize.button.medium,
               ...fontStyles.sfPro.display.bold,
             }}
           >
@@ -229,7 +230,7 @@ const MobileFooter = (props) => {
           variant="h6"
           color="primary.main"
           sx={{
-            fontSize: "0.95rem",
+            fontSize: fontSize.typography.body1,
             mb: 1,
             ...fontStyles.montserrat.bold,
           }}
@@ -243,7 +244,7 @@ const MobileFooter = (props) => {
           sx={{
             display: "block",
             mb: 2,
-            fontSize: "0.85rem",
+            fontSize: fontSize.nav.primary,
             ...fontStyles.openSans.regular,
           }}
         >
@@ -256,7 +257,7 @@ const MobileFooter = (props) => {
             size="small"
             sx={{
               "& .MuiSvgIcon-root": {
-                fontSize: "1.2rem",
+                fontSize: fontSize.icon.medium,
                 color: "primary.main",
               },
             }}
@@ -267,7 +268,7 @@ const MobileFooter = (props) => {
             size="small"
             sx={{
               "& .MuiSvgIcon-root": {
-                fontSize: "1.2rem",
+                fontSize: fontSize.icon.medium,
                 color: "primary.main",
               },
             }}
@@ -278,7 +279,7 @@ const MobileFooter = (props) => {
             size="small"
             sx={{
               "& .MuiSvgIcon-root": {
-                fontSize: "1.2rem",
+                fontSize: fontSize.icon.medium,
                 color: "primary.main",
               },
             }}
@@ -289,7 +290,7 @@ const MobileFooter = (props) => {
             size="small"
             sx={{
               "& .MuiSvgIcon-root": {
-                fontSize: "1.2rem",
+                fontSize: fontSize.icon.medium,
                 color: "primary.main",
               },
             }}
@@ -300,7 +301,7 @@ const MobileFooter = (props) => {
             size="small"
             sx={{
               "& .MuiSvgIcon-root": {
-                fontSize: "1.2rem",
+                fontSize: fontSize.icon.medium,
                 color: "primary.main",
               },
             }}
@@ -314,7 +315,7 @@ const MobileFooter = (props) => {
           <Link
             href="#"
             sx={{
-              fontSize: "0.85rem",
+              fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
             }}
           >
@@ -323,7 +324,7 @@ const MobileFooter = (props) => {
           <Link
             href="#"
             sx={{
-              fontSize: "0.85rem",
+              fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
             }}
           >
@@ -332,7 +333,7 @@ const MobileFooter = (props) => {
           <Link
             href="#"
             sx={{
-              fontSize: "0.85rem",
+              fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
             }}
           >
@@ -478,7 +479,7 @@ const Footer = () => {
             <Typography
               color="primary.main"
               sx={{
-                fontSize: "0.95rem",
+                fontSize: fontSize.typography.body1,
                 ...fontStyles.montserrat.bold,
               }}
             >
@@ -486,7 +487,7 @@ const Footer = () => {
             </Typography>
             <Link
               href="#"
-              sx={{ display: "block", mb: 2, fontSize: "0.85rem" }}
+              sx={{ display: "block", mb: 2, fontSize: fontSize.nav.primary }}
             >
               grow@moneytv.live
             </Link>
@@ -495,7 +496,7 @@ const Footer = () => {
                 size="small"
                 sx={{
                   "& .MuiSvgIcon-root": {
-                    fontSize: "1.2rem",
+                    fontSize: fontSize.icon.medium,
                     color: "primary.main",
                   },
                 }}
@@ -506,7 +507,7 @@ const Footer = () => {
                 size="small"
                 sx={{
                   "& .MuiSvgIcon-root": {
-                    fontSize: "1.2rem",
+                    fontSize: fontSize.icon.medium,
                     color: "primary.main",
                   },
                 }}
@@ -517,7 +518,7 @@ const Footer = () => {
                 size="small"
                 sx={{
                   "& .MuiSvgIcon-root": {
-                    fontSize: "1.2rem",
+                    fontSize: fontSize.icon.medium,
                     color: "primary.main",
                   },
                 }}
@@ -528,7 +529,7 @@ const Footer = () => {
                 size="small"
                 sx={{
                   "& .MuiSvgIcon-root": {
-                    fontSize: "1.2rem",
+                    fontSize: fontSize.icon.medium,
                     color: "primary.main",
                   },
                 }}
@@ -539,7 +540,7 @@ const Footer = () => {
                 size="small"
                 sx={{
                   "& .MuiSvgIcon-root": {
-                    fontSize: "1.2rem",
+                    fontSize: fontSize.icon.medium,
                     color: "primary.main",
                   },
                 }}
@@ -555,13 +556,13 @@ const Footer = () => {
           {/* Right section */}
           <Box>
             <Stack spacing={1}>
-              <Link href="#" sx={{ fontSize: "0.85rem" }}>
+              <Link href="#" sx={{ fontSize: fontSize.nav.primary }}>
                 Privacy Policy
               </Link>
-              <Link href="#" sx={{ fontSize: "0.85rem" }}>
+              <Link href="#" sx={{ fontSize: fontSize.nav.primary }}>
                 Terms of Use
               </Link>
-              <Link href="#" sx={{ fontSize: "0.85rem" }}>
+              <Link href="#" sx={{ fontSize: fontSize.nav.primary }}>
                 Help
               </Link>
             </Stack>
@@ -578,11 +579,12 @@ const Footer = () => {
             display: "flex",
             alignItems: "center",
             gap: 1,
-            fontSize: "1rem",
+            fontSize: fontSize.typography.body1,
             ...fontStyles.openSans.semibold,
           }}
         >
-          <Feedback sx={{ fontSize: "1.2rem" }} /> Send Feedback
+          <Feedback sx={{ fontSize: fontSize.typography.subtitle1 }} /> Send
+          Feedback
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate>
           <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
@@ -604,15 +606,15 @@ const Footer = () => {
                       : "1px solid rgba(0, 0, 0, 0.42)",
                 },
                 "& .MuiInputLabel-root": {
-                  fontSize: "0.85rem",
+                  fontSize: fontSize.form.label,
                   ...fontStyles.openSans.regular,
                 },
                 "& .MuiInputBase-input": {
-                  fontSize: "0.85rem",
+                  fontSize: fontSize.form.label,
                   ...fontStyles.openSans.regular,
                 },
                 "& .MuiFormHelperText-root": {
-                  fontSize: "0.7rem",
+                  fontSize: fontSize.form.helper,
                   marginTop: "3px",
                 },
               }}
@@ -636,15 +638,15 @@ const Footer = () => {
                       : "1px solid rgba(0, 0, 0, 0.42)",
                 },
                 "& .MuiInputLabel-root": {
-                  fontSize: "0.85rem",
+                  fontSize: fontSize.form.label,
                   ...fontStyles.openSans.regular,
                 },
                 "& .MuiInputBase-input": {
-                  fontSize: "0.85rem",
+                  fontSize: fontSize.form.label,
                   ...fontStyles.openSans.regular,
                 },
                 "& .MuiFormHelperText-root": {
-                  fontSize: "0.7rem",
+                  fontSize: fontSize.form.helper,
                   marginTop: "3px",
                 },
               }}
@@ -671,15 +673,15 @@ const Footer = () => {
                     : "1px solid rgba(0, 0, 0, 0.42)",
               },
               "& .MuiInputLabel-root": {
-                fontSize: "0.85rem",
+                fontSize: fontSize.form.label,
                 ...fontStyles.openSans.regular,
               },
               "& .MuiInputBase-input": {
-                fontSize: "0.85rem",
+                fontSize: fontSize.form.label,
                 ...fontStyles.openSans.regular,
               },
               "& .MuiFormHelperText-root": {
-                fontSize: "0.7rem",
+                fontSize: fontSize.form.helper,
                 marginTop: "3px",
               },
             }}
@@ -699,7 +701,7 @@ const Footer = () => {
               width: "100%",
               marginRight: "auto",
               marginLeft: "auto",
-              fontSize: "0.85rem",
+              fontSize: fontSize.button.medium,
               ...fontStyles.sfPro.display.bold,
             }}
           >

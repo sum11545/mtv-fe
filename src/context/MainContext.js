@@ -18,7 +18,7 @@ export const useMain = () => {
   return context;
 };
 
-const baseUrl = `https://relatively-conventional-disco-mary.trycloudflare.com/api/v1`;
+const baseUrl = `http://localhost:3700/api/v1`;
 
 export const MainProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);

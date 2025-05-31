@@ -11,7 +11,7 @@ import {
   Paper,
 } from "@mui/material";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
-import { fontStyles } from "@/theme/theme";
+import { fontSize, fontStyles } from "@/theme/theme";
 
 const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
   const theme = useTheme();
@@ -226,15 +226,15 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
                       border: "none",
                     },
                     borderRadius: 0,
-                    fontSize: "0.9rem",
+                    fontSize: fontSize.form.label,
                     ...fontStyles.sfPro.text.regular,
                   },
                   "& .MuiInputBase-input": {
-                    fontSize: "0.9rem",
+                    fontSize: fontSize.form.label,
                     ...fontStyles.sfPro.text.regular,
                   },
                   "& .MuiFormHelperText-root": {
-                    fontSize: "0.7rem",
+                    fontSize: fontSize.form.helper,
                   },
                 }}
               />
