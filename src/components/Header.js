@@ -104,6 +104,7 @@ const Header = ({ toggleSidebar }) => {
     alignItems: "center",
     position: "relative",
     height: "40px",
+    width: "170px",
     // border: "1px solid green",
     marginLeft: " -14px",
   });
@@ -148,9 +149,8 @@ const Header = ({ toggleSidebar }) => {
                     : "/images/logos/header-logo-dark.png"
                 }
                 alt="Money TV Logo"
-                height={170}
-                width={170}
-                style={{ objectFit: "contain" }}
+                fill
+                style={{ objectFit: "cover" }}
                 priority
               />
             </LogoWrapper>
@@ -238,9 +238,8 @@ const Header = ({ toggleSidebar }) => {
                   : "/images/logos/header-logo-dark.png"
               }
               alt="Money TV Logo"
-              height={170}
-              width={170}
-              style={{ objectFit: "contain" }}
+              fill
+              style={{ objectFit: "cover" }}
               priority
             />
           </LogoWrapper>
