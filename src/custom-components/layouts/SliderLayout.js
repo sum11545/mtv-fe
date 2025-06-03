@@ -13,7 +13,6 @@ import {
   ChevronRight as ChevronRightIcon,
 } from "@mui/icons-material";
 import { useRouter } from "next/router";
-import { mainArr } from "../../data/homeData";
 import { fontStyles } from "../../theme/theme";
 
 const SliderLayout = ({

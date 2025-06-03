@@ -14,7 +14,6 @@ import {
   ChevronLeft as ChevronLeftIcon,
 } from "@mui/icons-material";
 import { useRouter } from "next/router";
-import { mainArr } from "@/data/homeData";
 import { fontStyles } from "../../theme/theme";
 
 const GridLayout = ({ name, contents, id, sectionData, section }) => {
@@ -26,6 +25,7 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
   const [showRightScroll, setShowRightScroll] = useState(true);
   const size = section.layout_config.size;
   const height = section?.layout_config?.height;
+  const width = section?.layout_config?.width;
   const spacing = section?.layout_config?.spacing;
   // console.log({ section });
   // console.log({ sectionData });
@@ -165,6 +165,7 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
               id={section.id}
               sectionData={sectionData}
               section={section}
+              styles={{ height, width }}
             />
           </Grid>
         ))}

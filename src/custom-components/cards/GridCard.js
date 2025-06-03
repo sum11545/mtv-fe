@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { Reply, WhatsApp } from "@mui/icons-material";
 import { useRouter } from "next/router";
-import { mainArr } from "../../data/homeData";
 import ShareDialog from "../ShareDialog";
 import CopyButton from "../CopyButton";
 import { useMain } from "@/context/MainContext";
@@ -86,7 +85,7 @@ const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
   </Box>
 );
 
-const GridCard = ({ video, id, sectionData }) => {
+const GridCard = ({ video, id, sectionData, section, styles }) => {
   const router = useRouter();
   const [shareUrl, setShareUrl] = useState("");
   const { contentConfigurations } = useMain();
@@ -97,8 +96,11 @@ const GridCard = ({ video, id, sectionData }) => {
     (item) => item.content_type_id == video?.content_details[0]?.content_type_id
   );
 
-  let height = layout?.layout?.height;
-  let width = layout?.layout?.width;
+  // let height = layout?.layout?.height;
+  // let width = layout?.layout?.width;
+
+  const height = styles.height;
+  const width = styles.width;
 
   useEffect(() => {
     // Set share URL only after component mounts on client side
@@ -122,15 +124,23 @@ const GridCard = ({ video, id, sectionData }) => {
 
   const handleCardClick = () => {
     // Find the section this video belongs to
-    const section = sectionData.find((s, index) => {
+    console.log(section?.slug);
+    // If we're in a section list page, use the section prop directly
+    if (section?.slug) {
+      router.push(`/${section.slug}/${video.id}`);
+      return;
+    }
+
+    // If we're in the home page, find the section from sectionData
+    const foundSection = sectionData.find((s, index) => {
       if (typeof id === "number") {
         return index === id;
       }
-      return s.contents.some((v) => v.id === video.id);
+      return s.contents?.some((v) => v.id === video.id);
     });
 
-    if (section) {
-      router.push(`/${section.slug}/${video.id}`);
+    if (foundSection) {
+      router.push(`/${foundSection.slug}/${video.id}`);
     }
   };
 

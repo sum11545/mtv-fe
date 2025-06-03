@@ -12,14 +12,15 @@ import {
   useTheme,
   Link,
 } from "@mui/material";
-import Layout from "../../components/Layout";
-import { mainArr } from "../../data/homeData";
 import { WhatsApp, ContentCopy, Reply } from "@mui/icons-material";
 import GridLayout from "../../custom-components/layouts/GridLayout";
 import SliderLayout from "../../custom-components/layouts/SliderLayout";
 import ShareDialog from "../../custom-components/ShareDialog";
 import CopyButton from "../../custom-components/CopyButton";
 import { fontSize, fontStyles } from "../../theme/theme";
+import { useMain } from "@/context/MainContext";
+import StackLayout from "@/custom-components/layouts/StackLayout";
+import AdSection from "@/custom-components/layouts/AdSection";
 
 const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
   <Box
@@ -94,72 +95,52 @@ const VideoDetailPage = () => {
   const { section, video } = router.query;
   const theme = useTheme();
   const [videoData, setVideoData] = useState(null);
-  const [sectionData, setSectionData] = useState(null);
   const [relatedVideos, setRelatedVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [shortsData, setShortsData] = useState([]);
-  const [recommendedVideos, setRecommendedVideos] = useState([]);
-  const [adData, setAdData] = useState(null);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [shareUrl, setShareUrl] = useState("");
+
+  const [videoDetailData, setVideoDetailData] = useState(null);
+  const { fetchVideoDetailPageData } = useMain();
 
   useEffect(() => {
-    // Only proceed when we have the query parameters
-    if (section && video) {
-      // Find the section by slug
-      const foundSection = mainArr.find((s) => s.slug === section);
+    // Set share URL only after component mounts on client side
+    setShareUrl(window.location.href);
+  }, []);
 
-      if (foundSection) {
-        setSectionData(foundSection);
-
-        // Find the video in the section's content by ID
-        const foundVideo = foundSection.content.find(
-          (v) => v.id.toString() === video.toString()
-        );
-
-        if (foundVideo) {
-          setVideoData(foundVideo);
-
-          // Get related videos (from the same section except the current one)
-          const related = foundSection.content
-            .filter((v) => v.id.toString() !== video.toString())
-            .slice(0, 5); // Limit to 4 related videos
-          setRelatedVideos(related);
-        }
-
-        // Get shorts data
-        const SliderLayout = mainArr.find((s) => s.type === "shorts");
-        if (SliderLayout) {
-          setShortsData(SliderLayout.content.slice(0, 10));
-        }
-
-        // Get recommended videos (from other video sections)
-        const otherGridLayouts = mainArr.filter(
-          (s) => s.type === "videos" && s !== foundSection
-        );
-        if (otherGridLayouts.length > 0) {
-          setRecommendedVideos(otherGridLayouts[0].content.slice(0, 5));
-        }
-
-        // Get ad data
-        const adSection = mainArr.find((s) => s.type === "ads");
-        if (adSection && adSection.content.length > 0) {
-          // Randomly select one ad from available ads
-          const randomAdIndex = Math.floor(
-            Math.random() * adSection.content.length
-          );
-          setAdData(adSection.content[randomAdIndex]);
-        }
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const res = await fetchVideoDetailPageData(section, video);
+        console.log({ res });
+        setVideoDetailData(res?.data?.response);
+      } catch (err) {
+        console.error("Error fetching home data:", err);
       }
+    };
 
-      setLoading(false);
-    }
-  }, [section, video]);
+    loadData();
+  }, [router.query]);
 
-  // Handle actions
-  const handleCopy = () => {
-    if (videoData) {
-      navigator.clipboard?.writeText(videoData.name || videoData.title);
+  // Function to convert video URL to embed URL
+  const getEmbedUrl = (url) => {
+    if (!url) return "";
+
+    // Handle YouTube URLs
+    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+      // Extract video ID from YouTube URL
+      let videoId = "";
+      if (url.includes("youtube.com/watch?v=")) {
+        videoId = url.split("watch?v=")[1];
+      } else if (url.includes("youtu.be/")) {
+        videoId = url.split("youtu.be/")[1];
+      }
+      // Remove any additional parameters
+      videoId = videoId.split("&")[0];
+      return `https://www.youtube.com/embed/${videoId}`;
     }
+
+    // Handle other video platforms here if needed
+    return url;
   };
 
   const handleShare = () => {
@@ -177,72 +158,17 @@ const VideoDetailPage = () => {
     }
   };
 
-  // If the page is still loading or couldn't find the video
-  if (loading) {
-    return (
-      <Layout>
-        <Container maxWidth="xl">
-          <Box sx={{ py: 4, textAlign: "center" }}>
-            <Typography variant="h6">Loading...</Typography>
-          </Box>
-        </Container>
-      </Layout>
-    );
-  }
-
-  if (!videoData) {
-    return (
-      <Layout>
-        <Container maxWidth="xl">
-          <Box sx={{ py: 4, textAlign: "center" }}>
-            <Typography variant="h6">Video not found</Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ mt: 2 }}
-              onClick={() => router.push("/")}
-            >
-              Back to Home
-            </Button>
-          </Box>
-        </Container>
-      </Layout>
-    );
-  }
-
-  // Format view count with commas
-  const formattedViews = videoData.views
-    ? new Intl.NumberFormat("en-US").format(videoData.views)
-    : "0";
-
-  // Format date
-  const formattedDate = videoData.uploadDate
-    ? new Date(videoData.uploadDate).toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      })
-    : "";
-
   return (
-    <Layout>
+    <>
       <Container
         maxWidth="xl"
         sx={{
-          px: { xs: 2, sm: 2, md: 4 },
-          // py: 2,
+          px: { xs: 3, sm: 5, md: 5 },
           width: "100%",
           maxWidth: "100% !important",
         }}
       >
-        <Grid
-          container
-          spacing={3}
-          sx={{
-            p: { xs: 3, md: 0 },
-            pl: { md: 3 },
-          }}
-        >
+        <Grid container spacing={3}>
           {/* Left side - Video and details */}
           <Grid item xs={12} md={9}>
             {/* Video Player */}
@@ -257,24 +183,11 @@ const VideoDetailPage = () => {
                 mb: 2,
               }}
             >
-              {/* <Box
-                component="img"
-                src={videoData.thumbnailUrl}
-                alt={videoData.name || videoData.title}
-                sx={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
-                }}
-              /> */}
               <iframe
-                src="https://www.youtube.com/embed/mgmVOuLgFB0?autoplay=1&si=l_zJ0fk0fvKo7FnA"
-                title="YouTube video player"
+                src={getEmbedUrl(videoDetailData?.url)}
+                title={videoDetailData?.name}
                 frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
                 style={{
                   position: "absolute",
@@ -293,7 +206,7 @@ const VideoDetailPage = () => {
               color="text.secondary"
               sx={{ mb: 1 }}
             >
-              {sectionData?.sectionTitle}
+              {/* {sectionData?.sectionTitle} */}
             </Typography>
 
             {/* Video Title */}
@@ -305,7 +218,7 @@ const VideoDetailPage = () => {
                 ...fontStyles.openSans.bold,
               }}
             >
-              {videoData.name || videoData.title}
+              {videoDetailData?.name}
             </Typography>
 
             {/* Action Buttons */}
@@ -324,7 +237,7 @@ const VideoDetailPage = () => {
                   label="Send"
                   onClick={handleWhatsApp}
                 />
-                <CopyButton text={videoData?.content_details[0]?.url} />
+                <CopyButton text={videoDetailData?.url} />
               </Box>
               <ActionButton
                 icon={
@@ -351,12 +264,12 @@ const VideoDetailPage = () => {
                   color: "text.secondary",
                 }}
               >
-                {videoData.description}
+                {videoDetailData?.description}
               </Typography>
             </Box>
 
             {/* Advertisement Section */}
-            {adData && (
+            {/* {adData && (
               <Box sx={{ mb: 2 }}>
                 <Typography
                   variant="subtitle2"
@@ -417,7 +330,7 @@ const VideoDetailPage = () => {
                   </Paper>
                 </Link>
               </Box>
-            )}
+            )} */}
           </Grid>
 
           {/* Right side - Sidebar with 4 sections */}
@@ -428,15 +341,15 @@ const VideoDetailPage = () => {
                 backgroundColor: "background.paper",
                 borderRadius: 2,
                 height: "100%",
-                px: 2,
-                pb: 2,
+                px: { md: 2, lg: 2 },
+                pb: { md: 3, lg: 3 },
                 "& .MuiPaper-root": {
                   backgroundColor: "background.paper",
                 },
               }}
             >
               {/* Section 1: Related Videos */}
-              <Box sx={{ mb: 2 }}>
+              {/* <Box sx={{ mb: 2 }}>
                 <Typography
                   variant="subtitle1"
                   fontWeight="bold"
@@ -518,280 +431,53 @@ const VideoDetailPage = () => {
                     </Paper>
                   ))}
                 </Stack>
-              </Box>
+              </Box> */}
 
-              <Divider sx={{ my: 1 }} />
-
-              {/* Section 2: Recommended Videos */}
-              <Box sx={{ mb: 2 }}>
-                <Typography
-                  variant="subtitle1"
-                  fontWeight="bold"
-                  sx={{ mb: 2 }}
-                >
-                  Recommended Videos
-                </Typography>
-                <Stack spacing={2}>
-                  {recommendedVideos.slice(0, 5).map((video) => (
-                    <Paper
-                      key={video.id}
-                      elevation={0}
-                      className="video-card"
-                      sx={{
-                        display: "flex",
-                        gap: 1,
-                        borderRadius: 0,
-                        overflow: "hidden",
-                        cursor: "pointer",
-                        backgroundColor: "background.paper",
-                        transition: "background-color 0.2s",
-                        "&:hover": {
-                          backgroundColor: (theme) =>
-                            theme.palette.mode === "light"
-                              ? "rgba(0, 0, 0, 0.04)"
-                              : "rgba(255, 255, 255, 0.08)",
-                        },
-                      }}
-                      onClick={() => {
-                        // Find the section for this video
-                        const GridLayout = mainArr.find((section) =>
-                          section.content.some((v) => v.id === video.id)
-                        );
-                        if (GridLayout) {
-                          router.push(`/${GridLayout.slug}/${video.id}`);
-                        }
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: 100,
-                          minWidth: 100,
-                          height: 50,
-                          position: "relative",
-                          borderRadius: 1,
-                          overflow: "hidden",
-                        }}
-                      >
-                        <Box
-                          component="img"
-                          src={video.thumbnailUrl}
-                          alt={video.name}
-                          sx={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                          }}
-                        />
-                      </Box>
-                      <Box sx={{ flex: 1, py: 0.5 }}>
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            display: "-webkit-box",
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: "vertical",
-                            lineHeight: 1.2,
-                            mb: 0.5,
-                            fontSize: fontSize.typography.caption,
-                            color: (theme) =>
-                              theme.palette.mode === "light"
-                                ? "black"
-                                : "inherit",
-                            ...fontStyles.openSans.bold,
-                          }}
-                        >
-                          {video.name}
-                        </Typography>
-                      </Box>
-                    </Paper>
-                  ))}
-                </Stack>
-              </Box>
-
-              <Divider sx={{ my: 1 }} />
-
-              {/* Section 3: Trending Shorts */}
-              <Box sx={{ mb: 2 }}>
-                <Typography
-                  variant="subtitle1"
-                  fontWeight="bold"
-                  sx={{ mb: 2 }}
-                >
-                  Trending Shorts
-                </Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    gap: 2,
-                    overflowX: "auto",
-                    pb: 1,
-                    scrollbarWidth: "none",
-                    msOverflowStyle: "none",
-                    "&::-webkit-scrollbar": {
-                      display: "none",
-                    },
-                    "-webkit-overflow-scrolling": "touch",
-                  }}
-                >
-                  {shortsData.map((short) => (
-                    <Paper
-                      key={short.id}
-                      elevation={0}
-                      className="short-card"
-                      sx={{
-                        minWidth: "120px",
-                        height: "200px",
-                        borderRadius: 2,
-                        overflow: "hidden",
-                        position: "relative",
-                        cursor: "pointer",
-                        backgroundColor: "background.paper",
-                      }}
-                      onClick={() => {
-                        const SliderLayout = mainArr.find(
-                          (s) => s.type === "shorts"
-                        );
-                        if (SliderLayout) {
-                          router.push(`/${SliderLayout.slug}/${short.id}`);
-                        }
-                      }}
-                    >
-                      <Box
-                        component="img"
-                        src={short.thumbnailUrl}
-                        alt={short.title}
-                        sx={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
+              {videoDetailData?.sections?.map((section, index) => {
+                switch (section.layout_config?.type) {
+                  case "grid":
+                    return (
+                      <GridLayout
+                        key={`${section.type}-${index}`}
+                        video={section.contents}
+                        section={section}
+                        sectionData={section.contents}
                       />
-                      <Box
-                        sx={{
-                          position: "absolute",
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          p: 1,
-                          background:
-                            "linear-gradient(transparent, rgba(0,0,0,0.7))",
-                        }}
-                      >
-                        <Typography
-                          variant="caption"
-                          sx={{
-                            color: "white",
-                            display: "-webkit-box",
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: "vertical",
-                            overflow: "hidden",
-                          }}
-                        >
-                          {short.title}
-                        </Typography>
-                      </Box>
-                    </Paper>
-                  ))}
-                </Box>
-              </Box>
+                    );
+                  case "stack":
+                    return (
+                      <StackLayout
+                        key={`${section.type}-${index}`}
+                        video={section.contents}
+                        section={section}
+                        sectionData={videoDetailData}
+                      />
+                    );
+                  case "slider":
+                    return (
+                      <SliderLayout
+                        key={`${section.type}-${section.id}`}
+                        name={section.name}
+                        section={section}
+                        sectionData={sectionData}
+                      />
+                    );
+                  case "ad":
+                    return (
+                      <AdSection
+                        key={`${section.type}-${index}`}
+                        name={section.name}
+                        ads={section.contents}
+                        section={section}
+                        sectionData={sectionData}
+                      />
+                    );
+                  default:
+                    return null;
+                }
+              })}
 
               <Divider sx={{ my: 1 }} />
-
-              {/* Section 4: More Videos */}
-              <Box>
-                <Typography
-                  variant="subtitle1"
-                  fontWeight="bold"
-                  sx={{ mb: 2 }}
-                >
-                  More Videos
-                </Typography>
-                <Stack spacing={2}>
-                  {recommendedVideos.slice(0, 5).map((video) => (
-                    <Paper
-                      key={video.id}
-                      elevation={0}
-                      className="video-card"
-                      sx={{
-                        display: "flex",
-                        gap: 1,
-                        borderRadius: 0,
-                        overflow: "hidden",
-                        cursor: "pointer",
-                        backgroundColor: "background.paper",
-                        transition: "background-color 0.2s",
-                        "&:hover": {
-                          backgroundColor: (theme) =>
-                            theme.palette.mode === "light"
-                              ? "rgba(0, 0, 0, 0.04)"
-                              : "rgba(255, 255, 255, 0.08)",
-                        },
-                      }}
-                      onClick={() => {
-                        // Find the section for this video
-                        const GridLayout = mainArr.find((section) =>
-                          section.content.some((v) => v.id === video.id)
-                        );
-                        if (GridLayout) {
-                          router.push(`/${GridLayout.slug}/${video.id}`);
-                        }
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          width: 100,
-                          minWidth: 100,
-                          height: 50,
-                          position: "relative",
-                          borderRadius: 1,
-                          overflow: "hidden",
-                        }}
-                      >
-                        <Box
-                          component="img"
-                          src={video.thumbnailUrl}
-                          alt={video.name}
-                          sx={{
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                          }}
-                        />
-                      </Box>
-                      <Box sx={{ flex: 1, py: 0.5 }}>
-                        <Typography
-                          variant="body2"
-                          sx={{
-                            overflow: "hidden",
-                            textOverflow: "ellipsis",
-                            display: "-webkit-box",
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: "vertical",
-                            lineHeight: 1.2,
-                            mb: 0.5,
-                            fontSize: fontSize.typography.caption,
-                            color: (theme) =>
-                              theme.palette.mode === "light"
-                                ? "black"
-                                : "inherit",
-                            ...fontStyles.openSans.bold,
-                          }}
-                        >
-                          {video.name}
-                        </Typography>
-                      </Box>
-                    </Paper>
-                  ))}
-                </Stack>
-              </Box>
             </Box>
           </Grid>
         </Grid>
@@ -800,69 +486,37 @@ const VideoDetailPage = () => {
       <ShareDialog
         open={shareDialogOpen}
         onClose={() => setShareDialogOpen(false)}
-        url={window.location.href}
-        title={videoData?.name || videoData?.title}
+        url={shareUrl}
+        title={videoData?.name}
       />
-    </Layout>
+    </>
   );
 };
 
 export default VideoDetailPage;
 
-// Generate static paths for all videos
-export async function getStaticPaths() {
-  const paths = [];
-
-  // Generate paths for all videos in all sections
-  mainArr.forEach((section) => {
-    if (section.content && Array.isArray(section.content)) {
-      section.content.forEach((video) => {
-        paths.push({
-          params: {
-            section: section.slug,
-            video: video.id.toString(),
-          },
-        });
-      });
-    }
-  });
-
-  return {
-    paths,
-    fallback: "blocking", // Show 404 for non-existent slugs
-  };
-}
-
-// Get static props for each video page
-export async function getStaticProps({ params }) {
+// Remove getStaticPaths and getStaticProps and replace with getServerSideProps
+export async function getServerSideProps({ params, req, res }) {
   const { section, video } = params;
 
-  // Find the section by slug
-  const foundSection = mainArr.find((s) => s.slug === section);
+  try {
+    // Set cache headers
+    res.setHeader(
+      "Cache-Control",
+      "public, s-maxage=10, stale-while-revalidate=59"
+    );
 
-  if (!foundSection) {
+    return {
+      props: {
+        // We'll fetch the data client-side using the useEffect hook
+        section,
+        video,
+      },
+    };
+  } catch (error) {
+    console.error("Error in getServerSideProps:", error);
     return {
       notFound: true,
     };
   }
-
-  // Find the video in the section by ID
-  const foundVideo = foundSection.content.find(
-    (v) => v.id.toString() === video.toString()
-  );
-
-  if (!foundVideo) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: {
-      sectionData: foundSection,
-      videoData: foundVideo,
-    },
-    // Revalidate the page every hour
-    revalidate: 3600,
-  };
 }

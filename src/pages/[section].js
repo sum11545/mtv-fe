@@ -1,15 +1,12 @@
 import { useRouter } from "next/router";
 import { Box, Container, Typography, Grid } from "@mui/material";
-import GridCard from "../custom-components/cards/GridCard";
-import SliderCard from "../custom-components/cards/SliderCard";
-import { mainArr } from "../data/homeData";
-import Layout from "@/components/Layout";
 import { useEffect, useState } from "react";
 import { useMain } from "@/context/MainContext";
 import AdSection from "@/custom-components/layouts/AdSection";
 import GridLayout from "@/custom-components/layouts/GridLayout";
+import SliderLayout from "@/custom-components/layouts/SliderLayout";
 
-export default function SectionPage() {
+export default function SectionPage({ sectionSlug }) {
   const router = useRouter();
   const { section } = router.query;
   const [sectionData, setSectionData] = useState(null);
@@ -31,74 +28,71 @@ export default function SectionPage() {
   }, [section]);
 
   return (
-    <Layout>
-      <Container maxWidth="xl">
-        <Box sx={{ px: 3 }}>
-          {sectionData?.map((section, index) => {
-            switch (section.layout_config?.type) {
-              case "grid":
-                return (
-                  <GridLayout
-                    key={`${section.type}-${index}`}
-                    video={section.contents}
-                    section={section}
-                    sectionData={section.contents}
-                  />
-                );
-              case "slider":
-                return (
-                  <SliderLayout
-                    key={`${section.type}-${section.id}`}
-                    name={section.name}
-                    section={section}
-                    sectionData={sectionData}
-                  />
-                );
-              case "ad":
-                return (
-                  <AdSection
-                    key={`${section.type}-${index}`}
-                    name={section.name}
-                    ads={section.contents}
-                    section={section}
-                    sectionData={sectionData}
-                  />
-                );
-              default:
-                return null;
-            }
-          })}
-        </Box>
-      </Container>
-    </Layout>
+    <Container
+      maxWidth="xl"
+      sx={{
+        px: { xs: 3, sm: 5, md: 5 },
+      }}
+    >
+      <Box>
+        {sectionData?.map((section, index) => {
+          switch (section.layout_config?.type) {
+            case "grid":
+              return (
+                <GridLayout
+                  key={`${section.type}-${index}`}
+                  video={section.contents}
+                  section={section}
+                  sectionData={sectionData}
+                />
+              );
+            case "slider":
+              return (
+                <SliderLayout
+                  key={`${section.type}-${section.id}`}
+                  name={section.name}
+                  section={section}
+                  sectionData={sectionData}
+                />
+              );
+            case "ad":
+              return (
+                <AdSection
+                  key={`${section.type}-${index}`}
+                  name={section.name}
+                  ads={section.contents}
+                  section={section}
+                  sectionData={sectionData}
+                />
+              );
+            default:
+              return null;
+          }
+        })}
+      </Box>
+    </Container>
   );
 }
 
-// // This ensures all paths are pre-rendered at build time
-// export async function getStaticPaths() {
-//   const paths = sectionList?.map((section) => ({
-//     params: { section: section.slug },
-//   }));
+export async function getServerSideProps({ params, req, res }) {
+  const { section } = params;
 
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-// }
+  try {
+    // Set cache headers
+    res.setHeader(
+      "Cache-Control",
+      "public, s-maxage=10, stale-while-revalidate=59"
+    );
 
-// // Get the static props for the page
-// export async function getStaticProps({ params }) {
-//   const sectionData = sectionList?.find((s) => s.slug === params.section);
-
-//   if (!sectionData) {
-//     return {
-//       notFound: true,
-//     };
-//   }
-
-//   return {
-//     props: {
-//       sectionData,
-//     },
-//   };
-// }
+    return {
+      props: {
+        sectionSlug: section,
+      },
+    };
+  } catch (error) {
+    console.error("Error in getServerSideProps:", error);
+    return {
+      notFound: true,
+    };
+  }
+}

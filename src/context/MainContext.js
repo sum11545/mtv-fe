@@ -74,12 +74,12 @@ export const MainProvider = ({ children }) => {
     }
   };
 
-  const fetchVideoPageData = async (sectionName, videoId) => {
+  const fetchVideoDetailPageData = async (sectionName, videoId) => {
     try {
       setLoading(true);
       setError(null);
       const response = await axiosInstance.get(
-        `${baseUrl}/homePageContents/${sectionName}/videos/${videoId}`
+        `${baseUrl}/contentDetailPage/${sectionName}/${videoId}`
       );
       return response;
     } catch (err) {
@@ -94,7 +94,7 @@ export const MainProvider = ({ children }) => {
     error,
     fetchHomePageData,
     fetchSectionPageData,
-    fetchVideoPageData,
+    fetchVideoDetailPageData,
     contentConfigurations,
   };
 

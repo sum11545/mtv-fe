@@ -39,8 +39,11 @@ const ScrollContainer = styled(Box)(({ theme }) => ({
   // backgroundColor:
   //   theme.palette.mode === "dark"
   //     ? "rgba(15, 23, 42, 0.6)"
-  //     : theme.palette.background.paper,
-  padding: theme.spacing(1, 1),
+  //     : theme.palette.background.paper
+  padding: theme.spacing(0.5, 1),
+  [theme.breakpoints.down("sm")]: {
+    padding: theme.spacing(0.5, 0.5),
+  },
 }));
 
 const ScrollButton = styled(IconButton)(({ theme }) => ({
@@ -77,8 +80,8 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
 const StyledTab = styled(Tab)(({ theme }) => ({
   minHeight: 26,
   minWidth: "auto",
-  margin: theme.spacing(0, 0.5),
-  padding: theme.spacing(0.75, 1),
+  margin: theme.spacing(0, 0.25),
+  padding: theme.spacing(0.5, 1),
   borderRadius: theme.shape.borderRadius,
   backgroundColor:
     theme.palette.mode === "dark"
@@ -104,7 +107,8 @@ const StyledTab = styled(Tab)(({ theme }) => ({
   },
   [theme.breakpoints.down("sm")]: {
     fontSize: fontSize.typography.caption,
-    padding: theme.spacing(0.5, 1.5),
+    padding: theme.spacing(0.5, 1),
+    margin: theme.spacing(0, 0.125),
   },
 }));
 

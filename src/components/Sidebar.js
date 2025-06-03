@@ -154,7 +154,10 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                     px: 2.5,
                   }}
                   onClick={() =>
-                    window.open("https://www.youtube.com/@fireship", "_blank")
+                    window.open(
+                      "https://www.youtube.com/@moneytvlive",
+                      "_blank"
+                    )
                   }
                 >
                   <ListItemIcon
@@ -334,7 +337,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                 color="primary"
                 fullWidth
                 onClick={() =>
-                  window.open("https://www.youtube.com/@fireship", "_blank")
+                  window.open("https://www.youtube.com/@moneytvlive", "_blank")
                 }
                 startIcon={
                   <SubscriptionsIcon sx={{ fontSize: fontSize.icon.medium }} />

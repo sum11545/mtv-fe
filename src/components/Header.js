@@ -137,7 +137,7 @@ const Header = ({ toggleSidebar }) => {
               alignItems: "center",
               justifyContent: "space-between",
               width: "100%",
-              px: 1,
+              px: { xs: 0.5, sm: 1 },
             }}
           >
             {/* Logo */}
@@ -190,7 +190,7 @@ const Header = ({ toggleSidebar }) => {
           </Box>
 
           {/* Bottom row with search bar */}
-          <Box sx={{ width: "100%", px: 1 }}>
+          <Box sx={{ width: "100%", px: { xs: 0.5, sm: 1 } }}>
             <Search>
               <StyledInputBase
                 placeholder="Search for Videos"
@@ -220,7 +220,15 @@ const Header = ({ toggleSidebar }) => {
       }}
       elevation={0}
     >
-      <Toolbar>
+      <Toolbar
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          py: 0.5,
+          px: { xs: 0.5, sm: 1 },
+        }}
+      >
         <Box
           sx={{
             display: "flex",
