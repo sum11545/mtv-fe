@@ -25,6 +25,7 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, styles }) => {
   const layout = contentConfigurations?.find(
     (item) => item.content_type_id == short?.content_details[0]?.content_type_id
   );
+  let isShort = short?.content_details[0]?.content_type_id == "CTSR"; // CTSR  is for shorts.
 
   // let height = layout?.layout?.height;
   // let width = layout?.layout?.width;
@@ -42,16 +43,24 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, styles }) => {
   }, [short.uploadDate]);
 
   const handleCardClick = () => {
-    // Find the section this short belongs to
-    const section = sectionData.find((s, index) => {
-      if (typeof sectionIndex === "number") {
-        return index === sectionIndex;
-      }
-      return s.type === "shorts";
-    });
+    // If content type is short then i am redirecting it to static shorts/id page i.e. short detail page
+    if (isShort) {
+      let shortId = short?.id;
+      router.push(`/shorts/${shortId}`);
+    } else {
+      // If content type is not short then i am redirecting it to dynamic section/contentId page i.e. video detail page
 
-    if (section) {
-      router.push(`/${section.slug}/${short.id}`);
+      // Find the section this short belongs to
+      const section = sectionData?.sections?.find((s, index) => {
+        if (typeof sectionIndex === "number") {
+          return index === sectionIndex;
+        }
+        return s.type === "shorts";
+      });
+
+      if (section) {
+        router.push(`/${section.slug}/${short.id}`);
+      }
     }
   };
 

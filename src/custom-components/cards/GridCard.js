@@ -124,24 +124,32 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
   };
 
   const handleCardClick = () => {
-    // Find the section this video belongs to
-    console.log(section?.slug);
-    // If we're in a section list page, use the section prop directly
-    if (section?.slug) {
-      router.push(`/${section.slug}/${video.id}`);
-      return;
-    }
+    // If content type is short then i am redirecting it to static shorts/id page i.e. short detail page
+    if (isShort) {
+      let shortId = video?.id;
+      router.push(`/shorts/${shortId}`);
+    } else {
+      // If content type is not short then i am redirecting it to dynamic section/contentId page i.e. video detail page
 
-    // If we're in the home page, find the section from sectionData
-    const foundSection = sectionData.find((s, index) => {
-      if (typeof id === "number") {
-        return index === id;
+      // Find the section this video belongs to
+      // console.log(section?.slug);
+      // If we're in a section list page, use the section prop directly
+      if (section?.slug) {
+        router.push(`/${section.slug}/${video.id}`);
+        return;
       }
-      return s.contents?.some((v) => v.id === video.id);
-    });
 
-    if (foundSection) {
-      router.push(`/${foundSection.slug}/${video.id}`);
+      // If we're in the home page, find the section from sectionData
+      const foundSection = sectionData.find((s, index) => {
+        if (typeof id === "number") {
+          return index === id;
+        }
+        return s.contents?.some((v) => v.id === video.id);
+      });
+
+      if (foundSection) {
+        router.push(`/${foundSection.slug}/${video.id}`);
+      }
     }
   };
 
