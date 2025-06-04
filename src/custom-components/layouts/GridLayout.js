@@ -61,7 +61,7 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
   };
 
   return (
-    <Box sx={{ pb: 2 }}>
+    <Box sx={{}}>
       <Box
         sx={{
           display: "flex",

@@ -134,9 +134,10 @@ const VideoDetailPage = () => {
       } else if (url.includes("youtu.be/")) {
         videoId = url.split("youtu.be/")[1];
       }
-      // Remove any additional parameters
-      videoId = videoId.split("&")[0];
-      return `https://www.youtube.com/embed/${videoId}`;
+      // Remove any additional parameters (e.g., ?si=...)
+      videoId = videoId.split(/[?&]/)[0];
+      // Add autoplay and mute parameters
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
     }
 
     // Handle other video platforms here if needed
@@ -184,7 +185,7 @@ const VideoDetailPage = () => {
               }}
             >
               <iframe
-                src={getEmbedUrl(videoDetailData?.url)}
+                src={getEmbedUrl(videoDetailData?.content_details[0]?.url)}
                 title={videoDetailData?.name}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -237,7 +238,7 @@ const VideoDetailPage = () => {
                   label="Send"
                   onClick={handleWhatsApp}
                 />
-                <CopyButton text={videoDetailData?.url} />
+                <CopyButton text={videoDetailData?.content_details[0]?.url} />
               </Box>
               <ActionButton
                 icon={
