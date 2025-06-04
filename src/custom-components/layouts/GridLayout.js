@@ -80,18 +80,21 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
         >
           {section.name}
         </Typography>
-        {section.total_contents > section.contents.length && (
-          <Button
-            endIcon={<ChevronRightIcon />}
-            sx={{
-              textTransform: "none",
-              ...fontStyles.openSans.regular,
-            }}
-            onClick={handleViewMore}
-          >
-            View More
-          </Button>
-        )}
+
+        {/* showing view more button only in home page(/ means home page) and also if the total content is greater then current content */}
+        {section.total_contents > section.contents.length &&
+          router?.pathname === "/" && (
+            <Button
+              endIcon={<ChevronRightIcon />}
+              sx={{
+                textTransform: "none",
+                ...fontStyles.openSans.regular,
+              }}
+              onClick={handleViewMore}
+            >
+              View More
+            </Button>
+          )}
       </Box>
 
       {/* <Box sx={{ position: "relative" }}> */}

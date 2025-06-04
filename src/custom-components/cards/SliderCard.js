@@ -110,7 +110,7 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, styles }) => {
           />
         </Box>
       </Card>
-      <Typography
+      {/* <Typography
         variant="subtitle2"
         sx={{
           fontWeight: "bold",
@@ -128,7 +128,7 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, styles }) => {
         }}
       >
         {short.name}
-      </Typography>
+      </Typography> */}
     </>
   );
 };

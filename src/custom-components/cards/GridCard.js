@@ -90,6 +90,7 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
   const [shareUrl, setShareUrl] = useState("");
   const { contentConfigurations } = useMain();
   let isAd = [10, 21, 22].includes(video?.content_details[0]?.content_type_id);
+  let isShort = video?.content_details[0]?.content_type_id == "CTSR"; // CTSR  is for shorts.
 
   // Finding the content type id and then applying height and width according to configuration
   const layout = contentConfigurations?.find(
@@ -202,7 +203,9 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
           )}
         </Box>
 
-        {/* Not showing send, copy and share buttons for ad */}
+        {/* Not showing video name and send, copy and share buttons for ad 
+        and for shorts showing only video name and for grid showing both */}
+
         {!isAd && (
           <CardContent
             sx={{
@@ -211,7 +214,8 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
               px: 0,
               display: "flex",
               flexDirection: "column",
-              height: "90px",
+              // height: "90px",
+              height: isShort ? "50px" : "90px",
               "&:last-child": {
                 paddingBottom: 1.5,
               },
@@ -234,44 +238,45 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
             >
               {video.name}
             </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                // gap: 2,
-                mb: 1,
-              }}
-            >
+            {!isShort && (
               <Box
                 sx={{
                   display: "flex",
+                  justifyContent: "space-between",
                   alignItems: "center",
-                  mt: 0.5,
-                  marginLeft: "-5px",
+                  mb: 1,
                 }}
               >
-                <ActionButton
-                  icon={<WhatsApp sx={{ fontSize: fontSize.icon.small }} />}
-                  label="Send"
-                  onClick={handleWhatsApp}
-                />
-                <CopyButton text={video?.content_details[0]?.url} />
-              </Box>
-              <ActionButton
-                icon={
-                  <Reply
-                    sx={{
-                      fontSize: fontSize.icon.small,
-                      transform: "rotate(180deg) scaleY(-1)",
-                    }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    mt: 0.5,
+                    marginLeft: "-5px",
+                  }}
+                >
+                  <ActionButton
+                    icon={<WhatsApp sx={{ fontSize: fontSize.icon.small }} />}
+                    label="Send"
+                    onClick={handleWhatsApp}
                   />
-                }
-                label="Share"
-                onClick={handleShare}
-                isReversed={true}
-              />
-            </Box>
+                  <CopyButton text={video?.content_details[0]?.url} />
+                </Box>
+                <ActionButton
+                  icon={
+                    <Reply
+                      sx={{
+                        fontSize: fontSize.icon.small,
+                        transform: "rotate(180deg) scaleY(-1)",
+                      }}
+                    />
+                  }
+                  label="Share"
+                  onClick={handleShare}
+                  isReversed={true}
+                />
+              </Box>
+            )}
           </CardContent>
         )}
       </Card>
