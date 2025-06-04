@@ -49,7 +49,7 @@ const ScrollContainer = styled(Box)(({ theme }) => ({
 const ScrollButton = styled(IconButton)(({ theme }) => ({
   position: "absolute",
   zIndex: 2,
-  height: "60%",
+  height: "100%",
   padding: theme.spacing(1),
   backgroundColor:
     theme.palette.mode === "dark"
@@ -70,7 +70,10 @@ const StyledTabs = styled(Tabs)(({ theme }) => ({
   minHeight: 30,
   flex: 1,
   "& .MuiTabs-scroller": {
-    margin: "0 40px", // Space for scroll buttons
+    margin: "0 30px", // Space for scroll buttons
+    [theme.breakpoints.down("sm")]: {
+      margin: "0 20px", // Space for scroll buttons on small devices
+    },
   },
   "& .MuiTabs-indicator": {
     display: "none", // Hide the default indicator

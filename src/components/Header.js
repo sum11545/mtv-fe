@@ -226,7 +226,7 @@ const Header = ({ toggleSidebar }) => {
           alignItems: "center",
           justifyContent: "space-between",
           py: 0.5,
-          px: { xs: 0.5, sm: 1 },
+          px: { xs: 0.5, sm: 1.5 },
         }}
       >
         <Box
