@@ -460,7 +460,7 @@ const VideoDetailPage = () => {
                         key={`${section.type}-${section.id}`}
                         name={section.name}
                         section={section}
-                        sectionData={sectionData}
+                        sectionData={videoDetailData}
                       />
                     );
                   case "ad":

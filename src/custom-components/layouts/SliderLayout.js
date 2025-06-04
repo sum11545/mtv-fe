@@ -75,7 +75,7 @@ const SliderLayout = ({
           variant="h6"
           component="h2"
           sx={{
-            color: "primary.main",
+            color: "inherit",
             ...fontStyles.montserrat.bold,
           }}
         >
