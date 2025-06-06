@@ -83,7 +83,8 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
 
         {/* showing view more button only in home page(/ means home page) and also if the total content is greater then current content */}
         {section.total_contents > section.contents.length &&
-          router?.pathname === "/" && (
+          router?.pathname === "/" &&
+          section.is_ad === false && (
             <Button
               endIcon={<ChevronRightIcon />}
               sx={{
@@ -137,41 +138,68 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
           }
         }
       >
-        {section.contents.map((video) => (
-          <Grid
-            item
-            key={video.id}
-            // sx={{
-            //   width: {
-            //     // xs: "calc(100vw - 32px)",
-            //     // sm: "350px",
-            //     // md: "300px",
-            //     // lg: "325px",
-            //   },
-            // }}
-            // height={250}
-            lg={12 / size.lg}
-            md={12 / size.md}
-            xl={12 / size.xl}
-            xs={12 / size.xs}
-            // sx={{
-            //   height: height && {
-            //     lg: height.lg,
-            //     md: height.md,
-            //     xl: height.xl,
-            //     xs: height.xs,
-            //   },
-            // }}
-          >
-            <GridCard
-              video={video}
-              id={section.id}
-              sectionData={sectionData}
-              section={section}
-              styles={{ height, width }}
-            />
-          </Grid>
-        ))}
+        {section.contents.map((video) => {
+          if (video.type === "content" || video.type === "ad_content") {
+            return (
+              <Grid
+                item
+                key={video.id}
+                lg={12 / size.lg}
+                md={12 / size.md}
+                xl={12 / size.xl}
+                xs={12 / size.xs}
+              >
+                <GridCard
+                  video={video}
+                  id={section.id}
+                  sectionData={sectionData}
+                  section={section}
+                  styles={{ height, width }}
+                />
+              </Grid>
+            );
+          } else if (video.type === "section") {
+            return (
+              <>
+                <Typography
+                  variant="h6"
+                  component="h2"
+                  sx={{
+                    color: "primary.main",
+                    ...fontStyles.montserrat.bold,
+                  }}
+                >
+                  {video.name}
+                </Typography>
+                <Grid container spacing={2}>
+                  {video.contents.map((vid) => (
+                    <Grid
+                      item
+                      key={vid.id}
+                      lg={12 / video?.layout_config?.size.lg}
+                      md={12 / video?.layout_config?.size.md}
+                      xl={12 / video?.layout_config?.size.xl}
+                      xs={12 / video?.layout_config?.size.xs}
+                    >
+                      <GridCard
+                        video={vid}
+                        id={video.id}
+                        sectionData={video}
+                        section={video}
+                        styles={{
+                          height: video?.layout_config?.height,
+                          width: video?.layout_config?.width,
+                        }}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
+              </>
+            );
+          } else {
+            return <></>;
+          }
+        })}
       </Grid>
       {/* </Box> */}
 

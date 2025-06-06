@@ -89,7 +89,9 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
   const router = useRouter();
   const [shareUrl, setShareUrl] = useState("");
   const { contentConfigurations } = useMain();
-  let isAd = [10, 21, 22].includes(video?.content_details[0]?.content_type_id);
+  let isAd = ["ATI", "ATV", "ATT"].includes(
+    video?.content_details[0]?.content_type_id
+  );
   let isShort = video?.content_details[0]?.content_type_id == "CTSR"; // CTSR  is for shorts.
 
   // Finding the content type id and then applying height and width according to configuration
@@ -152,7 +154,6 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
       }
     }
   };
-
   return (
     <>
       <Card

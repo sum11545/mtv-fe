@@ -15,9 +15,8 @@ const AdCard = ({ ad }) => {
   const adRedirection = (url) => {
     window.open(url, "_blank");
   };
-
   switch (adType) {
-    case 21:
+    case "ATV":
       // Ad type is ad-video
       return (
         <CardMedia
@@ -27,7 +26,7 @@ const AdCard = ({ ad }) => {
           alt="Ad image"
         />
       );
-    case 22:
+    case "ATI":
       // Ad type is ad-image
       return (
         <CardMedia
@@ -38,7 +37,7 @@ const AdCard = ({ ad }) => {
           controls
         />
       );
-    case 10:
+    case "ATT":
       // Ad type is ad-text
       return (
         <CardContent
@@ -74,7 +73,6 @@ const AdCard = ({ ad }) => {
               width: "fit-content",
               textTransform: "none",
               px: 2,
-              borderRadius: 2,
               fontSize: fontSize.button.large,
               color: theme.palette.custom.adText,
               borderColor: theme.palette.custom.adText,
