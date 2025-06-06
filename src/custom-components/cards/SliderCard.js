@@ -44,8 +44,8 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, styles }) => {
 
   const handleCardClick = () => {
     // if video type is ad then don't redirect it to any ad url
-    if (video.type == "ad_content") {
-      window.open(video.content_details[0]?.cta_url, "_blank");
+    if (short?.type == "ad_content") {
+      window.open(short.content_details[0]?.cta_url, "_blank");
     } else {
       // If content type is short then i am redirecting it to static shorts/id page i.e. short detail page
       if (isShort) {
