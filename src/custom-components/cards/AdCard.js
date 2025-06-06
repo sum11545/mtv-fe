@@ -15,6 +15,7 @@ const AdCard = ({ ad }) => {
   const adRedirection = (url) => {
     window.open(url, "_blank");
   };
+
   switch (adType) {
     case "ATV":
       // Ad type is ad-video
@@ -68,7 +69,7 @@ const AdCard = ({ ad }) => {
             color="primary"
             size="small"
             // endIcon={<ChevronRightIcon />}
-            onClick={() => adRedirection(ad.content_details[0]?.url)}
+            onClick={() => adRedirection(ad.content_details[0]?.cta_url)}
             sx={{
               width: "fit-content",
               textTransform: "none",

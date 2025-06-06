@@ -43,23 +43,28 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, styles }) => {
   }, [short.uploadDate]);
 
   const handleCardClick = () => {
-    // If content type is short then i am redirecting it to static shorts/id page i.e. short detail page
-    if (isShort) {
-      let shortId = short?.id;
-      router.push(`/shorts/${shortId}`);
+    // if video type is ad then don't redirect it to any ad url
+    if (video.type == "ad_content") {
+      window.open(video.content_details[0]?.cta_url, "_blank");
     } else {
-      // If content type is not short then i am redirecting it to dynamic section/contentId page i.e. video detail page
+      // If content type is short then i am redirecting it to static shorts/id page i.e. short detail page
+      if (isShort) {
+        let shortId = short?.id;
+        router.push(`/shorts/${shortId}`);
+      } else {
+        // If content type is not short then i am redirecting it to dynamic section/contentId page i.e. video detail page
 
-      // Find the section this short belongs to
-      const section = sectionData?.sections?.find((s, index) => {
-        if (typeof sectionIndex === "number") {
-          return index === sectionIndex;
+        // Find the section this short belongs to
+        const section = sectionData?.sections?.find((s, index) => {
+          if (typeof sectionIndex === "number") {
+            return index === sectionIndex;
+          }
+          return s.type === "shorts";
+        });
+
+        if (section) {
+          router.push(`/${section.slug}/${short.id}`);
         }
-        return s.type === "shorts";
-      });
-
-      if (section) {
-        router.push(`/${section.slug}/${short.id}`);
       }
     }
   };
