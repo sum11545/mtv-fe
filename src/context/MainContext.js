@@ -89,6 +89,19 @@ export const MainProvider = ({ children }) => {
     }
   };
 
+  const fetchShortDetailPageData = async (videoId) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await axiosInstance.get(`${baseUrl}/shorts/${videoId}`);
+      return response;
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+      throw err;
+    }
+  };
+
   const value = {
     loading,
     error,
@@ -96,6 +109,7 @@ export const MainProvider = ({ children }) => {
     fetchSectionPageData,
     fetchVideoDetailPageData,
     contentConfigurations,
+    fetchShortDetailPageData,
   };
 
   return <MainContext.Provider value={value}>{children}</MainContext.Provider>;

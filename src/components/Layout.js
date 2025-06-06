@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Box, styled, ThemeProvider, useMediaQuery } from "@mui/material";
+import { useRouter } from "next/router";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
 import CategoryTabs from "./CategoryTabs";
@@ -9,7 +10,7 @@ import createAppTheme from "@/theme/theme";
 
 const MINI_DRAWER_WIDTH = 70;
 
-const Main = styled("main")(({ theme }) => ({
+const Main = styled("main")(({ theme, isShortsPageMobile }) => ({
   flexGrow: 1,
   marginTop: theme.spacing(15),
   width: `calc(100% - ${MINI_DRAWER_WIDTH}px)`,
@@ -19,7 +20,7 @@ const Main = styled("main")(({ theme }) => ({
   flexDirection: "column",
   [theme.breakpoints.down("sm")]: {
     width: "100%",
-    marginTop: theme.spacing(20),
+    marginTop: isShortsPageMobile ? 0 : theme.spacing(20),
   },
 }));
 
@@ -41,6 +42,10 @@ const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const isMobile = useMediaQuery("(max-width:600px)");
+  const router = useRouter();
+
+  // Check if current page is shorts page
+  const isShortsPage = router.pathname.includes("/shorts");
 
   useEffect(() => {
     setMounted(true);
@@ -88,14 +93,18 @@ const Layout = ({ children }) => {
         }}
       >
         <Header toggleSidebar={toggleSidebar} />
-        <TabsContainer>
-          <CategoryTabs />
-        </TabsContainer>
-        <Main>
+        {/* Hide category tabs on mobile for shorts detail page */}
+        {!(isMobile && isShortsPage) && (
+          <TabsContainer>
+            <CategoryTabs />
+          </TabsContainer>
+        )}
+        <Main isShortsPageMobile={isMobile && isShortsPage}>
           {children}
           {/* <NoVideosPage /> */}
         </Main>
-        <Footer />
+        {/* Hide footer on mobile for shorts detail page */}
+        {!(isMobile && isShortsPage) && <Footer />}
         <Sidebar
           open={sidebarOpen}
           onClose={toggleSidebar}
