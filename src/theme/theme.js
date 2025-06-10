@@ -132,6 +132,13 @@ const palette = {
       light: "#1a2f9f",
       dark: "#001066",
     },
+    secondary: {
+      main: "#f50057",
+    },
+    error: {
+      main: "#FF0000",
+      dark: "#CC0000",
+    },
     background: {
       default: "#ffffff",
       paper: "#ffffff",
@@ -144,6 +151,10 @@ const palette = {
     custom: {
       brandBlue: "#001691",
       adText: "rgba(0, 0, 0, 0.7)",
+      youtube: {
+        main: "#FF0000",
+        dark: "#CC0000",
+      },
     },
   },
   dark: {
@@ -151,6 +162,13 @@ const palette = {
       main: "#ffffff",
       light: "#ffffff",
       dark: "#e0e0e0",
+    },
+    secondary: {
+      main: "#f50057",
+    },
+    error: {
+      main: "#FF0000",
+      dark: "#CC0000",
     },
     background: {
       default: "#040C38",
@@ -163,6 +181,10 @@ const palette = {
     custom: {
       lightBlue: "#1a2152",
       adText: "rgba(0, 0, 0, 0.7)",
+      youtube: {
+        main: "#FF0000",
+        dark: "#CC0000",
+      },
     },
     action: {
       selected: "#1a2152",
