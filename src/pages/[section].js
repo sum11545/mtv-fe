@@ -28,12 +28,7 @@ export default function SectionPage({ sectionSlug }) {
   }, [section]);
 
   return (
-    <Container
-      maxWidth="xl"
-      sx={{
-        px: { xs: 3, sm: 5, md: 5 },
-      }}
-    >
+    <Container disableGutters maxWidth="xl">
       <Box>
         {sectionData?.map((section, index) => {
           switch (section.layout_config?.type) {
@@ -44,6 +39,7 @@ export default function SectionPage({ sectionSlug }) {
                   video={section.contents}
                   section={section}
                   sectionData={sectionData}
+                  sectionIndex={index}
                 />
               );
             case "slider":

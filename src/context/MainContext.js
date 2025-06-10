@@ -5,7 +5,6 @@ import React, {
   useCallback,
   useEffect,
 } from "react";
-import axiosInstance from "../configs/axios";
 import createAxiosInstance from "../configs/axios";
 
 const MainContext = createContext();
@@ -18,8 +17,6 @@ export const useMain = () => {
   return context;
 };
 
-const baseUrl = `http://localhost:3700/api/v1`;
-
 export const MainProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -31,9 +28,7 @@ export const MainProvider = ({ children }) => {
   useEffect(() => {
     const getContentConfiguration = async () => {
       try {
-        const response = await axiosInstance.get(
-          `${baseUrl}/contentConfigurations`
-        );
+        const response = await axiosInstance.get(`/contentConfigurations`);
         setContentConfigurations(response.data.response.data);
         return response;
       } catch (err) {
@@ -49,7 +44,7 @@ export const MainProvider = ({ children }) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axiosInstance.get(`${baseUrl}/homePageContents`);
+      const response = await axiosInstance.get(`/homePageContents`);
       return response;
     } catch (err) {
       console.log({ err });
@@ -63,9 +58,7 @@ export const MainProvider = ({ children }) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axiosInstance.get(
-        `${baseUrl}/sectionPage/${sectionName}`
-      );
+      const response = await axiosInstance.get(`/sectionPage/${sectionName}`);
       return response;
     } catch (err) {
       setError(err.message);
@@ -79,7 +72,7 @@ export const MainProvider = ({ children }) => {
       setLoading(true);
       setError(null);
       const response = await axiosInstance.get(
-        `${baseUrl}/contentDetailPage/${sectionName}/${videoId}`
+        `/contentDetailPage/${sectionName}/${videoId}`
       );
       return response;
     } catch (err) {
@@ -93,7 +86,7 @@ export const MainProvider = ({ children }) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axiosInstance.get(`${baseUrl}/shorts/${videoId}`);
+      const response = await axiosInstance.get(`/shorts/${videoId}`);
       return response;
     } catch (err) {
       setError(err.message);

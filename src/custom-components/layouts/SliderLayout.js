@@ -62,7 +62,7 @@ const SliderLayout = ({
   };
 
   return (
-    <Box sx={{ mb: 4 }}>
+    <Box sx={{ mb: 4, px: 2.5 }}>
       <Box
         sx={{
           display: "flex",

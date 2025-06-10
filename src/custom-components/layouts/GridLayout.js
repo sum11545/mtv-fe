@@ -14,9 +14,10 @@ import {
   ChevronLeft as ChevronLeftIcon,
 } from "@mui/icons-material";
 import { useRouter } from "next/router";
-import { fontStyles } from "../../theme/theme";
+import { fontSize, fontStyles } from "../../theme/theme";
+import StackVideoCard from "../cards/StackVideoCard";
 
-const GridLayout = ({ name, contents, id, sectionData, section }) => {
+const GridLayout = ({ name, contents, id, sectionData, section, bgColor }) => {
   const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -27,8 +28,7 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
   const height = section?.layout_config?.height;
   const width = section?.layout_config?.width;
   const spacing = section?.layout_config?.spacing;
-  // console.log({ section });
-  // console.log({ sectionData });
+  const isAd = section?.is_ad;
 
   const handleScroll = () => {
     if (scrollContainerRef.current) {
@@ -61,7 +61,12 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
   };
 
   return (
-    <Box sx={{}}>
+    <Box
+      sx={{
+        background: bgColor,
+        px: 2.5,
+      }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -71,11 +76,13 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
         }}
       >
         <Typography
-          variant="h6"
+          variant={isAd ? "body2" : "h6"}
           component="h2"
           sx={{
             color: "primary.main",
-            ...fontStyles.montserrat.bold,
+            fontFamily: isAd
+              ? { ...fontStyles.openSans.bold }
+              : { ...fontStyles.montserrat.bold },
           }}
         >
           {section.name}
@@ -138,7 +145,7 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
           }
         }
       >
-        {section.contents.map((video) => {
+        {section.contents.map((video, index) => {
           if (video.type === "content" || video.type === "ad_content") {
             return (
               <Grid
@@ -160,26 +167,30 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
             );
           } else if (video.type === "section") {
             return (
-              <>
+              <Grid item key={video.id} xs={12}>
+                {/* Section Title */}
                 <Typography
                   variant="h6"
                   component="h2"
                   sx={{
                     color: "primary.main",
                     ...fontStyles.montserrat.bold,
+                    mb: 1, // margin bottom for spacing
                   }}
                 >
                   {video.name}
                 </Typography>
-                <Grid container spacing={2}>
+
+                {/* Section Grid Content */}
+                <Grid container spacing={0}>
                   {video.contents.map((vid) => (
                     <Grid
                       item
                       key={vid.id}
-                      lg={12 / video?.layout_config?.size.lg}
-                      md={12 / video?.layout_config?.size.md}
-                      xl={12 / video?.layout_config?.size.xl}
-                      xs={12 / video?.layout_config?.size.xs}
+                      lg={12 / (video?.layout_config?.size?.lg || 4)}
+                      md={12 / (video?.layout_config?.size?.md || 3)}
+                      xl={12 / (video?.layout_config?.size?.xl || 4)}
+                      xs={12 / (video?.layout_config?.size?.xs || 2)}
                     >
                       <GridCard
                         video={vid}
@@ -187,14 +198,14 @@ const GridLayout = ({ name, contents, id, sectionData, section }) => {
                         sectionData={video}
                         section={video}
                         styles={{
-                          height: video?.layout_config?.height,
-                          width: video?.layout_config?.width,
+                          height: video?.layout_config?.height || "auto",
+                          width: video?.layout_config?.width || "100%",
                         }}
                       />
                     </Grid>
                   ))}
                 </Grid>
-              </>
+              </Grid>
             );
           } else {
             return <></>;

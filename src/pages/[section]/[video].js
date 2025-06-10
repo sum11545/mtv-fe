@@ -164,7 +164,7 @@ const VideoDetailPage = () => {
       <Container
         maxWidth="xl"
         sx={{
-          px: { xs: 3, sm: 5, md: 5 },
+          px: { xs: 3, sm: 5, md: 5, lg: 2, xl: 2.5 },
           width: "100%",
           maxWidth: "100% !important",
         }}

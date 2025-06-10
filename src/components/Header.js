@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -18,81 +17,7 @@ import {
 } from "@mui/icons-material";
 import Image from "next/image";
 import { fontStyles, fontSize } from "../theme/theme";
-
-const Search = styled("div")(({ theme }) => ({
-  position: "relative",
-  borderRadius: 15,
-  backgroundColor:
-    theme.palette.mode === "dark"
-      ? "rgba(30, 39, 84, 1)"
-      : theme.palette.background.paper,
-  border:
-    theme.palette.mode === "light" && `1px solid ${theme.palette.divider}`,
-  display: "flex",
-  alignItems: "center",
-  // marginRight: theme.spacing(2),
-  // marginLeft: theme.spacing(3),
-  width: "100%",
-  [theme.breakpoints.up("sm")]: {
-    marginLeft: theme.spacing(3),
-    width: "80%",
-  },
-  [theme.breakpoints.down("sm")]: {
-    backgroundColor:
-      theme.palette.mode === "dark" ? "rgba(30, 39, 84, 1)" : "#f8f8f8",
-    border: `1px solid ${
-      theme.palette.mode === "dark"
-        ? theme.palette.divider
-        : theme.palette.grey[200]
-    }`,
-  },
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: theme.palette.text.primary,
-  width: "100%",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(1)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    fontSize: fontSize.form.label,
-    ...fontStyles.sfPro.text.regular,
-    [theme.breakpoints.down("sm")]: {
-      fontSize: fontSize.form.label,
-    },
-  },
-}));
-
-const PostfixIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: "100%",
-  position: "absolute",
-  right: 0,
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  "& .MuiDivider-root": {
-    marginRight: theme.spacing(2),
-  },
-  "& .MuiSvgIcon-root": {
-    fontSize: fontSize.icon.small,
-    color: theme.palette.text.secondary,
-    [theme.breakpoints.down("sm")]: {
-      fontSize: fontSize.icon.small,
-    },
-  },
-}));
+import SearchBar from "./SearchBar";
 
 const Header = ({ toggleSidebar }) => {
   const theme = useTheme();
@@ -191,15 +116,7 @@ const Header = ({ toggleSidebar }) => {
 
           {/* Bottom row with search bar */}
           <Box sx={{ width: "100%", px: { xs: 0.5, sm: 1 } }}>
-            <Search>
-              <StyledInputBase
-                placeholder="Search for Videos"
-                inputProps={{ "aria-label": "search" }}
-              />
-              <PostfixIconWrapper>
-                <SearchIcon />
-              </PostfixIconWrapper>
-            </Search>
+            <SearchBar />
           </Box>
         </Toolbar>
       </AppBar>
@@ -253,16 +170,7 @@ const Header = ({ toggleSidebar }) => {
           </LogoWrapper>
 
           {/* Search Bar */}
-          <Search>
-            <StyledInputBase
-              placeholder="Search for Videos"
-              inputProps={{ "aria-label": "search" }}
-            />
-            <PostfixIconWrapper>
-              <Divider orientation="vertical" flexItem />
-              <SearchIcon />
-            </PostfixIconWrapper>
-          </Search>
+          <SearchBar />
         </Box>
 
         {/* Right side icons */}

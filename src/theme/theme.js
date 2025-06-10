@@ -135,6 +135,7 @@ const palette = {
     background: {
       default: "#ffffff",
       paper: "#ffffff",
+      sectionBg: "#FAFAFA",
     },
     text: {
       primary: "#000000",
@@ -250,18 +251,6 @@ export const getDesignTokens = (mode) => ({
   breakpoints,
   typography,
   components: {
-    MuiContainer: {
-      styleOverrides: {
-        root: {
-          paddingLeft: "16px",
-          paddingRight: "16px",
-          "@media (min-width: 600px)": {
-            paddingLeft: "24px",
-            paddingRight: "24px",
-          },
-        },
-      },
-    },
     MuiButton: {
       styleOverrides: {
         root: {
