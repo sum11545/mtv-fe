@@ -95,6 +95,21 @@ export const MainProvider = ({ children }) => {
     }
   };
 
+  const fetchSideBarData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await axiosInstance.get(
+        `/publicMenus`
+      );
+      return response;
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+      throw err;
+    }
+  };
+
   const value = {
     loading,
     error,
@@ -103,6 +118,7 @@ export const MainProvider = ({ children }) => {
     fetchVideoDetailPageData,
     contentConfigurations,
     fetchShortDetailPageData,
+    fetchSideBarData
   };
 
   return <MainContext.Provider value={value}>{children}</MainContext.Provider>;

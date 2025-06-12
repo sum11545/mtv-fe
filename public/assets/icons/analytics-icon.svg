@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <clipPath id="clip-Icon-4">
+      <rect width="40" height="40"/>
+    </clipPath>
+  </defs>
+  <g id="Icon-4" clip-path="url(#clip-Icon-4)">
+    <g id="analysis-analytics-chart-2-svgrepo-com" transform="translate(7 7)">
+      <path id="Subtraction_3" data-name="Subtraction 3" d="M1.733,25.133h0L0,23.4l6.566-6.566A10.4,10.4,0,0,1,14.73,0h.007A10.4,10.4,0,1,1,8.3,18.567L1.733,25.133Zm13-22.533a7.776,7.776,0,1,0,3.036.613A7.748,7.748,0,0,0,14.733,2.6Zm0-.867h0a8.669,8.669,0,0,1,8.629,7.872,8.659,8.659,0,0,0-8.629-7.873Z" transform="translate(0.433 0.433)" fill="#535353"/>
+      <rect id="Rectangle_3982" data-name="Rectangle 3982" width="2.542" height="3.813" transform="translate(9.478 10.167)" fill="#535353"/>
+      <rect id="Rectangle_3983" data-name="Rectangle 3983" width="2.542" height="6.355" transform="translate(13.291 7.625)" fill="#535353"/>
+      <rect id="Rectangle_3984" data-name="Rectangle 3984" width="2.542" height="7.625" transform="translate(17.103 6.355)" fill="#535353"/>
+      <path id="Path_31478" data-name="Path 31478" d="M17.167,2A10.845,10.845,0,0,0,6.333,12.833a10.71,10.71,0,0,0,2.092,6.4l-6.3,6.3a.433.433,0,0,0,0,.613L3.86,27.873a.433.433,0,0,0,.613,0l6.3-6.3a10.712,10.712,0,0,0,6.4,2.092A10.833,10.833,0,1,0,17.167,2Zm-13,24.954L3.046,25.833,7.2,21.679,8.321,22.8Zm13-4.154A9.86,9.86,0,0,1,11,20.66a.433.433,0,0,0-.575.034L8.933,22.187,7.813,21.067l1.493-1.493A.433.433,0,0,0,9.339,19,9.861,9.861,0,0,1,7.2,12.833,9.967,9.967,0,1,1,17.167,22.8Z" transform="translate(-2 -2)" fill="#535353"/>
+    </g>
+  </g>
+</svg>
