@@ -19,6 +19,7 @@ export const fontStyles = {
       fontFamily: "Montserrat",
       fontWeight: 400,
     },
+    
   },
   openSans: {
     bold: {
@@ -33,6 +34,14 @@ export const fontStyles = {
       fontFamily: "Open Sans",
       fontWeight: 400,
     },
+    small: {
+      fontFamily: "Montserrat",
+      fontWeight: 300,
+    },
+    extraSmall: {
+      fontFamily: "Montserrat",
+      fontWeight: 200,
+    }
   },
   sfPro: {
     text: {
@@ -124,8 +133,73 @@ export const fontSize = {
   },
 };
 
+// Layout configuration
+export const layout = {
+  // Sidebar dimensions
+  sidebar: {
+    drawer: {
+      width: 300,
+      mobileWidth: "50%",
+    },
+    mini: {
+      width: 70,
+    },
+  },
+
+  // AppBar/Header
+  appBar: {
+    height: 64,
+  },
+
+  // Spacing and dimensions
+  spacing: {
+    // Border widths
+    border: {
+      thin: "1px",
+      medium: "2px",
+      thick: "3px",
+    },
+
+    // Common padding/margin values
+    padding: {
+      xsmall: 0.5,
+      small: 1,
+      medium: 2,
+      large: 3,
+      xlarge: 4,
+    },
+
+    // Icon container dimensions
+    iconContainer: {
+      minWidth: 40,
+      maxWidth: 60,
+    },
+
+    // Button heights for different sections
+    buttonHeight: {
+      topIcons: 64,
+      bottomIcons: 40,
+      regular: 48,
+    },
+  },
+
+  // Typography layout
+  text: {
+    lineHeight: {
+      tight: 1,
+      normal: 1.2,
+      relaxed: 1.5,
+    },
+    maxWidth: {
+      iconLabel: "60px",
+      button: "200px",
+      content: "800px",
+    },
+  },
+};
+
 // Color palette configuration
-const palette = {
+export const palette = {
   light: {
     primary: {
       main: "#001691",
@@ -141,6 +215,7 @@ const palette = {
     },
     background: {
       default: "#ffffff",
+      footer: "#f5f5f5",
       paper: "#ffffff",
       sectionBg: "#FAFAFA",
     },

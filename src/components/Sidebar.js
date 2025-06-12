@@ -25,21 +25,9 @@ import {
 } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { fontSize, fontStyles } from "../theme/theme";
+import { fontSize, fontStyles, layout, palette} from "../theme/theme";
 import { useMain } from "@/context/MainContext";
-import { MarketPillarIcon, MoonStarIcon, EyeIcon, AnalyticsIcon, StarIcon, ProfileIcon } from "./icons";
-
-const DRAWER_WIDTH = 300;
-const MINI_DRAWER_WIDTH = 70;
-
-// Keep icons mapping for reference
-const iconMapping = {
-  TV: <MarketPillarIcon />,
-  MU: <ProfileIcon />,
-  TI: <EyeIcon />,
-  T10P: <AnalyticsIcon />,
-  LN: <StarIcon />,
-};
+import { DynamicIcon, MoonStarIcon } from "./icons";
 
 const bottomSidebarItems = [{ text: "Settings", icon: <SettingsIcon /> }];
 
@@ -57,32 +45,43 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
       try {
         const res = await fetchSideBarData();
         const data = res?.data?.response?.data;
+
+        // Dynamic icon style based on theme mode
+        const iconStyle = {
+          color: isDarkMode ? palette?.dark?.primary?.main : palette?.light?.primary?.main // Use theme's primary text color for consistency
+        };
+
         
-        // Map the API data with icons
+        // Map the API data with dynamic icons
         const mappedItems = data.map(item => ({
           text: item.name,
           section_slug: item.section_slug,
-          icon: iconMapping[item.keyword] || iconMapping.TV, // Default to MarketPillar icon if no match
+          icon: <DynamicIcon keyword={item.keyword} style={iconStyle} />, // Use DynamicIcon with theme-aware color
           keyword: item.keyword
         }));
         
         setSidebarItems(mappedItems);
       } catch (err) {
         console.error("Error fetching sidebar data:", err);
+        // Dynamic icon style for fallback items
+        const fallbackIconStyle = {
+          color: theme.palette.text.primary // Use theme's primary text color for consistency
+        };
+        
         // Fallback to default items if API fails
         setSidebarItems([
-          { text: "TV", icon: <MarketPillarIcon /> },
-          { text: "Market Update", icon: <ProfileIcon /> },
-          { text: "Technical Indicators", icon: <EyeIcon /> },
-          { text: "Top 10 Picks", icon: <AnalyticsIcon /> },
-          { text: "Latest News", icon: <StarIcon /> },
+          { text: "TV", icon: <DynamicIcon keyword="TV" style={fallbackIconStyle} /> },
+          { text: "Market Update", icon: <DynamicIcon keyword="MU" style={fallbackIconStyle} /> },
+          { text: "Technical Indicators", icon: <DynamicIcon keyword="TI" style={fallbackIconStyle} /> },
+          { text: "Top 10 Picks", icon: <DynamicIcon keyword="T10P" style={fallbackIconStyle} /> },
+          { text: "Latest News", icon: <DynamicIcon keyword="LN" style={fallbackIconStyle} /> },
         ]);
       } finally {
         setIsLoading(false);
       }
     };
     SidebarData();
-  }, [fetchSideBarData]);
+  }, [fetchSideBarData, isDarkMode]);
 
   const handleIconClick = (section_slug) => {
     console.log(section_slug);
@@ -99,16 +98,16 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
           variant="permanent"
           anchor="right"
           sx={{
-            width: MINI_DRAWER_WIDTH,
+            width: theme.layout?.sidebar?.mini?.width || layout.sidebar.mini.width,
             flexShrink: 0,
             display: { xs: "none", sm: "block" },
             "& .MuiDrawer-paper": {
-              width: MINI_DRAWER_WIDTH,
+              width: theme.layout?.sidebar?.mini?.width || layout.sidebar.mini.width,
               boxSizing: "border-box",
-              top: "64px",
-              height: `calc(100% - 64px)`,
+              top: `${theme.layout?.appBar?.height || layout.appBar.height}px`,
+              height: `calc(100% - ${theme.layout?.appBar?.height || layout.appBar.height}px)`,
               backgroundColor: "background.default",
-              borderLeft: "1px solid",
+              borderLeft: `${theme.layout?.spacing?.border?.thin || layout.spacing.border.thin} solid`,
               borderColor: "divider",
               display: "flex",
               flexDirection: "column",
@@ -123,10 +122,10 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                 <ListItemButton
                   onClick={() => handleIconClick(item.section_slug)}
                   sx={{
-                    minHeight: 64,
+                    minHeight: theme.layout?.spacing?.buttonHeight?.topIcons || layout.spacing.buttonHeight.topIcons,
                     justifyContent: "center",
-                    px: 1,
-                    py: 1,
+                    px: theme.layout?.spacing?.padding?.small || layout.spacing.padding.small,
+                    py: theme.layout?.spacing?.padding?.small || layout.spacing.padding.small,
                     flexDirection: "column",
                     alignItems: "center",
                   }}
@@ -137,7 +136,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                       flexDirection: "column",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: 0.5,
+                      gap: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
                     }}
                   >
                     <Box
@@ -145,8 +144,9 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        "& .MuiSvgIcon-root": {
-                          fontSize: theme.fontSize?.icon?.medium || fontSize.icon.medium,
+                        "& img": {
+                          width: theme.fontSize?.icon?.medium || fontSize.icon.medium,
+                          height: theme.fontSize?.icon?.medium || fontSize.icon.medium,
                         },
                         cursor: "pointer",
                         "&:hover": {
@@ -163,8 +163,8 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                         fontSize: theme.fontSize?.typography?.overline || fontSize.typography.overline,
                         textTransform: "uppercase",
                         textAlign: "center",
-                        lineHeight: 1,
-                        maxWidth: "60px",
+                        lineHeight: theme.layout?.text?.lineHeight?.tight || layout.text.lineHeight.tight,
+                        maxWidth: theme.layout?.text?.maxWidth?.iconLabel || layout.text.maxWidth.iconLabel,
                         wordWrap: "break-word",
                       }}
                     >
@@ -183,10 +183,10 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                 <ListItemButton
                   onClick={onToggleTheme}
                   sx={{
-                    minHeight: 64,
+                    minHeight: theme.layout?.spacing?.buttonHeight?.bottomIcons || layout.spacing.buttonHeight.bottomIcons,
                     justifyContent: "center",
-                    px: 1,
-                    py: 1,
+                    px: theme.layout?.spacing?.padding?.small || layout.spacing.padding.small,
+                    py: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
                     flexDirection: "column",
                     alignItems: "center",
                   }}
@@ -197,7 +197,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                       flexDirection: "column",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: 0.5,
+                      gap: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
                     }}
                   >
                     <Box
@@ -208,24 +208,14 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                         "& .MuiSvgIcon-root": {
                           fontSize: theme.fontSize?.icon?.medium || fontSize.icon.medium,
                         },
+                        "& img": {
+                          width: theme.fontSize?.icon?.medium || fontSize.icon.medium,
+                          height: theme.fontSize?.icon?.medium || fontSize.icon.medium,
+                        },
                       }}
                     >
                       {isDarkMode ? <LightModeIcon /> : <MoonStarIcon />}
                     </Box>
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        ...fontStyles.sfPro.condensed.regular,
-                        fontSize: theme.fontSize?.typography?.overline || fontSize.typography.overline,
-                        textTransform: "uppercase",
-                        textAlign: "center",
-                        lineHeight: 1,
-                        maxWidth: "60px",
-                        wordWrap: "break-word",
-                      }}
-                    >
-                      {isDarkMode ? "LIGHT" : "DARK"}
-                    </Typography>
                   </Box>
                 </ListItemButton>
               </ListItem>
@@ -234,10 +224,10 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                 <ListItem key={item.text} disablePadding>
                   <ListItemButton
                     sx={{
-                      minHeight: 64,
+                      minHeight: theme.layout?.spacing?.buttonHeight?.bottomIcons || layout.spacing.buttonHeight.bottomIcons,
                       justifyContent: "center",
-                      px: 1,
-                      py: 1,
+                      px: theme.layout?.spacing?.padding?.small || layout.spacing.padding.small,
+                      py: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
                       flexDirection: "column",
                       alignItems: "center",
                     }}
@@ -248,7 +238,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                         flexDirection: "column",
                         alignItems: "center",
                         justifyContent: "center",
-                        gap: 0.5,
+                        gap: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
                       }}
                     >
                       <Box
@@ -263,20 +253,6 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                       >
                         {item.icon}
                       </Box>
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          ...fontStyles.sfPro.condensed.regular,
-                          fontSize: theme.fontSize?.typography?.overline || fontSize.typography.overline,
-                          textTransform: "uppercase",
-                          textAlign: "center",
-                          lineHeight: 1,
-                          maxWidth: "60px",
-                          wordWrap: "break-word",
-                        }}
-                      >
-                        SET
-                      </Typography>
                     </Box>
                   </ListItemButton>
                 </ListItem>
@@ -285,10 +261,10 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
               <ListItem disablePadding>
                 <ListItemButton
                   sx={{
-                    minHeight: 64,
+                    minHeight: theme.layout?.spacing?.buttonHeight?.bottomIcons || layout.spacing.buttonHeight.bottomIcons,
                     justifyContent: "center",
-                    px: 1,
-                    py: 1,
+                    px: theme.layout?.spacing?.padding?.small || layout.spacing.padding.small,
+                    py: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
                     flexDirection: "column",
                     alignItems: "center",
                   }}
@@ -305,7 +281,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                       flexDirection: "column",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: 0.5,
+                      gap: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
                     }}
                   >
                     <Box
@@ -319,22 +295,11 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                         },
                       }}
                     >
-                      <SubscriptionsIcon />
+                      {/* <SubscriptionsIcon /> */}
+                      <DynamicIcon keyword={"YOUTUBE"} style={{
+                    color: ''// Use theme's primary text color for consistency
+                  }}/>
                     </Box>
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        ...fontStyles.sfPro.condensed.regular,
-                        fontSize: theme.fontSize?.typography?.overline || fontSize.typography.overline,
-                        textTransform: "uppercase",
-                        textAlign: "center",
-                        lineHeight: 1,
-                        maxWidth: "60px",
-                        wordWrap: "break-word",
-                      }}
-                    >
-                      YT
-                    </Typography>
                   </Box>
                 </ListItemButton>
               </ListItem>
@@ -346,16 +311,16 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
       {/* Full-width temporary drawer */}
       <Drawer
         sx={{
-          width: DRAWER_WIDTH,
+          width: theme.layout?.sidebar?.drawer?.width || layout.sidebar.drawer.width,
           flexShrink: 0,
           position: "fixed",
           "& .MuiDrawer-paper": {
-            width: isMobile ? "50%" : DRAWER_WIDTH,
+            width: isMobile ? (theme.layout?.sidebar?.drawer?.mobileWidth || layout.sidebar.drawer.mobileWidth) : (theme.layout?.sidebar?.drawer?.width || layout.sidebar.drawer.width),
             boxSizing: "border-box",
             top: 0,
             height: "100%",
             zIndex: (theme) => theme.zIndex.appBar + 1,
-            borderLeft: "1px solid",
+            borderLeft: `${theme.layout?.spacing?.border?.thin || layout.spacing.border.thin} solid`,
             borderColor: "divider",
           },
         }}
@@ -370,8 +335,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
         {/* Header */}
         <Box
           sx={{
-            p: 2,
-            // mt: "64px",
+            p: theme.layout?.spacing?.padding?.medium || layout.spacing.padding.medium,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -414,14 +378,19 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
           }}
         >
           {/* Top menu items */}
-          <List>
+          <List >
             {sidebarItems.map((item) => (
-              <ListItem key={item.text} disablePadding>
+              <ListItem divider key={item.text} disablePadding>
                 <ListItemButton  onClick={() => handleIconClick(item.section_slug)}>
                   <ListItemIcon
                     sx={{
+                      minWidth: theme.layout?.spacing?.iconContainer?.minWidth || layout.spacing.iconContainer.minWidth,
                       "& .MuiSvgIcon-root": {
                         fontSize: theme.fontSize?.icon?.medium || fontSize.icon.medium,
+                      },
+                      "& img": {
+                        width: theme.fontSize?.icon?.medium || fontSize.icon.medium,
+                        height: theme.fontSize?.icon?.medium || fontSize.icon.medium,
                       },
                     }}
                   >
@@ -440,17 +409,26 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                 </ListItemButton>
               </ListItem>
             ))}
+            
           </List>
 
+         
+
           {/* Bottom section */}
-          <Box sx={{ p: 2 }}>
-            <List>
+          <Box sx={{ p: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall }}>
+          <Divider />
+            <List dense>
               <ListItem disablePadding>
                 <ListItemButton onClick={onToggleTheme}>
                   <ListItemIcon
                     sx={{
+                      minWidth: theme.layout?.spacing?.iconContainer?.minWidth || layout.spacing.iconContainer.minWidth,
                       "& .MuiSvgIcon-root": {
                         fontSize: theme.fontSize?.icon?.medium || fontSize.icon.medium,
+                      },
+                      "& img": {
+                        width: theme.fontSize?.icon?.medium || fontSize.icon.medium,
+                        height: theme.fontSize?.icon?.medium || fontSize.icon.medium,
                       },
                     }}
                   >
@@ -473,6 +451,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                   <ListItemButton>
                     <ListItemIcon
                       sx={{
+                        minWidth: theme.layout?.spacing?.iconContainer?.minWidth || layout.spacing.iconContainer.minWidth,
                         "& .MuiSvgIcon-root": {
                           fontSize: theme.fontSize?.icon?.medium || fontSize.icon.medium,
                         },
@@ -504,22 +483,26 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                   window.open("https://www.youtube.com/@moneytvlive", "_blank")
                 }
                 startIcon={
-                  <SubscriptionsIcon sx={{ fontSize: theme.fontSize?.icon?.medium || fontSize.icon.medium }} />
+                  <DynamicIcon keyword={"YOUTUBE"} style={{
+                    color: palette?.dark?.primary?.main// Use theme's primary text color for consistency
+                  }}/>
                 }
-                                  sx={{
-                    mb: 2,
-                    ...fontStyles.sfPro.condensed.bold,
-                    fontSize: theme.fontSize?.button?.medium || fontSize.button.medium,
-                    textTransform: "uppercase",
-                    backgroundColor: theme.palette.custom?.youtube?.main || "#FF0000",
+                sx={{
+                  pr:11,
+                  mb: theme.layout?.spacing?.padding?.small || layout.spacing.padding.small,
+                  mt: 0,
+                  ...fontStyles.sfPro.condensed.bold,
+                  fontSize: theme.fontSize?.button?.medium || fontSize.button.medium,
+                  textTransform: "uppercase",
+                  backgroundColor: theme.palette.custom?.youtube?.main || "#FF0000",
+                  color: theme.palette.common?.white || "#FFFFFF",
+                  "& .MuiSvgIcon-root": {
                     color: theme.palette.common?.white || "#FFFFFF",
-                    "& .MuiSvgIcon-root": {
-                      color: theme.palette.common?.white || "#FFFFFF",
-                    },
-                    "&:hover": {
-                      backgroundColor: theme.palette.custom?.youtube?.dark || "#CC0000",
-                    },
-                  }}
+                  },
+                  "&:hover": {
+                    backgroundColor: theme.palette.custom?.youtube?.dark || "#CC0000",
+                  },
+                }}
               >
                 Subscribe To YouTube
               </Button>
