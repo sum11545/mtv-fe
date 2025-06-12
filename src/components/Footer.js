@@ -22,7 +22,8 @@ import {
 } from "@mui/icons-material";
 import Image from "next/image";
 import styled from "@emotion/styled";
-import { fontStyles, fontSize } from "../theme/theme";
+import { fontStyles, fontSize, palette } from "../theme/theme";
+import { DynamicIcon } from "./icons";
 
 const LogoWrapper = styled(Box)({
   display: "flex",
@@ -262,7 +263,7 @@ const MobileFooter = (props) => {
               },
             }}
           >
-            <YouTube />
+           
           </IconButton>
           <IconButton
             size="small"
@@ -436,6 +437,7 @@ const Footer = () => {
     }
   };
 
+
   // Desktop Footer (original unchanged)
   const renderDesktopFooter = () => (
     <Box
@@ -479,7 +481,7 @@ const Footer = () => {
             <Typography
               color="primary.main"
               sx={{
-                fontSize: fontSize.typography.body1,
+                fontSize: fontSize.typography.body2,
                 ...fontStyles.montserrat.bold,
               }}
             >
@@ -487,7 +489,7 @@ const Footer = () => {
             </Typography>
             <Link
               href="#"
-              sx={{ display: "block", mb: 2, fontSize: fontSize.nav.primary }}
+              sx={{ display: "block", mb: 2, fontSize: fontSize.nav.primary, ...fontStyles.openSans.small }}
             >
               grow@moneytv.live
             </Link>
@@ -501,7 +503,10 @@ const Footer = () => {
                   },
                 }}
               >
-                <YouTube />
+            
+                 <DynamicIcon width={"30px"} height={"30px"} keyword={"YT"} style={{
+          color: isDarkMode ? palette?.dark?.primary?.main : '' // Use theme's primary text color for consistency
+        }}/>
               </IconButton>
               <IconButton
                 size="small"
@@ -512,7 +517,11 @@ const Footer = () => {
                   },
                 }}
               >
-                <Instagram />
+                {/* <Instagram /> */}
+                <DynamicIcon  keyword={"INSTA"} style={{
+          color: isDarkMode ? palette?.dark?.primary?.main : '' // Use theme's primary text color for consistency
+        }}/>
+
               </IconButton>
               <IconButton
                 size="small"
@@ -523,7 +532,10 @@ const Footer = () => {
                   },
                 }}
               >
-                <Twitter />
+                {/* <Twitter /> */}
+                <DynamicIcon keyword={"X"} style={{
+          color: isDarkMode ? palette?.dark?.primary?.main : '' // Use theme's primary text color for consistency
+        }}/>
               </IconButton>
               <IconButton
                 size="small"
@@ -534,7 +546,10 @@ const Footer = () => {
                   },
                 }}
               >
-                <LinkedIn />
+                {/* <LinkedIn /> */}
+                <DynamicIcon keyword={"IN"} style={{
+          color: isDarkMode ? palette?.dark?.primary?.main : '' // Use theme's primary text color for consistency
+        }}/>
               </IconButton>
               <IconButton
                 size="small"
@@ -545,7 +560,10 @@ const Footer = () => {
                   },
                 }}
               >
-                <Facebook />
+                {/* <Facebook /> */}
+                <DynamicIcon keyword={"FB"} style={{
+          color: isDarkMode ? palette?.dark?.primary?.main : '' // Use theme's primary text color for consistency
+        }}/>
               </IconButton>
             </Stack>
           </Box>
@@ -579,11 +597,15 @@ const Footer = () => {
             display: "flex",
             alignItems: "center",
             gap: 1,
-            fontSize: fontSize.typography.body1,
+            fontSize: fontSize.typography.h5,
             ...fontStyles.openSans.semibold,
           }}
         >
-          <Feedback sx={{ fontSize: fontSize.typography.subtitle1 }} /> Send
+          {/* <Feedback sx={{ fontSize: fontSize.typography.subtitle1 }} />  */}
+          <DynamicIcon keyword={"FEEDBACK"} width={"20px"} height={"20px"} style={{
+            color: isDarkMode ? palette?.dark?.primary?.main : palette?.light?.primary?.main // Use theme's primary text color for consistency
+          }}/>
+          Send
           Feedback
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate>
@@ -717,7 +739,7 @@ const Footer = () => {
       component="footer"
       sx={{
         py: 1,
-        bgcolor: theme.palette.mode === "dark" ? "background.paper" : "#f5f5f5",
+        bgcolor: theme.palette.mode === "dark" ? palette.dark.background.default : palette.light.background.footer,
         borderTop: 1,
         borderColor: "divider",
       }}
