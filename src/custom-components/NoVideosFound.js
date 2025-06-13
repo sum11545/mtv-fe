@@ -10,7 +10,8 @@ import {
   useMediaQuery,
   Paper,
 } from "@mui/material";
-import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
+import Lottie from "lottie-react";
+import sadAnimationData from "../../public/assets/animated-icons/sad-animation.json";
 import { fontSize, fontStyles } from "@/theme/theme";
 
 const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
@@ -45,17 +46,15 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
   };
 
   const SadEmoji = () => (
-    <SentimentDissatisfiedIcon
-      sx={{
-        fontSize: isMobile ? 70 : 100,
-        color: theme.palette.mode === "dark" ? "yellow" : "primary.main",
-        animation: "pulse 2s infinite ease-in-out",
-        "@keyframes pulse": {
-          "0%": { opacity: 0.7, transform: "scale(1)" },
-          "50%": { opacity: 1, transform: "scale(1.05)" },
-          "100%": { opacity: 0.7, transform: "scale(1)" },
-        },
+    <Lottie
+      animationData={sadAnimationData}
+      style={{
+        width: isMobile ? 70 : 150,
+        height: isMobile ? 70 : 150,
+        transform: `translateY(${isMobile ? '8px' : '15px'})`, // Move animation down to overlap more
       }}
+      loop={true}
+      autoplay={true}
     />
   );
 
@@ -89,9 +88,11 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
         >
           <Box
             sx={{
-              mb: isMobile ? 1 : 3,
               display: "flex",
               justifyContent: "center",
+              mb: isMobile ? -1 : -1, // Negative margin to overlap with text below
+              position: "relative",
+              zIndex: 1,
             }}
           >
             <SadEmoji />
@@ -101,6 +102,9 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
             align="center"
             sx={{
               ...fontStyles.sfPro.display.regular,
+              mt: 0, // Remove any top margin
+              position: "relative",
+              zIndex: 2,
             }}
           >
             No Videos found for
@@ -111,8 +115,7 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
             align="center"
             color="primary"
             sx={{
-              fontWeight: 500,
-              ...fontStyles.sfPro.display.regular,
+              ...fontStyles.sfPro.display.bold,
             }}
           >
             "{searchQuery}"
@@ -147,34 +150,33 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
             <Typography
               variant={isMobile ? "body1" : "h6"}
               sx={{
-                fontWeight: 400,
-                mb: 0.5,
+                // mb: 0.5,
                 ...fontStyles.sfPro.display.regular,
+                lineHeight: 1.3,
               }}
             >
-              We're working hard to fulfil
+              We're working hard to fulfil <br /> your video request. <br /> <span style={{  ...fontStyles.sfPro.display.bold,}}>You'll have the video soon!</span>
             </Typography>
-            <Typography
+            {/* <Typography
               variant={isMobile ? "body1" : "h6"}
               sx={{
-                fontWeight: 400,
-                mb: 0.5,
-                mt: -0.5,
+                // fontWeight: 400,
+                // mb: 0.5,
+                // mt: -0.5,
                 ...fontStyles.sfPro.display.regular,
               }}
             >
               your video request.
-            </Typography>
-            <Typography
+            </Typography> */}
+            {/* <Typography
               variant={isMobile ? "body1" : "h6"}
               sx={{
-                fontWeight: 600,
-                mt: -0.5,
-                ...fontStyles.sfPro.display.regular,
+                // mt: -0.5,
+                ...fontStyles.sfPro.display.bold,
               }}
             >
               You'll have the video soon!
-            </Typography>
+            </Typography> */}
 
             {/* Mobile only divider - moved below the text */}
             {isMobile && <Divider sx={{ width: "100%", my: 2 }} />}
