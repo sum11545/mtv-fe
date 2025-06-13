@@ -4,7 +4,8 @@ import GridLayout from "@/custom-components/layouts/GridLayout";
 import SliderLayout from "@/custom-components/layouts/SliderLayout";
 import StackLayout from "@/custom-components/layouts/StackLayout";
 import NoVideosFound from "@/custom-components/NoVideosFound";
-import { Container } from "@mui/material";
+import { fontStyles } from "@/theme/theme";
+import { Container, Typography } from "@mui/material";
 import React from "react";
 
 export async function getServerSideProps(context) {
@@ -30,9 +31,30 @@ export async function getServerSideProps(context) {
 }
 const SearchPage = ({ results, query }) => {
   const { response, message } = results;
+
   const sectionData = response?.sections;
   return response.length == 0 ? (
-    <NoVideosFound />
+    <>
+    <Typography
+            // variant="h3"
+            // gutterBottom
+            // color="primary"
+            // sx={{
+            //   ml: 5,
+            //   ...fontStyles.sfPro.display.bold,
+            // }}
+            variant={"h6"}
+            component="h2"
+            sx={{
+              ml: 5.5,
+              color: "primary.main",
+              fontFamily: { ...fontStyles.montserrat.bold }
+            }}
+          >
+            Search Results
+          </Typography>
+    <NoVideosFound searchQuery={query?.searchQuery}/>
+    </>
   ) : (
     <Container
       maxWidth="xl"

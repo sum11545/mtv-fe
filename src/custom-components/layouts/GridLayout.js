@@ -64,7 +64,7 @@ const GridLayout = ({ name, contents, id, sectionData, section, bgColor }) => {
     <Box
       sx={{
         background: bgColor,
-        px: 2.5,
+        px: 0.5,
       }}
     >
       <Box

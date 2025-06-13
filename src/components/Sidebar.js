@@ -29,7 +29,7 @@ import { fontSize, fontStyles, layout, palette} from "../theme/theme";
 import { useMain } from "@/context/MainContext";
 import { DynamicIcon, MoonStarIcon } from "./icons";
 
-const bottomSidebarItems = [{ text: "Settings", icon: <SettingsIcon /> }];
+// const bottomSidebarItems = [{ text: "Settings", icon: <SettingsIcon /> }];
 
 const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
   const theme = useTheme();
@@ -39,6 +39,12 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
   const [sidebarItems, setSidebarItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const iconStyle = {
+    color: isDarkMode ? palette?.dark?.primary?.main :''// Use theme's primary text color for consistency
+  };
+
+  const bottomSidebarItems = [{ text: "Settings", icon: <DynamicIcon keyword={"SETTINGS"} style={iconStyle} /> }];
+
   useEffect(() => {
     const SidebarData = async () => {
       setIsLoading(true);
@@ -47,9 +53,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
         const data = res?.data?.response?.data;
 
         // Dynamic icon style based on theme mode
-        const iconStyle = {
-          color: isDarkMode ? palette?.dark?.primary?.main : palette?.light?.primary?.main // Use theme's primary text color for consistency
-        };
+
 
         
         // Map the API data with dynamic icons
@@ -81,7 +85,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
       }
     };
     SidebarData();
-  }, [fetchSideBarData, isDarkMode]);
+  }, []);
 
   const handleIconClick = (section_slug) => {
     console.log(section_slug);
