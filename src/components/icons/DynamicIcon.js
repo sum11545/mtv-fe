@@ -27,6 +27,10 @@ const DynamicIcon = ({
     'IN':'linkedin-icon',
     'FB':'facebook-icon',
     'FEEDBACK':'feedback-icon',
+    'ARROW': 'arrow-icon',
+    'WHATSAPP': 'whats-app-icon',
+    'COPY': 'copy-icon',
+    'SHARE': 'share-icon',
   };
 
   useEffect(() => {
@@ -51,6 +55,28 @@ const DynamicIcon = ({
     setIconSrc(`/assets/icons/${fileName}`);
   }, [iconName, keyword]);
 
+  // Function to convert hex color to filter
+  const getColorFilter = (color) => {
+    if (!color) return 'none';
+    
+    switch (color.toLowerCase()) {
+      case '#fff':
+      case '#ffffff':
+      case 'white':
+        return 'brightness(0) saturate(100%) invert(100%)';
+      case '#000':
+      case '#000000':
+      case 'black':
+        return 'brightness(0) saturate(100%) invert(0%)';
+      case 'yellow':
+        return 'brightness(0) saturate(100%) invert(85%) sepia(100%) saturate(500%) hue-rotate(0deg)';
+      case '#f4a512':
+        return 'brightness(0) saturate(100%) invert(75%) sepia(100%) saturate(1000%) hue-rotate(15deg) brightness(1.2)';
+      default:
+        return 'brightness(0) saturate(100%) invert(0%)'; // fallback to black
+    }
+  };
+
   if (!iconSrc) {
     return null;
   }
@@ -62,7 +88,7 @@ const DynamicIcon = ({
       style={{ 
         width, 
         height,
-        filter: style?.color ? `brightness(0) saturate(100%) invert(${style.color === '#fff' || style.color === '#ffffff' ? '100%' : '0%'})` : 'none',
+        filter: getColorFilter(style?.color),
         ...style
       }}
       {...props}
