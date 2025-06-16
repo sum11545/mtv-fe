@@ -7,7 +7,6 @@ import {
   Button,
   Divider,
   Stack,
-  Link,
   IconButton,
   useTheme,
   useMediaQuery,
@@ -24,6 +23,7 @@ import Image from "next/image";
 import styled from "@emotion/styled";
 import { fontStyles, fontSize, palette } from "../theme/theme";
 import { DynamicIcon } from "./icons";
+import Link from "next/link";
 
 const LogoWrapper = styled(Box)({
   display: "flex",
@@ -262,9 +262,7 @@ const MobileFooter = (props) => {
                 color: "primary.main",
               },
             }}
-          >
-           
-          </IconButton>
+          ></IconButton>
           <IconButton
             size="small"
             sx={{
@@ -437,7 +435,6 @@ const Footer = () => {
     }
   };
 
-
   // Desktop Footer (original unchanged)
   const renderDesktopFooter = () => (
     <Box
@@ -489,7 +486,12 @@ const Footer = () => {
             </Typography>
             <Link
               href="#"
-              sx={{ display: "block", mb: 2, fontSize: fontSize.nav.primary, ...fontStyles.openSans.small }}
+              sx={{
+                display: "block",
+                mb: 2,
+                fontSize: fontSize.nav.primary,
+                ...fontStyles.openSans.small,
+              }}
             >
               grow@moneytv.live
             </Link>
@@ -503,10 +505,14 @@ const Footer = () => {
                   },
                 }}
               >
-            
-                 <DynamicIcon width={"30px"} height={"30px"} keyword={"YT"} style={{
-          color: isDarkMode ? palette?.dark?.primary?.main : '' // Use theme's primary text color for consistency
-        }}/>
+                <DynamicIcon
+                  width={"30px"}
+                  height={"30px"}
+                  keyword={"YT"}
+                  style={{
+                    color: isDarkMode ? palette?.dark?.primary?.main : "", // Use theme's primary text color for consistency
+                  }}
+                />
               </IconButton>
               <IconButton
                 size="small"
@@ -518,10 +524,12 @@ const Footer = () => {
                 }}
               >
                 {/* <Instagram /> */}
-                <DynamicIcon  keyword={"INSTA"} style={{
-          color: isDarkMode ? palette?.dark?.primary?.main : '' // Use theme's primary text color for consistency
-        }}/>
-
+                <DynamicIcon
+                  keyword={"INSTA"}
+                  style={{
+                    color: isDarkMode ? palette?.dark?.primary?.main : "", // Use theme's primary text color for consistency
+                  }}
+                />
               </IconButton>
               <IconButton
                 size="small"
@@ -533,9 +541,12 @@ const Footer = () => {
                 }}
               >
                 {/* <Twitter /> */}
-                <DynamicIcon keyword={"X"} style={{
-          color: isDarkMode ? palette?.dark?.primary?.main : '' // Use theme's primary text color for consistency
-        }}/>
+                <DynamicIcon
+                  keyword={"X"}
+                  style={{
+                    color: isDarkMode ? palette?.dark?.primary?.main : "", // Use theme's primary text color for consistency
+                  }}
+                />
               </IconButton>
               <IconButton
                 size="small"
@@ -547,9 +558,12 @@ const Footer = () => {
                 }}
               >
                 {/* <LinkedIn /> */}
-                <DynamicIcon keyword={"IN"} style={{
-          color: isDarkMode ? palette?.dark?.primary?.main : '' // Use theme's primary text color for consistency
-        }}/>
+                <DynamicIcon
+                  keyword={"IN"}
+                  style={{
+                    color: isDarkMode ? palette?.dark?.primary?.main : "", // Use theme's primary text color for consistency
+                  }}
+                />
               </IconButton>
               <IconButton
                 size="small"
@@ -561,9 +575,12 @@ const Footer = () => {
                 }}
               >
                 {/* <Facebook /> */}
-                <DynamicIcon keyword={"FB"} style={{
-          color: isDarkMode ? palette?.dark?.primary?.main : '' // Use theme's primary text color for consistency
-        }}/>
+                <DynamicIcon
+                  keyword={"FB"}
+                  style={{
+                    color: isDarkMode ? palette?.dark?.primary?.main : "", // Use theme's primary text color for consistency
+                  }}
+                />
               </IconButton>
             </Stack>
           </Box>
@@ -602,11 +619,17 @@ const Footer = () => {
           }}
         >
           {/* <Feedback sx={{ fontSize: fontSize.typography.subtitle1 }} />  */}
-          <DynamicIcon keyword={"FEEDBACK"} width={"20px"} height={"20px"} style={{
-            color: isDarkMode ? palette?.dark?.primary?.main : palette?.light?.primary?.main // Use theme's primary text color for consistency
-          }}/>
-          Send
-          Feedback
+          <DynamicIcon
+            keyword={"FEEDBACK"}
+            width={"20px"}
+            height={"20px"}
+            style={{
+              color: isDarkMode
+                ? palette?.dark?.primary?.main
+                : palette?.light?.primary?.main, // Use theme's primary text color for consistency
+            }}
+          />
+          Send Feedback
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate>
           <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
@@ -739,7 +762,10 @@ const Footer = () => {
       component="footer"
       sx={{
         py: 1,
-        bgcolor: theme.palette.mode === "dark" ? palette.dark.background.default : palette.light.background.footer,
+        bgcolor:
+          theme.palette.mode === "dark"
+            ? palette.dark.background.default
+            : palette.light.background.footer,
         borderTop: 1,
         borderColor: "divider",
       }}

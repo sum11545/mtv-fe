@@ -12,7 +12,6 @@ const MINI_DRAWER_WIDTH = 70;
 
 const Main = styled("main")(({ theme, isShortsPageMobile }) => ({
   flexGrow: 1,
-  marginTop: theme.spacing(15),
   width: `calc(100% - ${MINI_DRAWER_WIDTH}px)`,
   minHeight: "100vh",
   backgroundColor: theme.palette.background.default,
@@ -94,17 +93,20 @@ const Layout = ({ children }) => {
       >
         <Header toggleSidebar={toggleSidebar} />
         {/* Hide category tabs on mobile for shorts detail page */}
-        {!(isMobile && isShortsPage) && (
+        {!(isMobile || isShortsPage) && (
           <TabsContainer>
             <CategoryTabs />
           </TabsContainer>
         )}
-        <Main isShortsPageMobile={isMobile && isShortsPage}>
+        <Main
+          isShortsPageMobile={isMobile && isShortsPage}
+          sx={{ marginTop: isShortsPage || isMobile ? "64px" : "104px" }}
+        >
           {children}
           {/* <NoVideosPage /> */}
         </Main>
         {/* Hide footer on mobile for shorts detail page */}
-        {!(isMobile && isShortsPage) && <Footer />}
+        {!(isMobile || isShortsPage) && <Footer />}
         <Sidebar
           open={sidebarOpen}
           onClose={toggleSidebar}

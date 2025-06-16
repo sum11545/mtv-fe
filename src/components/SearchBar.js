@@ -155,8 +155,9 @@ const SearchResults = ({ searchResults, handleSearch, isMobile }) => {
                   }}
                   component="span"
                 >
-                  {search?.exchange_name}
+                  {search?.exchange_symbol}
                 </Typography>
+
                 <PipeSeparator />
                 {search?.exchange_code && (
                   <>
@@ -175,7 +176,6 @@ const SearchResults = ({ searchResults, handleSearch, isMobile }) => {
                     <PipeSeparator />
                   </>
                 )}
-
                 <Typography
                   sx={{
                     ...fontStyles.montserrat,
@@ -186,7 +186,7 @@ const SearchResults = ({ searchResults, handleSearch, isMobile }) => {
                   }}
                   component="span"
                 >
-                  {search?.exchange_symbol}
+                  {search?.exchange_name}
                 </Typography>
               </Box>
             );
@@ -207,9 +207,20 @@ const SearchBar = () => {
   const handleSearch = (mtvCode) => {
     setShowSearchResults(false);
     if (mtvCode) {
-      router.push(`/search?searchQuery=${searchQuery}&mtv_code=${mtvCode}`);
+      router.push({
+        pathname: "/search",
+        query: {
+          searchQuery,
+          mtvCode,
+        },
+      });
     } else {
-      router.push(`/search?searchQuery=${searchQuery}`);
+      router.push({
+        pathname: "/search",
+        query: {
+          searchQuery,
+        },
+      });
     }
   };
 

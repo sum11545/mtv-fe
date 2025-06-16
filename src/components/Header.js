@@ -18,6 +18,7 @@ import {
 import Image from "next/image";
 import { fontStyles, fontSize } from "../theme/theme";
 import SearchBar from "./SearchBar";
+import Link from "next/link";
 
 const Header = ({ toggleSidebar }) => {
   const theme = useTheme();
@@ -66,20 +67,21 @@ const Header = ({ toggleSidebar }) => {
             }}
           >
             {/* Logo */}
-            <LogoWrapper>
-              <Image
-                src={
-                  isDarkMode
-                    ? "/images/logos/header-logo-light.png"
-                    : "/images/logos/header-logo-dark.png"
-                }
-                alt="Money TV Logo"
-                fill
-                style={{ objectFit: "cover" }}
-                priority
-              />
-            </LogoWrapper>
-
+            <Link href="/">
+              <LogoWrapper>
+                <Image
+                  src={
+                    isDarkMode
+                      ? "/images/logos/header-logo-light.png"
+                      : "/images/logos/header-logo-dark.png"
+                  }
+                  alt="Money TV Logo"
+                  fill
+                  style={{ objectFit: "cover" }}
+                  priority
+                />
+              </LogoWrapper>
+            </Link>
             {/* Right side icons */}
             <Box sx={{ display: "flex" }}>
               <IconButton
@@ -155,19 +157,21 @@ const Header = ({ toggleSidebar }) => {
           }}
         >
           {/* Logo */}
-          <LogoWrapper>
-            <Image
-              src={
-                isDarkMode
-                  ? "/images/logos/header-logo-light.png"
-                  : "/images/logos/header-logo-dark.png"
-              }
-              alt="Money TV Logo"
-              fill
-              style={{ objectFit: "cover" }}
-              priority
-            />
-          </LogoWrapper>
+          <Link href="/">
+            <LogoWrapper>
+              <Image
+                src={
+                  isDarkMode
+                    ? "/images/logos/header-logo-light.png"
+                    : "/images/logos/header-logo-dark.png"
+                }
+                alt="Money TV Logo"
+                fill
+                style={{ objectFit: "cover" }}
+                priority
+              />
+            </LogoWrapper>
+          </Link>
 
           {/* Search Bar */}
           <SearchBar />

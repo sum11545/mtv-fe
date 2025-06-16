@@ -6,6 +6,7 @@ import React, {
   useEffect,
 } from "react";
 import createAxiosInstance from "../configs/axios";
+import _ from "lodash";
 
 const MainContext = createContext();
 
@@ -24,22 +25,6 @@ export const MainProvider = ({ children }) => {
   const axiosInstance = createAxiosInstance();
   const [contentConfigurations, setContentConfigurations] = useState(null);
 
-  // This api contains configuration based on content type
-  useEffect(() => {
-    const getContentConfiguration = async () => {
-      try {
-        const response = await axiosInstance.get(`/contentConfigurations`);
-        setContentConfigurations(response.data.response.data);
-        return response;
-      } catch (err) {
-        console.log({ err });
-        throw err;
-      }
-    };
-
-    getContentConfiguration();
-  }, []);
-
   const fetchHomePageData = async () => {
     try {
       setLoading(true);
@@ -49,8 +34,9 @@ export const MainProvider = ({ children }) => {
     } catch (err) {
       console.log({ err });
       setError(err.message);
-      setLoading(false);
       throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -62,8 +48,9 @@ export const MainProvider = ({ children }) => {
       return response;
     } catch (err) {
       setError(err.message);
-      setLoading(false);
       throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -77,8 +64,9 @@ export const MainProvider = ({ children }) => {
       return response;
     } catch (err) {
       setError(err.message);
-      setLoading(false);
       throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -90,8 +78,9 @@ export const MainProvider = ({ children }) => {
       return response;
     } catch (err) {
       setError(err.message);
-      setLoading(false);
       throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -99,14 +88,13 @@ export const MainProvider = ({ children }) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axiosInstance.get(
-        `/publicMenus`
-      );
+      const response = await axiosInstance.get(`/publicMenus`);
       return response;
     } catch (err) {
       setError(err.message);
-      setLoading(false);
       throw err;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -118,7 +106,7 @@ export const MainProvider = ({ children }) => {
     fetchVideoDetailPageData,
     contentConfigurations,
     fetchShortDetailPageData,
-    fetchSideBarData
+    fetchSideBarData,
   };
 
   return <MainContext.Provider value={value}>{children}</MainContext.Provider>;
