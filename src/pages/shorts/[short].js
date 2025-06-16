@@ -22,6 +22,11 @@ import { useMain } from "@/context/MainContext";
 import CopyButton from "@/custom-components/CopyButton";
 import ShareDialog from "@/custom-components/ShareDialog";
 import { fontSize, fontStyles } from "@/theme/theme";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
+import ShareIcon from "@/components/icons/ShareIcon";
+import ShareShortMobileIcon from "@/components/icons/ShareShortMobileIcon";
+import { ShortCopyMobileIcon } from "@/components/icons/ShortCopyMobileIcon";
+import ShortWhatsAppMobileIcon from "@/components/icons/ShortWhatsAppMobileIcon";
 
 const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
   <Box
@@ -106,7 +111,6 @@ const MobileActionButton = ({ icon, onClick, label }) => (
   >
     <IconButton
       sx={{
-        bgcolor: "rgba(255, 255, 255, 0.9)",
         color: "grey.500",
         "&:hover": {
           bgcolor: "rgba(255, 255, 255, 1)",
@@ -114,8 +118,6 @@ const MobileActionButton = ({ icon, onClick, label }) => (
             color: "grey.700",
           },
         },
-        width: 72,
-        height: 72,
         transition: "all 0.2s ease-in-out",
       }}
     >
@@ -144,6 +146,8 @@ const getEmbedUrl = (url) => {
       videoId = url.split("watch?v=")[1];
     } else if (url.includes("youtu.be/")) {
       videoId = url.split("youtu.be/")[1];
+    } else if (url.includes("shorts/")) {
+      videoId = url.split("shorts/")[1];
     }
     videoId = videoId.split(/[?&]/)[0];
     return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}`;
@@ -412,24 +416,17 @@ const Short = () => {
             }}
           >
             <MobileActionButton
-              icon={<WhatsApp sx={{ fontSize: fontSize.icon.small }} />}
+              icon={<ShortWhatsAppMobileIcon />}
               onClick={handleWhatsApp}
-              label="Send"
+              label="Whats App"
             />
             <MobileActionButton
-              icon={<ContentCopy sx={{ fontSize: fontSize.icon.small }} />}
+              icon={<ShortCopyMobileIcon />}
               onClick={handleCopyToClipboard}
               label="Copy"
             />
             <MobileActionButton
-              icon={
-                <Reply
-                  sx={{
-                    fontSize: fontSize.icon.small,
-                    transform: "scaleX(-1)",
-                  }}
-                />
-              }
+              icon={<ShareShortMobileIcon />}
               onClick={handleShare}
               label="Share"
             />
@@ -456,13 +453,13 @@ const Short = () => {
         }}
       >
         {/* Left Empty Space */}
-        <Grid item xs={12} md={2.5} />
+        <Grid item xs={12} md={5} />
 
         {/* Center: Video */}
         <Grid
           item
           xs={12}
-          md={5.5}
+          md={3}
           sx={{
             display: "flex",
             justifyContent: "flex-end",
@@ -471,9 +468,8 @@ const Short = () => {
         >
           <Box
             sx={{
-              width: { xs: "100vw", md: 400 },
-              height: { xs: "100vw", sm: 600, md: 700 },
-              maxHeight: "80vh",
+              width: { xs: "100vw", md: 606 },
+              height: { xs: "calc(100vh - 64px)" },
               bgcolor: "black",
               overflow: "hidden",
               display: "flex",
@@ -548,22 +544,14 @@ const Short = () => {
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   <ActionButton
-                    icon={<WhatsApp sx={{ fontSize: fontSize.icon.small }} />}
+                    icon={<WhatsAppIcon />}
                     label="Send"
                     onClick={handleWhatsApp}
                   />
                   <CopyButton text={currentShort?.content_details[0]?.url} />
                 </Box>
                 <ActionButton
-                  icon={
-                    <Reply
-                      sx={{
-                        fontSize: fontSize.icon.small,
-                        transform: "rotate(180deg) scaleY(-1)",
-                        mr: 2,
-                      }}
-                    />
-                  }
+                  icon={<ShareIcon />}
                   label="Share"
                   onClick={handleShare}
                   isReversed={true}

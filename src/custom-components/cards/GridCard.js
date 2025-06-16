@@ -15,6 +15,8 @@ import CopyButton from "../CopyButton";
 import { useMain } from "@/context/MainContext";
 import AdCard from "./AdCard";
 import { fontStyles, fontSize } from "../../theme/theme";
+import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
+import ShareIcon from "@/components/icons/ShareIcon";
 
 const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
   <Box
@@ -159,13 +161,30 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
       }
     }
   };
+  const getThumbnailUrl = () => {
+    const details = video?.content_details?.[0];
+    if (!details || details.platform !== "PY")
+      return "/images/404-not-found.jpg";
+
+    const url = details.url;
+    let videoId = "";
+
+    try {
+      const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?/]+)/;
+      const match = url.match(youtubeRegex);
+      videoId = match?.[1] ?? "";
+    } catch (err) {
+      return "/images/404-not-found.jpg";
+    }
+
+    return videoId
+      ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+      : "/images/404-not-found.jpg";
+  };
   return (
     <>
       <Card
         sx={{
-          // width: "100%",
-          // height: "100%",
-
           display: "flex",
           flexDirection: "column",
           "&:hover": {
@@ -180,9 +199,6 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
       >
         <Box
           sx={{
-            // position: "relative",
-            // paddingTop: "56.25%",
-            // overflow: "hidden",
             width: width && {
               lg: width?.lg,
               md: width?.md,
@@ -203,15 +219,12 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
           ) : (
             <CardMedia
               component="img"
-              image={video.content_details[0].thumbnail_url} // currently we don't have to show carousel in each content that's why mapping 0th element
+              image={getThumbnailUrl()} // currently we don't have to show carousel in each content that's why mapping 0th element
               alt={video.name}
               sx={{
-                // position: "absolute",
-                // top: 0,
-                // left: 0,
                 width: "100%",
                 height: "100%",
-                borderRadius: 2,
+                borderRadius: "12px",
               }}
             />
           )}
@@ -224,7 +237,7 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
           <CardContent
             sx={{
               flexGrow: 1,
-              py: 1,
+              py: "14px",
               px: 0,
               display: "flex",
               flexDirection: "column",
@@ -270,21 +283,14 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
                   }}
                 >
                   <ActionButton
-                    icon={<WhatsApp sx={{ fontSize: fontSize.icon.small }} />}
+                    icon={<WhatsAppIcon />}
                     label="Send"
                     onClick={handleWhatsApp}
                   />
                   <CopyButton text={video?.content_details[0]?.url} />
                 </Box>
                 <ActionButton
-                  icon={
-                    <Reply
-                      sx={{
-                        fontSize: fontSize.icon.small,
-                        transform: "rotate(180deg) scaleY(-1)",
-                      }}
-                    />
-                  }
+                  icon={<ShareIcon />}
                   label="Share"
                   onClick={handleShare}
                   isReversed={true}

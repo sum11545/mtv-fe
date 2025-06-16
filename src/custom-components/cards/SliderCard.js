@@ -29,7 +29,26 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, styles }) => {
 
   // let height = layout?.layout?.height;
   // let width = layout?.layout?.width;
+  const getThumbnailUrl = () => {
+    const details = short?.content_details?.[0];
+    if (!details || details.platform !== "PY")
+      return "/images/404-not-found.jpg";
 
+    const url = details.url;
+    let videoId = "";
+
+    try {
+      const youtubeRegex =
+        /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([^&?/]+)/;
+      const match = url.match(youtubeRegex);
+      const videoId = match?.[1] ?? "";
+      return videoId
+        ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+        : "/images/404-not-found.jpg";
+    } catch (err) {
+      return "/images/404-not-found.jpg";
+    }
+  };
   useEffect(() => {
     setMounted(true);
     try {
@@ -73,24 +92,6 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, styles }) => {
     <>
       <Card
         sx={{
-          // width: 250,
-          // height: height && {
-          //   lg: height.lg,
-          //   md: height.md,
-          //   xl: height.xl,
-          //   xs: height.xs,
-          // },
-          // width: width && {
-          //   lg: width.lg,
-          //   md: width.md,
-          //   xl: width.xl,
-          //   xs: width.xs,
-          // },
-          // height: 400,
-          // aspectRatio: 9 / 16,
-          // display: "flex",
-          // flexDirection: "column",
-
           width: width && {
             lg: width.lg,
             md: width.md,
@@ -115,7 +116,7 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, styles }) => {
         <Box sx={{ position: "relative", height: "100%" }}>
           <CardMedia
             component="img"
-            image={short?.content_details[0]?.thumbnail_url}
+            image={getThumbnailUrl()}
             alt={short.title}
             sx={{
               height: "100%",
@@ -124,25 +125,6 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, styles }) => {
           />
         </Box>
       </Card>
-      {/* <Typography
-        variant="subtitle2"
-        sx={{
-          fontWeight: "bold",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          display: "-webkit-box",
-          WebkitLineClamp: 3,
-          WebkitBoxOrient: "vertical",
-          color: "inherit",
-          mt: 0.5,
-          mb: 0.5,
-          px: 1,
-          fontSize: fontSize.typography.body2,
-          ...fontStyles.openSans.bold,
-        }}
-      >
-        {short.name}
-      </Typography> */}
     </>
   );
 };

@@ -21,6 +21,7 @@ const SliderLayout = ({
   sectionIndex,
   sectionData,
   section,
+  styles = {},
 }) => {
   const router = useRouter();
   const theme = useTheme();
@@ -62,7 +63,7 @@ const SliderLayout = ({
   };
 
   return (
-    <Box sx={{ mb: 4, px: 2.5 }}>
+    <Box sx={{ mb: 4, ...styles }}>
       <Box
         sx={{
           display: "flex",
@@ -72,8 +73,7 @@ const SliderLayout = ({
         }}
       >
         <Typography
-          variant="h6"
-          component="h2"
+          variant="sectionTitle"
           sx={{
             color: router?.pathname === "/" ? "primary.main" : "inherit",
             ...fontStyles.montserrat.bold,
@@ -140,23 +140,7 @@ const SliderLayout = ({
           }}
         >
           {section?.contents?.map((short) => (
-            <Box
-              key={short.id}
-              sx={
-                {
-                  // aspectRatio: 9 / 16,
-                  // height: "400px",
-                  // width: "250px",
-                  // flex: {
-                  //   xs: "0 0 250px", // Increased width for shorts cards
-                  //   sm: "0 0 250px",
-                  // },
-                  // minWidth: "250px", // Ensure minimum width
-                  // maxWidth: "250px", // Ensure maximum width
-                  // height: "400px", // Increased height
-                }
-              }
-            >
+            <Box key={short.id}>
               <SliderCard
                 key={short.id}
                 short={short}

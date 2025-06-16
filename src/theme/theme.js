@@ -19,7 +19,6 @@ export const fontStyles = {
       fontFamily: "Montserrat",
       fontWeight: 400,
     },
-    
   },
   openSans: {
     bold: {
@@ -41,7 +40,7 @@ export const fontStyles = {
     extraSmall: {
       fontFamily: "Montserrat",
       fontWeight: 200,
-    }
+    },
   },
   sfPro: {
     text: {
@@ -218,6 +217,7 @@ export const palette = {
       footer: "#f5f5f5",
       paper: "#ffffff",
       sectionBg: "#FAFAFA",
+      videoDetailSectionBg: "#F2F2F2",
     },
     text: {
       primary: "#000000",
@@ -230,6 +230,7 @@ export const palette = {
         main: "#FF0000",
         dark: "#CC0000",
       },
+      advertisementColor: "#2E2D2D",
     },
   },
   dark: {
@@ -248,6 +249,8 @@ export const palette = {
     background: {
       default: "#040C38",
       paper: "#0a1445",
+      sectionBg: "#03092B",
+      videoDetailSectionBg: "#03092B",
     },
     text: {
       primary: "#ffffff",
@@ -260,6 +263,7 @@ export const palette = {
         main: "#FF0000",
         dark: "#CC0000",
       },
+      advertisementColor: "#2E2D2D",
     },
     action: {
       selected: "#1a2152",
@@ -336,6 +340,23 @@ const typography = {
     ...fontStyles.openSans.regular,
     fontSize: fontSize.typography.overline,
     textTransform: "uppercase",
+  },
+  sectionTitle: {
+    fontSize: "1rem", // sm (default)
+
+    "@media (min-width:900px)": {
+      fontSize: "1.25rem", // lg
+    },
+    "@media (min-width:1400px)": {
+      fontSize: "1.563rem", // xl
+    },
+  },
+  advertisementTitle: {
+    fontSize: "0.75rem", // sm (default)
+
+    "@media (min-width:900px)": {
+      fontSize: "1rem", // lg
+    },
   },
 };
 

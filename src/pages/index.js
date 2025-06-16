@@ -1,5 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { Container, useTheme } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  CircularProgress,
+  Container,
+  useTheme,
+} from "@mui/material";
 import GridLayout from "../custom-components/layouts/GridLayout";
 import SliderLayout from "../custom-components/layouts/SliderLayout";
 import AdSection from "../custom-components/layouts/AdSection";
@@ -39,41 +45,50 @@ export default function Home() {
     }
   };
   return (
-    <Container
-      maxWidth="xl"
-      disableGutters
-      sx={{
-        width: "100%",
-        maxWidth: "100% !important",
-      }}
-    >
-      {sectionData?.map((section, index) => {
-        switch (section.layout_config?.type) {
-          case "grid":
-            const isAd = section.is_ad;
-            const bgColor = getBackgroundColor(isAd);
-            return (
-              <GridLayout
-                section={section}
-                sectionData={sectionData}
-                sectionIndex={sectionIndex}
-                bgColor={bgColor}
-                key={`${section.type}-${index}`}
-              />
-            );
-          case "slider":
-            return (
-              <SliderLayout
-                name={section.name}
-                section={section}
-                sectionData={sectionData}
-                key={`${section.type}-${index}`}
-              />
-            );
-          default:
-            return null;
-        }
-      })}
-    </Container>
+    <>
+      <Backdrop
+        sx={{ background: "transparent", zIndex: 100, height: "100vh" }}
+        open={loading}
+      >
+        <CircularProgress />
+      </Backdrop>
+      <Container
+        maxWidth="xl"
+        disableGutters
+        sx={{
+          width: "100%",
+          maxWidth: "100% !important",
+        }}
+      >
+        {sectionData?.map((section, index) => {
+          switch (section.layout_config?.type) {
+            case "grid":
+              const isAd = section.is_ad;
+              const bgColor = getBackgroundColor(isAd);
+              return (
+                <GridLayout
+                  section={section}
+                  sectionData={sectionData}
+                  sectionIndex={sectionIndex}
+                  bgColor={bgColor}
+                  key={`${section.type}-${index}`}
+                />
+              );
+            case "slider":
+              return (
+                <SliderLayout
+                  name={section.name}
+                  section={section}
+                  sectionData={sectionData}
+                  key={`${section.type}-${index}`}
+                  styles={{ px: 2.5 }}
+                />
+              );
+            default:
+              return null;
+          }
+        })}
+      </Container>
+    </>
   );
 }

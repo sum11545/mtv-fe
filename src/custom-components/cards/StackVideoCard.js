@@ -3,9 +3,28 @@ import { Box, Typography, useTheme } from "@mui/material";
 import React from "react";
 
 const StackVideoCard = ({ video, layout }) => {
-  console.log({ layout });
+  const getThumbnailUrl = () => {
+    const details = video?.content_details?.[0];
+    if (!details || details.platform !== "PY")
+      return "/images/404-not-found.jpg";
+
+    const url = details.url;
+    let videoId = "";
+
+    try {
+      const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?/]+)/;
+      const match = url.match(youtubeRegex);
+      videoId = match?.[1] ?? "";
+    } catch (err) {
+      return "/images/404-not-found.jpg";
+    }
+
+    return videoId
+      ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+      : "/images/404-not-found.jpg";
+  };
   return (
-    <>
+    <Box sx={{ display: "flex", gap: "0.75rem", overflow: "hidden" }}>
       <Box
         sx={{
           width: {
@@ -23,13 +42,11 @@ const StackVideoCard = ({ video, layout }) => {
             xs: layout?.height?.xs || 50,
           },
           position: "relative",
-          borderRadius: 1,
-          overflow: "hidden",
         }}
       >
         <Box
           component={"img"}
-          src={video?.content_details[0]?.thumbnail_url}
+          src={getThumbnailUrl()}
           alt={video.name}
           sx={{
             position: "absolute",
@@ -38,15 +55,18 @@ const StackVideoCard = ({ video, layout }) => {
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            borderRadius: 2,
           }}
         />
       </Box>
-      <Box sx={{ flex: 1, py: 0.5 }}>
+      <Box
+        sx={{ flex: 1, py: 0.5, overflow: "hidden", textOverflow: "ellipsis" }}
+      >
         <Typography
           variant="body2"
           sx={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
+            whiteSpace: "normal",
+            wordBreak: "break-word",
             display: "-webkit-box",
             WebkitLineClamp: 2,
             WebkitBoxOrient: "vertical",
@@ -61,7 +81,7 @@ const StackVideoCard = ({ video, layout }) => {
           {video?.name}
         </Typography>
       </Box>
-    </>
+    </Box>
   );
 };
 

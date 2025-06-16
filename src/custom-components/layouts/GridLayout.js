@@ -16,8 +16,17 @@ import {
 import { useRouter } from "next/router";
 import { fontSize, fontStyles } from "../../theme/theme";
 import StackVideoCard from "../cards/StackVideoCard";
+import ArrowIcon from "@/components/icons/ArrowIcon";
 
-const GridLayout = ({ name, contents, id, sectionData, section, bgColor }) => {
+const GridLayout = ({
+  name,
+  contents,
+  id,
+  sectionData,
+  section,
+  sectionIndex,
+  bgColor,
+}) => {
   const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -29,6 +38,28 @@ const GridLayout = ({ name, contents, id, sectionData, section, bgColor }) => {
   const width = section?.layout_config?.width;
   const spacing = section?.layout_config?.spacing;
   const isAd = section?.is_ad;
+  let rowCount = 1;
+
+  const getBackgroundColor = (isAd, index, isMobile, size) => {
+    if (isAd || isMobile) return theme.palette.background.default;
+    contentIndex++;
+    const getIsIndexCurrentRow = (size) => {
+      // 4 * 0 && 4 * 1
+      // 4 * 0 && 4 * 1
+      // 4 * 0 && 4 * 1
+      // 4 * 0 && 4 * 1
+      return index >= size * (rowCount - 1) && index <= size * rowCount;
+    };
+    const isIndexInCurrentRowXl = getIsIndexCurrentRow(size?.xl);
+
+    if (!isIndexInCurrentRowXl) rowCount++;
+    console.log({ sectionIndex, rowCount });
+    if (rowCount % 2 === 0 || sectionIndex % 2 === 0) {
+      return theme.palette.background.sectionBg;
+    } else {
+      return theme.palette.background.default;
+    }
+  };
 
   const handleScroll = () => {
     if (scrollContainerRef.current) {
@@ -64,7 +95,11 @@ const GridLayout = ({ name, contents, id, sectionData, section, bgColor }) => {
     <Box
       sx={{
         background: bgColor,
-        px: 0.5,
+        px: 2.5,
+        pb: {
+          md: 0,
+          xs: router.pathname === "/" ? "25px" : 0,
+        },
       }}
     >
       <Box
@@ -72,14 +107,24 @@ const GridLayout = ({ name, contents, id, sectionData, section, bgColor }) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          mb: 2,
+          pb: {
+            xl: "1.375rem",
+            lg: "1.125rem",
+            xs: "1.563rem",
+          },
+          pt: {
+            xl: "1.75rem",
+            lg: "1.25rem",
+            xs: "1.563rem",
+          },
         }}
       >
         <Typography
-          variant={isAd ? "body2" : "h6"}
-          component="h2"
+          variant={isAd ? "advertisementTitle" : "sectionTitle"}
           sx={{
-            color: "primary.main",
+            color: isAd
+              ? theme.palette.custom.advertisementColor
+              : "primary.main",
             fontFamily: isAd
               ? { ...fontStyles.openSans.bold }
               : { ...fontStyles.montserrat.bold },
@@ -93,58 +138,18 @@ const GridLayout = ({ name, contents, id, sectionData, section, bgColor }) => {
           router?.pathname === "/" &&
           section.is_ad === false && (
             <Button
-              endIcon={<ChevronRightIcon />}
+              endIcon={<ArrowIcon />}
               sx={{
                 textTransform: "none",
                 ...fontStyles.openSans.regular,
               }}
               onClick={handleViewMore}
             >
-              View More
+              {isMobile ? "" : "View More"}
             </Button>
           )}
       </Box>
-
-      {/* <Box sx={{ position: "relative" }}> */}
-      {/* {showLeftScroll && (
-          <IconButton
-            sx={{
-              position: "absolute",
-              left: -20,
-              top: "30%",
-              transform: "translateY(-50%)",
-              zIndex: 2,
-              bgcolor: "background.paper",
-              boxShadow: 2,
-              "&:hover": { bgcolor: "background.paper" },
-            }}
-            onClick={() => scroll("left")}
-          >
-            <ChevronLeftIcon />
-          </IconButton>
-        )} */}
-
-      {/* <Box
-          ref={scrollContainerRef}
-          onScroll={handleScroll}
-          sx={{
-            overflowX: "auto",
-            scrollbarWidth: "none",
-            "&::-webkit-scrollbar": {
-              display: "none",
-            },
-          }}
-        > */}
-      <Grid
-        container
-        spacing={spacing ?? 2}
-        sx={
-          {
-            // flexWrap: "nowrap",
-            // width: "max-content",
-          }
-        }
-      >
+      <Grid container spacing={spacing ?? 2}>
         {section.contents.map((video, index) => {
           if (video.type === "content" || video.type === "ad_content") {
             return (
@@ -156,13 +161,23 @@ const GridLayout = ({ name, contents, id, sectionData, section, bgColor }) => {
                 xl={12 / size.xl}
                 xs={12 / size.xs}
               >
-                <GridCard
-                  video={video}
-                  id={section.id}
-                  sectionData={sectionData}
-                  section={section}
-                  styles={{ height, width }}
-                />
+                {index !== 0 &&
+                router.pathname === "/" &&
+                video.type !== "ad_content" &&
+                isMobile ? (
+                  <StackVideoCard
+                    video={video}
+                    layout={section?.layout_config}
+                  />
+                ) : (
+                  <GridCard
+                    video={video}
+                    id={section.id}
+                    sectionData={sectionData}
+                    section={section}
+                    styles={{ height, width }}
+                  />
+                )}
               </Grid>
             );
           } else if (video.type === "section") {
@@ -212,26 +227,6 @@ const GridLayout = ({ name, contents, id, sectionData, section, bgColor }) => {
           }
         })}
       </Grid>
-      {/* </Box> */}
-
-      {/* {showRightScroll && !isMobile && (
-          <IconButton
-            sx={{
-              position: "absolute",
-              right: -20,
-              top: "30%",
-              transform: "translateY(-50%)",
-              zIndex: 2,
-              bgcolor: "background.paper",
-              boxShadow: 2,
-              "&:hover": { bgcolor: "background.paper" },
-            }}
-            onClick={() => scroll("right")}
-          >
-            <ChevronRightIcon />
-          </IconButton>
-        )} */}
-      {/* </Box> */}
     </Box>
   );
 };
