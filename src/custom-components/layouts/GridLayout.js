@@ -14,9 +14,10 @@ import {
   ChevronLeft as ChevronLeftIcon,
 } from "@mui/icons-material";
 import { useRouter } from "next/router";
-import { fontSize, fontStyles } from "../../theme/theme";
+import { fontSize, fontStyles, palette } from "../../theme/theme";
 import StackVideoCard from "../cards/StackVideoCard";
 import ArrowIcon from "@/components/icons/ArrowIcon";
+import { DynamicIcon } from "@/components/icons";
 
 const GridLayout = ({
   name,
@@ -33,12 +34,16 @@ const GridLayout = ({
   const scrollContainerRef = useRef(null);
   const [showLeftScroll, setShowLeftScroll] = useState(false);
   const [showRightScroll, setShowRightScroll] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
   const size = section.layout_config.size;
   const height = section?.layout_config?.height;
   const width = section?.layout_config?.width;
   const spacing = section?.layout_config?.spacing;
   const isAd = section?.is_ad;
   let rowCount = 1;
+
+
+  const isDarkMode = theme.palette.mode === "dark";
 
   const getBackgroundColor = (isAd, index, isMobile, size) => {
     if (isAd || isMobile) return theme.palette.background.default;
@@ -138,10 +143,34 @@ const GridLayout = ({
           router?.pathname === "/" &&
           section.is_ad === false && (
             <Button
-              endIcon={<ArrowIcon />}
+              // endIcon={<ArrowIcon />}
+              endIcon={<DynamicIcon 
+                keyword="ARROW" 
+                height={"15px"} 
+                width={"15px"}
+                style={{
+                  color: isDarkMode 
+                    ? (isHovered ? '#fff' : '#fff')
+                    : (isHovered ? 'black' : '')
+                }}
+              />}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
               sx={{
                 textTransform: "none",
                 ...fontStyles.openSans.regular,
+                color: isDarkMode ? '#fff' : '#001691',
+                '&:hover': {
+                  bgcolor: 'transparent',
+                  color: isDarkMode ? '#F4A512' : 'common.black',
+                  '& .MuiButton-endIcon': {
+                    transform: 'translateX(5px)',
+                    transition: 'transform 0.3s ease-in-out'
+                  }
+                },
+                '& .MuiButton-endIcon': {
+                  transition: 'transform 0.3s ease-in-out'
+                }
               }}
               onClick={handleViewMore}
             >

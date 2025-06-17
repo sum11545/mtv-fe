@@ -85,7 +85,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
       }
     };
     SidebarData();
-  }, []);
+  }, [isDarkMode]);
 
   const handleIconClick = (section_slug) => {
     console.log(section_slug);

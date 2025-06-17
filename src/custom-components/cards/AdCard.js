@@ -52,7 +52,7 @@ const AdCard = ({ ad }) => {
             flexDirection: "column",
             justifyContent: "space-between",
             "&:last-child": {
-              paddingBottom: "1rem",
+              // paddingBottom: "1rem",
             },
           }}
         >
@@ -74,18 +74,6 @@ const AdCard = ({ ad }) => {
               alignItems: "center",
             }}
           >
-            <Typography
-              variant="body1"
-              sx={{
-                lineHeight: 1.1,
-                color: theme.palette.custom.adText,
-                fontSize: fontSize.typography.body2,
-                ...fontStyles.montserrat.regular,
-                fontStyle: "italic",
-              }}
-            >
-              {ad.content_details[0].sponsor_name}
-            </Typography>
             <Button
               variant={isMobile ? "text" : "outlined"}
               color="primary"
@@ -110,6 +98,19 @@ const AdCard = ({ ad }) => {
             >
               {ad.content_details[0]?.cta_label}
             </Button>
+
+            <Typography
+              variant="body1"
+              sx={{
+                lineHeight: 1.1,
+                color: theme.palette.custom.adText,
+                fontSize: fontSize.typography.body2,
+                ...fontStyles.montserrat.regular,
+                fontStyle: "italic",
+              }}
+            >
+              {ad.content_details[0].sponsor_name}
+            </Typography>
           </Box>
         </CardContent>
       );

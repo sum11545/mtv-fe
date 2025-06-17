@@ -7,6 +7,7 @@ import {
   Typography,
   Stack,
   IconButton,
+  useTheme,
 } from "@mui/material";
 import { Reply, WhatsApp } from "@mui/icons-material";
 import { useRouter } from "next/router";
@@ -14,11 +15,12 @@ import ShareDialog from "../ShareDialog";
 import CopyButton from "../CopyButton";
 import { useMain } from "@/context/MainContext";
 import AdCard from "./AdCard";
-import { fontStyles, fontSize } from "../../theme/theme";
+import { fontStyles, fontSize, palette } from "../../theme/theme";
 import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import ShareIcon from "@/components/icons/ShareIcon";
+import { DynamicIcon } from "@/components/icons";
 
-const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
+const ActionButton = ({ icon, label, onClick, isReversed = false, onMouseEnter, onMouseLeave, textColor, hoverTextColor }) =>  (
   <Box
     sx={{
       display: "flex",
@@ -30,19 +32,24 @@ const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
       transition: "all 0.2s ease-in-out",
       "&:hover": {
         // backgroundColor: "rgba(0, 0, 0, 0.04)",
-        "& .MuiTypography-root, & .MuiSvgIcon-root": {
+        "& .MuiTypography-root": {
+          color: hoverTextColor || "grey.700",
+        },
+        "& .MuiSvgIcon-root": {
           color: "grey.700",
         },
       },
     }}
     onClick={onClick}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
   >
     {isReversed ? (
       <>
         <Typography
           variant="caption"
           sx={{
-            color: "grey.500",
+            color: textColor || "grey.500",
             fontSize: fontSize.typography.caption,
             userSelect: "none",
             mr: 0.5,
@@ -72,7 +79,7 @@ const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
         <Typography
           variant="caption"
           sx={{
-            color: "grey.500",
+            color: textColor || "grey.500",
             fontSize: fontSize.typography.caption,
             userSelect: "none",
             ml: 0.5,
@@ -88,8 +95,13 @@ const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
 );
 
 const GridCard = ({ video, id, sectionData, section, styles }) => {
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === "dark";
   const router = useRouter();
   const [shareUrl, setShareUrl] = useState("");
+  const [isWhatsAppHovered, setIsWhatsAppHovered] = useState(false);
+  const [isShareHovered, setIsShareHovered] = useState(false);
+  const [isCopyHovered, setIsCopyHovered] = useState(false);
   const { contentConfigurations } = useMain();
   let isAd = ["ATI", "ATV", "ATT"].includes(
     video?.content_details[0]?.content_type_id
@@ -271,28 +283,69 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  mb: 1,
+                  mb: -0.5,
+                  mt: -0.5,
                 }}
               >
                 <Box
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    mt: 0.5,
+                    // mt: 0.5,
                     marginLeft: "-5px",
+                    ...fontStyles.sfPro.condensed.regular,
                   }}
                 >
                   <ActionButton
-                    icon={<WhatsAppIcon />}
+                    icon={<DynamicIcon 
+                      style={{
+                        color: isDarkMode 
+                          ? (isWhatsAppHovered ? '#fff' : '')
+                          : (isWhatsAppHovered ? '#111' : '')
+                      }} 
+                      height={"15px"} 
+                      width={"15px"} 
+                      keyword="WHATSAPP" 
+                    />}
                     label="Send"
                     onClick={handleWhatsApp}
+                    onMouseEnter={() => setIsWhatsAppHovered(true)}
+                    onMouseLeave={() => setIsWhatsAppHovered(false)}
+                    textColor={isDarkMode ? '' : 'grey.500'}
+                    hoverTextColor={isDarkMode ? '#fff' : '#111'}
                   />
-                  <CopyButton text={video?.content_details[0]?.url} />
+
+                  <CopyButton 
+                    color={isCopyHovered ? '#fff' : ''} 
+                    text={video?.content_details[0]?.url}
+                    onMouseEnter={() => setIsCopyHovered(true)}
+                    onMouseLeave={() => setIsCopyHovered(false)}
+                    textColor={isDarkMode ? '' : 'grey.500'}
+                    hoverTextColor={isDarkMode ? '#fff' : '#111'}
+                    iconColor={isDarkMode 
+                      ? (isCopyHovered ? '#fff' : '')
+                      : (isCopyHovered ? '#111' : '')
+                    }
+                  />
+
                 </Box>
                 <ActionButton
-                  icon={<ShareIcon />}
+                  icon={<DynamicIcon 
+                    style={{
+                      color: isDarkMode 
+                        ? (isShareHovered ? '#fff' : '')
+                        : (isShareHovered ? '#111' : '')
+                    }}
+                    height={"15px"} 
+                    width={"15px"} 
+                    keyword="SHARE" 
+                  />}
                   label="Share"
                   onClick={handleShare}
+                  onMouseEnter={() => setIsShareHovered(true)}
+                  onMouseLeave={() => setIsShareHovered(false)}
+                  textColor={isDarkMode ? '' : 'grey.500'}
+                  hoverTextColor={isDarkMode ? '#fff' : '#111'}
                   isReversed={true}
                 />
               </Box>

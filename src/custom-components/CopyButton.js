@@ -3,8 +3,9 @@ import { Box, Typography, Snackbar } from "@mui/material";
 import { ContentCopy } from "@mui/icons-material";
 import { fontSize, fontStyles } from "../theme/theme";
 import CopyIcon from "@/components/icons/CopyIcon";
+import { DynamicIcon } from "@/components/icons";
 
-const CopyButton = ({ text, label = "Copy" }) => {
+const CopyButton = ({color, text, label = "Copy", onMouseEnter, onMouseLeave, textColor, hoverTextColor, iconColor }) => {
   const [copied, setCopied] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
@@ -32,18 +33,28 @@ const CopyButton = ({ text, label = "Copy" }) => {
           padding: "4px 8px",
           transition: "all 0.2s ease-in-out",
           "&:hover": {
-            "& .MuiTypography-root, & .MuiSvgIcon-root": {
-              color: "grey.700",
+            "& .MuiTypography-root": {
+              color: hoverTextColor || "grey.700",
             },
           },
         }}
         onClick={handleCopy}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
       >
-        <CopyIcon />
+        {/* <CopyIcon /> */}
+        <DynamicIcon
+          height={"15px"} 
+          width={"15px"} 
+          keyword="COPY" 
+          style={{
+            color: iconColor || '',
+          }}
+        />
         <Typography
           variant="caption"
           sx={{
-            color: copied ? "success.main" : "grey.500",
+            color: copied ? "success.main" : (textColor || "grey.500"),
             fontSize: fontSize.typography.caption,
             userSelect: "none",
             ml: 0.5,
