@@ -73,8 +73,8 @@ const SearchPage = () => {
       </Backdrop>
       <Container
         maxWidth="xl"
+        disableGutters={true}
         sx={{
-          px: { xs: 3, sm: 5, md: 5 },
           width: "100%",
           maxWidth: "100% !important",
         }}
