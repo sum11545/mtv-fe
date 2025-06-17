@@ -20,7 +20,16 @@ import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import ShareIcon from "@/components/icons/ShareIcon";
 import { DynamicIcon } from "@/components/icons";
 
-const ActionButton = ({ icon, label, onClick, isReversed = false, onMouseEnter, onMouseLeave, textColor, hoverTextColor }) =>  (
+const ActionButton = ({
+  icon,
+  label,
+  onClick,
+  isReversed = false,
+  onMouseEnter,
+  onMouseLeave,
+  textColor,
+  hoverTextColor,
+}) => (
   <Box
     sx={{
       display: "flex",
@@ -297,55 +306,71 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
                   }}
                 >
                   <ActionButton
-                    icon={<DynamicIcon 
-                      style={{
-                        color: isDarkMode 
-                          ? (isWhatsAppHovered ? '#fff' : '')
-                          : (isWhatsAppHovered ? '#111' : '')
-                      }} 
-                      height={"15px"} 
-                      width={"15px"} 
-                      keyword="WHATSAPP" 
-                    />}
+                    icon={
+                      <DynamicIcon
+                        style={{
+                          color: isDarkMode
+                            ? isWhatsAppHovered
+                              ? "#fff"
+                              : ""
+                            : isWhatsAppHovered
+                            ? "#111"
+                            : "",
+                        }}
+                        height={"15px"}
+                        width={"15px"}
+                        keyword="WHATSAPP"
+                      />
+                    }
                     label="Send"
                     onClick={handleWhatsApp}
                     onMouseEnter={() => setIsWhatsAppHovered(true)}
                     onMouseLeave={() => setIsWhatsAppHovered(false)}
-                    textColor={isDarkMode ? '' : 'grey.500'}
-                    hoverTextColor={isDarkMode ? '#fff' : '#111'}
+                    textColor={isDarkMode ? "" : "grey.500"}
+                    hoverTextColor={isDarkMode ? "#fff" : "#111"}
                   />
 
-                  <CopyButton 
-                    color={isCopyHovered ? '#fff' : ''} 
+                  <CopyButton
+                    color={isCopyHovered ? "#fff" : ""}
                     text={video?.content_details[0]?.url}
                     onMouseEnter={() => setIsCopyHovered(true)}
                     onMouseLeave={() => setIsCopyHovered(false)}
-                    textColor={isDarkMode ? '' : 'grey.500'}
-                    hoverTextColor={isDarkMode ? '#fff' : '#111'}
-                    iconColor={isDarkMode 
-                      ? (isCopyHovered ? '#fff' : '')
-                      : (isCopyHovered ? '#111' : '')
+                    textColor={isDarkMode ? "" : "grey.500"}
+                    hoverTextColor={isDarkMode ? "#fff" : "#111"}
+                    iconColor={
+                      isDarkMode
+                        ? isCopyHovered
+                          ? "#fff"
+                          : ""
+                        : isCopyHovered
+                        ? "#111"
+                        : ""
                     }
                   />
-
                 </Box>
                 <ActionButton
-                  icon={<DynamicIcon 
-                    style={{
-                      color: isDarkMode 
-                        ? (isShareHovered ? '#fff' : '')
-                        : (isShareHovered ? '#111' : '')
-                    }}
-                    height={"15px"} 
-                    width={"15px"} 
-                    keyword="SHARE" 
-                  />}
+                  icon={
+                    <DynamicIcon
+                      style={{
+                        color: isDarkMode
+                          ? isShareHovered
+                            ? "#fff"
+                            : ""
+                          : isShareHovered
+                          ? "#111"
+                          : "",
+                      }}
+                      height={"15px"}
+                      width={"15px"}
+                      keyword="SHARE"
+                    />
+                  }
                   label="Share"
                   onClick={handleShare}
                   onMouseEnter={() => setIsShareHovered(true)}
                   onMouseLeave={() => setIsShareHovered(false)}
-                  textColor={isDarkMode ? '' : 'grey.500'}
-                  hoverTextColor={isDarkMode ? '#fff' : '#111'}
+                  textColor={isDarkMode ? "" : "grey.500"}
+                  hoverTextColor={isDarkMode ? "#fff" : "#111"}
                   isReversed={true}
                 />
               </Box>
