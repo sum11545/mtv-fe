@@ -459,28 +459,4 @@ const VideoDetailPage = () => {
 
 export default VideoDetailPage;
 
-// Remove getStaticPaths and getStaticProps and replace with getServerSideProps
-export async function getServerSideProps({ params, req, res }) {
-  const { section, video } = params;
 
-  try {
-    // Set cache headers
-    res.setHeader(
-      "Cache-Control",
-      "public, s-maxage=10, stale-while-revalidate=59"
-    );
-
-    return {
-      props: {
-        // We'll fetch the data client-side using the useEffect hook
-        section,
-        video,
-      },
-    };
-  } catch (error) {
-    console.error("Error in getServerSideProps:", error);
-    return {
-      notFound: true,
-    };
-  }
-}
