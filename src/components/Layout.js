@@ -93,11 +93,11 @@ const Layout = ({ children }) => {
       >
         <Header toggleSidebar={toggleSidebar} />
         {/* Hide category tabs on mobile for shorts detail page */}
-        {!(isMobile || isShortsPage) && (
+        {/* {!(isMobile || isShortsPage) && (
           <TabsContainer>
             <CategoryTabs />
           </TabsContainer>
-        )}
+        )} */}
         <Main
           isShortsPageMobile={isMobile && isShortsPage}
           sx={{ marginTop: isShortsPage || isMobile ? "64px" : "104px" }}

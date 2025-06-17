@@ -28,9 +28,12 @@ const DynamicIcon = ({
     'FB':'facebook-icon',
     'FEEDBACK':'feedback-icon',
     'ARROW': 'arrow-icon',
+    'ARROW-YELLOW': 'arrow-yellow',
     'WHATSAPP': 'whats-app-icon',
     'COPY': 'copy-icon',
     'SHARE': 'share-icon',
+    "ARROW-UP": 'arrow-up',
+    "ARROW-DOWN": 'arrow-down',
   };
 
   useEffect(() => {
@@ -71,6 +74,7 @@ const DynamicIcon = ({
       case 'yellow':
         return 'brightness(0) saturate(100%) invert(85%) sepia(100%) saturate(500%) hue-rotate(0deg)';
       case '#f4a512':
+        // 'brightness(0) saturate(100%) invert(65%) sepia(95%) saturate(800%) hue-rotate(10deg) brightness(0.9) contrast(110%)';
         return 'brightness(0) saturate(100%) invert(75%) sepia(100%) saturate(1000%) hue-rotate(15deg) brightness(1.2)';
       default:
         return 'brightness(0) saturate(100%) invert(0%)'; // fallback to black

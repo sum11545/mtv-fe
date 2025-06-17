@@ -21,12 +21,13 @@ import {
 import { useMain } from "@/context/MainContext";
 import CopyButton from "@/custom-components/CopyButton";
 import ShareDialog from "@/custom-components/ShareDialog";
-import { fontSize, fontStyles } from "@/theme/theme";
+import { fontSize, fontStyles, palette } from "@/theme/theme";
 import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import ShareIcon from "@/components/icons/ShareIcon";
 import ShareShortMobileIcon from "@/components/icons/ShareShortMobileIcon";
 import { ShortCopyMobileIcon } from "@/components/icons/ShortCopyMobileIcon";
 import ShortWhatsAppMobileIcon from "@/components/icons/ShortWhatsAppMobileIcon";
+import { DynamicIcon } from "@/components/icons";
 
 const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
   <Box
@@ -166,6 +167,7 @@ const Short = () => {
 
   // Responsive breakpoint
   const theme = useTheme();
+  const isDarkMode = theme.palette.mode === "dark";
   const isMobile = useMediaQuery("(max-width:899px)"); // Simplified breakpoint to ensure all mobile devices are covered
 
   // Touch gesture handling for mobile
@@ -596,7 +598,13 @@ const Short = () => {
                 cursor: isPreviousDisabled ? "not-allowed" : "pointer",
               }}
             >
-              <ArrowUpward fontSize="large" />
+              {/* <ArrowUpward fontSize="large" /> */}
+              <DynamicIcon
+                keyword={"arrow-up"}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
             </IconButton>
             <IconButton
               color="inherit"
@@ -611,9 +619,16 @@ const Short = () => {
                 },
                 opacity: isNextDisabled ? 0.3 : 1,
                 cursor: isNextDisabled ? "not-allowed" : "pointer",
+                mt: 2,
               }}
             >
-              <ArrowDownward fontSize="large" />
+              {/* <ArrowDownward fontSize="large" /> */}
+              <DynamicIcon
+                keyword={"arrow-down"}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
             </IconButton>
             <Typography
               variant="caption"
