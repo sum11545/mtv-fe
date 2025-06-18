@@ -81,7 +81,7 @@ export const CONTENT_CONFIG = {
       contactEmail: "grow@moneytv.live",
     },
     api: {
-      baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || "https://api.moneytv.com",
+      baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3700/api/v1",
       videos: "/api/videos",
       sections: "/api/sections",
       search: "/api/search",
