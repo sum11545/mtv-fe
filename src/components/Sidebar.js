@@ -25,6 +25,7 @@ import {
 } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { fontSize, fontStyles, layout, palette} from "../theme/theme";
 import { useMain } from "@/context/MainContext";
 import { DynamicIcon, MoonStarIcon } from "./icons";
@@ -345,18 +346,26 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
             justifyContent: "space-between",
           }}
         >
-          <Typography
-            variant="h6"
-            component="div"
-            color="primary.main"
-            sx={{
-              ...fontStyles.sfPro.condensed.bold,
-              fontSize: theme.fontSize?.typography?.h6 || fontSize.typography.h6,
-              textTransform: "uppercase",
-            }}
-          >
-            Welcome, User!
-          </Typography>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            <Image
+              src="/assets/icons/favicon.png"
+              alt="Logo"
+              width={24}
+              height={24}
+            />
+            <Typography
+              variant="h6"
+              component="div"
+              color="primary.main"
+              sx={{
+                ...fontStyles.sfPro.condensed.bold,
+                fontSize: theme.fontSize?.typography?.h6 || fontSize.typography.h6,
+                textTransform: "uppercase",
+              }}
+            >
+             Welcome User
+            </Typography>
+          </Box>
           <IconButton
             onClick={onClose}
             edge="end"
