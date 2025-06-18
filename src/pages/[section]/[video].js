@@ -25,8 +25,10 @@ import { useMain } from "@/context/MainContext";
 import StackLayout from "@/custom-components/layouts/StackLayout";
 import AdSection from "@/custom-components/layouts/AdSection";
 import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
+import { DynamicIcon } from "@/components/icons";
+import { useContent } from "@/hooks/useContent";
 
-const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
+const ActionButton = ({ icon, label, onClick, isReversed = false, onMouseEnter, onMouseLeave, textColor, hoverTextColor }) => (
   <Box
     sx={{
       display: "flex",
@@ -37,19 +39,24 @@ const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
       padding: "4px 8px",
       transition: "all 0.2s ease-in-out",
       "&:hover": {
-        "& .MuiTypography-root, & .MuiSvgIcon-root": {
+        "& .MuiTypography-root": {
+          color: hoverTextColor || "grey.700",
+        },
+        "& .MuiSvgIcon-root": {
           color: "grey.700",
         },
       },
     }}
     onClick={onClick}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
   >
     {isReversed ? (
       <>
         <Typography
           variant="caption"
           sx={{
-            color: "grey.500",
+            color: textColor || "grey.500",
             fontSize: fontSize.typography.caption,
             userSelect: "none",
             mr: 0.5,
@@ -79,7 +86,7 @@ const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
         <Typography
           variant="caption"
           sx={{
-            color: "grey.500",
+            color: textColor || "grey.500",
             fontSize: fontSize.typography.caption,
             userSelect: "none",
             ml: 0.5,
@@ -104,9 +111,24 @@ const VideoDetailPage = () => {
   const [relatedVideos, setRelatedVideos] = useState([]);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
+  const [isWhatsAppHovered, setIsWhatsAppHovered] = useState(false);
+  const [isShareHovered, setIsShareHovered] = useState(false);
+  const [isCopyHovered, setIsCopyHovered] = useState(false);
 
   const [videoDetailData, setVideoDetailData] = useState(null);
   const { fetchVideoDetailPageData, loading } = useMain();
+  const { 
+    getButtonConfig, 
+    getSocialUrl, 
+    getSuccessMessage, 
+    isDarkMode,
+    isFeatureEnabled 
+  } = useContent();
+  
+  // Get button configurations
+  const whatsappConfig = getButtonConfig('whatsapp');
+  const shareConfig = getButtonConfig('share');
+  const copyConfig = getButtonConfig('copy');
 
   const shouldTruncate =
     isMobile && videoDetailData?.description.length > maxChars;
@@ -158,17 +180,15 @@ const VideoDetailPage = () => {
   };
 
   const handleShare = () => {
-    if (videoData) {
+    if (videoDetailData) {
       setShareDialogOpen(true);
     }
   };
 
   const handleWhatsApp = () => {
-    if (videoData) {
-      const text = encodeURIComponent(
-        `${videoData.content_details[0]?.url}\n${window.location.href}`
-      );
-      window.open(`https://wa.me/?text=${text}`, "_blank");
+    if (videoDetailData) {
+      const shareUrl = getSocialUrl('whatsapp', window.location.href, videoDetailData.content_details[0].url);
+      window.open(shareUrl, "_blank");
     }
   };
 
@@ -265,22 +285,70 @@ const VideoDetailPage = () => {
                 }}
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <WhatsAppIcon />
-                  <CopyButton text={videoDetailData?.content_details[0]?.url} />
-                </Box>
-                <ActionButton
-                  icon={
-                    <Reply
-                      sx={{
-                        fontSize: fontSize.icon.small,
-                        transform: "rotate(180deg) scaleY(-1)",
-                      }}
+                  {isFeatureEnabled('enableWhatsAppSharing') && (
+                    <ActionButton
+                      icon={<DynamicIcon 
+                        style={{
+                          color: isDarkMode 
+                            ? (isWhatsAppHovered ? whatsappConfig.colors?.hover : whatsappConfig.colors?.normal)
+                            : (isWhatsAppHovered ? '#111' : '')
+                        }} 
+                        height={"15px"} 
+                        width={"15px"} 
+                        keyword={whatsappConfig.icon} 
+                      />}
+                      label={whatsappConfig.label}
+                      onClick={handleWhatsApp}
+                      onMouseEnter={() => setIsWhatsAppHovered(true)}
+                      onMouseLeave={() => setIsWhatsAppHovered(false)}
+                      textColor={isDarkMode ? whatsappConfig.colors?.normal : 'grey.500'}
+                      hoverTextColor={isDarkMode ? whatsappConfig.colors?.hover : '#111'}
                     />
-                  }
-                  label="Share"
-                  onClick={handleShare}
-                  isReversed={true}
-                />
+                  )}
+
+                  {isFeatureEnabled('enableCopyLink') && (
+                    <CopyButton 
+                      color={isCopyHovered ? '#fff' : ''} 
+                      text={videoDetailData?.content_details[0]?.url}
+                      label={copyConfig.label}
+                      onMouseEnter={() => setIsCopyHovered(true)}
+                      onMouseLeave={() => setIsCopyHovered(false)}
+                      textColor={isDarkMode ? copyConfig.colors?.normal : 'grey.500'}
+                      hoverTextColor={isDarkMode ? copyConfig.colors?.hover : '#111'}
+                      iconColor={isDarkMode 
+                        ? (isCopyHovered ? copyConfig.colors?.hover : copyConfig.colors?.normal)
+                        : (isCopyHovered ? '#111' : '')
+                      }
+                    />
+                  )}
+                </Box>
+                {isFeatureEnabled('enableSharing') && (
+                  <ActionButton
+                    icon={
+                      <DynamicIcon
+                        style={{
+                          color: isDarkMode
+                            ? isShareHovered
+                              ? shareConfig.colors?.hover
+                              : shareConfig.colors?.normal
+                            : isShareHovered
+                            ? "#111"
+                            : "",
+                        }}
+                        height={"15px"}
+                        width={"15px"}
+                        keyword={shareConfig.icon}
+                      />
+                    }
+                    label={shareConfig.label}
+                    onClick={handleShare}
+                    onMouseEnter={() => setIsShareHovered(true)}
+                    onMouseLeave={() => setIsShareHovered(false)}
+                    textColor={isDarkMode ? shareConfig.colors?.normal : "grey.500"}
+                    hoverTextColor={isDarkMode ? shareConfig.colors?.hover : "#111"}
+                    isReversed={true}
+                  />
+                )}
               </Box>
 
               {/* Video Description */}
@@ -436,7 +504,7 @@ const VideoDetailPage = () => {
                         name={section.name}
                         ads={section.contents}
                         section={section}
-                        sectionData={sectionData}
+                        sectionData={videoDetailData}
                       />
                     );
                   default:
@@ -452,7 +520,7 @@ const VideoDetailPage = () => {
         open={shareDialogOpen}
         onClose={() => setShareDialogOpen(false)}
         url={shareUrl}
-        title={videoData?.name}
+        title={videoDetailData?.name}
       />
     </>
   );

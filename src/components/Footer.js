@@ -20,6 +20,7 @@ import {
   YouTube,
 } from "@mui/icons-material";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import { fontStyles, fontSize, palette } from "../theme/theme";
 import { DynamicIcon } from "./icons";
@@ -47,6 +48,7 @@ const MobileFooter = (props) => {
     validateForm,
   } = props;
   const theme = useTheme();
+  const router = useRouter();
   const isDarkMode = theme.palette.mode === "dark";
   const { config, getUrl } = useContent();
 
@@ -355,7 +357,7 @@ const MobileFooter = (props) => {
         <Stack direction="row" spacing={2}>
           <Typography
             color="primary.main"
-            onClick={() => window.open(getUrl('external', 'privacy'), "_blank")}
+            onClick={() => router.push(getUrl('external', 'privacy'))}
             sx={{
               fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
@@ -369,7 +371,7 @@ const MobileFooter = (props) => {
           </Typography>
           <Typography
             color="primary.main"
-            onClick={() => window.open(getUrl('external', 'terms'), "_blank")}
+            onClick={() => router.push(getUrl('external', 'terms'))}
             sx={{
               fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
@@ -383,7 +385,7 @@ const MobileFooter = (props) => {
           </Typography>
           <Typography
             color="primary.main"
-            onClick={() => window.open(getUrl('external', 'help'), "_blank")}
+            onClick={() => router.push(getUrl('external', 'help'))}
             sx={{
               fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
@@ -406,7 +408,8 @@ const Footer = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isDarkMode = theme.palette.mode === "dark";
-  const { config } = useContent();
+  const { config, getUrl } = useContent();
+  const router = useRouter();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -495,8 +498,6 @@ const Footer = () => {
 
   // Desktop Footer (original unchanged)
   const renderDesktopFooter = () => {
-    const { config, getUrl } = useContent();
-    
     return (
       <Box
         sx={{
@@ -662,7 +663,7 @@ const Footer = () => {
               <Stack spacing={1}>
                 <Typography
                   color="primary.main"
-                  onClick={() => window.open(getUrl('external', 'privacy'), "_blank")}
+                  onClick={() => router.push(getUrl('external', 'privacy'))}
                   sx={{
                     fontSize: fontSize.nav.primary,
                     ...fontStyles.openSans.regular,
@@ -677,7 +678,7 @@ const Footer = () => {
                 </Typography>
                 <Typography
                   color="primary.main"
-                  onClick={() => window.open(getUrl('external', 'terms'), "_blank")}
+                  onClick={() => router.push(getUrl('external', 'terms'))}
                   sx={{
                     fontSize: fontSize.nav.primary,
                     ...fontStyles.openSans.regular,
@@ -692,7 +693,7 @@ const Footer = () => {
                 </Typography>
                 <Typography
                   color="primary.main"
-                  onClick={() => window.open(getUrl('external', 'help'), "_blank")}
+                  onClick={() => router.push(getUrl('external', 'help'))}
                   sx={{
                     fontSize: fontSize.nav.primary,
                     ...fontStyles.openSans.regular,

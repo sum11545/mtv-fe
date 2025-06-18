@@ -196,6 +196,9 @@ const GridLayout = ({
                   <StackVideoCard
                     video={video}
                     layout={section?.layout_config}
+                    id={section.id}
+                    sectionData={sectionData}
+                    section={section}
                   />
                 ) : (
                   <GridCard
