@@ -23,7 +23,7 @@ const Main = styled("main")(({ theme, isShortsPageMobile }) => ({
   flexDirection: "column",
   [theme.breakpoints.down("sm")]: {
     width: "100%",
-    marginTop: isShortsPageMobile ? 0 : theme.spacing(13),
+    marginTop: isShortsPageMobile ? 0 : theme.spacing(15),
   },
 }));
 
@@ -314,7 +314,7 @@ const Layout = ({ children }) => {
           sx={{ 
             marginTop: backButtonInfo.show 
               ? (isShortsPage || isMobile ? "120px" : "120px")
-              : (isShortsPage || isMobile ? "64px" : "80px")
+              : (isShortsPage || isMobile ? "70px" : "80px")
           }}
         >
           {children}
