@@ -28,6 +28,8 @@ const DynamicIcon = ({
     'FB':'facebook-icon',
     'FEEDBACK':'feedback-icon',
     'ARROW': 'arrow-icon',
+    'ARROW-LEFT': 'arrow-left',
+    'ARROW-LEFT_YELLOW': 'arrow-left-yellow',
     'ARROW-YELLOW': 'arrow-yellow',
     'WHATSAPP': 'whats-app-icon',
     'COPY': 'copy-icon',
