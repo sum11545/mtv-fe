@@ -9,6 +9,8 @@ import Footer from "./Footer";
 import NoVideosPage from "@/pages/no-videos";
 import createAppTheme from "@/theme/theme";
 import { fontSize, fontStyles } from "@/theme/theme";
+import { DynamicIcon } from "@/components/icons";
+import { useContent } from "@/hooks/useContent";
 
 const MINI_DRAWER_WIDTH = 70;
 
@@ -56,19 +58,43 @@ const BackButtonContainer = styled(Box)(({ theme }) => ({
 }));
 
 const BackButton = ({ onClick, label }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const { getColor, isDarkMode } = useContent();
+  
   return (
     <BackButtonContainer>
       <Button
-        startIcon={<ArrowBack />}
+        startIcon={<DynamicIcon 
+          keyword={isHovered ? 'ARROW-LEFT_YELLOW' : 'ARROW-LEFT'}
+          height={"15px"} 
+          width={"15px"}
+          style={{
+            color: isDarkMode 
+              ? (isHovered ? '' : '#fff')
+              : (isHovered ? 'black' : ''),
+            transform: 'rotate(180deg)' // Rotate arrow to point left for back
+          }}
+        />}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
         onClick={onClick}
         sx={{
-          color: "text.primary",
           textTransform: "none",
-          fontSize: fontSize.button.medium,
           ...fontStyles.openSans.regular,
-          "&:hover": {
-            backgroundColor: "action.hover",
+          fontSize: fontSize.button.medium,
+          color: isDarkMode ? '#fff' : 'black',
+          '&:hover': {
+            bgcolor: 'transparent',
+            color: isDarkMode ? getColor('secondary') : 'common.black',
+            '& .MuiButton-startIcon': {
+              transform: 'translateX(-5px) rotate(180deg)',
+              transition: 'transform 0.3s ease-in-out'
+            }
           },
+          '& .MuiButton-startIcon': {
+            transition: 'transform 0.3s ease-in-out',
+            transform: 'rotate(180deg)'
+          }
         }}
       >
         {label}
