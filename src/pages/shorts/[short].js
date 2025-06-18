@@ -9,6 +9,8 @@ import {
   Grid,
   useTheme,
   useMediaQuery,
+  Backdrop,
+  CircularProgress,
 } from "@mui/material";
 import {
   WhatsApp,
@@ -159,7 +161,7 @@ const getEmbedUrl = (url) => {
 const Short = () => {
   const router = useRouter();
   const { short } = router.query;
-  const { fetchShortDetailPageData } = useMain();
+  const { fetchShortDetailPageData, loading } = useMain();
   const [allShorts, setAllShorts] = useState([]);
   const [currentShortIndex, setCurrentShortIndex] = useState(0);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
@@ -294,7 +296,13 @@ const Short = () => {
           justifyContent: "center",
         }}
       >
-        <Typography>Loading...</Typography>
+        {/* <Typography>Loading...</Typography> */}
+        <Backdrop
+        sx={{ background: "transparent", zIndex: 100, height: "100vh" }}
+        open={loading}
+      >
+        <CircularProgress />
+      </Backdrop>
       </Box>
     );
   }
