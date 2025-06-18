@@ -23,7 +23,7 @@ const Main = styled("main")(({ theme, isShortsPageMobile }) => ({
   flexDirection: "column",
   [theme.breakpoints.down("sm")]: {
     width: "100%",
-    marginTop: isShortsPageMobile ? 0 : theme.spacing(20),
+    marginTop: isShortsPageMobile ? 0 : theme.spacing(13),
   },
 }));
 
@@ -47,7 +47,6 @@ const BackButtonContainer = styled(Box)(({ theme }) => ({
   right: MINI_DRAWER_WIDTH,
   zIndex: theme.zIndex.appBar - 1,
   backgroundColor: theme.palette.background.default,
-  borderBottom: `1px solid ${theme.palette.divider}`,
   padding: theme.spacing(1, 2),
   [theme.breakpoints.down("sm")]: {
     top: "64px",
@@ -107,40 +106,104 @@ const Layout = ({ children }) => {
   const [mounted, setMounted] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [navigationHistory, setNavigationHistory] = useState([]);
   const isMobile = useMediaQuery("(max-width:600px)");
   const router = useRouter();
 
   // Check if current page is shorts page
   const isShortsPage = router.pathname.includes("/shorts");
 
+  // Get the previous route from navigation history
+  const getPreviousRoute = () => {
+    if (navigationHistory.length >= 2) {
+      return navigationHistory[navigationHistory.length - 2];
+    }
+    return null;
+  };
+
+  // Get a user-friendly label for a route
+  const getRouteLabel = (route) => {
+    if (!route) return "Home";
+    
+    const { pathname, query } = route;
+    
+    if (pathname === "/") return "Home";
+    if (pathname === "/search") return "Search";
+    if (pathname === "/[section]" && query.section) {
+      return query.section.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    }
+    if (pathname === "/[section]/[video]" && query.section) {
+      return query.section.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    }
+    if (pathname === "/shorts/[short]") return "Shorts";
+    if (pathname === "/privacy-policy") return "Privacy Policy";
+    if (pathname === "/terms-of-service") return "Terms of Service";
+    if (pathname === "/help") return "Help";
+    
+    return "Previous Page";
+  };
+
+  // Navigate to a specific route
+  const navigateToRoute = (route) => {
+    if (!route) {
+      router.push("/");
+      return;
+    }
+
+    const { pathname, query } = route;
+    
+    if (pathname === "/") {
+      router.push("/");
+    } else if (pathname === "/search") {
+      router.push("/search");
+    } else if (pathname === "/[section]" && query.section) {
+      router.push(`/${query.section}`);
+    } else if (pathname === "/[section]/[video]" && query.section && query.video) {
+      router.push(`/${query.section}/${query.video}`);
+    } else if (pathname === "/shorts/[short]" && query.short) {
+      router.push(`/shorts/${query.short}`);
+    } else {
+      router.push(pathname);
+    }
+  };
+
   // Determine if we should show back button and what the back action should be
   const getBackButtonInfo = () => {
     const { pathname, query } = router;
+    const previousRoute = getPreviousRoute();
     
-    // If we're on a video detail page (e.g., /section-slug/video-id)
-    if (pathname === "/[section]/[video]" && query.section && query.video) {
+    // Show back button for pages that should have navigation
+    const shouldShowBackButton = [
+      "/[section]/[video]",
+      "/shorts/[short]", 
+      "/[section]",
+      "/search",
+      "/privacy-policy",
+      "/terms-of-service", 
+      "/help"
+    ].includes(pathname);
+
+    if (shouldShowBackButton) {
+      const previousLabel = getRouteLabel(previousRoute);
+      
       return {
         show: true,
-        label: `Back to ${query.section.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}`,
-        action: () => router.push(`/${query.section}`)
-      };
-    }
-    
-    // If we're on a shorts detail page (e.g., /shorts/short-id)
-    if (pathname === "/shorts/[short]" && query.short) {
-      return {
-        show: true,
-        label: "Back to Home",
-        action: () => router.push("/")
-      };
-    }
-    
-    // If we're on a section page (e.g., /section-slug)
-    if (pathname === "/[section]" && query.section) {
-      return {
-        show: true,
-        label: "Back to Home",
-        action: () => router.push("/")
+        label: `Back to ${previousLabel}`,
+        action: () => {
+          if (previousRoute) {
+            // Remove current route from history and navigate to previous
+            setNavigationHistory(prev => prev.slice(0, -1));
+            try {
+              navigateToRoute(previousRoute);
+            } catch (error) {
+              console.error('Navigation failed, falling back to home:', error);
+              router.push("/");
+            }
+          } else {
+            // Fallback to home if no previous route
+            router.push("/");
+          }
+        }
       };
     }
     
@@ -148,6 +211,44 @@ const Layout = ({ children }) => {
   };
 
   const backButtonInfo = getBackButtonInfo();
+
+  // Track route changes and build navigation history
+  useEffect(() => {
+    const handleRouteChangeComplete = (url) => {
+      const currentRoute = {
+        pathname: router.pathname,
+        query: router.query,
+        asPath: router.asPath,
+        url: url
+      };
+
+      setNavigationHistory(prev => {
+        // Don't add the same route consecutively
+        const lastRoute = prev[prev.length - 1];
+        if (lastRoute && 
+            lastRoute.pathname === currentRoute.pathname && 
+            JSON.stringify(lastRoute.query) === JSON.stringify(currentRoute.query)) {
+          return prev;
+        }
+
+        // Limit history to last 10 routes to prevent memory issues
+        const newHistory = [...prev, currentRoute];
+        return newHistory.slice(-10);
+      });
+    };
+
+    // Add current route to history on component mount
+    if (router.isReady) {
+      handleRouteChangeComplete(router.asPath);
+    }
+
+    // Listen for route changes
+    router.events.on('routeChangeComplete', handleRouteChangeComplete);
+
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChangeComplete);
+    };
+  }, [router.isReady, router.pathname, router.query, router.asPath]);
 
   useEffect(() => {
     setMounted(true);
@@ -213,14 +314,14 @@ const Layout = ({ children }) => {
           sx={{ 
             marginTop: backButtonInfo.show 
               ? (isShortsPage || isMobile ? "120px" : "120px")
-              : (isShortsPage || isMobile ? "64px" : "104px")
+              : (isShortsPage || isMobile ? "64px" : "80px")
           }}
         >
           {children}
           {/* <NoVideosPage /> */}
         </Main>
         {/* Hide footer on mobile for shorts detail page */}
-        {!(isMobile || isShortsPage) && <Footer />}
+        {!(isShortsPage) && <Footer />}
         <Sidebar
           open={sidebarOpen}
           onClose={toggleSidebar}
