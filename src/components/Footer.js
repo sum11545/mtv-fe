@@ -24,6 +24,7 @@ import styled from "@emotion/styled";
 import { fontStyles, fontSize, palette } from "../theme/theme";
 import { DynamicIcon } from "./icons";
 import Link from "next/link";
+import { useContent } from "@/hooks/useContent";
 
 const LogoWrapper = styled(Box)({
   display: "flex",
@@ -47,6 +48,7 @@ const MobileFooter = (props) => {
   } = props;
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
+  const { config, getUrl } = useContent();
 
   return (
     <Box
@@ -90,13 +92,13 @@ const MobileFooter = (props) => {
             ...fontStyles.openSans.semibold,
           }}
         >
-          <Feedback sx={{ fontSize: fontSize.typography.subtitle1 }} /> Send
-          Feedback
+          <Feedback sx={{ fontSize: fontSize.typography.subtitle1 }} /> 
+          {config.footer.feedbackTitle}
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate>
           <TextField
             size="small"
-            label="Name"
+            label={config.forms.labels.name}
             variant="standard"
             fullWidth
             name="name"
@@ -127,7 +129,7 @@ const MobileFooter = (props) => {
           />
           <TextField
             size="small"
-            label="Email"
+            label={config.forms.labels.feedbackEmail}
             type="email"
             variant="standard"
             fullWidth
@@ -159,7 +161,7 @@ const MobileFooter = (props) => {
           />
           <TextField
             size="small"
-            label="Message"
+            label={config.forms.labels.feedbackMessage}
             multiline
             rows={3}
             variant="standard"
@@ -210,7 +212,7 @@ const MobileFooter = (props) => {
               ...fontStyles.sfPro.display.bold,
             }}
           >
-            Send Message
+            {config.footer.sendMessage}
           </Button>
         </Box>
       </Box>
@@ -236,35 +238,33 @@ const MobileFooter = (props) => {
             ...fontStyles.montserrat.bold,
           }}
         >
-          Let's 'find true value here.'
+          {config.footer.slogan}
         </Typography>
 
         {/* 2. grow@moneytv.live link */}
-        <Link
-          href="#"
+        <Typography
+          color="primary.main"
+          onClick={() => window.open(`mailto:${getUrl('external', 'contactEmail')}`, "_self")}
           sx={{
             display: "block",
             mb: 2,
+            textDecoration: "underline",
             fontSize: fontSize.nav.primary,
             ...fontStyles.openSans.regular,
+            cursor: "pointer",
+            "&:hover": {
+              color: "primary.dark",
+            }
           }}
         >
-          grow@moneytv.live
-        </Link>
+          {getUrl('external', 'contactEmail')}
+        </Typography>
 
         {/* 3. Social media icons */}
         <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
           <IconButton
             size="small"
-            sx={{
-              "& .MuiSvgIcon-root": {
-                fontSize: fontSize.icon.medium,
-                color: "primary.main",
-              },
-            }}
-          ></IconButton>
-          <IconButton
-            size="small"
+            onClick={() => window.open(getUrl('social', 'footerYoutube'), "_blank")}
             sx={{
               "& .MuiSvgIcon-root": {
                 fontSize: fontSize.icon.medium,
@@ -272,10 +272,18 @@ const MobileFooter = (props) => {
               },
             }}
           >
-            <Instagram />
+            <DynamicIcon
+              width={"30px"}
+              height={"30px"}
+              keyword={config.footer.icons.youtube}
+              style={{
+                color: isDarkMode ? palette?.dark?.primary?.main : "",
+              }}
+            />
           </IconButton>
           <IconButton
             size="small"
+            onClick={() => window.open(getUrl('social', 'footerInstagram'), "_blank")}
             sx={{
               "& .MuiSvgIcon-root": {
                 fontSize: fontSize.icon.medium,
@@ -283,10 +291,16 @@ const MobileFooter = (props) => {
               },
             }}
           >
-            <Twitter />
+            <DynamicIcon
+              keyword={config.footer.icons.instagram}
+              style={{
+                color: isDarkMode ? palette?.dark?.primary?.main : "",
+              }}
+            />
           </IconButton>
           <IconButton
             size="small"
+            onClick={() => window.open(getUrl('social', 'footerTwitter'), "_blank")}
             sx={{
               "& .MuiSvgIcon-root": {
                 fontSize: fontSize.icon.medium,
@@ -294,10 +308,16 @@ const MobileFooter = (props) => {
               },
             }}
           >
-            <LinkedIn />
+            <DynamicIcon
+              keyword={config.footer.icons.twitter}
+              style={{
+                color: isDarkMode ? palette?.dark?.primary?.main : "",
+              }}
+            />
           </IconButton>
           <IconButton
             size="small"
+            onClick={() => window.open(getUrl('social', 'footerLinkedin'), "_blank")}
             sx={{
               "& .MuiSvgIcon-root": {
                 fontSize: fontSize.icon.medium,
@@ -305,39 +325,76 @@ const MobileFooter = (props) => {
               },
             }}
           >
-            <Facebook />
+            <DynamicIcon
+              keyword={config.footer.icons.linkedin}
+              style={{
+                color: isDarkMode ? palette?.dark?.primary?.main : "",
+              }}
+            />
+          </IconButton>
+          <IconButton
+            size="small"
+            onClick={() => window.open(getUrl('social', 'footerFacebook'), "_blank")}
+            sx={{
+              "& .MuiSvgIcon-root": {
+                fontSize: fontSize.icon.medium,
+                color: "primary.main",
+              },
+            }}
+          >
+            <DynamicIcon
+              keyword={config.footer.icons.facebook}
+              style={{
+                color: isDarkMode ? palette?.dark?.primary?.main : "",
+              }}
+            />
           </IconButton>
         </Stack>
 
         {/* 4. Privacy, Terms, Help links in a row */}
         <Stack direction="row" spacing={2}>
-          <Link
-            href="#"
+          <Typography
+            color="primary.main"
+            onClick={() => window.open(getUrl('external', 'privacy'), "_blank")}
             sx={{
               fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
+              cursor: "pointer",
+              "&:hover": {
+                color: "primary.dark",
+              }
             }}
           >
-            Privacy Policy
-          </Link>
-          <Link
-            href="#"
+            {config.footer.links.privacyPolicy}
+          </Typography>
+          <Typography
+            color="primary.main"
+            onClick={() => window.open(getUrl('external', 'terms'), "_blank")}
             sx={{
               fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
+              cursor: "pointer",
+              "&:hover": {
+                color: "primary.dark",
+              }
             }}
           >
-            Terms of Use
-          </Link>
-          <Link
-            href="#"
+            {config.footer.links.termsOfUse}
+          </Typography>
+          <Typography
+            color="primary.main"
+            onClick={() => window.open(getUrl('external', 'help'), "_blank")}
             sx={{
               fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
+              cursor: "pointer",
+              "&:hover": {
+                color: "primary.dark",
+              }
             }}
           >
-            Help
-          </Link>
+            {config.footer.links.help}
+          </Typography>
         </Stack>
       </Box>
     </Box>
@@ -349,6 +406,7 @@ const Footer = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isDarkMode = theme.palette.mode === "dark";
+  const { config } = useContent();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -377,28 +435,28 @@ const Footer = () => {
 
     // Name validation
     if (!formData.name.trim()) {
-      tempErrors.name = "Name is required";
+      tempErrors.name = config.forms.validation.required;
       isValid = false;
     } else if (formData.name.length < 2) {
-      tempErrors.name = "Name must be at least 2 characters";
+      tempErrors.name = config.forms.validation.nameMinLength;
       isValid = false;
     }
 
     // Email validation
     if (!formData.email) {
-      tempErrors.email = "Email is required";
+      tempErrors.email = config.forms.validation.required;
       isValid = false;
     } else if (!validateEmail(formData.email)) {
-      tempErrors.email = "Please enter a valid email";
+      tempErrors.email = config.forms.validation.invalidEmail;
       isValid = false;
     }
 
     // Message validation
     if (!formData.message.trim()) {
-      tempErrors.message = "Message is required";
+      tempErrors.message = config.forms.validation.required;
       isValid = false;
     } else if (formData.message.length < 10) {
-      tempErrors.message = "Message must be at least 10 characters";
+      tempErrors.message = config.forms.validation.messageMinLength;
       isValid = false;
     }
 
@@ -436,326 +494,373 @@ const Footer = () => {
   };
 
   // Desktop Footer (original unchanged)
-  const renderDesktopFooter = () => (
-    <Box
-      sx={{
-        display: "flex",
-        gap: 4,
-      }}
-    >
-      {/* Left Side */}
-      <Box sx={{ flex: 1, paddingY: 4 }}>
-        <Box sx={{ mb: 3 }}>
-          <LogoWrapper>
-            <Image
-              src={
-                isDarkMode
-                  ? "/images/logos/footer-logo-light.png"
-                  : "/images/logos/footer-logo-dark.png"
-              }
-              alt="Money TV Logo"
-              height={230}
-              width={230}
-              style={{ objectFit: "contain" }}
-              priority
-            />
-          </LogoWrapper>
-        </Box>
-
-        {/* <Divider sx={{ mb: 3 }} /> */}
-
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "start",
-            justifyContent: "start",
-            gap: 4,
-            mt: 6,
-          }}
-        >
-          {/* Left section after divider */}
-          <Box>
-            <Typography
-              color="primary.main"
-              sx={{
-                fontSize: fontSize.typography.body2,
-                ...fontStyles.montserrat.bold,
-              }}
-            >
-              Let's 'find true value here.'
-            </Typography>
-            <Link
-              href="#"
-              sx={{
-                display: "block",
-                mb: 2,
-                fontSize: fontSize.nav.primary,
-                ...fontStyles.openSans.small,
-              }}
-            >
-              grow@moneytv.live
-            </Link>
-            <Stack direction="row" spacing={1}>
-              <IconButton
-                size="small"
-                sx={{
-                  "& .MuiSvgIcon-root": {
-                    fontSize: fontSize.icon.medium,
-                    color: "primary.main",
-                  },
-                }}
-              >
-                <DynamicIcon
-                  width={"30px"}
-                  height={"30px"}
-                  keyword={"YT"}
-                  style={{
-                    color: isDarkMode ? palette?.dark?.primary?.main : "", // Use theme's primary text color for consistency
-                  }}
-                />
-              </IconButton>
-              <IconButton
-                size="small"
-                sx={{
-                  "& .MuiSvgIcon-root": {
-                    fontSize: fontSize.icon.medium,
-                    color: "primary.main",
-                  },
-                }}
-              >
-                {/* <Instagram /> */}
-                <DynamicIcon
-                  keyword={"INSTA"}
-                  style={{
-                    color: isDarkMode ? palette?.dark?.primary?.main : "", // Use theme's primary text color for consistency
-                  }}
-                />
-              </IconButton>
-              <IconButton
-                size="small"
-                sx={{
-                  "& .MuiSvgIcon-root": {
-                    fontSize: fontSize.icon.medium,
-                    color: "primary.main",
-                  },
-                }}
-              >
-                {/* <Twitter /> */}
-                <DynamicIcon
-                  keyword={"X"}
-                  style={{
-                    color: isDarkMode ? palette?.dark?.primary?.main : "", // Use theme's primary text color for consistency
-                  }}
-                />
-              </IconButton>
-              <IconButton
-                size="small"
-                sx={{
-                  "& .MuiSvgIcon-root": {
-                    fontSize: fontSize.icon.medium,
-                    color: "primary.main",
-                  },
-                }}
-              >
-                {/* <LinkedIn /> */}
-                <DynamicIcon
-                  keyword={"IN"}
-                  style={{
-                    color: isDarkMode ? palette?.dark?.primary?.main : "", // Use theme's primary text color for consistency
-                  }}
-                />
-              </IconButton>
-              <IconButton
-                size="small"
-                sx={{
-                  "& .MuiSvgIcon-root": {
-                    fontSize: fontSize.icon.medium,
-                    color: "primary.main",
-                  },
-                }}
-              >
-                {/* <Facebook /> */}
-                <DynamicIcon
-                  keyword={"FB"}
-                  style={{
-                    color: isDarkMode ? palette?.dark?.primary?.main : "", // Use theme's primary text color for consistency
-                  }}
-                />
-              </IconButton>
-            </Stack>
+  const renderDesktopFooter = () => {
+    const { config, getUrl } = useContent();
+    
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          gap: 4,
+        }}
+      >
+        {/* Left Side */}
+        <Box sx={{ flex: 1, paddingY: 4 }}>
+          <Box sx={{ mb: 9 }}>
+            <LogoWrapper>
+              <Image
+                src={
+                  isDarkMode
+                    ? "/images/logos/footer-logo-light.png"
+                    : "/images/logos/footer-logo-dark.png"
+                }
+                alt="Money TV Logo"
+                height={230}
+                width={230}
+                style={{ objectFit: "contain" }}
+                priority
+              />
+            </LogoWrapper>
           </Box>
 
-          {/* Vertical Divider */}
-          <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
+          {/* <Divider sx={{ mb: 3 }} /> */}
 
-          {/* Right section */}
-          <Box>
-            <Stack spacing={1}>
-              <Link href="#" sx={{ fontSize: fontSize.nav.primary }}>
-                Privacy Policy
-              </Link>
-              <Link href="#" sx={{ fontSize: fontSize.nav.primary }}>
-                Terms of Use
-              </Link>
-              <Link href="#" sx={{ fontSize: fontSize.nav.primary }}>
-                Help
-              </Link>
-            </Stack>
-          </Box>
-        </Box>
-      </Box>
-
-      {/* Right Side - Feedback Form */}
-      <Box sx={{ flex: 1, padding: 4 }}>
-        <Typography
-          variant="h6"
-          sx={{
-            mb: 2,
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            fontSize: fontSize.typography.h5,
-            ...fontStyles.openSans.semibold,
-          }}
-        >
-          {/* <Feedback sx={{ fontSize: fontSize.typography.subtitle1 }} />  */}
-          <DynamicIcon
-            keyword={"FEEDBACK"}
-            width={"20px"}
-            height={"20px"}
-            style={{
-              color: isDarkMode
-                ? palette?.dark?.primary?.main
-                : palette?.light?.primary?.main, // Use theme's primary text color for consistency
-            }}
-          />
-          Send Feedback
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate>
-          <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
-            <TextField
-              size="small"
-              label="Name"
-              variant="standard"
-              fullWidth
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              error={Boolean(errors.name)}
-              helperText={errors.name}
-              sx={{
-                "& .MuiInput-underline:before": {
-                  borderBottom:
-                    theme.palette.mode === "dark"
-                      ? "1px solid rgba(255, 255, 255, 0.42)"
-                      : "1px solid rgba(0, 0, 0, 0.42)",
-                },
-                "& .MuiInputLabel-root": {
-                  fontSize: fontSize.form.label,
-                  ...fontStyles.openSans.regular,
-                },
-                "& .MuiInputBase-input": {
-                  fontSize: fontSize.form.label,
-                  ...fontStyles.openSans.regular,
-                },
-                "& .MuiFormHelperText-root": {
-                  fontSize: fontSize.form.helper,
-                  marginTop: "3px",
-                },
-              }}
-            />
-            <TextField
-              size="small"
-              label="Email"
-              type="email"
-              variant="standard"
-              fullWidth
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              error={Boolean(errors.email)}
-              helperText={errors.email}
-              sx={{
-                "& .MuiInput-underline:before": {
-                  borderBottom:
-                    theme.palette.mode === "dark"
-                      ? "1px solid rgba(255, 255, 255, 0.42)"
-                      : "1px solid rgba(0, 0, 0, 0.42)",
-                },
-                "& .MuiInputLabel-root": {
-                  fontSize: fontSize.form.label,
-                  ...fontStyles.openSans.regular,
-                },
-                "& .MuiInputBase-input": {
-                  fontSize: fontSize.form.label,
-                  ...fontStyles.openSans.regular,
-                },
-                "& .MuiFormHelperText-root": {
-                  fontSize: fontSize.form.helper,
-                  marginTop: "3px",
-                },
-              }}
-            />
-          </Box>
-          <TextField
-            size="small"
-            label="Message"
-            multiline
-            rows={3}
-            variant="standard"
-            fullWidth
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            error={Boolean(errors.message)}
-            helperText={errors.message}
+          <Box
             sx={{
-              mb: 2,
-              "& .MuiInput-underline:before": {
-                borderBottom:
-                  theme.palette.mode === "dark"
-                    ? "1px solid rgba(255, 255, 255, 0.42)"
-                    : "1px solid rgba(0, 0, 0, 0.42)",
-              },
-              "& .MuiInputLabel-root": {
-                fontSize: fontSize.form.label,
-                ...fontStyles.openSans.regular,
-              },
-              "& .MuiInputBase-input": {
-                fontSize: fontSize.form.label,
-                ...fontStyles.openSans.regular,
-              },
-              "& .MuiFormHelperText-root": {
-                fontSize: fontSize.form.helper,
-                marginTop: "3px",
-              },
-            }}
-          />
-          <Button
-            type="submit"
-            sx={{
-              minWidth: 150,
-              color: "text.primary",
-              backgroundColor: "transparent",
-              "&:hover": {
-                backgroundColor: "transparent",
-                color: "primary.main",
-              },
-              textTransform: "none",
-              p: 0,
-              width: "100%",
-              marginRight: "auto",
-              marginLeft: "auto",
-              fontSize: fontSize.button.medium,
-              ...fontStyles.sfPro.display.bold,
+              display: "flex",
+              alignItems: "start",
+              justifyContent: "start",
+              gap: 4,
+              mt: 6,
             }}
           >
-            Send Message
-          </Button>
+            {/* Left section after divider */}
+            <Box>
+              <Typography
+                color="primary.main"
+                sx={{
+                  fontSize: fontSize.typography.body2,
+                  ...fontStyles.montserrat.bold,
+                }}
+              >
+                {config.footer.slogan}
+              </Typography>
+              <Typography
+                color="primary.main"
+                onClick={() => window.open(`mailto:${getUrl('external', 'contactEmail')}`, "_self")}
+                sx={{
+                  display: "block",
+                  mb: 2,
+                  textDecoration: "underline",
+                  fontSize: fontSize.nav.primary,
+                  ...fontStyles.openSans.regular,
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "primary.dark",
+                  }
+                }}
+              >
+                {getUrl('external', 'contactEmail')}
+              </Typography>
+              
+              <Stack direction="row" spacing={1}>
+                <IconButton
+                  size="small"
+                  onClick={() => window.open(getUrl('social', 'footerYoutube'), "_blank")}
+                  sx={{
+                    "& .MuiSvgIcon-root": {
+                      fontSize: fontSize.icon.medium,
+                      color: "primary.main",
+                    },
+                  }}
+                >
+                  <DynamicIcon
+                    width={"30px"}
+                    height={"30px"}
+                    keyword={config.footer.icons.youtube}
+                    style={{
+                      color: isDarkMode ? palette?.dark?.primary?.main : "",
+                    }}
+                  />
+                </IconButton>
+                <IconButton
+                  size="small"
+                  onClick={() => window.open(getUrl('social', 'footerInstagram'), "_blank")}
+                  sx={{
+                    "& .MuiSvgIcon-root": {
+                      fontSize: fontSize.icon.medium,
+                      color: "primary.main",
+                    },
+                  }}
+                >
+                  <DynamicIcon
+                    keyword={config.footer.icons.instagram}
+                    style={{
+                      color: isDarkMode ? palette?.dark?.primary?.main : "",
+                    }}
+                  />
+                </IconButton>
+                <IconButton
+                  size="small"
+                  onClick={() => window.open(getUrl('social', 'footerTwitter'), "_blank")}
+                  sx={{
+                    "& .MuiSvgIcon-root": {
+                      fontSize: fontSize.icon.medium,
+                      color: "primary.main",
+                    },
+                  }}
+                >
+                  <DynamicIcon
+                    keyword={config.footer.icons.twitter}
+                    style={{
+                      color: isDarkMode ? palette?.dark?.primary?.main : "",
+                    }}
+                  />
+                </IconButton>
+                <IconButton
+                  size="small"
+                  onClick={() => window.open(getUrl('social', 'footerLinkedin'), "_blank")}
+                  sx={{
+                    "& .MuiSvgIcon-root": {
+                      fontSize: fontSize.icon.medium,
+                      color: "primary.main",
+                    },
+                  }}
+                >
+                  <DynamicIcon
+                    keyword={config.footer.icons.linkedin}
+                    style={{
+                      color: isDarkMode ? palette?.dark?.primary?.main : "",
+                    }}
+                  />
+                </IconButton>
+                <IconButton
+                  size="small"
+                  onClick={() => window.open(getUrl('social', 'footerFacebook'), "_blank")}
+                  sx={{
+                    "& .MuiSvgIcon-root": {
+                      fontSize: fontSize.icon.medium,
+                      color: "primary.main",
+                    },
+                  }}
+                >
+                  <DynamicIcon
+                    keyword={config.footer.icons.facebook}
+                    style={{
+                      color: isDarkMode ? palette?.dark?.primary?.main : "",
+                    }}
+                  />
+                </IconButton>
+              </Stack>
+            </Box>
+
+            {/* Vertical Divider */}
+            <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
+
+            {/* Right section */}
+            <Box>
+              <Stack spacing={1}>
+                <Typography
+                  color="primary.main"
+                  onClick={() => window.open(getUrl('external', 'privacy'), "_blank")}
+                  sx={{
+                    fontSize: fontSize.nav.primary,
+                    ...fontStyles.openSans.regular,
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    "&:hover": {
+                      color: "primary.dark",
+                    }
+                  }}
+                >
+                  {config.footer.links.privacyPolicy}
+                </Typography>
+                <Typography
+                  color="primary.main"
+                  onClick={() => window.open(getUrl('external', 'terms'), "_blank")}
+                  sx={{
+                    fontSize: fontSize.nav.primary,
+                    ...fontStyles.openSans.regular,
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    "&:hover": {
+                      color: "primary.dark",
+                    }
+                  }}
+                >
+                  {config.footer.links.termsOfUse}
+                </Typography>
+                <Typography
+                  color="primary.main"
+                  onClick={() => window.open(getUrl('external', 'help'), "_blank")}
+                  sx={{
+                    fontSize: fontSize.nav.primary,
+                    ...fontStyles.openSans.regular,
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    "&:hover": {
+                      color: "primary.dark",
+                    }
+                  }}
+                >
+                  {config.footer.links.help}
+                </Typography>
+              </Stack>
+            </Box>
+          </Box>
+        </Box>
+
+        {/* Right Side - Feedback Form */}
+        <Box sx={{ flex: 1, padding: 4 }}>
+          <Typography
+            variant="h6"
+            sx={{
+              mb: 2,
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              fontSize: fontSize.typography.h5,
+              ...fontStyles.openSans.semibold,
+            }}
+          >
+            <DynamicIcon
+              keyword={config.footer.icons.feedback}
+              width={"20px"}
+              height={"20px"}
+              style={{
+                color: isDarkMode
+                  ? palette?.dark?.primary?.main
+                  : palette?.light?.primary?.main,
+              }}
+            />
+            {config.footer.feedbackTitle}
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit} noValidate>
+            <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
+              <TextField
+                size="small"
+                label={config.forms.labels.name}
+                variant="standard"
+                fullWidth
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                error={Boolean(errors.name)}
+                helperText={errors.name}
+                sx={{
+                  "& .MuiInput-underline:before": {
+                    borderBottom:
+                      theme.palette.mode === "dark"
+                        ? "1px solid rgba(255, 255, 255, 0.42)"
+                        : "1px solid rgba(0, 0, 0, 0.42)",
+                  },
+                  "& .MuiInputLabel-root": {
+                    fontSize: fontSize.form.label,
+                    ...fontStyles.openSans.regular,
+                  },
+                  "& .MuiInputBase-input": {
+                    fontSize: fontSize.form.label,
+                    ...fontStyles.openSans.regular,
+                  },
+                  "& .MuiFormHelperText-root": {
+                    fontSize: fontSize.form.helper,
+                    marginTop: "3px",
+                  },
+                }}
+              />
+              <TextField
+                size="small"
+                label={config.forms.labels.feedbackEmail}
+                type="email"
+                variant="standard"
+                fullWidth
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                error={Boolean(errors.email)}
+                helperText={errors.email}
+                sx={{
+                  "& .MuiInput-underline:before": {
+                    borderBottom:
+                      theme.palette.mode === "dark"
+                        ? "1px solid rgba(255, 255, 255, 0.42)"
+                        : "1px solid rgba(0, 0, 0, 0.42)",
+                  },
+                  "& .MuiInputLabel-root": {
+                    fontSize: fontSize.form.label,
+                    ...fontStyles.openSans.regular,
+                  },
+                  "& .MuiInputBase-input": {
+                    fontSize: fontSize.form.label,
+                    ...fontStyles.openSans.regular,
+                  },
+                  "& .MuiFormHelperText-root": {
+                    fontSize: fontSize.form.helper,
+                    marginTop: "3px",
+                  },
+                }}
+              />
+            </Box>
+            <TextField
+              size="small"
+              label={config.forms.labels.feedbackMessage}
+              multiline
+              rows={3}
+              variant="standard"
+              fullWidth
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              error={Boolean(errors.message)}
+              helperText={errors.message}
+              sx={{
+                mb: 2,
+                "& .MuiInput-underline:before": {
+                  borderBottom:
+                    theme.palette.mode === "dark"
+                      ? "1px solid rgba(255, 255, 255, 0.42)"
+                      : "1px solid rgba(0, 0, 0, 0.42)",
+                },
+                "& .MuiInputLabel-root": {
+                  fontSize: fontSize.form.label,
+                  ...fontStyles.openSans.regular,
+                },
+                "& .MuiInputBase-input": {
+                  fontSize: fontSize.form.label,
+                  ...fontStyles.openSans.regular,
+                },
+                "& .MuiFormHelperText-root": {
+                  fontSize: fontSize.form.helper,
+                  marginTop: "3px",
+                },
+              }}
+            />
+            <Button
+              type="submit"
+              sx={{
+                minWidth: 150,
+                color: "text.primary",
+                backgroundColor: "transparent",
+                "&:hover": {
+                  backgroundColor: "transparent",
+                  color: "primary.main",
+                },
+                textTransform: "none",
+                p: 0,
+                width: "100%",
+                marginRight: "auto",
+                marginLeft: "auto",
+                fontSize: fontSize.button.medium,
+                ...fontStyles.sfPro.display.bold,
+              }}
+            >
+              {config.footer.sendMessage}
+            </Button>
+          </Box>
         </Box>
       </Box>
-    </Box>
-  );
+    );
+  };
 
   return (
     <Box

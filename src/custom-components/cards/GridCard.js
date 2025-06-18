@@ -19,6 +19,7 @@ import { fontStyles, fontSize, palette } from "../../theme/theme";
 import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import ShareIcon from "@/components/icons/ShareIcon";
 import { DynamicIcon } from "@/components/icons";
+import { useContent } from "@/hooks/useContent";
 
 const ActionButton = ({
   icon,
@@ -105,13 +106,25 @@ const ActionButton = ({
 
 const GridCard = ({ video, id, sectionData, section, styles }) => {
   const theme = useTheme();
-  const isDarkMode = theme.palette.mode === "dark";
   const router = useRouter();
   const [shareUrl, setShareUrl] = useState("");
   const [isWhatsAppHovered, setIsWhatsAppHovered] = useState(false);
   const [isShareHovered, setIsShareHovered] = useState(false);
   const [isCopyHovered, setIsCopyHovered] = useState(false);
   const { contentConfigurations } = useMain();
+  const { 
+    getButtonConfig, 
+    getSocialUrl, 
+    getSuccessMessage, 
+    isDarkMode,
+    isFeatureEnabled 
+  } = useContent();
+  
+  // Get button configurations
+  const whatsappConfig = getButtonConfig('whatsapp');
+  const shareConfig = getButtonConfig('share');
+  const copyConfig = getButtonConfig('copy');
+
   let isAd = ["ATI", "ATV", "ATT"].includes(
     video?.content_details[0]?.content_type_id
   );
@@ -142,10 +155,8 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
 
   const handleWhatsApp = (e) => {
     e.stopPropagation(); // Prevent card click event
-    const text = encodeURIComponent(
-      `${video.content_details[0].url}\n${window.location.href}`
-    );
-    window.open(`https://wa.me/?text=${text}`, "_blank");
+    const shareUrl = getSocialUrl('whatsapp', window.location.href, video.content_details[0].url);
+    window.open(shareUrl, "_blank");
   };
 
   const handleCardClick = () => {
@@ -305,6 +316,46 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
                     ...fontStyles.sfPro.condensed.regular,
                   }}
                 >
+                  {/* Show action buttons only if features are enabled */}
+                  {isFeatureEnabled('enableWhatsAppSharing') && (
+                    <ActionButton
+                      icon={<DynamicIcon 
+                        style={{
+                          color: isDarkMode 
+                            ? (isWhatsAppHovered ? whatsappConfig.colors?.hover : whatsappConfig.colors?.normal)
+                            : (isWhatsAppHovered ? '#111' : '')
+                        }} 
+                        height={"15px"} 
+                        width={"15px"} 
+                        keyword={whatsappConfig.icon} 
+                      />}
+                      label={whatsappConfig.label}
+                      onClick={handleWhatsApp}
+                      onMouseEnter={() => setIsWhatsAppHovered(true)}
+                      onMouseLeave={() => setIsWhatsAppHovered(false)}
+                      textColor={isDarkMode ? whatsappConfig.colors?.normal : 'grey.500'}
+                      hoverTextColor={isDarkMode ? whatsappConfig.colors?.hover : '#111'}
+                    />
+                  )}
+
+                  {isFeatureEnabled('enableCopyLink') && (
+                    <CopyButton 
+                      color={isCopyHovered ? '#fff' : ''} 
+                      text={video?.content_details[0]?.url}
+                      label={copyConfig.label}
+                      onMouseEnter={() => setIsCopyHovered(true)}
+                      onMouseLeave={() => setIsCopyHovered(false)}
+                      textColor={isDarkMode ? copyConfig.colors?.normal : 'grey.500'}
+                      hoverTextColor={isDarkMode ? copyConfig.colors?.hover : '#111'}
+                      iconColor={isDarkMode 
+                        ? (isCopyHovered ? copyConfig.colors?.hover : copyConfig.colors?.normal)
+                        : (isCopyHovered ? '#111' : '')
+                      }
+                    />
+                  )}
+
+                </Box>
+                {isFeatureEnabled('enableSharing') && (
                   <ActionButton
                     icon={
                       <DynamicIcon

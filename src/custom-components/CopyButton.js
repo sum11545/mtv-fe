@@ -4,10 +4,17 @@ import { ContentCopy } from "@mui/icons-material";
 import { fontSize, fontStyles } from "../theme/theme";
 import CopyIcon from "@/components/icons/CopyIcon";
 import { DynamicIcon } from "@/components/icons";
+import { useContent } from "@/hooks/useContent";
 
-const CopyButton = ({color, text, label = "Copy", onMouseEnter, onMouseLeave, textColor, hoverTextColor, iconColor }) => {
+const CopyButton = ({color, text, label, onMouseEnter, onMouseLeave, textColor, hoverTextColor, iconColor }) => {
   const [copied, setCopied] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const { getButtonLabel, getSuccessMessage, snackbarDuration } = useContent();
+  
+  // Use centralized configuration with fallbacks
+  const buttonLabel = label || getButtonLabel('copy');
+  const copiedLabel = getButtonLabel('copied');
+  const successMessage = getSuccessMessage('linkCopied');
 
   const handleCopy = (e) => {
     e.stopPropagation(); // Prevent event bubbling
@@ -62,15 +69,15 @@ const CopyButton = ({color, text, label = "Copy", onMouseEnter, onMouseLeave, te
             ...fontStyles.sfPro.condensed.regular,
           }}
         >
-          {copied ? "Copied!" : label}
+          {copied ? copiedLabel : buttonLabel}
         </Typography>
       </Box>
 
       <Snackbar
         open={snackbarOpen}
-        autoHideDuration={1000}
+        autoHideDuration={snackbarDuration}
         onClose={handleSnackbarClose}
-        message="Link copied to clipboard"
+        message={successMessage}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       />
     </>

@@ -84,7 +84,7 @@ const Header = ({ toggleSidebar }) => {
             </Link>
             {/* Right side icons */}
             <Box sx={{ display: "flex" }}>
-              <IconButton
+              {/* <IconButton
                 size="large"
                 aria-label="show notifications"
                 color="inherit"
@@ -97,7 +97,7 @@ const Header = ({ toggleSidebar }) => {
                 <Badge badgeContent={3} color="error">
                   <NotificationsIcon />
                 </Badge>
-              </IconButton>
+              </IconButton> */}
               <IconButton
                 size="large"
                 edge="end"
@@ -179,7 +179,7 @@ const Header = ({ toggleSidebar }) => {
 
         {/* Right side icons */}
         <Box sx={{ display: "flex" }}>
-          <IconButton
+          {/* <IconButton
             size="large"
             aria-label="show notifications"
             color="inherit"
@@ -192,7 +192,7 @@ const Header = ({ toggleSidebar }) => {
             <Badge badgeContent={3} color="error">
               <NotificationsIcon />
             </Badge>
-          </IconButton>
+          </IconButton> */}
           <IconButton
             size="large"
             edge="end"

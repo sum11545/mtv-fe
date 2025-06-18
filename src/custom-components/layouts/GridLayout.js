@@ -18,6 +18,7 @@ import { fontSize, fontStyles, palette } from "../../theme/theme";
 import StackVideoCard from "../cards/StackVideoCard";
 import ArrowIcon from "@/components/icons/ArrowIcon";
 import { DynamicIcon } from "@/components/icons";
+import { useContent } from "@/hooks/useContent";
 
 const GridLayout = ({
   name,
@@ -35,15 +36,13 @@ const GridLayout = ({
   const [showLeftScroll, setShowLeftScroll] = useState(false);
   const [showRightScroll, setShowRightScroll] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const { getButtonLabel, getButtonConfig, getColor, isDarkMode } = useContent();
   const size = section.layout_config.size;
   const height = section?.layout_config?.height;
   const width = section?.layout_config?.width;
   const spacing = section?.layout_config?.spacing;
   const isAd = section?.is_ad;
   let rowCount = 1;
-
-
-  const isDarkMode = theme.palette.mode === "dark";
 
   const getBackgroundColor = (isAd, index, isMobile, size) => {
     if (isAd || isMobile) return theme.palette.background.default;
@@ -145,12 +144,12 @@ const GridLayout = ({
             <Button
               // endIcon={<ArrowIcon />}
               endIcon={<DynamicIcon 
-                keyword="ARROW" 
+                keyword={isHovered ? 'ARROW-YELLOW' : 'ARROW'}
                 height={"15px"} 
                 width={"15px"}
                 style={{
                   color: isDarkMode 
-                    ? (isHovered ? '#fff' : '#fff')
+                    ? (isHovered ? '' : '#fff')
                     : (isHovered ? 'black' : '')
                 }}
               />}
@@ -159,10 +158,10 @@ const GridLayout = ({
               sx={{
                 textTransform: "none",
                 ...fontStyles.openSans.regular,
-                color: isDarkMode ? '#fff' : '#001691',
+                color: isDarkMode ? '#fff' : getColor('primary'),
                 '&:hover': {
                   bgcolor: 'transparent',
-                  color: isDarkMode ? '#F4A512' : 'common.black',
+                  color: isDarkMode ? getColor('secondary') : 'common.black',
                   '& .MuiButton-endIcon': {
                     transform: 'translateX(5px)',
                     transition: 'transform 0.3s ease-in-out'
@@ -174,7 +173,7 @@ const GridLayout = ({
               }}
               onClick={handleViewMore}
             >
-              {isMobile ? "" : "View More"}
+              {isMobile ? "" : getButtonLabel('viewMore')}
             </Button>
           )}
       </Box>
