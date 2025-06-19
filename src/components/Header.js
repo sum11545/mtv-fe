@@ -178,7 +178,7 @@ const Header = ({ toggleSidebar }) => {
         </Box>
 
         {/* Right side icons */}
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ display: "flex", marginRight: "5px" }}>
           {/* <IconButton
             size="large"
             aria-label="show notifications"

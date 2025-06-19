@@ -75,7 +75,7 @@ export const CONTENT_CONFIG = {
       youtube: "https://youtube.com",
       support: "mailto:support@moneytv.com",
       privacy: "/privacy-policy",
-      terms: "/terms-of-service",
+      terms: "/terms-of-use",
       help: "/help",
       // Footer contact
       contactEmail: "grow@moneytv.live",
