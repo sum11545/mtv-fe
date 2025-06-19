@@ -26,7 +26,7 @@ const Help = () => {
             textAlign: 'center',
           }}
         >
-          Help & Support
+          Help
         </Typography>
 
         {/* Content Sections */}

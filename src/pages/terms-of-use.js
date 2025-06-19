@@ -26,7 +26,7 @@ const TermsOfService = () => {
             textAlign: 'center',
           }}
         >
-          Terms of Service
+          Terms of Use
         </Typography>
 
         {/* Last Updated */}
