@@ -12,10 +12,12 @@ import {
 } from "@mui/material";
 import Lottie from "lottie-react";
 import sadAnimationData from "../../public/assets/animated-icons/sad-animation.json";
+import sadAnimationDataWhite from "../../public/assets/animated-icons/sad-animation-white.json";
 import { fontSize, fontStyles } from "@/theme/theme";
 
 const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
   const theme = useTheme();
+  const isDarkMode = theme.palette.mode === "dark";
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -47,7 +49,7 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
 
   const SadEmoji = () => (
     <Lottie
-      animationData={sadAnimationData}
+      animationData={isDarkMode ? sadAnimationDataWhite : sadAnimationData}
       style={{
         width: isMobile ? 70 : 150,
         height: isMobile ? 70 : 150,

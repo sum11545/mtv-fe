@@ -30,31 +30,37 @@ import ShareShortMobileIcon from "@/components/icons/ShareShortMobileIcon";
 import { ShortCopyMobileIcon } from "@/components/icons/ShortCopyMobileIcon";
 import ShortWhatsAppMobileIcon from "@/components/icons/ShortWhatsAppMobileIcon";
 import { DynamicIcon } from "@/components/icons";
+import { useContent } from "@/hooks/useContent";
 
-const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
+const ActionButton = ({ icon, label, onClick, isReversed = false, onMouseEnter, onMouseLeave, textColor, hoverTextColor }) => (
   <Box
     sx={{
       display: "flex",
       alignItems: "center",
-      gap: 0.5,
+      gap: 0,
       borderRadius: 1,
       cursor: "pointer",
       padding: "4px 8px",
       transition: "all 0.2s ease-in-out",
       "&:hover": {
-        "& .MuiTypography-root, & .MuiSvgIcon-root": {
+        "& .MuiTypography-root": {
+          color: hoverTextColor || "grey.700",
+        },
+        "& .MuiSvgIcon-root": {
           color: "grey.700",
         },
       },
     }}
     onClick={onClick}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
   >
     {isReversed ? (
       <>
         <Typography
           variant="caption"
           sx={{
-            color: "grey.500",
+            color: textColor || "grey.500",
             fontSize: fontSize.typography.caption,
             userSelect: "none",
             mr: 0.5,
@@ -84,7 +90,7 @@ const ActionButton = ({ icon, label, onClick, isReversed = false }) => (
         <Typography
           variant="caption"
           sx={{
-            color: "grey.500",
+            color: textColor || "grey.500",
             fontSize: fontSize.typography.caption,
             userSelect: "none",
             ml: 0.5,
@@ -166,11 +172,26 @@ const Short = () => {
   const [currentShortIndex, setCurrentShortIndex] = useState(0);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
+  const [isWhatsAppHovered, setIsWhatsAppHovered] = useState(false);
+  const [isShareHovered, setIsShareHovered] = useState(false);
+  const [isCopyHovered, setIsCopyHovered] = useState(false);
 
   // Responsive breakpoint
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
   const isMobile = useMediaQuery("(max-width:899px)"); // Simplified breakpoint to ensure all mobile devices are covered
+
+  const { 
+    getButtonConfig, 
+    getSocialUrl, 
+    getSuccessMessage, 
+    isFeatureEnabled 
+  } = useContent();
+  
+  // Get button configurations
+  const whatsappConfig = getButtonConfig('whatsapp');
+  const shareConfig = getButtonConfig('share');
+  const copyConfig = getButtonConfig('copy');
 
   // Touch gesture handling for mobile
   const touchStartY = useRef(0);
@@ -219,10 +240,8 @@ const Short = () => {
 
   const handleWhatsApp = () => {
     if (currentShort) {
-      const text = encodeURIComponent(
-        `${currentShort?.content_details[0]?.url}\n${window.location.href}`
-      );
-      window.open(`https://wa.me/?text=${text}`, "_blank");
+      const shareUrl = getSocialUrl('whatsapp', window.location.href, currentShort.content_details[0].url);
+      window.open(shareUrl, "_blank");
     }
   };
 
@@ -553,19 +572,70 @@ const Short = () => {
                 }}
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <ActionButton
-                    icon={<WhatsAppIcon />}
-                    label="Send"
-                    onClick={handleWhatsApp}
-                  />
-                  <CopyButton text={currentShort?.content_details[0]?.url} />
+                  {isFeatureEnabled('enableWhatsAppSharing') && (
+                    <ActionButton
+                      icon={<DynamicIcon 
+                        style={{
+                          color: isDarkMode 
+                            ? (isWhatsAppHovered ? whatsappConfig.colors?.hover : whatsappConfig.colors?.normal)
+                            : (isWhatsAppHovered ? '#111' : '')
+                        }} 
+                        height={"15px"} 
+                        width={"15px"} 
+                        keyword={whatsappConfig.icon} 
+                      />}
+                      label={whatsappConfig.label}
+                      onClick={handleWhatsApp}
+                      onMouseEnter={() => setIsWhatsAppHovered(true)}
+                      onMouseLeave={() => setIsWhatsAppHovered(false)}
+                      textColor={isDarkMode ? whatsappConfig.colors?.normal : 'grey.500'}
+                      hoverTextColor={isDarkMode ? whatsappConfig.colors?.hover : '#111'}
+                    />
+                  )}
+
+                  {isFeatureEnabled('enableCopyLink') && (
+                    <CopyButton 
+                      color={isCopyHovered ? '#fff' : ''} 
+                      text={currentShort?.content_details[0]?.url}
+                      label={copyConfig.label}
+                      onMouseEnter={() => setIsCopyHovered(true)}
+                      onMouseLeave={() => setIsCopyHovered(false)}
+                      textColor={isDarkMode ? copyConfig.colors?.normal : 'grey.500'}
+                      hoverTextColor={isDarkMode ? copyConfig.colors?.hover : '#111'}
+                      iconColor={isDarkMode 
+                        ? (isCopyHovered ? copyConfig.colors?.hover : copyConfig.colors?.normal)
+                        : (isCopyHovered ? '#111' : '')
+                      }
+                    />
+                  )}
                 </Box>
-                <ActionButton
-                  icon={<ShareIcon />}
-                  label="Share"
-                  onClick={handleShare}
-                  isReversed={true}
-                />
+                {isFeatureEnabled('enableSharing') && (
+                  <ActionButton
+                    icon={
+                      <DynamicIcon
+                        style={{
+                          color: isDarkMode
+                            ? isShareHovered
+                              ? shareConfig.colors?.hover
+                              : shareConfig.colors?.normal
+                            : isShareHovered
+                            ? "#111"
+                            : "",
+                        }}
+                        height={"15px"}
+                        width={"15px"}
+                        keyword={shareConfig.icon}
+                      />
+                    }
+                    label={shareConfig.label}
+                    onClick={handleShare}
+                    onMouseEnter={() => setIsShareHovered(true)}
+                    onMouseLeave={() => setIsShareHovered(false)}
+                    textColor={isDarkMode ? shareConfig.colors?.normal : "grey.500"}
+                    hoverTextColor={isDarkMode ? shareConfig.colors?.hover : "#111"}
+                    isReversed={true}
+                  />
+                )}
               </Box>
             </Box>
           </Box>
