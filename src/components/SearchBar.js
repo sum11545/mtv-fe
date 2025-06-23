@@ -30,6 +30,21 @@ const Search = styled("div")(({ theme }) => ({
   // marginRight: theme.spacing(2),
   // marginLeft: theme.spacing(3),
   width: "100%",
+  transition: "background-color 0.2s ease-in-out",
+
+  // Dark mode hover and focus states
+  ...(theme.palette.mode === "dark" && {
+    "&:hover, &:focus-within": {
+      backgroundColor: "#ffffff",
+      "& .MuiInputBase-input": {
+        color: "#000000",
+      },
+      "& .MuiSvgIcon-root": {
+        color: "#666666",
+      },
+    },
+  }),
+
   [theme.breakpoints.up("sm")]: {
     marginLeft: theme.spacing(3),
     width: "80%",
@@ -42,6 +57,20 @@ const Search = styled("div")(({ theme }) => ({
         ? theme.palette.divider
         : theme.palette.grey[200]
     }`,
+
+    // Dark mode hover and focus states for mobile
+    ...(theme.palette.mode === "dark" && {
+      "&:hover, &:focus-within": {
+        backgroundColor: "#ffffff",
+        borderColor: "#e0e0e0",
+        "& .MuiInputBase-input": {
+          color: "#000000",
+        },
+        "& .MuiSvgIcon-root": {
+          color: "#666666",
+        },
+      },
+    }),
   },
 }));
 

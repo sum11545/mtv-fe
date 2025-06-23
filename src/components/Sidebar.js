@@ -44,7 +44,9 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
     color: isDarkMode ? palette?.dark?.primary?.main :''// Use theme's primary text color for consistency
   };
 
-  const bottomSidebarItems = [{ text: "Settings", icon: <DynamicIcon keyword={"SETTINGS"} style={iconStyle} /> }];
+  const bottomSidebarItems = [
+    // { text: "Settings", icon: <DynamicIcon keyword={"SETTINGS"} style={iconStyle} /> }
+  ];
 
   useEffect(() => {
     const SidebarData = async () => {

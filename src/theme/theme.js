@@ -263,7 +263,7 @@ export const palette = {
         main: "#FF0000",
         dark: "#CC0000",
       },
-      advertisementColor: "#2E2D2D",
+      advertisementColor: "#ffffff",
     },
     action: {
       selected: "#1a2152",
@@ -355,7 +355,7 @@ const typography = {
     fontSize: "0.75rem", // sm (default)
 
     "@media (min-width:900px)": {
-      fontSize: "1rem", // lg
+      fontSize: "0.80rem", // lg
     },
   },
 };
