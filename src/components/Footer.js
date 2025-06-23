@@ -31,8 +31,8 @@ const LogoWrapper = styled(Box)({
   display: "flex",
   alignItems: "center",
   position: "relative",
-  // width: "120px",
-  height: "40px",
+  width: "230px",
+  height: "43px",
   marginLeft: " -25px",
   // border: "1px solid green",
 });
@@ -73,9 +73,8 @@ const MobileFooter = (props) => {
                 : "/images/logos/footer-logo-dark.png"
             }
             alt="Money TV Logo"
-            height={230}
-            width={230}
-            style={{ objectFit: "contain" }}
+            fill
+            style={{ objectFit: "cover" }}
             priority
           />
         </LogoWrapper>
@@ -383,7 +382,7 @@ const MobileFooter = (props) => {
           >
             {config.footer.links.termsOfUse}
           </Typography>
-          <Typography
+          {/* <Typography
             color="primary.main"
             onClick={() => router.push(getUrl('external', 'help'))}
             sx={{
@@ -396,7 +395,7 @@ const MobileFooter = (props) => {
             }}
           >
             {config.footer.links.help}
-          </Typography>
+          </Typography> */}
         </Stack>
       </Box>
     </Box>
@@ -516,9 +515,8 @@ const Footer = () => {
                     : "/images/logos/footer-logo-dark.png"
                 }
                 alt="Money TV Logo"
-                height={230}
-                width={230}
-                style={{ objectFit: "contain" }}
+                fill
+                style={{ objectFit: "cover" }}
                 priority
               />
             </LogoWrapper>
@@ -691,7 +689,7 @@ const Footer = () => {
                 >
                   {config.footer.links.termsOfUse}
                 </Typography>
-                <Typography
+                {/* <Typography
                   color="primary.main"
                   onClick={() => router.push(getUrl('external', 'help'))}
                   sx={{
@@ -705,7 +703,7 @@ const Footer = () => {
                   }}
                 >
                   {config.footer.links.help}
-                </Typography>
+                </Typography> */}
               </Stack>
             </Box>
           </Box>
