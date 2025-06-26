@@ -8,6 +8,7 @@ import {
   Stack,
   IconButton,
   useTheme,
+  Tooltip,
 } from "@mui/material";
 import { Reply, WhatsApp } from "@mui/icons-material";
 import { useRouter } from "next/router";
@@ -112,18 +113,18 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
   const [isShareHovered, setIsShareHovered] = useState(false);
   const [isCopyHovered, setIsCopyHovered] = useState(false);
   const { contentConfigurations } = useMain();
-  const { 
-    getButtonConfig, 
-    getSocialUrl, 
-    getSuccessMessage, 
+  const {
+    getButtonConfig,
+    getSocialUrl,
+    getSuccessMessage,
     isDarkMode,
-    isFeatureEnabled 
+    isFeatureEnabled,
   } = useContent();
-  
+
   // Get button configurations
-  const whatsappConfig = getButtonConfig('whatsapp');
-  const shareConfig = getButtonConfig('share');
-  const copyConfig = getButtonConfig('copy');
+  const whatsappConfig = getButtonConfig("whatsapp");
+  const shareConfig = getButtonConfig("share");
+  const copyConfig = getButtonConfig("copy");
 
   let isAd = ["ATI", "ATV", "ATT"].includes(
     video?.content_details[0]?.content_type_id
@@ -155,7 +156,11 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
 
   const handleWhatsApp = (e) => {
     e.stopPropagation(); // Prevent card click event
-    const shareUrl = getSocialUrl('whatsapp', window.location.href, video.content_details[0].url);
+    const shareUrl = getSocialUrl(
+      "whatsapp",
+      window.location.href,
+      video.content_details[0].url
+    );
     window.open(shareUrl, "_blank");
   };
 
@@ -273,89 +278,113 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
               px: 0,
               display: "flex",
               flexDirection: "column",
-              // height: "90px",
               height: isShort ? "50px" : "90px",
+              justifyContent: "space-between",
               "&:last-child": {
                 paddingBottom: 1.5,
               },
             }}
           >
-            <Typography
-              component="div"
+            <Box
               sx={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                lineHeight: 1.2,
-                minHeight: "2.5em",
-                maxHeight: "2.5em",
-                fontSize: fontSize.typography.body2,
-                ...fontStyles.openSans.bold,
+                minHeight: "2.2em", // Fixed height for video name area (2 lines)
+                maxHeight: "2.2em",
+                display: "flex",
+                alignItems: "flex-start",
               }}
             >
-              {video.name}
-            </Typography>
+              {/* <Tooltip title={video.name} arrow> */}
+              <Typography
+                component="div"
+                sx={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  lineHeight: 1.2,
+                  fontSize: fontSize.typography.body2,
+                  ...fontStyles.openSans.bold,
+                }}
+              >
+                {video.name}
+              </Typography>
+              {/* </Tooltip> */}
+            </Box>
             {!isShort && (
               <Box
                 sx={{
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  mb: -0.5,
-                  mt: -0.5,
                 }}
               >
                 <Box
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    // mt: 0.5,
                     marginLeft: "-5px",
                     ...fontStyles.sfPro.condensed.regular,
                   }}
                 >
                   {/* Show action buttons only if features are enabled */}
-                  {isFeatureEnabled('enableWhatsAppSharing') && (
+                  {isFeatureEnabled("enableWhatsAppSharing") && (
                     <ActionButton
-                      icon={<DynamicIcon 
-                        style={{
-                          color: isDarkMode 
-                            ? (isWhatsAppHovered ? whatsappConfig.colors?.hover : whatsappConfig.colors?.normal)
-                            : (isWhatsAppHovered ? '#111' : '')
-                        }} 
-                        height={"15px"} 
-                        width={"15px"} 
-                        keyword={whatsappConfig.icon} 
-                      />}
+                      icon={
+                        <DynamicIcon
+                          style={{
+                            color: isDarkMode
+                              ? isWhatsAppHovered
+                                ? whatsappConfig.colors?.hover
+                                : whatsappConfig.colors?.normal
+                              : isWhatsAppHovered
+                              ? "#111"
+                              : "",
+                          }}
+                          height={"15px"}
+                          width={"15px"}
+                          keyword={whatsappConfig.icon}
+                        />
+                      }
                       label={whatsappConfig.label}
                       onClick={handleWhatsApp}
                       onMouseEnter={() => setIsWhatsAppHovered(true)}
                       onMouseLeave={() => setIsWhatsAppHovered(false)}
-                      textColor={isDarkMode ? whatsappConfig.colors?.normal : 'grey.500'}
-                      hoverTextColor={isDarkMode ? whatsappConfig.colors?.hover : '#111'}
-                    />
-                  )}
-
-                  {isFeatureEnabled('enableCopyLink') && (
-                    <CopyButton 
-                      color={isCopyHovered ? '#fff' : ''} 
-                      text={video?.content_details[0]?.url}
-                      label={copyConfig.label}
-                      onMouseEnter={() => setIsCopyHovered(true)}
-                      onMouseLeave={() => setIsCopyHovered(false)}
-                      textColor={isDarkMode ? copyConfig.colors?.normal : 'grey.500'}
-                      hoverTextColor={isDarkMode ? copyConfig.colors?.hover : '#111'}
-                      iconColor={isDarkMode 
-                        ? (isCopyHovered ? copyConfig.colors?.hover : copyConfig.colors?.normal)
-                        : (isCopyHovered ? '#111' : '')
+                      textColor={
+                        isDarkMode ? whatsappConfig.colors?.normal : "grey.500"
+                      }
+                      hoverTextColor={
+                        isDarkMode ? whatsappConfig.colors?.hover : "#111"
                       }
                     />
                   )}
 
+                  {isFeatureEnabled("enableCopyLink") && (
+                    <CopyButton
+                      color={isCopyHovered ? "#fff" : ""}
+                      text={video?.content_details[0]?.url}
+                      label={copyConfig.label}
+                      onMouseEnter={() => setIsCopyHovered(true)}
+                      onMouseLeave={() => setIsCopyHovered(false)}
+                      textColor={
+                        isDarkMode ? copyConfig.colors?.normal : "grey.500"
+                      }
+                      hoverTextColor={
+                        isDarkMode ? copyConfig.colors?.hover : "#111"
+                      }
+                      iconColor={
+                        isDarkMode
+                          ? isCopyHovered
+                            ? copyConfig.colors?.hover
+                            : copyConfig.colors?.normal
+                          : isCopyHovered
+                          ? "#111"
+                          : ""
+                      }
+                    />
+                  )}
                 </Box>
-                {isFeatureEnabled('enableSharing') && (
+                {isFeatureEnabled("enableSharing") && (
                   <ActionButton
                     icon={
                       <DynamicIcon
@@ -377,8 +406,12 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
                     onClick={handleShare}
                     onMouseEnter={() => setIsShareHovered(true)}
                     onMouseLeave={() => setIsShareHovered(false)}
-                    textColor={isDarkMode ? shareConfig.colors?.normal : "grey.500"}
-                    hoverTextColor={isDarkMode ? shareConfig.colors?.hover : "#111"}
+                    textColor={
+                      isDarkMode ? shareConfig.colors?.normal : "grey.500"
+                    }
+                    hoverTextColor={
+                      isDarkMode ? shareConfig.colors?.hover : "#111"
+                    }
                     isReversed={true}
                   />
                 )}
@@ -393,6 +426,7 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
         onClose={() => setShareDialogOpen(false)}
         url={shareUrl}
         title={video.name}
+        videoUrl={video?.content_details[0]?.url}
       />
     </>
   );

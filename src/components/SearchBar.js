@@ -30,7 +30,18 @@ const Search = styled("div")(({ theme }) => ({
   // marginRight: theme.spacing(2),
   // marginLeft: theme.spacing(3),
   width: "100%",
-  transition: "background-color 0.2s ease-in-out",
+  transition:
+    "background-color 0.2s ease-in-out, border-color 0.2s ease-in-out",
+
+  // Light mode hover and focus states
+  ...(theme.palette.mode === "light" && {
+    "&:hover, &:focus-within": {
+      borderColor: theme.palette.primary.main,
+      "& .MuiDivider-root": {
+        borderColor: theme.palette.primary.main,
+      },
+    },
+  }),
 
   // Dark mode hover and focus states
   ...(theme.palette.mode === "dark" && {
@@ -50,6 +61,7 @@ const Search = styled("div")(({ theme }) => ({
     width: "80%",
   },
   [theme.breakpoints.down("sm")]: {
+    borderRadius: 7,
     backgroundColor:
       theme.palette.mode === "dark" ? "rgba(30, 39, 84, 1)" : "#f8f8f8",
     border: `1px solid ${
@@ -57,6 +69,16 @@ const Search = styled("div")(({ theme }) => ({
         ? theme.palette.divider
         : theme.palette.grey[200]
     }`,
+
+    // Light mode hover and focus states for mobile
+    ...(theme.palette.mode === "light" && {
+      "&:hover, &:focus-within": {
+        borderColor: theme.palette.primary.main,
+        "& .MuiDivider-root": {
+          borderColor: theme.palette.primary.main,
+        },
+      },
+    }),
 
     // Dark mode hover and focus states for mobile
     ...(theme.palette.mode === "dark" && {
@@ -86,6 +108,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     ...fontStyles.sfPro.text.regular,
     [theme.breakpoints.down("sm")]: {
       fontSize: fontSize.form.label,
+      paddingLeft: `calc(1em + ${theme.spacing(0)})`,
     },
   },
 }));
@@ -100,6 +123,7 @@ const PostfixIconWrapper = styled("div")(({ theme }) => ({
   justifyContent: "center",
   "& .MuiDivider-root": {
     marginRight: theme.spacing(2),
+    transition: "border-color 0.2s ease-in-out",
   },
   "& .MuiSvgIcon-root": {
     fontSize: fontSize.icon.small,

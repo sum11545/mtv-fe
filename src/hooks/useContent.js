@@ -1,10 +1,17 @@
-import { useTheme } from '@mui/material';
-import { getContentConfig, getButtonLabel, getMessage, getUrl, getFeature, getActionButton } from '../config/content';
+import { useTheme } from "@mui/material";
+import {
+  getContentConfig,
+  getButtonLabel,
+  getMessage,
+  getUrl,
+  getFeature,
+  getActionButton,
+} from "../config/content";
 
 // Custom hook for centralized content management
 export const useContent = () => {
   const theme = useTheme();
-  const isDarkMode = theme.palette.mode === 'dark';
+  const isDarkMode = theme.palette.mode === "dark";
   const config = getContentConfig();
 
   // Get button configuration with theme-aware colors
@@ -12,10 +19,12 @@ export const useContent = () => {
     const buttonConfig = getActionButton(buttonKey);
     if (!buttonConfig.color) return buttonConfig;
 
-    const themeColors = isDarkMode ? buttonConfig.color.dark : buttonConfig.color.light;
+    const themeColors = isDarkMode
+      ? buttonConfig.color.dark
+      : buttonConfig.color.light;
     return {
       ...buttonConfig,
-      colors: themeColors
+      colors: themeColors,
     };
   };
 
@@ -27,18 +36,21 @@ export const useContent = () => {
   };
 
   // Get social sharing URL
-  const getSocialUrl = (platform, url, text = '') => {
+  const getSocialUrl = (platform, pageUrl, videoUrl = "") => {
     const baseUrl = config.urls.social[platform];
-    if (!baseUrl) return '';
-    
+    if (!baseUrl) return "";
+
+    // Use videoUrl if provided, otherwise fallback to pageUrl
+    const urlToShare = videoUrl || pageUrl;
+
     switch (platform) {
-      case 'whatsapp':
-        return `${baseUrl}?text=${encodeURIComponent(`${text}\n${url}`)}`;
-      case 'twitter':
-        return `${baseUrl}&text=${encodeURIComponent(text)}`;
-      case 'facebook':
-      case 'linkedin':
-        return `${baseUrl}${encodeURIComponent(url)}`;
+      case "whatsapp":
+        return `${baseUrl}?text=${encodeURIComponent(urlToShare)}`;
+      case "twitter":
+        return `${baseUrl}&url=${encodeURIComponent(urlToShare)}`;
+      case "facebook":
+      case "linkedin":
+        return `${baseUrl}${encodeURIComponent(urlToShare)}`;
       default:
         return baseUrl;
     }
@@ -62,38 +74,38 @@ export const useContent = () => {
   return {
     // Direct access to config
     config,
-    
+
     // Button helpers
     getButtonLabel,
     getButtonConfig,
-    
+
     // Message helpers
     getMessage,
-    getSuccessMessage: (key) => getMessage('success', key),
-    getErrorMessage: (key) => getMessage('error', key),
-    getLoadingMessage: (key) => getMessage('loading', key),
-    
+    getSuccessMessage: (key) => getMessage("success", key),
+    getErrorMessage: (key) => getMessage("error", key),
+    getLoadingMessage: (key) => getMessage("loading", key),
+
     // URL helpers
     getUrl,
     getApiUrl,
     getSocialUrl,
-    
+
     // Feature toggles
     isFeatureEnabled,
-    
+
     // UI helpers
     getColor,
     getUIConfig,
-    
+
     // Content access
     buttons: config.buttons,
     headers: config.headers,
     placeholders: config.placeholders,
     seo: config.seo,
-    
+
     // Theme-aware properties
     isDarkMode,
-    
+
     // Commonly used values
     maxItemsPerPage: config.ui.maxItemsPerPage,
     animationDuration: config.ui.animationDuration,
@@ -101,4 +113,4 @@ export const useContent = () => {
   };
 };
 
-export default useContent; 
+export default useContent;

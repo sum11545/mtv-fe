@@ -70,6 +70,7 @@ const AdCard = ({ ad }) => {
           <Box
             sx={{
               display: "flex",
+              flexDirection: !isMobile ? "row" : "column",
               justifyContent: "space-between",
               alignItems: "center",
             }}
