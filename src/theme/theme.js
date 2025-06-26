@@ -161,11 +161,20 @@ export const layout = {
 
     // Common padding/margin values
     padding: {
+      xxsmall: 0.25,
       xsmall: 0.5,
       small: 1,
       medium: 2,
       large: 3,
       xlarge: 4,
+    },
+
+    // Gap values for different components
+    gap: {
+      xxsmall: 0.25,
+      xsmall: 0.5,
+      small: 1,
+      medium: 2,
     },
 
     // Icon container dimensions
@@ -177,7 +186,9 @@ export const layout = {
     // Button heights for different sections
     buttonHeight: {
       topIcons: 64,
+      topIconsCompact: 48,
       bottomIcons: 40,
+      bottomIconsCompact: 32,
       regular: 48,
     },
   },
