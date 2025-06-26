@@ -75,18 +75,21 @@ const AdCard = ({ ad }) => {
               alignItems: "center",
             }}
           >
-            <Typography
-              variant="body1"
-              sx={{
-                lineHeight: 1.1,
-                color: theme.palette.custom.adText,
-                fontSize: fontSize.typography.body2,
-                ...fontStyles.montserrat.regular,
-                fontStyle: "italic",
-              }}
-            >
-              {ad.content_details[0].sponsor_name}
-            </Typography>
+            {/* not showing sponsor name inside card in mobile device */}
+            {!isMobile && (
+              <Typography
+                variant="body1"
+                sx={{
+                  lineHeight: 1.1,
+                  color: theme.palette.custom.adText,
+                  fontSize: fontSize.typography.body2,
+                  ...fontStyles.montserrat.regular,
+                  fontStyle: "italic",
+                }}
+              >
+                {ad.content_details[0].sponsor_name}
+              </Typography>
+            )}
             <Button
               variant={isMobile ? "text" : "outlined"}
               color="primary"

@@ -36,6 +36,7 @@ const SliderLayout = ({
   const size = section?.layout_config?.size;
   const height = section?.layout_config?.height;
   const width = section?.layout_config?.width;
+  const isAd = section?.is_ad;
 
   const handleScroll = () => {
     if (scrollContainerRef.current) {
@@ -73,7 +74,16 @@ const SliderLayout = ({
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          mb: 2,
+          pb: {
+            xl: "1.5625rem", // 25px
+            lg: "0.9375rem", // 15px
+            xs: "1.25rem", // 20px
+          },
+          pt: {
+            xl: "1.5625rem", // 25px
+            lg: "0.9375rem", // 15px
+            xs: "1.25rem", // 20px
+          },
         }}
       >
         <Typography
@@ -85,6 +95,32 @@ const SliderLayout = ({
         >
           {section.name}
         </Typography>
+
+        {/* for mobile device showing sponsor name next to section name instead of inside card */}
+        {isAd &&
+          isMobile &&
+          (() => {
+            const sponsor = section.contents?.find(
+              (c) => c?.content_details?.[0]?.sponsor_name
+            )?.content_details?.[0]?.sponsor_name;
+
+            return (
+              sponsor && (
+                <Typography
+                  variant="body1"
+                  sx={{
+                    lineHeight: 1.1,
+                    color: theme.palette.custom.adText,
+                    fontSize: fontSize.typography.caption,
+                    ...fontStyles.montserrat.regular,
+                    fontStyle: "italic",
+                  }}
+                >
+                  - {sponsor}
+                </Typography>
+              )
+            );
+          })()}
 
         {/* showing view more button only in home page(/ means home page) and also if the total content is greater then current content */}
         {section.total_contents > section.contents.length &&
