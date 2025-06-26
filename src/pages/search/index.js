@@ -14,12 +14,19 @@ import {
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useState } from "react";
+import _ from "lodash";
 
 const SearchPage = () => {
   const axiosInstance = createAxiosInstance();
   const router = useRouter();
   const [sectionData, setSectionData] = useState([]);
   const [loading, setLoading] = useState(true);
+  
+  // Function to truncate search query for display
+  const truncateText = (text, maxLength = 50) => {
+    if (!text || text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "...";
+  };
   useEffect(() => {
     const fetchSearchResults = async () => {
       if (!_.isEmpty(router.query)) {
@@ -31,7 +38,8 @@ const SearchPage = () => {
           }
 
           if (query?.searchQuery) {
-            searchQueryParams["search_query"] = query?.searchQuery;
+            // Ensure proper decoding of the search query
+            searchQueryParams["search_query"] = decodeURIComponent(query?.searchQuery);
           }
           const response = await axiosInstance.get("/search/searchResults", {
             params: searchQueryParams,
@@ -57,11 +65,14 @@ const SearchPage = () => {
           ml: 5.5,
           color: "primary.main",
           fontFamily: { ...fontStyles.montserrat.bold },
+          wordBreak: "break-word",
+          overflowWrap: "break-word",
         }}
+        title={router.query?.searchQuery ? `Search Results for: ${decodeURIComponent(router.query.searchQuery)}` : "Search Results"}
       >
-        Search Results
+        Search Results {router.query?.searchQuery && `for "${truncateText(decodeURIComponent(router.query.searchQuery), 30)}"`}
       </Typography>
-      <NoVideosFound searchQuery={router.query?.searchQuery} />
+      <NoVideosFound searchQuery={router.query?.searchQuery ? decodeURIComponent(router.query.searchQuery) : ""} />
     </>
   ) : (
     <>

@@ -21,6 +21,12 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
+  
+  // Function to truncate search query for display
+  const truncateSearchQuery = (query, maxLength = 30) => {
+    if (!query || query.length <= maxLength) return query;
+    return query.substring(0, maxLength) + "...";
+  };
 
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -118,9 +124,12 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
             color="primary"
             sx={{
               ...fontStyles.sfPro.display.bold,
+              wordBreak: "break-word", // Handle very long words
+              overflowWrap: "break-word", // Handle overflow
             }}
+            title={searchQuery} // Show full text on hover
           >
-            "{searchQuery}"
+            "{truncateSearchQuery(searchQuery, isMobile ? 20 : 30)}"
           </Typography>
         </Grid>
 
@@ -188,6 +197,7 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum" }) => {
               color="primary"
               sx={{
                 mt: isMobile ? 1 : 4,
+                mb: isMobile ? 0.7 : 1,
                 ...fontStyles.sfPro.display.bold,
               }}
             >

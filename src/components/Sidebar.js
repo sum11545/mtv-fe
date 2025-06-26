@@ -113,7 +113,8 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
               boxSizing: "border-box",
               top: `${theme.layout?.appBar?.height || layout.appBar.height}px`,
               height: `calc(100% - ${theme.layout?.appBar?.height || layout.appBar.height}px)`,
-              backgroundColor: "background.default",
+              backgroundColor: `${isDarkMode ? theme.palette.background.default : theme.palette.background.default} !important`,
+              backgroundImage: "none !important",
               borderLeft: `${theme.layout?.spacing?.border?.thin || layout.spacing.border.thin} solid`,
               borderColor: "divider",
               display: "flex",
@@ -129,10 +130,10 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                 <ListItemButton
                   onClick={() => handleIconClick(item.section_slug)}
                   sx={{
-                    minHeight: theme.layout?.spacing?.buttonHeight?.topIcons || layout.spacing.buttonHeight.topIcons,
+                    minHeight: theme.layout?.spacing?.buttonHeight?.topIconsCompact || layout.spacing.buttonHeight.topIconsCompact,
                     justifyContent: "center",
-                    px: theme.layout?.spacing?.padding?.small || layout.spacing.padding.small,
-                    py: theme.layout?.spacing?.padding?.small || layout.spacing.padding.small,
+                    px: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
+                    py: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
                     flexDirection: "column",
                     alignItems: "center",
                   }}
@@ -143,7 +144,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                       flexDirection: "column",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
+                      gap: theme.layout?.spacing?.gap?.xxsmall || layout.spacing.gap.xxsmall,
                     }}
                   >
                     <Box
@@ -190,10 +191,10 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                 <ListItemButton
                   onClick={onToggleTheme}
                   sx={{
-                    minHeight: theme.layout?.spacing?.buttonHeight?.bottomIcons || layout.spacing.buttonHeight.bottomIcons,
+                    minHeight: theme.layout?.spacing?.buttonHeight?.bottomIconsCompact || layout.spacing.buttonHeight.bottomIconsCompact,
                     justifyContent: "center",
-                    px: theme.layout?.spacing?.padding?.small || layout.spacing.padding.small,
-                    py: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
+                    px: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
+                    py: theme.layout?.spacing?.padding?.xxsmall || layout.spacing.padding.xxsmall,
                     flexDirection: "column",
                     alignItems: "center",
                   }}
@@ -204,7 +205,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                       flexDirection: "column",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
+                      gap: theme.layout?.spacing?.gap?.xxsmall || layout.spacing.gap.xxsmall,
                     }}
                   >
                     <Box
@@ -231,10 +232,10 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                 <ListItem key={item.text} disablePadding>
                   <ListItemButton
                     sx={{
-                      minHeight: theme.layout?.spacing?.buttonHeight?.bottomIcons || layout.spacing.buttonHeight.bottomIcons,
+                      minHeight: theme.layout?.spacing?.buttonHeight?.bottomIconsCompact || layout.spacing.buttonHeight.bottomIconsCompact,
                       justifyContent: "center",
-                      px: theme.layout?.spacing?.padding?.small || layout.spacing.padding.small,
-                      py: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
+                      px: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
+                      py: theme.layout?.spacing?.padding?.xxsmall || layout.spacing.padding.xxsmall,
                       flexDirection: "column",
                       alignItems: "center",
                     }}
@@ -245,8 +246,8 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                         flexDirection: "column",
                         alignItems: "center",
                         justifyContent: "center",
-                        gap: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
-                      }}
+                                              gap: theme.layout?.spacing?.gap?.xxsmall || layout.spacing.gap.xxsmall,
+                    }}
                     >
                       <Box
                         sx={{
@@ -266,21 +267,21 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
               ))}
 
               <ListItem disablePadding>
-                <ListItemButton
-                  sx={{
-                    minHeight: theme.layout?.spacing?.buttonHeight?.bottomIcons || layout.spacing.buttonHeight.bottomIcons,
-                    justifyContent: "center",
-                    px: theme.layout?.spacing?.padding?.small || layout.spacing.padding.small,
-                    py: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                  onClick={() =>
-                    window.open(
-                      "https://www.youtube.com/@moneytvlive",
-                      "_blank"
-                    )
-                  }
+                                  <ListItemButton
+                    sx={{
+                      minHeight: theme.layout?.spacing?.buttonHeight?.bottomIconsCompact || layout.spacing.buttonHeight.bottomIconsCompact,
+                      justifyContent: "center",
+                      px: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
+                      py: theme.layout?.spacing?.padding?.xxsmall || layout.spacing.padding.xxsmall,
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                    onClick={() =>
+                      window.open(
+                        "https://www.youtube.com/@moneytvlive",
+                        "_blank"
+                      )
+                    }
                 >
                   <Box
                     sx={{
@@ -288,7 +289,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                       flexDirection: "column",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: theme.layout?.spacing?.padding?.xsmall || layout.spacing.padding.xsmall,
+                      gap: theme.layout?.spacing?.gap?.xxsmall || layout.spacing.gap.xxsmall,
                     }}
                   >
                     <Box
@@ -327,6 +328,8 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
             top: 0,
             height: "100%",
             zIndex: (theme) => theme.zIndex.appBar + 1,
+            backgroundColor: `${isDarkMode ? theme.palette.background.default : theme.palette.background.default} !important`,
+            backgroundImage: "none !important",
             borderLeft: `${theme.layout?.spacing?.border?.thin || layout.spacing.border.thin} solid`,
             borderColor: "divider",
           },
@@ -348,9 +351,10 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
             justifyContent: "space-between",
           }}
         >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <Box sx={{ display: "flex", alignItems: "center", gap: theme.layout?.spacing?.gap?.small || layout.spacing.gap.small }}>
             <Image
-              src="/assets/icons/favicon.png"
+              // src="/assets/icons/favicon.png"
+              src={isDarkMode ? "/assets/icons/favicon-dark.png" : "/assets/icons/favicon.png"}
               alt="Logo"
               width={24}
               height={24}

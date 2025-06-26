@@ -257,6 +257,16 @@ const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showSearhResults, setShowSearchResults] = useState(false);
+  
+  // Maximum character limit for search query
+  const MAX_SEARCH_CHARS = 100;
+  
+  // Function to truncate text for display
+  const truncateText = (text, maxLength = 50) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + "...";
+  };
+  
   const handleSearch = (mtvCode) => {
     setShowSearchResults(false);
     if (mtvCode) {
@@ -279,7 +289,12 @@ const SearchBar = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      router.push(`/search?searchQuery=${searchQuery}`);
+      router.push({
+        pathname: "/search",
+        query: {
+          searchQuery: searchQuery,
+        },
+      });
       setShowSearchResults(false);
     }
   };
@@ -289,8 +304,12 @@ const SearchBar = () => {
   return (
     <Search>
       <StyledInputBase
-        placeholder="Search for Videos"
-        inputProps={{ "aria-label": "search" }}
+        // placeholder={`Search for Videos (${searchQuery.length}/${MAX_SEARCH_CHARS})`}
+        placeholder={`Search for Videos`}
+        inputProps={{ 
+          "aria-label": "search",
+          maxLength: MAX_SEARCH_CHARS 
+        }}
         value={searchQuery}
         onFocus={() => {
           setShowSearchResults(true);
@@ -303,13 +322,28 @@ const SearchBar = () => {
         onKeyDown={handleKeyDown}
         onChange={(e) => {
           e.preventDefault();
-          setSearchQuery(e.target.value);
-          axiosInstance
-            .get(`/search/searchSuggestions?search_query=${e.target.value}`)
-            .then((res) => {
-              setSearchResults(res?.data?.response);
-            })
-            .catch((err) => console.log({ err }));
+          const inputValue = e.target.value;
+          
+          // Limit input to maximum characters
+          if (inputValue.length <= MAX_SEARCH_CHARS) {
+            setSearchQuery(inputValue);
+            
+            // Only make API call if there's input and within character limit
+            if (inputValue.trim()) {
+              axiosInstance
+                .get("/search/searchSuggestions", {
+                  params: {
+                    search_query: inputValue,
+                  },
+                })
+                .then((res) => {
+                  setSearchResults(res?.data?.response);
+                })
+                .catch((err) => console.log({ err }));
+            } else {
+              setSearchResults([]);
+            }
+          }
         }}
       />
       <PostfixIconWrapper>

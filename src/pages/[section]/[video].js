@@ -180,8 +180,8 @@ const VideoDetailPage = () => {
       }
       // Remove any additional parameters (e.g., ?si=...)
       videoId = videoId.split(/[?&]/)[0];
-      // Add autoplay and mute parameters
-      return `https://www.youtube.com/embed/${videoId}`;
+      // Add autoplay parameter for immediate playback
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
     }
 
     // Handle other video platforms here if needed
