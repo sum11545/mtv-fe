@@ -32,7 +32,16 @@ import ShortWhatsAppMobileIcon from "@/components/icons/ShortWhatsAppMobileIcon"
 import { DynamicIcon } from "@/components/icons";
 import { useContent } from "@/hooks/useContent";
 
-const ActionButton = ({ icon, label, onClick, isReversed = false, onMouseEnter, onMouseLeave, textColor, hoverTextColor }) => (
+const ActionButton = ({
+  icon,
+  label,
+  onClick,
+  isReversed = false,
+  onMouseEnter,
+  onMouseLeave,
+  textColor,
+  hoverTextColor,
+}) => (
   <Box
     sx={{
       display: "flex",
@@ -181,17 +190,13 @@ const Short = () => {
   const isDarkMode = theme.palette.mode === "dark";
   const isMobile = useMediaQuery("(max-width:899px)"); // Simplified breakpoint to ensure all mobile devices are covered
 
-  const { 
-    getButtonConfig, 
-    getSocialUrl, 
-    getSuccessMessage, 
-    isFeatureEnabled 
-  } = useContent();
-  
+  const { getButtonConfig, getSocialUrl, getSuccessMessage, isFeatureEnabled } =
+    useContent();
+
   // Get button configurations
-  const whatsappConfig = getButtonConfig('whatsapp');
-  const shareConfig = getButtonConfig('share');
-  const copyConfig = getButtonConfig('copy');
+  const whatsappConfig = getButtonConfig("whatsapp");
+  const shareConfig = getButtonConfig("share");
+  const copyConfig = getButtonConfig("copy");
 
   // Touch gesture handling for mobile
   const touchStartY = useRef(0);
@@ -240,7 +245,11 @@ const Short = () => {
 
   const handleWhatsApp = () => {
     if (currentShort) {
-      const shareUrl = getSocialUrl('whatsapp', window.location.href, currentShort.content_details[0].url);
+      const shareUrl = getSocialUrl(
+        "whatsapp",
+        window.location.href,
+        currentShort.content_details[0].url
+      );
       window.open(shareUrl, "_blank");
     }
   };
@@ -317,11 +326,11 @@ const Short = () => {
       >
         {/* <Typography>Loading...</Typography> */}
         <Backdrop
-        sx={{ background: "transparent", zIndex: 100, height: "100vh" }}
-        open={loading}
-      >
-        <CircularProgress />
-      </Backdrop>
+          sx={{ background: "transparent", zIndex: 100, height: "100vh" }}
+          open={loading}
+        >
+          <CircularProgress />
+        </Backdrop>
       </Box>
     );
   }
@@ -467,6 +476,7 @@ const Short = () => {
           onClose={() => setShareDialogOpen(false)}
           url={shareUrl}
           title={currentShort?.name}
+          videoUrl={currentShort?.content_details[0]?.url}
         />
       </Box>
     );
@@ -572,44 +582,63 @@ const Short = () => {
                 }}
               >
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  {isFeatureEnabled('enableWhatsAppSharing') && (
+                  {isFeatureEnabled("enableWhatsAppSharing") && (
                     <ActionButton
-                      icon={<DynamicIcon 
-                        style={{
-                          color: isDarkMode 
-                            ? (isWhatsAppHovered ? whatsappConfig.colors?.hover : whatsappConfig.colors?.normal)
-                            : (isWhatsAppHovered ? '#111' : '')
-                        }} 
-                        height={"15px"} 
-                        width={"15px"} 
-                        keyword={whatsappConfig.icon} 
-                      />}
+                      icon={
+                        <DynamicIcon
+                          style={{
+                            color: isDarkMode
+                              ? isWhatsAppHovered
+                                ? whatsappConfig.colors?.hover
+                                : whatsappConfig.colors?.normal
+                              : isWhatsAppHovered
+                              ? "#111"
+                              : "",
+                          }}
+                          height={"15px"}
+                          width={"15px"}
+                          keyword={whatsappConfig.icon}
+                        />
+                      }
                       label={whatsappConfig.label}
                       onClick={handleWhatsApp}
                       onMouseEnter={() => setIsWhatsAppHovered(true)}
                       onMouseLeave={() => setIsWhatsAppHovered(false)}
-                      textColor={isDarkMode ? whatsappConfig.colors?.normal : 'grey.500'}
-                      hoverTextColor={isDarkMode ? whatsappConfig.colors?.hover : '#111'}
+                      textColor={
+                        isDarkMode ? whatsappConfig.colors?.normal : "grey.500"
+                      }
+                      hoverTextColor={
+                        isDarkMode ? whatsappConfig.colors?.hover : "#111"
+                      }
                     />
                   )}
 
-                  {isFeatureEnabled('enableCopyLink') && (
-                    <CopyButton 
-                      color={isCopyHovered ? '#fff' : ''} 
+                  {isFeatureEnabled("enableCopyLink") && (
+                    <CopyButton
+                      color={isCopyHovered ? "#fff" : ""}
                       text={currentShort?.content_details[0]?.url}
                       label={copyConfig.label}
                       onMouseEnter={() => setIsCopyHovered(true)}
                       onMouseLeave={() => setIsCopyHovered(false)}
-                      textColor={isDarkMode ? copyConfig.colors?.normal : 'grey.500'}
-                      hoverTextColor={isDarkMode ? copyConfig.colors?.hover : '#111'}
-                      iconColor={isDarkMode 
-                        ? (isCopyHovered ? copyConfig.colors?.hover : copyConfig.colors?.normal)
-                        : (isCopyHovered ? '#111' : '')
+                      textColor={
+                        isDarkMode ? copyConfig.colors?.normal : "grey.500"
+                      }
+                      hoverTextColor={
+                        isDarkMode ? copyConfig.colors?.hover : "#111"
+                      }
+                      iconColor={
+                        isDarkMode
+                          ? isCopyHovered
+                            ? copyConfig.colors?.hover
+                            : copyConfig.colors?.normal
+                          : isCopyHovered
+                          ? "#111"
+                          : ""
                       }
                     />
                   )}
                 </Box>
-                {isFeatureEnabled('enableSharing') && (
+                {isFeatureEnabled("enableSharing") && (
                   <ActionButton
                     icon={
                       <DynamicIcon
@@ -631,8 +660,12 @@ const Short = () => {
                     onClick={handleShare}
                     onMouseEnter={() => setIsShareHovered(true)}
                     onMouseLeave={() => setIsShareHovered(false)}
-                    textColor={isDarkMode ? shareConfig.colors?.normal : "grey.500"}
-                    hoverTextColor={isDarkMode ? shareConfig.colors?.hover : "#111"}
+                    textColor={
+                      isDarkMode ? shareConfig.colors?.normal : "grey.500"
+                    }
+                    hoverTextColor={
+                      isDarkMode ? shareConfig.colors?.hover : "#111"
+                    }
                     isReversed={true}
                   />
                 )}
@@ -727,6 +760,7 @@ const Short = () => {
         onClose={() => setShareDialogOpen(false)}
         url={shareUrl}
         title={currentShort?.name}
+        videoUrl={currentShort?.content_details[0]?.url}
       />
     </>
   );

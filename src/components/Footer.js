@@ -93,7 +93,16 @@ const MobileFooter = (props) => {
             ...fontStyles.openSans.semibold,
           }}
         >
-          <Feedback sx={{ fontSize: fontSize.typography.subtitle1 }} /> 
+          <DynamicIcon
+            keyword={config.footer.icons.feedback}
+            width={"20px"}
+            height={"20px"}
+            style={{
+              color: isDarkMode
+                ? palette?.dark?.primary?.main
+                : palette?.light?.primary?.main,
+            }}
+          />
           {config.footer.feedbackTitle}
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate>

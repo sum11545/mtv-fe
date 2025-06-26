@@ -26,81 +26,80 @@ import {
   Check,
 } from "@mui/icons-material";
 import { fontStyles, fontSize } from "../theme/theme";
+import { useContent } from "../hooks/useContent";
 
-const socialPlatforms = [
-  // {
-  //   name: "WhatsApp",
-  //   icon: WhatsApp,
-  //   color: "#25D366",
-  //   shareUrl: (url, title) =>
-  //     `https://wa.me/?text=${encodeURIComponent(`${title}\n${url}`)}`,
-  // },
-  {
-    name: "Facebook",
-    icon: Facebook,
-    color: "#1877F2",
-    shareUrl: (url) =>
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
-  },
-  {
-    name: "Twitter",
-    icon: Twitter,
-    color: "#1DA1F2",
-    shareUrl: (url, title) =>
-      `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        title
-      )}&url=${encodeURIComponent(url)}`,
-  },
-  {
-    name: "LinkedIn",
-    icon: LinkedIn,
-    color: "#0A66C2",
-    shareUrl: (url, title) =>
-      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-        url
-      )}`,
-  },
-  {
-    name: "Reddit",
-    icon: Reddit,
-    color: "#FF4500",
-    shareUrl: (url, title) =>
-      `https://reddit.com/submit?url=${encodeURIComponent(
-        url
-      )}&title=${encodeURIComponent(title)}`,
-  },
-  {
-    name: "Email",
-    icon: Email,
-    color: "#EA4335",
-    shareUrl: (url, title) =>
-      `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(
-        url
-      )}`,
-  },
-  {
-    name: "Telegram",
-    icon: Telegram,
-    color: "#0088cc",
-    shareUrl: (url, title) =>
-      `https://t.me/share/url?url=${encodeURIComponent(
-        url
-      )}&text=${encodeURIComponent(title)}`,
-  },
-];
-
-const ShareDialog = ({ open, onClose, url, title }) => {
+const ShareDialog = ({ open, onClose, url, title, videoUrl }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [copied, setCopied] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const { getSocialUrl } = useContent();
+
+  // Social platforms configuration - using getSocialUrl for consistent URL formatting
+  const socialPlatforms = [
+    {
+      name: "WhatsApp",
+      icon: WhatsApp,
+      color: "#25D366",
+      shareUrl: (url, title) => getSocialUrl("whatsapp", url, videoUrl),
+    },
+    {
+      name: "Facebook",
+      icon: Facebook,
+      color: "#1877F2",
+      shareUrl: (url) =>
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+          url
+        )}`,
+    },
+    {
+      name: "Twitter",
+      icon: Twitter,
+      color: "#1DA1F2",
+      shareUrl: (url, title) =>
+        `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`,
+    },
+    {
+      name: "LinkedIn",
+      icon: LinkedIn,
+      color: "#0A66C2",
+      shareUrl: (url, title) =>
+        `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+          url
+        )}`,
+    },
+    {
+      name: "Reddit",
+      icon: Reddit,
+      color: "#FF4500",
+      shareUrl: (url, title) =>
+        `https://reddit.com/submit?url=${encodeURIComponent(url)}`,
+    },
+    {
+      name: "Email",
+      icon: Email,
+      color: "#EA4335",
+      shareUrl: (url, title) => `mailto:?body=${encodeURIComponent(url)}`,
+    },
+    {
+      name: "Telegram",
+      icon: Telegram,
+      color: "#0088cc",
+      shareUrl: (url, title) =>
+        `https://t.me/share/url?url=${encodeURIComponent(url)}`,
+    },
+  ];
 
   const handleShare = (platform) => {
-    window.open(platform.shareUrl(url, title), "_blank");
+    // Use videoUrl if provided, otherwise fallback to page url
+    const urlToShare = videoUrl || url;
+    window.open(platform.shareUrl(urlToShare, title), "_blank");
   };
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(url);
+    // Use videoUrl if provided, otherwise fallback to page url
+    const urlToCopy = videoUrl || url;
+    navigator.clipboard.writeText(urlToCopy);
     setCopied(true);
     setSnackbarOpen(true);
     setTimeout(() => setCopied(false), 3000);
@@ -185,40 +184,105 @@ const ShareDialog = ({ open, onClose, url, title }) => {
             ))}
           </Grid>
 
-          {/* <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+          {/* Separator line like YouTube */}
+          <Box
+            sx={{
+              borderTop: `1px solid ${
+                theme.palette.mode === "dark"
+                  ? "rgba(255, 255, 255, 0.1)"
+                  : "#e0e0e0"
+              }`,
+              mb: 3,
+            }}
+          />
+
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              border: `1px solid ${
+                theme.palette.mode === "dark"
+                  ? "rgba(255, 255, 255, 0.2)"
+                  : "#d1d5db"
+              }`,
+              borderRadius: "6px",
+              overflow: "hidden",
+              backgroundColor:
+                theme.palette.mode === "dark" ? "#0d1117" : "#ffffff",
+              padding: "10px 5px",
+            }}
+          >
             <TextField
               fullWidth
-              value={url}
+              value={videoUrl || url}
               variant="outlined"
               size="small"
               InputProps={{
                 readOnly: true,
                 sx: {
-                  bgcolor: "action.hover",
+                  backgroundColor: "transparent",
+                  border: "none",
                   "& .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "transparent",
+                    border: "none",
                   },
                   "&:hover .MuiOutlinedInput-notchedOutline": {
-                    borderColor: "transparent",
+                    border: "none",
                   },
+                  "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                    border: "none",
+                  },
+                  "& input": {
+                    padding: "8px 12px",
+                    fontSize: "14px",
+                    fontFamily:
+                      "ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace",
+                    color:
+                      theme.palette.mode === "dark" ? "#e6edf3" : "#1f2328",
+                    cursor: "text",
+                    lineHeight: "20px",
+                    backgroundColor: "transparent",
+                  },
+                },
+              }}
+              sx={{
+                "& .MuiInputBase-root": {
+                  height: "32px",
+                  backgroundColor: "transparent",
                 },
               }}
             />
             <Button
-              variant="contained"
+              variant="text"
               onClick={handleCopyLink}
-              startIcon={copied ? <Check /> : <ContentCopy />}
               sx={{
-                minWidth: "120px",
-                bgcolor: copied ? "success.main" : "primary.main",
+                minWidth: "60px",
+                height: "35px",
+                backgroundColor: copied ? "#1f883d" : "#001691",
+                color: "#ffffff",
+                fontSize: "12px",
+                fontWeight: 500,
+                textTransform: "none",
+                boxShadow: "none",
+                border: "none",
+                borderLeft: `1px solid ${
+                  theme.palette.mode === "dark"
+                    ? "rgba(255, 255, 255, 0.13)"
+                    : "#d1d5db"
+                }`,
+                borderRadius: "50px",
                 "&:hover": {
-                  bgcolor: copied ? "success.dark" : "primary.dark",
+                  backgroundColor: copied ? "#1a7f37" : "#001066",
+                  boxShadow: "none",
                 },
+                "&:active": {
+                  backgroundColor: copied ? "#176f2c" : "#000d4d",
+                },
+                transition: "background-color 0.2s",
               }}
             >
-              {copied ? "Copied" : "Copy"}
+              {copied ? "Copied!" : "Copy"}
             </Button>
-          </Box> */}
+          </Box>
         </DialogContent>
       </Dialog>
 
