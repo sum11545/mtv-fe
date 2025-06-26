@@ -19,6 +19,7 @@ import StackVideoCard from "../cards/StackVideoCard";
 import ArrowIcon from "@/components/icons/ArrowIcon";
 import { DynamicIcon } from "@/components/icons";
 import { useContent } from "@/hooks/useContent";
+import CustomTooltip from "../CustomTooltip";
 
 const GridLayout = ({
   name,
@@ -112,17 +113,25 @@ const GridLayout = ({
           justifyContent: "space-between",
           alignItems: "center",
           pb: {
-            xl: "1.375rem",
-            lg: "1.125rem",
-            xs: "1.563rem",
+            xl: isAd ? "1rem" : "1.5625rem", // 16px : 25px
+            lg: isAd ? "0.7rem" : "0.9375rem", // 11.2px : 15px
+            xs: isAd ? "0.75rem" : "1.25rem", // 12px : 20px
           },
           pt: {
-            xl: "1.75rem",
-            lg: "1.25rem",
-            xs: "1.563rem",
+            xl: "1.5625rem", // 25px
+            lg: "0.9375rem", // 15px
+            xs: "1.25rem", // 20px
           },
         }}
       >
+        <Box
+          sx={{
+            flex: "0 1 auto",
+            minWidth: 0,
+            width: isMobile ? "calc(100% - 120px)" : "calc(100% - 150px)",
+          }}
+        >
+          <CustomTooltip text={section.name}>
         <Typography
           variant={isAd ? "advertisementTitle" : "sectionTitle"}
           sx={{
@@ -136,6 +145,34 @@ const GridLayout = ({
         >
           {section.name}
         </Typography>
+          </CustomTooltip>
+        </Box>
+
+        {/* for mobile device showing sponsor name next to section name instead of inside card */}
+        {isAd &&
+          isMobile &&
+          (() => {
+            const sponsor = section.contents?.find(
+              (c) => c?.content_details?.[0]?.sponsor_name
+            )?.content_details?.[0]?.sponsor_name;
+
+            return (
+              sponsor && (
+                <Typography
+                  variant="body1"
+                  sx={{
+                    lineHeight: 1.1,
+                    color: theme.palette.custom.adText,
+                    fontSize: fontSize.typography.caption,
+                    ...fontStyles.montserrat.regular,
+                    fontStyle: "italic",
+                  }}
+                >
+                  {sponsor}
+                </Typography>
+              )
+            );
+          })()}
 
         {/* showing view more button only in home page(/ means home page) and also if the total content is greater then current content */}
         {section.total_contents > section.contents.length &&
@@ -214,18 +251,70 @@ const GridLayout = ({
           } else if (video.type === "section") {
             return (
               <Grid item key={video.id} xs={12}>
-                {/* Section Title */}
-                <Typography
-                  variant="h6"
-                  component="h2"
+                <Box
                   sx={{
-                    color: "primary.main",
-                    ...fontStyles.montserrat.bold,
-                    mb: 1, // margin bottom for spacing
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    mb: 1.5,
+                  }}
+                >
+                  {/* Section Title */}
+                  <Box
+                    sx={{
+                      flex: "1 1 auto",
+                      minWidth: 0,
+                      width: isMobile
+                        ? "calc(100% - 120px)"
+                        : "calc(100% - 150px)",
+                    }}
+                  >
+                    <CustomTooltip text={video.name}>
+                  <Typography
+                    variant={
+                      video.is_ad ? "advertisementTitle" : "sectionTitle"
+                    }
+                    sx={{
+                      color: video.is_ad
+                        ? theme.palette.custom.advertisementColor
+                        : "primary.main",
+                      fontFamily: video.is_ad
+                        ? { ...fontStyles.openSans.bold }
+                        : { ...fontStyles.montserrat.bold },
                   }}
                 >
                   {video.name}
                 </Typography>
+                    </CustomTooltip>
+                  </Box>
+
+                  {/* for mobile device showing sponsor name next to section name instead of inside card for nested sections */}
+                  {video.is_ad &&
+                    isMobile &&
+                    (() => {
+                      const sponsor = video.contents?.find(
+                        (c) => c?.content_details?.[0]?.sponsor_name
+                      )?.content_details?.[0]?.sponsor_name;
+
+                      return (
+                        sponsor && (
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              lineHeight: 1.1,
+                              color: theme.palette.custom.adText,
+                              fontSize: fontSize.typography.caption,
+                              ...fontStyles.montserrat.regular,
+                              fontStyle: "italic",
+                              // mt: 0.5, // small margin top for spacing from section title
+                            }}
+                          >
+                            {sponsor}
+                          </Typography>
+                        )
+                      );
+                    })()}
+                </Box>
 
                 {/* Section Grid Content */}
                 <Grid container spacing={0}>
