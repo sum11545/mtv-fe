@@ -115,11 +115,12 @@ const StackVideoCard = ({ video, layout, sectionData, section, id }) => {
         <Typography
           variant="body2"
           sx={{
-            whiteSpace: "normal",
-            wordBreak: "break-word",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
             display: "-webkit-box",
-            WebkitLineClamp: 2,
+            WebkitLineClamp: 3,
             WebkitBoxOrient: "vertical",
+            wordBreak: "break-all",
             lineHeight: 1.2,
             mb: 0.5,
             fontSize: fontSize.typography.caption,

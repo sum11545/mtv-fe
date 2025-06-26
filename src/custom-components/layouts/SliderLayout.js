@@ -13,9 +13,10 @@ import {
   ChevronRight as ChevronRightIcon,
 } from "@mui/icons-material";
 import { useRouter } from "next/router";
-import { fontStyles } from "../../theme/theme";
+import { fontStyles, fontSize } from "../../theme/theme";
 import { DynamicIcon } from "@/components/icons";
 import { useContent } from "@/hooks/useContent";
+import CustomTooltip from "../CustomTooltip";
 
 const SliderLayout = ({
   title,
@@ -86,6 +87,14 @@ const SliderLayout = ({
           },
         }}
       >
+        <Box
+          sx={{
+            flex: "0 1 auto",
+            minWidth: 0,
+            width: isMobile ? "calc(100% - 120px)" : "calc(100% - 150px)",
+          }}
+        >
+          <CustomTooltip text={section.name}>
         <Typography
           variant="sectionTitle"
           sx={{
@@ -95,6 +104,8 @@ const SliderLayout = ({
         >
           {section.name}
         </Typography>
+          </CustomTooltip>
+        </Box>
 
         {/* for mobile device showing sponsor name next to section name instead of inside card */}
         {isAd &&
@@ -116,7 +127,7 @@ const SliderLayout = ({
                     fontStyle: "italic",
                   }}
                 >
-                  - {sponsor}
+                  {sponsor}
                 </Typography>
               )
             );

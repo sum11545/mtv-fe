@@ -19,6 +19,7 @@ import StackVideoCard from "../cards/StackVideoCard";
 import ArrowIcon from "@/components/icons/ArrowIcon";
 import { DynamicIcon } from "@/components/icons";
 import { useContent } from "@/hooks/useContent";
+import CustomTooltip from "../CustomTooltip";
 
 const GridLayout = ({
   name,
@@ -123,6 +124,14 @@ const GridLayout = ({
           },
         }}
       >
+        <Box
+          sx={{
+            flex: "0 1 auto",
+            minWidth: 0,
+            width: isMobile ? "calc(100% - 120px)" : "calc(100% - 150px)",
+          }}
+        >
+          <CustomTooltip text={section.name}>
         <Typography
           variant={isAd ? "advertisementTitle" : "sectionTitle"}
           sx={{
@@ -136,6 +145,8 @@ const GridLayout = ({
         >
           {section.name}
         </Typography>
+          </CustomTooltip>
+        </Box>
 
         {/* for mobile device showing sponsor name next to section name instead of inside card */}
         {isAd &&
@@ -157,7 +168,7 @@ const GridLayout = ({
                     fontStyle: "italic",
                   }}
                 >
-                  - {sponsor}
+                  {sponsor}
                 </Typography>
               )
             );
@@ -249,6 +260,16 @@ const GridLayout = ({
                   }}
                 >
                   {/* Section Title */}
+                  <Box
+                    sx={{
+                      flex: "1 1 auto",
+                      minWidth: 0,
+                      width: isMobile
+                        ? "calc(100% - 120px)"
+                        : "calc(100% - 150px)",
+                    }}
+                  >
+                    <CustomTooltip text={video.name}>
                   <Typography
                     variant={
                       video.is_ad ? "advertisementTitle" : "sectionTitle"
@@ -264,6 +285,8 @@ const GridLayout = ({
                 >
                   {video.name}
                 </Typography>
+                    </CustomTooltip>
+                  </Box>
 
                   {/* for mobile device showing sponsor name next to section name instead of inside card for nested sections */}
                   {video.is_ad &&
@@ -286,7 +309,7 @@ const GridLayout = ({
                               // mt: 0.5, // small margin top for spacing from section title
                             }}
                           >
-                            - {sponsor}
+                            {sponsor}
                           </Typography>
                         )
                       );
