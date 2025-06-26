@@ -5,6 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import createEmotionCache from "../utils/createEmotionCache";
 import { MainProvider } from "../context/MainContext";
 import Layout from "../components/Layout";
+import { initFontLoading } from "../utils/fontLoader";
 import "../../styles/global.css";
 import "../../styles/font.css";
 
@@ -13,6 +14,11 @@ const clientSideEmotionCache = createEmotionCache();
 
 export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+
+  React.useEffect(() => {
+    // Initialize font loading detection to minimize FOUC
+    initFontLoading();
+  }, []);
 
   return (
     <MainProvider>
