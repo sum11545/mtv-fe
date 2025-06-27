@@ -209,7 +209,8 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
     let videoId = "";
 
     try {
-      const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?/]+)/;
+      const youtubeRegex =
+        /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([^&?/]+)/;
       const match = url.match(youtubeRegex);
       videoId = match?.[1] ?? "";
     } catch (err) {
