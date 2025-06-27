@@ -81,7 +81,7 @@ const MobileFooter = (props) => {
       </Box>
 
       {/* Form second */}
-      <Box sx={{ mb: 4 }}>
+      {/* <Box sx={{ mb: 4 }}>
         <Typography
           variant="h6"
           sx={{
@@ -225,7 +225,7 @@ const MobileFooter = (props) => {
             {config.footer.sendMessage}
           </Button>
         </Box>
-      </Box>
+      </Box> */}
 
       <Divider orientation="horizontal" flexItem sx={{ mb: 2 }} />
 
@@ -719,7 +719,7 @@ const Footer = () => {
         </Box>
 
         {/* Right Side - Feedback Form */}
-        <Box sx={{ flex: 1, padding: 4 }}>
+        {/* <Box sx={{ flex: 1, padding: 4 }}>
           <Typography
             variant="h6"
             sx={{
@@ -865,7 +865,7 @@ const Footer = () => {
               {config.footer.sendMessage}
             </Button>
           </Box>
-        </Box>
+        </Box> */}
       </Box>
     );
   };
