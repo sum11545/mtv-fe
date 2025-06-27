@@ -23,8 +23,6 @@ export const MainProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   const axiosInstance = createAxiosInstance();
-  const [contentConfigurations, setContentConfigurations] = useState(null);
-
   const fetchHomePageData = async () => {
     try {
       setLoading(true);
@@ -104,7 +102,6 @@ export const MainProvider = ({ children }) => {
     fetchHomePageData,
     fetchSectionPageData,
     fetchVideoDetailPageData,
-    contentConfigurations,
     fetchShortDetailPageData,
     fetchSideBarData,
   };

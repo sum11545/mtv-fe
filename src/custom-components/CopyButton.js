@@ -6,15 +6,24 @@ import CopyIcon from "@/components/icons/CopyIcon";
 import { DynamicIcon } from "@/components/icons";
 import { useContent } from "@/hooks/useContent";
 
-const CopyButton = ({color, text, label, onMouseEnter, onMouseLeave, textColor, hoverTextColor, iconColor }) => {
+const CopyButton = ({
+  color,
+  text,
+  label,
+  onMouseEnter,
+  onMouseLeave,
+  textColor,
+  hoverTextColor,
+  iconColor,
+}) => {
   const [copied, setCopied] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { getButtonLabel, getSuccessMessage, snackbarDuration } = useContent();
-  
+
   // Use centralized configuration with fallbacks
-  const buttonLabel = label || getButtonLabel('copy');
-  const copiedLabel = getButtonLabel('copied');
-  const successMessage = getSuccessMessage('linkCopied');
+  const buttonLabel = label || getButtonLabel("copy");
+  const copiedLabel = getButtonLabel("copied");
+  const successMessage = getSuccessMessage("linkCopied");
 
   const handleCopy = (e) => {
     e.stopPropagation(); // Prevent event bubbling
@@ -37,7 +46,6 @@ const CopyButton = ({color, text, label, onMouseEnter, onMouseLeave, textColor, 
           gap: 0,
           borderRadius: 1,
           cursor: "pointer",
-          padding: "4px 8px",
           transition: "all 0.2s ease-in-out",
           "&:hover": {
             "& .MuiTypography-root": {
@@ -51,17 +59,17 @@ const CopyButton = ({color, text, label, onMouseEnter, onMouseLeave, textColor, 
       >
         {/* <CopyIcon /> */}
         <DynamicIcon
-          height={"15px"} 
-          width={"15px"} 
-          keyword="COPY" 
+          height={"15px"}
+          width={"15px"}
+          keyword="COPY"
           style={{
-            color: iconColor || '',
+            color: iconColor || "",
           }}
         />
         <Typography
           variant="caption"
           sx={{
-            color: copied ? "success.main" : (textColor || "grey.500"),
+            color: copied ? "success.main" : textColor || "grey.500",
             fontSize: fontSize.typography.caption,
             userSelect: "none",
             ml: 0.5,

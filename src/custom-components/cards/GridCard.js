@@ -21,6 +21,8 @@ import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import ShareIcon from "@/components/icons/ShareIcon";
 import { DynamicIcon } from "@/components/icons";
 import { useContent } from "@/hooks/useContent";
+import LangauePopUp from "../LangauePopUp";
+import { LanguageComponet } from "../LanguageComponet";
 
 const ActionButton = ({
   icon,
@@ -112,7 +114,10 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
   const [isWhatsAppHovered, setIsWhatsAppHovered] = useState(false);
   const [isShareHovered, setIsShareHovered] = useState(false);
   const [isCopyHovered, setIsCopyHovered] = useState(false);
-  const { contentConfigurations } = useMain();
+  const [showLanguages, setShowLanguages] = useState(false);
+  const [selectedContent, setSelectedContent] = useState(
+    video?.content_details[0]
+  );
   const {
     getButtonConfig,
     getSocialUrl,
@@ -125,19 +130,11 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
   const whatsappConfig = getButtonConfig("whatsapp");
   const shareConfig = getButtonConfig("share");
   const copyConfig = getButtonConfig("copy");
-
-  let isAd = ["ATI", "ATV", "ATT"].includes(
-    video?.content_details[0]?.content_type_id
-  );
-  let isShort = video?.content_details[0]?.content_type_id == "CTSR"; // CTSR  is for shorts.
-
-  // Finding the content type id and then applying height and width according to configuration
-  const layout = contentConfigurations?.find(
-    (item) => item.content_type_id == video?.content_details[0]?.content_type_id
-  );
-
-  // let height = layout?.layout?.height;
-  // let width = layout?.layout?.width;
+  const contentLanguages = video?.content_details?.map((v) => {
+    return { ...v.language, content_id: v.id };
+  });
+  let isAd = ["ATI", "ATV", "ATT"].includes(selectedContent?.content_type_id);
+  let isShort = selectedContent?.content_type_id == "CTSR"; // CTSR  is for shorts.
 
   const height = styles.height;
   const width = styles.width;
@@ -159,7 +156,7 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
     const shareUrl = getSocialUrl(
       "whatsapp",
       window.location.href,
-      video.content_details[0].url
+      selectedContent?.url
     );
     window.open(shareUrl, "_blank");
   };
@@ -167,7 +164,7 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
   const handleCardClick = () => {
     // if video type is ad then don't redirect it to any ad url
     if (video.type == "ad_content") {
-      window.open(video.content_details[0]?.cta_url, "_blank");
+      window.open(selectedContent?.cta_url, "_blank");
     } else {
       // If content type is short then i am redirecting it to static shorts/id page i.e. short detail page
       if (isShort) {
@@ -180,7 +177,12 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
         // console.log(section?.slug);
         // If we're in a section list page, use the section prop directly
         if (section?.slug) {
-          router.push(`/${section.slug}/${video.id}`);
+          router.push({
+            pathname: `/${section.slug}/${video.id}`,
+            query: {
+              language: selectedContent?.language?.id,
+            },
+          });
           return;
         }
 
@@ -199,7 +201,7 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
     }
   };
   const getThumbnailUrl = () => {
-    const details = video?.content_details?.[0];
+    const details = selectedContent;
     if (!details || details.platform !== "PY")
       return "/images/404-not-found.jpg";
 
@@ -232,17 +234,19 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
           borderRadius: 0,
           background: "none",
         }}
-        onClick={handleCardClick}
       >
         <Box
+          onClick={handleCardClick}
           sx={{
             width: width && {
+              xl: width?.xl,
               lg: width?.lg,
               md: width?.md,
               sm: width?.sm,
               xs: width?.xs,
             },
             height: height && {
+              xl: height?.xl,
               lg: height?.lg,
               md: height?.md,
               sm: height?.sm,
@@ -277,40 +281,27 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
               py: "14px",
               px: 0,
               display: "flex",
+              position: "relative",
+              zIndex: 5,
               flexDirection: "column",
-              height: isShort ? "50px" : "90px",
-              justifyContent: "space-between",
               "&:last-child": {
                 paddingBottom: 1.5,
               },
             }}
           >
-            <Box
+            <Typography
               sx={{
-                minHeight: "2.2em", // Fixed height for video name area (2 lines)
-                maxHeight: "2.2em",
-                display: "flex",
-                alignItems: "flex-start",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                minHeight: "4em",
+                maxHeight: "4em",
+                fontSize: fontSize.typography.body2,
+                ...fontStyles.openSans.bold,
               }}
+              onClick={handleCardClick}
             >
-              {/* <Tooltip title={video.name} arrow> */}
-              <Typography
-                component="div"
-                sx={{
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  display: "-webkit-box",
-                  WebkitLineClamp: 2,
-                  WebkitBoxOrient: "vertical",
-                  lineHeight: 1.2,
-                  fontSize: fontSize.typography.body2,
-                  ...fontStyles.openSans.bold,
-                }}
-              >
-                {video.name}
-              </Typography>
-              {/* </Tooltip> */}
-            </Box>
+              {selectedContent?.name}
+            </Typography>
             {!isShort && (
               <Box
                 sx={{
@@ -319,102 +310,111 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
                   alignItems: "center",
                 }}
               >
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    marginLeft: "-5px",
-                    ...fontStyles.sfPro.condensed.regular,
-                  }}
-                >
-                  {/* Show action buttons only if features are enabled */}
-                  {isFeatureEnabled("enableWhatsAppSharing") && (
-                    <ActionButton
-                      icon={
-                        <DynamicIcon
-                          style={{
-                            color: isDarkMode
-                              ? isWhatsAppHovered
-                                ? whatsappConfig.colors?.hover
-                                : whatsappConfig.colors?.normal
-                              : isWhatsAppHovered
-                              ? "#111"
-                              : "",
-                          }}
-                          height={"15px"}
-                          width={"15px"}
-                          keyword={whatsappConfig.icon}
-                        />
-                      }
-                      label={whatsappConfig.label}
-                      onClick={handleWhatsApp}
-                      onMouseEnter={() => setIsWhatsAppHovered(true)}
-                      onMouseLeave={() => setIsWhatsAppHovered(false)}
-                      textColor={
-                        isDarkMode ? whatsappConfig.colors?.normal : "grey.500"
-                      }
-                      hoverTextColor={
-                        isDarkMode ? whatsappConfig.colors?.hover : "#111"
-                      }
-                    />
-                  )}
-
-                  {isFeatureEnabled("enableCopyLink") && (
-                    <CopyButton
-                      color={isCopyHovered ? "#fff" : ""}
-                      text={video?.content_details[0]?.url}
-                      label={copyConfig.label}
-                      onMouseEnter={() => setIsCopyHovered(true)}
-                      onMouseLeave={() => setIsCopyHovered(false)}
-                      textColor={
-                        isDarkMode ? copyConfig.colors?.normal : "grey.500"
-                      }
-                      hoverTextColor={
-                        isDarkMode ? copyConfig.colors?.hover : "#111"
-                      }
-                      iconColor={
-                        isDarkMode
-                          ? isCopyHovered
-                            ? copyConfig.colors?.hover
-                            : copyConfig.colors?.normal
-                          : isCopyHovered
-                          ? "#111"
-                          : ""
-                      }
-                    />
-                  )}
-                </Box>
-                {isFeatureEnabled("enableSharing") && (
-                  <ActionButton
-                    icon={
-                      <DynamicIcon
-                        style={{
-                          color: isDarkMode
-                            ? isShareHovered
-                              ? shareConfig.colors?.hover
-                              : shareConfig.colors?.normal
-                            : isShareHovered
-                            ? "#111"
-                            : "",
-                        }}
-                        height={"15px"}
-                        width={"15px"}
-                        keyword={shareConfig.icon}
+                <LanguageComponet
+                  langaugeName={selectedContent?.language?.name}
+                  contentLanguages={contentLanguages}
+                  contentDetails={video?.content_details}
+                  setSelectedContent={setSelectedContent}
+                />
+                <Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      ...fontStyles.sfPro.condensed.regular,
+                    }}
+                  >
+                    {/* Show action buttons only if features are enabled */}
+                    {isFeatureEnabled("enableWhatsAppSharing") && (
+                      <ActionButton
+                        icon={
+                          <DynamicIcon
+                            style={{
+                              color: isDarkMode
+                                ? isWhatsAppHovered
+                                  ? whatsappConfig.colors?.hover
+                                  : whatsappConfig.colors?.normal
+                                : isWhatsAppHovered
+                                ? "#111"
+                                : "",
+                            }}
+                            height={"15px"}
+                            width={"15px"}
+                            keyword={whatsappConfig.icon}
+                          />
+                        }
+                        label={whatsappConfig.label}
+                        onClick={handleWhatsApp}
+                        onMouseEnter={() => setIsWhatsAppHovered(true)}
+                        onMouseLeave={() => setIsWhatsAppHovered(false)}
+                        textColor={
+                          isDarkMode
+                            ? whatsappConfig.colors?.normal
+                            : "grey.500"
+                        }
+                        hoverTextColor={
+                          isDarkMode ? whatsappConfig.colors?.hover : "#111"
+                        }
                       />
-                    }
-                    label={shareConfig.label}
-                    onClick={handleShare}
-                    onMouseEnter={() => setIsShareHovered(true)}
-                    onMouseLeave={() => setIsShareHovered(false)}
-                    textColor={
-                      isDarkMode ? shareConfig.colors?.normal : "grey.500"
-                    }
-                    hoverTextColor={
-                      isDarkMode ? shareConfig.colors?.hover : "#111"
-                    }
-                    isReversed={true}
-                  />
-                )}
+                    )}
+
+                    {isFeatureEnabled("enableCopyLink") && (
+                      <CopyButton
+                        color={isCopyHovered ? "#fff" : ""}
+                        text={video?.content_details[0]?.url}
+                        label={copyConfig.label}
+                        onMouseEnter={() => setIsCopyHovered(true)}
+                        onMouseLeave={() => setIsCopyHovered(false)}
+                        textColor={
+                          isDarkMode ? copyConfig.colors?.normal : "grey.500"
+                        }
+                        hoverTextColor={
+                          isDarkMode ? copyConfig.colors?.hover : "#111"
+                        }
+                        iconColor={
+                          isDarkMode
+                            ? isCopyHovered
+                              ? copyConfig.colors?.hover
+                              : copyConfig.colors?.normal
+                            : isCopyHovered
+                            ? "#111"
+                            : ""
+                        }
+                      />
+                    )}
+                    {isFeatureEnabled("enableSharing") && (
+                      <ActionButton
+                        icon={
+                          <DynamicIcon
+                            style={{
+                              color: isDarkMode
+                                ? isShareHovered
+                                  ? shareConfig.colors?.hover
+                                  : shareConfig.colors?.normal
+                                : isShareHovered
+                                ? "#111"
+                                : "",
+                            }}
+                            height={"15px"}
+                            width={"15px"}
+                            keyword={shareConfig.icon}
+                          />
+                        }
+                        label={shareConfig.label}
+                        onClick={handleShare}
+                        onMouseEnter={() => setIsShareHovered(true)}
+                        onMouseLeave={() => setIsShareHovered(false)}
+                        textColor={
+                          isDarkMode ? shareConfig.colors?.normal : "grey.500"
+                        }
+                        hoverTextColor={
+                          isDarkMode ? shareConfig.colors?.hover : "#111"
+                        }
+                        isReversed={true}
+                      />
+                    )}
+                  </Box>
+                </Box>
               </Box>
             )}
           </CardContent>
@@ -425,8 +425,8 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
         open={shareDialogOpen}
         onClose={() => setShareDialogOpen(false)}
         url={shareUrl}
-        title={video.name}
-        videoUrl={video?.content_details[0]?.url}
+        title={selectedContent?.name}
+        videoUrl={selectedContent?.url}
       />
     </>
   );

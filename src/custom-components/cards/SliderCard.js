@@ -93,12 +93,14 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, styles }) => {
       <Card
         sx={{
           width: width && {
+            xl: width.xl,
             lg: width.lg,
             md: width.md,
             sm: width.sm,
             xs: width.xs,
           },
           height: height && {
+            xl: height.xl,
             lg: height.lg,
             md: height.md,
             sm: height.sm,
