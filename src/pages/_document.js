@@ -18,6 +18,15 @@ export default class MyDocument extends Document {
               __html: `
                 (function() {
                   try {
+                    // Set initial background to prevent white flash
+                    const savedMode = localStorage.getItem('darkMode');
+                    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    const isDarkMode = savedMode !== null ? savedMode === 'true' : prefersDarkMode;
+                    
+                    // Set body background immediately
+                    document.body.style.backgroundColor = isDarkMode ? '#040C38' : '#ffffff';
+                    document.documentElement.style.backgroundColor = isDarkMode ? '#040C38' : '#ffffff';
+                    
                     document.documentElement.classList.add('fonts-loading');
                     
                     // Check if critical fonts are already cached

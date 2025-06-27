@@ -257,11 +257,18 @@ const Layout = ({ children }) => {
       const savedMode = localStorage.getItem("darkMode");
       if (savedMode !== null) {
         setIsDarkMode(savedMode === "true");
+        // Set initial body background to prevent flash
+        document.body.style.backgroundColor =
+          savedMode === "true" ? "#040C38" : "#ffffff";
       } else {
         const prefersDarkMode = window.matchMedia(
           "(prefers-color-scheme: dark)"
         ).matches;
         setIsDarkMode(prefersDarkMode);
+        // Set initial body background to prevent flash
+        document.body.style.backgroundColor = prefersDarkMode
+          ? "#040C38"
+          : "#ffffff";
       }
     }
   }, []);
@@ -275,6 +282,8 @@ const Layout = ({ children }) => {
     setIsDarkMode(newMode);
     if (typeof window !== "undefined") {
       localStorage.setItem("darkMode", newMode.toString());
+      // Update body background immediately to prevent flash
+      document.body.style.backgroundColor = newMode ? "#040C38" : "#ffffff";
     }
   };
 

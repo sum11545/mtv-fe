@@ -16,6 +16,10 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Prevent white flash by setting a dark default background */
+  background-color: #040c38;
+  /* Smooth transitions for background color changes */
+  transition: background-color 0.2s ease-in-out;
 }
 
 /* Prevent layout shift during font loading */
@@ -48,6 +52,32 @@ html {
 
 #__next {
   height: 100%;
+  /* Ensure next.js wrapper doesn't flash white */
+  background-color: inherit;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* Prevent route transition flashes */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.15s ease-in, transform 0.15s ease-in;
 }
 
 a {
