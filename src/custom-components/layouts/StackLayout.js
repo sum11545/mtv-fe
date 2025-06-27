@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -7,6 +7,7 @@ import {
   Stack,
   Paper,
   Divider,
+  Tooltip,
 } from "@mui/material";
 
 import { useRouter } from "next/router";
@@ -18,17 +19,57 @@ const StackLayout = ({ name, contents, id, sectionData, section }) => {
   const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const [showTooltip, setShowTooltip] = useState(false);
+  const textRef = useRef(null);
+
+  useEffect(() => {
+    const checkOverflow = () => {
+      if (textRef.current) {
+        const isOverflowing =
+          textRef.current.scrollWidth > textRef.current.clientWidth;
+        setShowTooltip(isOverflowing);
+      }
+    };
+
+    checkOverflow();
+    window.addEventListener("resize", checkOverflow);
+
+    return () => {
+      window.removeEventListener("resize", checkOverflow);
+    };
+  }, [section?.name]);
 
   return (
     <>
       <Box sx={{ mb: 2 }}>
-        <Typography
-          variant="subtitle1"
-          fontWeight="bold"
-          sx={{ py: { md: 2, lg: 2, xs: 1.5 }, px: { md: 2, lg: 2, xs: 1.5 } }}
+        <Box
+          sx={{
+            px: { md: 2, lg: 2, xs: 1.5 },
+            py: { md: 2, lg: 2, xs: 2 },
+          }}
         >
-          {section?.name}
-        </Typography>
+          <Tooltip
+            title={showTooltip ? section?.name || "" : ""}
+            arrow
+            placement="top"
+          >
+            <Typography
+              ref={textRef}
+              variant="subtitle1"
+              fontWeight="bold"
+              sx={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                display: "block",
+                maxWidth: "100%",
+                cursor: "pointer",
+              }}
+            >
+              {section?.name}
+            </Typography>
+          </Tooltip>
+        </Box>
         <Stack spacing={2}>
           {section?.contents?.map((video, index, arr) => (
             <>

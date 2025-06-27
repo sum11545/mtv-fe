@@ -288,7 +288,7 @@ const VideoDetailPage = () => {
                     variant="subtitle2"
                     fontWeight="bold"
                     color="text.secondary"
-                    sx={{ whiteSpace: "nowrap" }} // prevent title from wrapping
+                    // sx={{ whiteSpace: "nowrap" }} // prevent title from wrapping
                   >
                     {videoDetailData?.section_name}
                   </Typography>
