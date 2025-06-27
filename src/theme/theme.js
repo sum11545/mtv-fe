@@ -74,6 +74,24 @@ export const fontStyles = {
       },
     },
   },
+  barlowCondensed: {
+    bold: {
+      fontFamily: "Barlow Condensed",
+      fontWeight: 700,
+    },
+    semibold: {
+      fontFamily: "Barlow Condensed",
+      fontWeight: 600,
+    },
+    medium: {
+      fontFamily: "Barlow Condensed",
+      fontWeight: 500,
+    },
+    regular: {
+      fontFamily: "Barlow Condensed",
+      fontWeight: 400,
+    },
+  },
 };
 
 // Font size configuration

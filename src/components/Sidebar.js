@@ -167,7 +167,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                     <Typography
                       variant="caption"
                       sx={{
-                        ...fontStyles.sfPro.condensed.regular,
+                        ...fontStyles.barlowCondensed.regular,
                         fontSize: theme.fontSize?.typography?.overline || fontSize.typography.overline,
                         textTransform: "uppercase",
                         textAlign: "center",
@@ -364,7 +364,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
               component="div"
               color="primary.main"
               sx={{
-                ...fontStyles.sfPro.condensed.bold,
+                ...fontStyles.barlowCondensed.bold,
                 fontSize: theme.fontSize?.typography?.h6 || fontSize.typography.h6,
                 textTransform: "uppercase",
               }}
@@ -419,7 +419,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                     primary={item.text}
                     sx={{
                       "& .MuiListItemText-primary": {
-                        ...fontStyles.sfPro.condensed.regular,
+                        ...fontStyles.barlowCondensed.regular,
                         fontSize: theme.fontSize?.nav?.primary || fontSize.nav.primary,
                         textTransform: "uppercase"
                       },
@@ -457,7 +457,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                     primary={isDarkMode ? "Switch to Light" : "Switch to Dark"}
                     sx={{
                       "& .MuiListItemText-primary": {
-                        ...fontStyles.sfPro.condensed.regular,
+                        ...fontStyles.barlowCondensed.regular,
                         fontSize: theme.fontSize?.nav?.primary || fontSize.nav.primary,
                         textTransform: "uppercase",
                       },
@@ -482,7 +482,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                       primary={item.text}
                       sx={{
                         "& .MuiListItemText-primary": {
-                          ...fontStyles.sfPro.condensed.regular,
+                          ...fontStyles.barlowCondensed.regular,
                           fontSize: theme.fontSize?.nav?.primary || fontSize.nav.primary,
                           textTransform: "uppercase",
                         },
@@ -510,7 +510,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                   pr:11,
                   mb: theme.layout?.spacing?.padding?.small || layout.spacing.padding.small,
                   mt: 0,
-                  ...fontStyles.sfPro.condensed.bold,
+                  ...fontStyles.barlowCondensed.bold,
                   fontSize: theme.fontSize?.button?.medium || fontSize.button.medium,
                   textTransform: "uppercase",
                   backgroundColor: theme.palette.custom?.youtube?.main || "#FF0000",

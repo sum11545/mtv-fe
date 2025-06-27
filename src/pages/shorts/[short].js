@@ -508,7 +508,7 @@ const Short = () => {
           <Box
             sx={{
               width: { xs: "100vw", md: 606 },
-              height: { xs: "calc(100vh - 64px)" },
+              height: { xs: "calc(100vh - 120px)", md: "calc(100vh - 120px)" },
               bgcolor: "black",
               overflow: "hidden",
               display: "flex",
