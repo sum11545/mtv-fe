@@ -1,5 +1,11 @@
 import { useState, useEffect } from "react";
-import { Box, styled, ThemeProvider, useMediaQuery, Button } from "@mui/material";
+import {
+  Box,
+  styled,
+  ThemeProvider,
+  useMediaQuery,
+  Button,
+} from "@mui/material";
 import { useRouter } from "next/router";
 import { ArrowBack } from "@mui/icons-material";
 import Header from "./Header";
@@ -59,21 +65,27 @@ const BackButtonContainer = styled(Box)(({ theme }) => ({
 const BackButton = ({ onClick, label }) => {
   const [isHovered, setIsHovered] = useState(false);
   const { getColor, isDarkMode } = useContent();
-  
+
   return (
     <BackButtonContainer>
       <Button
-        startIcon={<DynamicIcon 
-          keyword={isHovered ? 'ARROW-LEFT_YELLOW' : 'ARROW-LEFT'}
-          height={"15px"} 
-          width={"15px"}
-          style={{
-            color: isDarkMode 
-              ? (isHovered ? '' : '#fff')
-              : (isHovered ? 'black' : ''),
-            transform: 'rotate(180deg)' // Rotate arrow to point left for back
-          }}
-        />}
+        startIcon={
+          <DynamicIcon
+            keyword={isHovered ? "ARROW-LEFT_YELLOW" : "ARROW-LEFT"}
+            height={"15px"}
+            width={"15px"}
+            style={{
+              color: isDarkMode
+                ? isHovered
+                  ? ""
+                  : "#fff"
+                : isHovered
+                ? "black"
+                : "",
+              transform: "rotate(180deg)", // Rotate arrow to point left for back
+            }}
+          />
+        }
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={onClick}
@@ -81,19 +93,19 @@ const BackButton = ({ onClick, label }) => {
           textTransform: "none",
           ...fontStyles.openSans.regular,
           fontSize: fontSize.button.medium,
-          color: isDarkMode ? '#fff' : 'black',
-          '&:hover': {
-            bgcolor: 'transparent',
-            color: isDarkMode ? getColor('secondary') : 'common.black',
-            '& .MuiButton-startIcon': {
-              transform: 'translateX(-5px) rotate(180deg)',
-              transition: 'transform 0.3s ease-in-out'
-            }
+          color: isDarkMode ? "#fff" : "black",
+          "&:hover": {
+            bgcolor: "transparent",
+            color: isDarkMode ? getColor("secondary") : "common.black",
+            "& .MuiButton-startIcon": {
+              transform: "translateX(-5px) rotate(180deg)",
+              transition: "transform 0.3s ease-in-out",
+            },
           },
-          '& .MuiButton-startIcon': {
-            transition: 'transform 0.3s ease-in-out',
-            transform: 'rotate(180deg)'
-          }
+          "& .MuiButton-startIcon": {
+            transition: "transform 0.3s ease-in-out",
+            transform: "rotate(180deg)",
+          },
         }}
       >
         {label}
@@ -124,22 +136,26 @@ const Layout = ({ children }) => {
   // Get a user-friendly label for a route
   const getRouteLabel = (route) => {
     if (!route) return "Home";
-    
+
     const { pathname, query } = route;
-    
+
     if (pathname === "/") return "Home";
     if (pathname === "/search") return "Search";
     if (pathname === "/[section]" && query.section) {
-      return query.section.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+      return query.section
+        .replace(/-/g, " ")
+        .replace(/\b\w/g, (l) => l.toUpperCase());
     }
     if (pathname === "/[section]/[video]" && query.section) {
-      return query.section.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+      return query.section
+        .replace(/-/g, " ")
+        .replace(/\b\w/g, (l) => l.toUpperCase());
     }
     if (pathname === "/shorts/[short]") return "Shorts";
     if (pathname === "/privacy-policy") return "Privacy Policy";
     if (pathname === "/terms-of-service") return "Terms of Service";
     if (pathname === "/help") return "Help";
-    
+
     return "Previous Page";
   };
 
@@ -151,14 +167,18 @@ const Layout = ({ children }) => {
     }
 
     const { pathname, query } = route;
-    
+
     if (pathname === "/") {
       router.push("/");
     } else if (pathname === "/search") {
       router.push("/search");
     } else if (pathname === "/[section]" && query.section) {
       router.push(`/${query.section}`);
-    } else if (pathname === "/[section]/[video]" && query.section && query.video) {
+    } else if (
+      pathname === "/[section]/[video]" &&
+      query.section &&
+      query.video
+    ) {
       router.push(`/${query.section}/${query.video}`);
     } else if (pathname === "/shorts/[short]" && query.short) {
       router.push(`/shorts/${query.short}`);
@@ -171,42 +191,42 @@ const Layout = ({ children }) => {
   const getBackButtonInfo = () => {
     const { pathname, query } = router;
     const previousRoute = getPreviousRoute();
-    
+
     // Show back button for pages that should have navigation
     const shouldShowBackButton = [
       "/[section]/[video]",
-      "/shorts/[short]", 
+      "/shorts/[short]",
       "/[section]",
       "/search",
       "/privacy-policy",
-      "/terms-of-service", 
-      "/help"
+      "/terms-of-service",
+      "/help",
     ].includes(pathname);
 
     if (shouldShowBackButton) {
       const previousLabel = getRouteLabel(previousRoute);
-      
+
       return {
         show: true,
         label: `Back to ${previousLabel}`,
         action: () => {
           if (previousRoute) {
             // Remove current route from history and navigate to previous
-            setNavigationHistory(prev => prev.slice(0, -1));
+            setNavigationHistory((prev) => prev.slice(0, -1));
             try {
               navigateToRoute(previousRoute);
             } catch (error) {
-              console.error('Navigation failed, falling back to home:', error);
+              console.error("Navigation failed, falling back to home:", error);
               router.push("/");
             }
           } else {
             // Fallback to home if no previous route
             router.push("/");
           }
-        }
+        },
       };
     }
-    
+
     return { show: false };
   };
 
@@ -219,15 +239,17 @@ const Layout = ({ children }) => {
         pathname: router.pathname,
         query: router.query,
         asPath: router.asPath,
-        url: url
+        url: url,
       };
 
-      setNavigationHistory(prev => {
+      setNavigationHistory((prev) => {
         // Don't add the same route consecutively
         const lastRoute = prev[prev.length - 1];
-        if (lastRoute && 
-            lastRoute.pathname === currentRoute.pathname && 
-            JSON.stringify(lastRoute.query) === JSON.stringify(currentRoute.query)) {
+        if (
+          lastRoute &&
+          lastRoute.pathname === currentRoute.pathname &&
+          JSON.stringify(lastRoute.query) === JSON.stringify(currentRoute.query)
+        ) {
           return prev;
         }
 
@@ -243,10 +265,10 @@ const Layout = ({ children }) => {
     }
 
     // Listen for route changes
-    router.events.on('routeChangeComplete', handleRouteChangeComplete);
+    router.events.on("routeChangeComplete", handleRouteChangeComplete);
 
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChangeComplete);
+      router.events.off("routeChangeComplete", handleRouteChangeComplete);
     };
   }, [router.isReady, router.pathname, router.query, router.asPath]);
 
@@ -307,9 +329,9 @@ const Layout = ({ children }) => {
         <Header toggleSidebar={toggleSidebar} />
         {/* Back Button */}
         {backButtonInfo.show && (
-          <BackButton 
-            onClick={backButtonInfo.action} 
-            label={backButtonInfo.label} 
+          <BackButton
+            onClick={backButtonInfo.action}
+            label={backButtonInfo.label}
           />
         )}
         {/* Hide category tabs on mobile for shorts detail page */}
@@ -320,17 +342,21 @@ const Layout = ({ children }) => {
         )} */}
         <Main
           isShortsPageMobile={isMobile && isShortsPage}
-          sx={{ 
-            marginTop: backButtonInfo.show 
-              ? (isShortsPage || isMobile ? "120px" : "120px")
-              : (isShortsPage || isMobile ? "70px" : "80px")
+          sx={{
+            marginTop: backButtonInfo.show
+              ? isShortsPage || isMobile
+                ? "120px"
+                : "120px"
+              : isShortsPage || isMobile
+              ? "70px"
+              : "80px",
           }}
         >
           {children}
           {/* <NoVideosPage /> */}
         </Main>
         {/* Hide footer on mobile for shorts detail page */}
-        {!(isShortsPage) && <Footer />}
+        {!isShortsPage && <Footer />}
         <Sidebar
           open={sidebarOpen}
           onClose={toggleSidebar}

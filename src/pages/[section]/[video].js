@@ -568,9 +568,38 @@ const VideoDetailPage = () => {
                   md: 2,
                   sm: 0,
                 },
-                height: "100%",
-
+                height: {
+                  md: "calc(50.25vw * 9/16 + 200px)", // Match video height + title/actions area
+                  xs: "auto",
+                },
+                maxHeight: {
+                  md: "calc(100vh - 100px)", // Prevent exceeding viewport
+                  xs: "none",
+                },
+                overflowY: {
+                  md: "auto",
+                  xs: "visible",
+                },
                 pb: { md: 3, lg: 3 },
+                "&::-webkit-scrollbar": {
+                  width: "6px",
+                },
+                "&::-webkit-scrollbar-track": {
+                  background: "transparent",
+                },
+                "&::-webkit-scrollbar-thumb": {
+                  background:
+                    theme.palette.mode === "dark"
+                      ? "rgba(255,255,255,0.2)"
+                      : "rgba(0,0,0,0.2)",
+                  borderRadius: "3px",
+                  "&:hover": {
+                    background:
+                      theme.palette.mode === "dark"
+                        ? "rgba(255,255,255,0.3)"
+                        : "rgba(0,0,0,0.3)",
+                  },
+                },
                 "& .MuiPaper-root": {
                   backgroundColor:
                     theme.palette.background.videoDetailSectionBg,

@@ -259,7 +259,7 @@ const SearchBar = () => {
   const [showSearhResults, setShowSearchResults] = useState(false);
 
   // Maximum character limit for search query
-  const MAX_SEARCH_CHARS = 100;
+  const MAX_SEARCH_CHARS = 300;
 
   // Function to truncate text for display
   const truncateText = (text, maxLength = 50) => {
