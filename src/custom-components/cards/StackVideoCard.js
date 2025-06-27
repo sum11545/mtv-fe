@@ -1,11 +1,26 @@
 import { fontSize, fontStyles } from "@/theme/theme";
-import { Box, Typography, useTheme } from "@mui/material";
-import React from "react";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
+import LangauePopUp from "../LangauePopUp";
+import { LanguageComponet } from "../LanguageComponet";
 
-const StackVideoCard = ({ video, layout, sectionData, section, id }) => {
+const StackVideoCard = ({
+  video,
+  layout,
+  sectionData,
+  section,
+  id,
+  showLanguageComponent = false,
+  isMobile,
+}) => {
   const router = useRouter();
-  
+  const [selectedContent, setSelectedContent] = useState(
+    video?.content_details[0]
+  );
+  const contentLanguages = video?.content_details?.map((v) => {
+    return { ...v.language, content_id: v.id };
+  });
   const getThumbnailUrl = () => {
     const details = video?.content_details?.[0];
     if (!details || details.platform !== "PY")
@@ -33,7 +48,7 @@ const StackVideoCard = ({ video, layout, sectionData, section, id }) => {
       window.open(video.content_details[0]?.cta_url, "_blank");
     } else {
       let isShort = video?.content_details[0]?.content_type_id == "CTSR"; // CTSR is for shorts.
-      
+
       // If content type is short then redirect to static shorts/id page
       if (isShort) {
         let shortId = video?.id;
@@ -61,17 +76,16 @@ const StackVideoCard = ({ video, layout, sectionData, section, id }) => {
       }
     }
   };
-
   return (
-    <Box 
-      sx={{ 
-        display: "flex", 
-        gap: "0.75rem", 
+    <Box
+      sx={{
+        display: "flex",
+        gap: "0.75rem",
         overflow: "hidden",
         cursor: "pointer",
         "&:hover": {
-          opacity: 0.8
-        }
+          opacity: 0.8,
+        },
       }}
       onClick={handleCardClick}
     >
@@ -131,6 +145,16 @@ const StackVideoCard = ({ video, layout, sectionData, section, id }) => {
         >
           {video?.name}
         </Typography>
+        {showLanguageComponent ? (
+          <LanguageComponet
+            contentDetails={video?.content_details}
+            langaugeName={selectedContent?.language?.name}
+            setSelectedContent={setSelectedContent}
+            contentLanguages={contentLanguages}
+          />
+        ) : (
+          <></>
+        )}
       </Box>
     </Box>
   );

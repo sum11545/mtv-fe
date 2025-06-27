@@ -21,7 +21,7 @@ const SearchPage = () => {
   const router = useRouter();
   const [sectionData, setSectionData] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+
   // Function to truncate search query for display
   const truncateText = (text, maxLength = 50) => {
     if (!text || text.length <= maxLength) return text;
@@ -39,7 +39,9 @@ const SearchPage = () => {
 
           if (query?.searchQuery) {
             // Ensure proper decoding of the search query
-            searchQueryParams["search_query"] = decodeURIComponent(query?.searchQuery);
+            searchQueryParams["search_query"] = decodeURIComponent(
+              query?.searchQuery
+            );
           }
           const response = await axiosInstance.get("/search/searchResults", {
             params: searchQueryParams,
@@ -68,11 +70,25 @@ const SearchPage = () => {
           wordBreak: "break-word",
           overflowWrap: "break-word",
         }}
-        title={router.query?.searchQuery ? `Search Results for: ${decodeURIComponent(router.query.searchQuery)}` : "Search Results"}
+        title={
+          router.query?.searchQuery
+            ? `Search Results for: ${decodeURIComponent(
+                router.query.searchQuery
+              )}`
+            : "Search Results"
+        }
       >
-        Search Results {router.query?.searchQuery && `for "${truncateText(decodeURIComponent(router.query.searchQuery), 30)}"`}
+        Search Results{" "}
+        {router.query?.searchQuery &&
+          `for "${truncateText(
+            decodeURIComponent(router.query.searchQuery),
+            30
+          )}"`}
       </Typography>
-      <NoVideosFound searchQuery={router.query?.searchQuery ? decodeURIComponent(router.query.searchQuery) : ""} />
+      <NoVideosFound
+        searchQuery={decodeURIComponent(router.query?.searchQuery)}
+        mtvCode={router.query?.mtvCode}
+      />
     </>
   ) : (
     <>

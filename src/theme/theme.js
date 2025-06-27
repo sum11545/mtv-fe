@@ -229,6 +229,7 @@ export const palette = {
       paper: "#ffffff",
       sectionBg: "#FAFAFA",
       videoDetailSectionBg: "#F2F2F2",
+      language: "#F3F3F3",
     },
     text: {
       primary: "#000000",
@@ -242,6 +243,7 @@ export const palette = {
         dark: "#CC0000",
       },
       advertisementColor: "#2E2D2D",
+      languageCountBorder: "#DDDDDD",
     },
   },
   dark: {

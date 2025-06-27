@@ -257,16 +257,16 @@ const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [showSearhResults, setShowSearchResults] = useState(false);
-  
+
   // Maximum character limit for search query
   const MAX_SEARCH_CHARS = 100;
-  
+
   // Function to truncate text for display
   const truncateText = (text, maxLength = 50) => {
     if (text.length <= maxLength) return text;
     return text.substring(0, maxLength) + "...";
   };
-  
+
   const handleSearch = (mtvCode) => {
     setShowSearchResults(false);
     if (mtvCode) {
@@ -306,9 +306,9 @@ const SearchBar = () => {
       <StyledInputBase
         // placeholder={`Search for Videos (${searchQuery.length}/${MAX_SEARCH_CHARS})`}
         placeholder={`Search for Videos`}
-        inputProps={{ 
+        inputProps={{
           "aria-label": "search",
-          maxLength: MAX_SEARCH_CHARS 
+          maxLength: MAX_SEARCH_CHARS,
         }}
         value={searchQuery}
         onFocus={() => {
@@ -323,11 +323,11 @@ const SearchBar = () => {
         onChange={(e) => {
           e.preventDefault();
           const inputValue = e.target.value;
-          
+
           // Limit input to maximum characters
           if (inputValue.length <= MAX_SEARCH_CHARS) {
             setSearchQuery(inputValue);
-            
+
             // Only make API call if there's input and within character limit
             if (inputValue.trim()) {
               axiosInstance
@@ -350,7 +350,7 @@ const SearchBar = () => {
         {!isMobile && <Divider orientation="vertical" flexItem />}
         <SearchIcon onClick={() => handleSearch()} sx={{ cursor: "pointer" }} />
       </PostfixIconWrapper>
-      {showSearhResults && searchQuery && searchResults.length ? (
+      {showSearhResults && searchQuery && searchResults?.length ? (
         <SearchResults
           searchResults={searchResults}
           handleSearch={handleSearch}

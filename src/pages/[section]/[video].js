@@ -27,6 +27,7 @@ import AdSection from "@/custom-components/layouts/AdSection";
 import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { DynamicIcon } from "@/components/icons";
 import { useContent } from "@/hooks/useContent";
+import { LanguageComponet } from "@/custom-components/LanguageComponet";
 
 const ActionButton = ({
   icon,
@@ -116,16 +117,15 @@ const VideoDetailPage = () => {
   const [showMore, setShowMore] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const [videoData, setVideoData] = useState(null);
-  const [relatedVideos, setRelatedVideos] = useState([]);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [shareUrl, setShareUrl] = useState("");
   const [isWhatsAppHovered, setIsWhatsAppHovered] = useState(false);
   const [isShareHovered, setIsShareHovered] = useState(false);
   const [isCopyHovered, setIsCopyHovered] = useState(false);
-
+  const [langaugeList, setLanguageList] = useState([]);
   const [videoDetailData, setVideoDetailData] = useState(null);
   const { fetchVideoDetailPageData, loading } = useMain();
+  const [selectedContent, setSelectedContent] = useState(null);
   const {
     getButtonConfig,
     getSocialUrl,
@@ -140,23 +140,32 @@ const VideoDetailPage = () => {
   const copyConfig = getButtonConfig("copy");
 
   const shouldTruncate =
-    isMobile && videoDetailData?.description.length > maxChars;
+    isMobile && selectedContent?.description?.length > maxChars;
   const displayText =
     shouldTruncate && !showMore
-      ? videoDetailData?.description.slice(0, maxChars) + "..."
-      : videoDetailData?.description;
+      ? selectedContent?.description?.slice(0, maxChars) + "..."
+      : selectedContent?.description;
 
   const toggleShowMore = () => setShowMore((prev) => !prev);
   useEffect(() => {
     // Set share URL only after component mounts on client side
     setShareUrl(window.location.href);
   }, []);
-
   useEffect(() => {
     const loadData = async () => {
       try {
         const res = await fetchVideoDetailPageData(section, video);
         setVideoDetailData(res?.data?.response);
+        setLanguageList(
+          res?.data?.response?.content_details?.map((v) => {
+            return { ...v.language, content_id: v.id };
+          })
+        );
+        setSelectedContent(
+          res?.data?.response?.content_details?.find(
+            (v) => v?.language?.id === router.query.language
+          )
+        );
       } catch (err) {
         console.error("Error fetching home data:", err);
       }
@@ -180,7 +189,7 @@ const VideoDetailPage = () => {
       }
       // Remove any additional parameters (e.g., ?si=...)
       videoId = videoId.split(/[?&]/)[0];
-      // Add autoplay parameter for immediate playback
+      // Add autoplay and mute parameters
       return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
     }
 
@@ -204,7 +213,6 @@ const VideoDetailPage = () => {
       window.open(shareUrl, "_blank");
     }
   };
-
   return (
     <>
       <Backdrop
@@ -243,8 +251,8 @@ const VideoDetailPage = () => {
               }}
             >
               <iframe
-                src={getEmbedUrl(videoDetailData?.content_details[0]?.url)}
-                title={videoDetailData?.name}
+                src={getEmbedUrl(selectedContent?.url)}
+                title={selectedContent?.name}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
@@ -265,15 +273,81 @@ const VideoDetailPage = () => {
                 },
               }}
             >
-              {/* Section Title */}
-              <Typography
-                variant="subtitle2"
-                fontWeight="bold"
-                color="text.secondary"
-                sx={{ mb: 1 }}
-              >
-                {/* {sectionData?.sectionTitle} */}
-              </Typography>
+              <Box component="section" sx={{ mb: 1 }}>
+                {/* Section Title & Language Tags */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexWrap: "wrap", // allow wrapping
+                    alignItems: "flex-start",
+                    gap: 1,
+                  }}
+                >
+                  {/* Section Title */}
+                  <Typography
+                    variant="subtitle2"
+                    fontWeight="bold"
+                    color="text.secondary"
+                    sx={{ whiteSpace: "nowrap" }} // prevent title from wrapping
+                  >
+                    {videoDetailData?.section_name}
+                  </Typography>
+
+                  {/* Language Tags */}
+                  {isMobile ? (
+                    <LanguageComponet
+                      contentDetails={videoDetailData?.content_details}
+                      langaugeName={selectedContent?.language?.name}
+                      setSelectedContent={setSelectedContent}
+                      contentLanguages={langaugeList}
+                    />
+                  ) : (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        alignItems: "center",
+                        gap: "4px",
+                        ml: 2,
+                        flex: 1, // occupy remaining space
+                        minWidth: 0, // prevent overflow
+                      }}
+                    >
+                      {langaugeList?.map((lang) => (
+                        <Typography
+                          key={lang.id}
+                          sx={{
+                            padding: "2px 8px",
+                            fontSize: "0.75rem",
+                            cursor: "pointer",
+                            background:
+                              lang.id === router.query.language
+                                ? theme.palette.common.white
+                                : theme.palette.background.language,
+                            borderRadius: "8px",
+                            border:
+                              lang.id === router.query.language
+                                ? `1px solid ${theme.palette.common.black}`
+                                : "none",
+                            ...fontStyles.montserrat.regular,
+                          }}
+                          onClick={() =>
+                            router.replace({
+                              pathname: router.pathname,
+                              query: {
+                                ...router.query,
+                                language: lang.id,
+                              },
+                            })
+                          }
+                        >
+                          {lang?.name}
+                        </Typography>
+                      ))}
+                    </Box>
+                  )}
+                </Box>
+              </Box>
 
               {/* Video Title */}
               <Typography
@@ -284,7 +358,7 @@ const VideoDetailPage = () => {
                   ...fontStyles.openSans.bold,
                 }}
               >
-                {videoDetailData?.name}
+                {selectedContent?.name}
               </Typography>
 
               {/* Action Buttons */}
@@ -332,7 +406,7 @@ const VideoDetailPage = () => {
                   {isFeatureEnabled("enableCopyLink") && (
                     <CopyButton
                       color={isCopyHovered ? "#fff" : ""}
-                      text={videoDetailData?.content_details[0]?.url}
+                      text={selectedContent?.url}
                       label={copyConfig.label}
                       onMouseEnter={() => setIsCopyHovered(true)}
                       onMouseLeave={() => setIsCopyHovered(false)}

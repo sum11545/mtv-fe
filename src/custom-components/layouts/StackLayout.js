@@ -18,9 +18,6 @@ const StackLayout = ({ name, contents, id, sectionData, section }) => {
   const router = useRouter();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const size = section.layout_config.size;
-  const height = section?.layout_config?.height;
-  const spacing = section?.layout_config?.spacing;
 
   return (
     <>
@@ -59,7 +56,11 @@ const StackLayout = ({ name, contents, id, sectionData, section }) => {
                   router.push(`/${section.slug}/${video.id}`);
                 }}
               >
-                <StackVideoCard video={video} layout={section?.layout_config} />
+                <StackVideoCard
+                  video={video}
+                  layout={section?.layout_config}
+                  isMobile={isMobile}
+                />
               </Paper>
               {index !== arr.length - 1 ? <Divider sx={{ my: 1 }} /> : <></>}
             </>
