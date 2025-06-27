@@ -10,6 +10,7 @@ import {
   CircularProgress,
   Container,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
@@ -21,6 +22,7 @@ const SearchPage = () => {
   const router = useRouter();
   const [sectionData, setSectionData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const theme = useTheme();
 
   // Function to truncate search query for display
   const truncateText = (text, maxLength = 50) => {
@@ -93,7 +95,11 @@ const SearchPage = () => {
   ) : (
     <>
       <Backdrop
-        sx={{ background: "#FFF", zIndex: 1, height: "100vh" }}
+        sx={{
+          backgroundColor: theme.palette.background.default,
+          zIndex: 100,
+          height: "100vh",
+        }}
         open={loading}
       >
         <CircularProgress />

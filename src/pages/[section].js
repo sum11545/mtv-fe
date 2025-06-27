@@ -54,7 +54,11 @@ export default function SectionPage({ sectionSlug }) {
   return (
     <>
       <Backdrop
-        sx={{ background: "#FFF", zIndex: 1, height: "100vh" }}
+        sx={{
+          backgroundColor: theme.palette.background.default,
+          zIndex: 100,
+          height: "100vh",
+        }}
         open={loading}
       >
         <CircularProgress />
