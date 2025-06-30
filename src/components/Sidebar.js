@@ -634,33 +634,59 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                   <DynamicIcon
                     keyword={"YOUTUBE"}
                     style={{
-                      color: palette?.dark?.primary?.main, // Use theme's primary text color for consistency
+                      color: "#FFFFFF", // White icon for contrast
                     }}
                   />
                 }
                 sx={{
-                  pr: 11,
+                  px: { xs: 1.5, sm: 2 }, // Responsive padding instead of fixed pr: 11
+                  py: { xs: 1, sm: 1.5 }, // Responsive vertical padding
                   mb:
                     theme.layout?.spacing?.padding?.small ||
                     layout.spacing.padding.small,
                   mt: 0,
                   ...fontStyles.barlowCondensed.bold,
-                  fontSize:
-                    theme.fontSize?.button?.medium || fontSize.button.medium,
+                  fontSize: {
+                    xs: "0.75rem", // Smaller font on mobile
+                    sm:
+                      theme.fontSize?.button?.medium || fontSize.button.medium,
+                  },
                   textTransform: "uppercase",
                   backgroundColor:
                     theme.palette.custom?.youtube?.main || "#FF0000",
                   color: theme.palette.common?.white || "#FFFFFF",
+                  justifyContent: "flex-start", // Left align the content
+                  textAlign: "left", // Left align the text
+                  minHeight: { xs: "40px", sm: "48px" }, // Ensure proper touch targets
+                  "& .MuiButton-startIcon": {
+                    marginRight: { xs: 0.75, sm: 1 }, // Responsive icon spacing
+                    marginLeft: 0, // Remove default left margin
+                  },
                   "& .MuiSvgIcon-root": {
                     color: theme.palette.common?.white || "#FFFFFF",
+                    fontSize: { xs: "1.1rem", sm: "1.25rem" }, // Responsive icon size
                   },
                   "&:hover": {
                     backgroundColor:
                       theme.palette.custom?.youtube?.dark || "#CC0000",
                   },
+                  // Better text handling on mobile
+                  overflow: "hidden",
+                  whiteSpace: { xs: "normal", sm: "nowrap" },
+                  lineHeight: { xs: 1.2, sm: 1.4 },
                 }}
               >
-                Subscribe To YouTube
+                <Box
+                  component="span"
+                  sx={{
+                    flex: 1,
+                    textAlign: "left",
+                    wordBreak: { xs: "break-word", sm: "normal" },
+                    overflow: "hidden",
+                  }}
+                >
+                  Subscribe To YouTube
+                </Box>
               </Button>
             </ListItem>
           </Box>
