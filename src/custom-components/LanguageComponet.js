@@ -1,6 +1,6 @@
 import { fontSize, fontStyles } from "@/theme/theme";
 import { Box, Typography, useTheme } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import LangauePopUp from "./LangauePopUp";
 
 export const LanguageComponet = ({
@@ -11,8 +11,34 @@ export const LanguageComponet = ({
 }) => {
   const [showLanguages, setShowLanguages] = useState(false);
   const theme = useTheme();
+
+  // if we click on language list, it shows the list but when we click anywhere then it should be closed.
+  const containerRef = useRef(null);
+
+  // Handle click outside to close popup
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setShowLanguages(false);
+      }
+    };
+
+    if (showLanguages) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showLanguages]);
+  //
+
   return (
     <Box
+      ref={containerRef}
       sx={{
         display: "flex",
         justifyContent: "space-between",
@@ -44,7 +70,7 @@ export const LanguageComponet = ({
           <>
             <Box
               component={"span"}
-              onClick={() => setShowLanguages(true)}
+              onClick={() => setShowLanguages(!showLanguages)}
               sx={{
                 borderRadius: "1rem",
                 border: `1px solid ${theme.palette.custom.languageCountBorder}`,
