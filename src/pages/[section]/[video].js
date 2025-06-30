@@ -285,10 +285,14 @@ const VideoDetailPage = () => {
                 >
                   {/* Section Title */}
                   <Typography
-                    variant="subtitle2"
-                    fontWeight="bold"
-                    color="text.secondary"
+                    // variant="subtitle2"
+                    // fontWeight="bold"
+                    // color="text.secondary"
                     // sx={{ whiteSpace: "nowrap" }} // prevent title from wrapping
+                    sx={{
+                      mb: 1,
+                      ...fontStyles.openSans.bold,
+                    }}
                   >
                     {videoDetailData?.section_name}
                   </Typography>
@@ -573,7 +577,7 @@ const VideoDetailPage = () => {
                   xs: "auto",
                 },
                 maxHeight: {
-                  md: "calc(100vh - 100px)", // Prevent exceeding viewport
+                  md: "calc(100vh - 200px)", // Ensure content overflows to show scrollbar
                   xs: "none",
                 },
                 overflowY: {
@@ -582,22 +586,31 @@ const VideoDetailPage = () => {
                 },
                 pb: { md: 3, lg: 3 },
                 "&::-webkit-scrollbar": {
-                  width: "6px",
+                  width: "8px !important",
+                  height: "8px !important",
+                  backgroundColor:
+                    theme.palette.mode === "dark"
+                      ? "rgba(255,255,255,0.1) !important"
+                      : "rgba(0,0,0,0.1) !important",
                 },
                 "&::-webkit-scrollbar-track": {
-                  background: "transparent",
+                  background:
+                    theme.palette.mode === "dark"
+                      ? "rgba(255,255,255,0.1) !important"
+                      : "rgba(0,0,0,0.1) !important",
+                  borderRadius: "4px !important",
                 },
                 "&::-webkit-scrollbar-thumb": {
                   background:
                     theme.palette.mode === "dark"
-                      ? "rgba(255,255,255,0.2)"
-                      : "rgba(0,0,0,0.2)",
-                  borderRadius: "3px",
+                      ? "rgba(255,255,255,0.4) !important"
+                      : "rgba(0,0,0,0.4) !important",
+                  borderRadius: "4px !important",
                   "&:hover": {
                     background:
                       theme.palette.mode === "dark"
-                        ? "rgba(255,255,255,0.3)"
-                        : "rgba(0,0,0,0.3)",
+                        ? "rgba(255,255,255,0.6) !important"
+                        : "rgba(0,0,0,0.6) !important",
                   },
                 },
                 "& .MuiPaper-root": {

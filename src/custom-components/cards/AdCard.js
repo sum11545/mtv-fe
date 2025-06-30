@@ -32,7 +32,11 @@ const AdCard = ({ ad }) => {
       // Ad type is ad-image
       return (
         <CardMedia
-          sx={{ background: "blue", height: "100%", width: "100%" }}
+          sx={{
+            background: "blue",
+            height: isMobile ? "100%" : "85%",
+            width: "100%",
+          }}
           component="img"
           image={ad.content_details[0].thumbnail_url}
           poster={ad.content_details[0].thumbnail_url}
@@ -45,7 +49,7 @@ const AdCard = ({ ad }) => {
         <CardContent
           sx={{
             background: "#FFDA93",
-            height: "100%",
+            height: "85%",
             width: "100%",
             padding: "1rem",
             display: "flex",
