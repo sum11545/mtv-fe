@@ -10,6 +10,7 @@ export const LanguageComponet = ({
   setSelectedContent,
 }) => {
   const [showLanguages, setShowLanguages] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const theme = useTheme();
 
   // if we click on language list, it shows the list but when we click anywhere then it should be closed.
@@ -35,6 +36,14 @@ export const LanguageComponet = ({
     };
   }, [showLanguages]);
   //
+
+  // Determine border color based on state
+  const getBorderColor = () => {
+    if (showLanguages || isHovered) {
+      return theme.palette.custom.languageCountBorder;
+    }
+    return theme.palette.divider;
+  };
 
   return (
     <Box
@@ -70,24 +79,35 @@ export const LanguageComponet = ({
           <>
             <Box
               component={"span"}
-              onClick={() => setShowLanguages(!showLanguages)}
+              onClick={() => {
+                setShowLanguages(true);
+              }}
+              onMouseEnter={() => {
+                setIsHovered(true);
+                setShowLanguages(true);
+              }}
+              onMouseLeave={() => {
+                setIsHovered(false);
+              }}
               sx={{
                 borderRadius: "1rem",
-                border: `1px solid ${theme.palette.custom.languageCountBorder}`,
+                border: `1px solid ${getBorderColor()}`,
                 fontSize: {
                   xl: fontSize.typography.h6,
                   lg: fontSize.typography.body1,
                   xs: fontSize.typography.body1,
                 },
                 padding: {
-                  xl: "7px",
-                  lg: "2px 10px",
-                  sm: "2px 10px",
-                  xs: "2px 10px",
+                  xl: "5px",
+                  lg: "2px 5px",
+                  sm: "2px 5px",
+                  xs: "2px 5px",
                 },
                 fontWeight: "bold",
                 position: "relative",
                 ml: "4px",
+                cursor: "pointer",
+                transition: "border-color 0.2s ease",
                 ...(showLanguages && {
                   "&::before": {
                     content: '""',
@@ -96,7 +116,7 @@ export const LanguageComponet = ({
                     height: 0,
                     borderLeft: "7px solid transparent",
                     borderRight: "7px solid transparent",
-                    borderTop: `7px solid ${theme.palette.custom.languageCountBorder}`,
+                    borderTop: `7px solid ${getBorderColor()}`,
                     left: "50%",
                     top: "-27%",
                     transform: "translateX(-50%)",
@@ -126,7 +146,7 @@ export const LanguageComponet = ({
                   position: "absolute",
                   top: "33%",
                   zIndex: 100,
-                  border: `1px solid ${theme.palette.custom.languageCountBorder}`,
+                  border: `1px solid ${getBorderColor()}`,
                   display: "flex",
                   justifyContent: "space-evenly",
                   backgroundColor: theme.palette.background.paper,
@@ -136,8 +156,10 @@ export const LanguageComponet = ({
                   height: "25px",
                   overflow: "hidden",
                 }}
+                onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={(e) => {
                   e.preventDefault();
+                  setIsHovered(false);
                   setShowLanguages(false);
                 }}
               >
