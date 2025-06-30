@@ -767,3 +767,773 @@ const Short = () => {
 };
 
 export default Short;
+
+// import React, {
+//   useEffect,
+//   useState,
+//   useRef,
+//   useCallback,
+//   useMemo,
+// } from "react";
+// import { useRouter } from "next/router";
+// import {
+//   Box,
+//   Typography,
+//   IconButton,
+//   Backdrop,
+//   CircularProgress,
+//   useTheme,
+//   useMediaQuery,
+// } from "@mui/material";
+// import { ArrowBack } from "@mui/icons-material";
+// import { useMain } from "@/context/MainContext";
+// import CopyButton from "@/custom-components/CopyButton";
+// import ShareDialog from "@/custom-components/ShareDialog";
+// import { fontSize, fontStyles, palette } from "@/theme/theme";
+// import { ShortCopyMobileIcon } from "@/components/icons/ShortCopyMobileIcon";
+// import ShortWhatsAppMobileIcon from "@/components/icons/ShortWhatsAppMobileIcon";
+// import ShareShortMobileIcon from "@/components/icons/ShareShortMobileIcon";
+// import { DynamicIcon } from "@/components/icons";
+// import { useContent } from "@/hooks/useContent";
+
+// const ActionButton = React.memo(
+//   ({
+//     icon,
+//     label,
+//     onClick,
+//     isReversed = false,
+//     onMouseEnter,
+//     onMouseLeave,
+//     textColor,
+//     hoverTextColor,
+//   }) => (
+//     <Box
+//       sx={{
+//         display: "flex",
+//         alignItems: "center",
+//         gap: 0,
+//         borderRadius: 1,
+//         cursor: "pointer",
+//         padding: "4px 8px",
+//         transition: "all 0.2s ease-in-out",
+//         "&:hover": {
+//           "& .MuiTypography-root": {
+//             color: hoverTextColor || "grey.700",
+//           },
+//           "& .MuiSvgIcon-root": {
+//             color: "grey.700",
+//           },
+//         },
+//       }}
+//       onClick={onClick}
+//       onMouseEnter={onMouseEnter}
+//       onMouseLeave={onMouseLeave}
+//     >
+//       {isReversed ? (
+//         <>
+//           <Typography
+//             variant="caption"
+//             sx={{
+//               color: textColor || "grey.500",
+//               fontSize: fontSize.typography.caption,
+//               userSelect: "none",
+//               mr: 0.5,
+//               transition: "color 0.2s ease-in-out",
+//               ...fontStyles.sfPro.condensed.regular,
+//             }}
+//           >
+//             {label}
+//           </Typography>
+//           {React.cloneElement(icon, {
+//             sx: {
+//               ...icon.props.sx,
+//               color: "grey.500",
+//               transition: "color 0.2s ease-in-out",
+//             },
+//           })}
+//         </>
+//       ) : (
+//         <>
+//           {React.cloneElement(icon, {
+//             sx: {
+//               ...icon.props.sx,
+//               color: "grey.500",
+//               transition: "color 0.2s ease-in-out",
+//             },
+//           })}
+//           <Typography
+//             variant="caption"
+//             sx={{
+//               color: textColor || "grey.500",
+//               fontSize: fontSize.typography.caption,
+//               userSelect: "none",
+//               ml: 0.5,
+//               transition: "color 0.2s ease-in-out",
+//               ...fontStyles.sfPro.condensed.regular,
+//             }}
+//           >
+//             {label}
+//           </Typography>
+//         </>
+//       )}
+//     </Box>
+//   )
+// );
+
+// const MobileActionButton = React.memo(({ icon, onClick, label }) => (
+//   <Box
+//     onClick={onClick}
+//     sx={{
+//       display: "flex",
+//       flexDirection: "column",
+//       alignItems: "center",
+//       gap: 0.5,
+//       cursor: "pointer",
+//       p: 0,
+//     }}
+//   >
+//     <IconButton
+//       sx={{
+//         color: "grey.500",
+//         "&:hover": {
+//           bgcolor: "rgba(255, 255, 255, 0.1)",
+//           "& .MuiSvgIcon-root": {
+//             color: "grey.700",
+//           },
+//         },
+//         transition: "all 0.2s ease-in-out",
+//       }}
+//     >
+//       {React.cloneElement(icon, {
+//         sx: { fontSize: 36, transition: "color 0.2s ease-in-out" },
+//       })}
+//     </IconButton>
+//   </Box>
+// ));
+
+// const getEmbedUrl = (url) => {
+//   if (!url) return "";
+//   if (url.includes("youtube.com") || url.includes("youtu.be")) {
+//     let videoId = "";
+//     if (url.includes("youtube.com/watch?v=")) {
+//       videoId = url.split("watch?v=")[1];
+//     } else if (url.includes("youtu.be/")) {
+//       videoId = url.split("youtu.be/")[1];
+//     } else if (url.includes("shorts/")) {
+//       videoId = url.split("shorts/")[1];
+//     }
+//     videoId = videoId.split(/[?&]/)[0];
+//     return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}`;
+//   }
+//   return url;
+// };
+
+// // Individual Short Item Component - Memoized to prevent unnecessary re-renders
+// const ShortItem = React.memo(
+//   ({ short, isActive, onShare, onWhatsApp, onCopy, isMobile, index }) => {
+//     const theme = useTheme();
+//     const isDarkMode = theme.palette.mode === "dark";
+//     const [isWhatsAppHovered, setIsWhatsAppHovered] = useState(false);
+//     const [isShareHovered, setIsShareHovered] = useState(false);
+//     const [isCopyHovered, setIsCopyHovered] = useState(false);
+
+//     const { getButtonConfig, isFeatureEnabled } = useContent();
+
+//     // Memoize button configs to prevent re-computation
+//     const buttonConfigs = useMemo(
+//       () => ({
+//         whatsapp: getButtonConfig("whatsapp"),
+//         share: getButtonConfig("share"),
+//         copy: getButtonConfig("copy"),
+//       }),
+//       [getButtonConfig]
+//     );
+
+//     // Memoize handlers to prevent re-creation on every render
+//     const handleShare = useCallback(() => onShare(short), [onShare, short]);
+//     const handleWhatsApp = useCallback(
+//       () => onWhatsApp(short),
+//       [onWhatsApp, short]
+//     );
+//     const handleCopy = useCallback(() => onCopy(short), [onCopy, short]);
+
+//     if (isMobile) {
+//       return (
+//         <Box
+//           sx={{
+//             height: "100vh",
+//             width: "100vw",
+//             position: "relative",
+//             bgcolor: "black",
+//             display: "flex",
+//             alignItems: "center",
+//             justifyContent: "center",
+//             scrollSnapAlign: "start",
+//           }}
+//         >
+//           {/* Video - Only render if active to save resources */}
+//           {isActive && (
+//             <iframe
+//               key={`mobile-${short.id}`} // Stable key
+//               src={getEmbedUrl(short?.content_details[0]?.url)}
+//               title={short?.name}
+//               frameBorder="0"
+//               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+//               allowFullScreen
+//               style={{
+//                 width: "100%",
+//                 height: "100%",
+//                 border: 0,
+//                 objectFit: "cover",
+//               }}
+//             />
+//           )}
+
+//           {/* Video Title Overlay */}
+//           <Box
+//             sx={{
+//               position: "absolute",
+//               bottom: 120,
+//               left: 20,
+//               right: 80,
+//               zIndex: 4,
+//             }}
+//           >
+//             <Typography
+//               variant="h6"
+//               sx={{
+//                 color: "white",
+//                 ...fontStyles.openSans.bold,
+//                 fontSize: fontSize.typography.h6,
+//                 textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
+//                 lineHeight: 1.3,
+//               }}
+//             >
+//               {short?.name}
+//             </Typography>
+//           </Box>
+
+//           {/* Action Buttons */}
+//           <Box
+//             sx={{
+//               position: "absolute",
+//               bottom: 100,
+//               right: 20,
+//               display: "flex",
+//               flexDirection: "column",
+//               gap: 2,
+//               zIndex: 5,
+//             }}
+//           >
+//             {isFeatureEnabled("enableWhatsAppSharing") && (
+//               <MobileActionButton
+//                 icon={<ShortWhatsAppMobileIcon />}
+//                 onClick={handleWhatsApp}
+//                 label="WhatsApp"
+//               />
+//             )}
+//             {isFeatureEnabled("enableCopyLink") && (
+//               <MobileActionButton
+//                 icon={<ShortCopyMobileIcon />}
+//                 onClick={handleCopy}
+//                 label="Copy"
+//               />
+//             )}
+//             {isFeatureEnabled("enableSharing") && (
+//               <MobileActionButton
+//                 icon={<ShareShortMobileIcon />}
+//                 onClick={handleShare}
+//                 label="Share"
+//               />
+//             )}
+//           </Box>
+//         </Box>
+//       );
+//     }
+
+//     // Desktop version
+//     return (
+//       <Box
+//         sx={{
+//           height: "100vh",
+//           width: "100vw",
+//           display: "flex",
+//           alignItems: "center",
+//           justifyContent: "center",
+//           position: "relative",
+//           scrollSnapAlign: "start",
+//           bgcolor: isDarkMode ? "grey.900" : "grey.50",
+//         }}
+//       >
+//         {/* Video Container */}
+//         <Box
+//           sx={{
+//             width: { xs: "100%", md: "400px", lg: "500px" },
+//             height: { xs: "100%", md: "80vh" },
+//             bgcolor: "black",
+//             borderRadius: { xs: 0, md: 2 },
+//             overflow: "hidden",
+//             position: "relative",
+//           }}
+//         >
+//           {isActive && (
+//             <iframe
+//               key={`desktop-${short.id}`} // Stable key
+//               src={getEmbedUrl(short?.content_details[0]?.url)}
+//               title={short?.name}
+//               frameBorder="0"
+//               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+//               allowFullScreen
+//               style={{
+//                 width: "100%",
+//                 height: "100%",
+//                 border: 0,
+//               }}
+//             />
+//           )}
+
+//           {/* Desktop Overlay Controls */}
+//           <Box
+//             sx={{
+//               position: "absolute",
+//               bottom: 0,
+//               left: 0,
+//               right: 0,
+//               background: "linear-gradient(transparent, rgba(0,0,0,0.8))",
+//               p: 3,
+//               zIndex: 4,
+//             }}
+//           >
+//             <Typography
+//               variant="h6"
+//               sx={{
+//                 color: "white",
+//                 ...fontStyles.openSans.bold,
+//                 mb: 2,
+//               }}
+//             >
+//               {short?.name}
+//             </Typography>
+
+//             <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+//               {isFeatureEnabled("enableWhatsAppSharing") && (
+//                 <ActionButton
+//                   icon={
+//                     <DynamicIcon
+//                       style={{
+//                         color: isWhatsAppHovered
+//                           ? buttonConfigs.whatsapp.colors?.hover
+//                           : "white",
+//                       }}
+//                       height="15px"
+//                       width="15px"
+//                       keyword={buttonConfigs.whatsapp.icon}
+//                     />
+//                   }
+//                   label={buttonConfigs.whatsapp.label}
+//                   onClick={handleWhatsApp}
+//                   onMouseEnter={() => setIsWhatsAppHovered(true)}
+//                   onMouseLeave={() => setIsWhatsAppHovered(false)}
+//                   textColor="white"
+//                   hoverTextColor={buttonConfigs.whatsapp.colors?.hover}
+//                 />
+//               )}
+
+//               {isFeatureEnabled("enableCopyLink") && (
+//                 <CopyButton
+//                   text={short?.content_details[0]?.url}
+//                   label={buttonConfigs.copy.label}
+//                   onMouseEnter={() => setIsCopyHovered(true)}
+//                   onMouseLeave={() => setIsCopyHovered(false)}
+//                   textColor="white"
+//                   hoverTextColor={buttonConfigs.copy.colors?.hover}
+//                   iconColor={
+//                     isCopyHovered ? buttonConfigs.copy.colors?.hover : "white"
+//                   }
+//                 />
+//               )}
+
+//               {isFeatureEnabled("enableSharing") && (
+//                 <ActionButton
+//                   icon={
+//                     <DynamicIcon
+//                       style={{
+//                         color: isShareHovered
+//                           ? buttonConfigs.share.colors?.hover
+//                           : "white",
+//                       }}
+//                       height="15px"
+//                       width="15px"
+//                       keyword={buttonConfigs.share.icon}
+//                     />
+//                   }
+//                   label={buttonConfigs.share.label}
+//                   onClick={handleShare}
+//                   onMouseEnter={() => setIsShareHovered(true)}
+//                   onMouseLeave={() => setIsShareHovered(false)}
+//                   textColor="white"
+//                   hoverTextColor={buttonConfigs.share.colors?.hover}
+//                   isReversed={true}
+//                 />
+//               )}
+//             </Box>
+//           </Box>
+//         </Box>
+//       </Box>
+//     );
+//   }
+// );
+
+// const Short = () => {
+//   const router = useRouter();
+//   const { short } = router.query;
+//   const { fetchShortDetailPageData, loading } = useMain();
+
+//   // State management
+//   const [allShorts, setAllShorts] = useState([]);
+//   const [currentIndex, setCurrentIndex] = useState(0);
+//   const [shareDialogOpen, setShareDialogOpen] = useState(false);
+//   const [shareUrl, setShareUrl] = useState("");
+//   const [selectedShort, setSelectedShort] = useState(null);
+//   const [dataLoaded, setDataLoaded] = useState(false);
+
+//   // Refs
+//   const containerRef = useRef(null);
+//   const scrollTimeoutRef = useRef(null);
+//   const isScrollingRef = useRef(false);
+//   const lastFetchedShort = useRef(null);
+
+//   // Responsive
+//   const theme = useTheme();
+//   const isMobile = useMediaQuery("(max-width:899px)");
+
+//   const { getSocialUrl } = useContent();
+
+//   // Memoize action handlers to prevent re-creation
+//   const handleShare = useCallback((shortItem) => {
+//     setSelectedShort(shortItem);
+//     setShareDialogOpen(true);
+//   }, []);
+
+//   const handleWhatsApp = useCallback(
+//     (shortItem) => {
+//       const shareUrl = getSocialUrl(
+//         "whatsapp",
+//         window.location.href,
+//         shortItem.content_details[0].url
+//       );
+//       window.open(shareUrl, "_blank");
+//     },
+//     [getSocialUrl]
+//   );
+
+//   const handleCopy = useCallback((shortItem) => {
+//     navigator.clipboard
+//       .writeText(shortItem?.content_details[0]?.url)
+//       .then(() => console.log("URL copied to clipboard"))
+//       .catch((err) => console.error("Failed to copy URL: ", err));
+//   }, []);
+
+//   // Load data - CRITICAL FIX: Prevent infinite API calls
+//   useEffect(() => {
+//     // Don't fetch if we already have data for this short, or if we're currently loading
+//     if (!short || loading || lastFetchedShort.current === short || dataLoaded) {
+//       return;
+//     }
+
+//     const loadData = async () => {
+//       try {
+//         lastFetchedShort.current = short; // Mark as fetching
+//         console.log("Fetching data for short:", short);
+
+//         const res = await fetchShortDetailPageData(short);
+
+//         let shortsArray = [];
+//         if (
+//           res?.data?.response?.contents &&
+//           Array.isArray(res.data.response.contents)
+//         ) {
+//           shortsArray = res.data.response.contents;
+//         } else if (res?.data?.response) {
+//           shortsArray = [res.data.response];
+//         }
+
+//         setAllShorts(shortsArray);
+//         setDataLoaded(true);
+
+//         // Find initial index
+//         const requestedIndex = shortsArray.findIndex((s) => s.id === short);
+//         const initialIndex = requestedIndex >= 0 ? requestedIndex : 0;
+//         setCurrentIndex(initialIndex);
+
+//         // Scroll to initial position after data loads
+//         setTimeout(() => {
+//           if (containerRef.current) {
+//             containerRef.current.scrollTo({
+//               top: initialIndex * window.innerHeight,
+//               behavior: "auto", // Use 'auto' for initial load to prevent flicker
+//             });
+//           }
+//         }, 100);
+//       } catch (err) {
+//         console.error("Error fetching shorts data:", err);
+//         lastFetchedShort.current = null; // Reset on error to allow retry
+//       }
+//     };
+
+//     loadData();
+//   }, [short]); // Only depend on short ID
+
+//   // Set share URL only once
+//   useEffect(() => {
+//     if (typeof window !== "undefined") {
+//       setShareUrl(window.location.href);
+//     }
+//   }, []);
+
+//   // Navigation function
+//   const navigateToShort = useCallback(
+//     (index) => {
+//       if (index < 0 || index >= allShorts.length || !containerRef.current)
+//         return;
+
+//       isScrollingRef.current = true;
+//       containerRef.current.scrollTo({
+//         top: index * window.innerHeight,
+//         behavior: "smooth",
+//       });
+
+//       // Update URL without triggering data refetch
+//       const newShort = allShorts[index];
+//       if (newShort && newShort.id !== short) {
+//         window.history.replaceState(null, "", `/shorts/${newShort.id}`);
+//       }
+
+//       setTimeout(() => {
+//         isScrollingRef.current = false;
+//       }, 500);
+//     },
+//     [allShorts, short]
+//   );
+
+//   // Scroll handler with debounce - FIXED to prevent infinite loops
+//   const handleScroll = useCallback(() => {
+//     if (
+//       !containerRef.current ||
+//       isScrollingRef.current ||
+//       allShorts.length === 0
+//     )
+//       return;
+
+//     const container = containerRef.current;
+//     const scrollTop = container.scrollTop;
+//     const viewportHeight = window.innerHeight;
+//     const newIndex = Math.round(scrollTop / viewportHeight);
+
+//     // Only update if index actually changed and is valid
+//     if (
+//       newIndex !== currentIndex &&
+//       newIndex >= 0 &&
+//       newIndex < allShorts.length
+//     ) {
+//       setCurrentIndex(newIndex);
+
+//       // Update URL without page reload - but don't trigger data fetch
+//       const newShort = allShorts[newIndex];
+//       if (newShort && newShort.id !== short) {
+//         window.history.replaceState(null, "", `/shorts/${newShort.id}`);
+//       }
+//     }
+
+//     // Clear existing timeout
+//     if (scrollTimeoutRef.current) {
+//       clearTimeout(scrollTimeoutRef.current);
+//     }
+
+//     // Set new timeout for snapping
+//     scrollTimeoutRef.current = setTimeout(() => {
+//       const targetScrollTop = newIndex * viewportHeight;
+//       if (Math.abs(scrollTop - targetScrollTop) > 10) {
+//         isScrollingRef.current = true;
+//         container.scrollTo({
+//           top: targetScrollTop,
+//           behavior: "smooth",
+//         });
+
+//         setTimeout(() => {
+//           isScrollingRef.current = false;
+//         }, 300);
+//       }
+//     }, 100);
+//   }, [currentIndex, allShorts, short]);
+
+//   // Attach scroll listener
+//   useEffect(() => {
+//     const container = containerRef.current;
+//     if (!container) return;
+
+//     container.addEventListener("scroll", handleScroll, { passive: true });
+//     return () => {
+//       container.removeEventListener("scroll", handleScroll);
+//       if (scrollTimeoutRef.current) {
+//         clearTimeout(scrollTimeoutRef.current);
+//       }
+//     };
+//   }, [handleScroll]);
+
+//   // Touch gesture handling
+//   const touchStartY = useRef(0);
+//   const touchEndY = useRef(0);
+
+//   const handleTouchStart = useCallback((e) => {
+//     touchStartY.current = e.touches[0].clientY;
+//   }, []);
+
+//   const handleTouchMove = useCallback((e) => {
+//     touchEndY.current = e.touches[0].clientY;
+//   }, []);
+
+//   const handleTouchEnd = useCallback(
+//     (e) => {
+//       if (!touchStartY.current || !touchEndY.current) return;
+
+//       const distance = touchStartY.current - touchEndY.current;
+//       const isSwipeUp = distance > 50;
+//       const isSwipeDown = distance < -50;
+
+//       if (isSwipeUp && currentIndex < allShorts.length - 1) {
+//         navigateToShort(currentIndex + 1);
+//       } else if (isSwipeDown && currentIndex > 0) {
+//         navigateToShort(currentIndex - 1);
+//       }
+
+//       touchStartY.current = 0;
+//       touchEndY.current = 0;
+//     },
+//     [currentIndex, allShorts.length, navigateToShort]
+//   );
+
+//   // Keyboard navigation
+//   useEffect(() => {
+//     const handleKeyDown = (e) => {
+//       if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+//         e.preventDefault();
+//         if (currentIndex > 0) {
+//           navigateToShort(currentIndex - 1);
+//         }
+//       } else if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+//         e.preventDefault();
+//         if (currentIndex < allShorts.length - 1) {
+//           navigateToShort(currentIndex + 1);
+//         }
+//       }
+//     };
+
+//     window.addEventListener("keydown", handleKeyDown);
+//     return () => window.removeEventListener("keydown", handleKeyDown);
+//   }, [currentIndex, allShorts.length, navigateToShort]);
+
+//   // Show loading state
+//   if (loading || !dataLoaded || allShorts.length === 0) {
+//     return (
+//       <Backdrop
+//         sx={{ background: "black", zIndex: 100, height: "100vh" }}
+//         open={true}
+//       >
+//         <CircularProgress />
+//       </Backdrop>
+//     );
+//   }
+
+//   return (
+//     <>
+//       {/* Back button for mobile */}
+//       {isMobile && (
+//         <Box
+//           sx={{
+//             position: "fixed",
+//             top: 20,
+//             left: 20,
+//             zIndex: 1000,
+//             bgcolor: "rgba(0,0,0,0.5)",
+//             borderRadius: "50%",
+//           }}
+//         >
+//           <IconButton onClick={() => router.back()} sx={{ color: "white" }}>
+//             <ArrowBack />
+//           </IconButton>
+//         </Box>
+//       )}
+
+//       {/* Main Container */}
+//       <Box
+//         ref={containerRef}
+//         sx={{
+//           height: "100vh",
+//           width: "100vw",
+//           overflowY: "auto",
+//           overflowX: "hidden",
+//           scrollSnapType: "y mandatory",
+//           scrollBehavior: "smooth",
+//           bgcolor: "black",
+//         }}
+//         onTouchStart={isMobile ? handleTouchStart : undefined}
+//         onTouchMove={isMobile ? handleTouchMove : undefined}
+//         onTouchEnd={isMobile ? handleTouchEnd : undefined}
+//       >
+//         {allShorts.map((shortItem, index) => (
+//           <ShortItem
+//             key={shortItem.id}
+//             short={shortItem}
+//             index={index}
+//             isActive={Math.abs(index - currentIndex) <= 1}
+//             onShare={handleShare}
+//             onWhatsApp={handleWhatsApp}
+//             onCopy={handleCopy}
+//             isMobile={isMobile}
+//           />
+//         ))}
+//       </Box>
+
+//       {/* Progress indicator */}
+//       {allShorts.length > 1 && (
+//         <Box
+//           sx={{
+//             position: "fixed",
+//             top: "50%",
+//             right: 20,
+//             transform: "translateY(-50%)",
+//             display: "flex",
+//             flexDirection: "column",
+//             gap: 1,
+//             zIndex: 1000,
+//           }}
+//         >
+//           {allShorts.map((_, index) => (
+//             <Box
+//               key={index}
+//               sx={{
+//                 width: 4,
+//                 height: 20,
+//                 bgcolor:
+//                   index === currentIndex ? "white" : "rgba(255,255,255,0.3)",
+//                 borderRadius: 2,
+//                 transition: "all 0.3s ease",
+//               }}
+//             />
+//           ))}
+//         </Box>
+//       )}
+
+//       <ShareDialog
+//         open={shareDialogOpen}
+//         onClose={() => setShareDialogOpen(false)}
+//         url={shareUrl}
+//         title={selectedShort?.name}
+//         videoUrl={selectedShort?.content_details[0]?.url}
+//       />
+//     </>
+//   );
+// };
+
+// export default Short;

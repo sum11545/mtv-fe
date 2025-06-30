@@ -32,8 +32,18 @@ const Header = ({ toggleSidebar }) => {
     height: "40px",
     width: "170px",
     // border: "1px solid green",
-    marginLeft: " -14px",
+    marginLeft: " -25px",
   });
+
+  // const LogoWrapper = styled(Box)({
+  //   display: "flex",
+  //   alignItems: "center",
+  //   position: "relative",
+  //   width: "230px",
+  //   height: "43px",
+  //   marginLeft: " -30px",
+  //   // border: "1px solid green",
+  // });
 
   if (isMobile) {
     return (
