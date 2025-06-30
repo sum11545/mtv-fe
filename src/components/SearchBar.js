@@ -102,6 +102,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
     paddingLeft: `calc(1em + ${theme.spacing(1)})`,
+    paddingRight: `calc(${theme.spacing(6)} + 24px)`, // Space for divider + icon + padding
     transition: theme.transitions.create("width"),
     width: "100%",
     fontSize: fontSize.form.label,
@@ -109,6 +110,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     [theme.breakpoints.down("sm")]: {
       fontSize: fontSize.form.label,
       paddingLeft: `calc(1em + ${theme.spacing(0)})`,
+      paddingRight: `calc(${theme.spacing(4)} + 24px)`, // Less space on mobile (no divider)
     },
   },
 }));

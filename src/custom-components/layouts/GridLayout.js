@@ -132,19 +132,20 @@ const GridLayout = ({
           }}
         >
           <CustomTooltip text={section.name}>
-        <Typography
-          variant={isAd ? "advertisementTitle" : "sectionTitle"}
-          sx={{
-            color: isAd
-              ? theme.palette.custom.advertisementColor
-              : "primary.main",
-            fontFamily: isAd
-              ? { ...fontStyles.openSans.bold }
-              : { ...fontStyles.montserrat.bold },
-          }}
-        >
-          {section.name}
-        </Typography>
+            <Typography
+              variant={isAd ? "advertisementTitle" : "sectionTitle"}
+              sx={{
+                color: isAd
+                  ? theme.palette.custom.advertisementColor
+                  : "primary.main",
+                fontFamily: isAd
+                  ? { ...fontStyles.openSans.bold }
+                  : { ...fontStyles.montserrat.bold },
+                marginLeft: "10px",
+              }}
+            >
+              {section.name}
+            </Typography>
           </CustomTooltip>
         </Box>
 
@@ -278,21 +279,21 @@ const GridLayout = ({
                     }}
                   >
                     <CustomTooltip text={video.name}>
-                  <Typography
-                    variant={
-                      video.is_ad ? "advertisementTitle" : "sectionTitle"
-                    }
-                    sx={{
-                      color: video.is_ad
-                        ? theme.palette.custom.advertisementColor
-                        : "primary.main",
-                      fontFamily: video.is_ad
-                        ? { ...fontStyles.openSans.bold }
-                        : { ...fontStyles.montserrat.bold },
-                  }}
-                >
-                  {video.name}
-                </Typography>
+                      <Typography
+                        variant={
+                          video.is_ad ? "advertisementTitle" : "sectionTitle"
+                        }
+                        sx={{
+                          color: video.is_ad
+                            ? theme.palette.custom.advertisementColor
+                            : "primary.main",
+                          fontFamily: video.is_ad
+                            ? { ...fontStyles.openSans.bold }
+                            : { ...fontStyles.montserrat.bold },
+                        }}
+                      >
+                        {video.name}
+                      </Typography>
                     </CustomTooltip>
                   </Box>
 
