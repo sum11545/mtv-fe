@@ -261,7 +261,7 @@ export const palette = {
         dark: "#CC0000",
       },
       advertisementColor: "#2E2D2D",
-      languageCountBorder: "#DDDDDD",
+      languageCountBorder: "#000000",
     },
   },
   dark: {
@@ -282,6 +282,7 @@ export const palette = {
       paper: "#0a1445",
       sectionBg: "#03092B",
       videoDetailSectionBg: "#03092B",
+      language: "#1a2152",
     },
     text: {
       primary: "#ffffff",
@@ -295,6 +296,7 @@ export const palette = {
         dark: "#CC0000",
       },
       advertisementColor: "#ffffff",
+      languageCountBorder: "#ffffff",
     },
     action: {
       selected: "#1a2152",

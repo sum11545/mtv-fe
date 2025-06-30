@@ -70,7 +70,7 @@ export const LanguageComponet = ({
                     height: 0,
                     borderLeft: "7px solid transparent",
                     borderRight: "7px solid transparent",
-                    borderTop: "7px solid black", // Stroke
+                    borderTop: `7px solid ${theme.palette.custom.languageCountBorder}`,
                     left: "50%",
                     top: "-27%",
                     transform: "translateX(-50%)",
@@ -83,7 +83,7 @@ export const LanguageComponet = ({
                     height: 0,
                     borderLeft: "6px solid transparent",
                     borderRight: "6px solid transparent",
-                    borderTop: "6px solid white", // Fill
+                    borderTop: `6px solid ${theme.palette.background.paper}`,
                     left: "50%",
                     top: "calc(100% + 1px)", // Slight offset to sit inside black stroke
                     transform: "translateX(-50%)",
@@ -100,11 +100,11 @@ export const LanguageComponet = ({
                   position: "absolute",
                   top: "33%",
                   zIndex: 100,
-                  border: "1px solid #000",
+                  border: `1px solid ${theme.palette.custom.languageCountBorder}`,
                   display: "flex",
                   justifyContent: "space-evenly",
-                  backgroundColor: "#fff",
-                  boxShadow: "0px 0px 8px #00000038",
+                  backgroundColor: theme.palette.background.paper,
+                  boxShadow: "0px 0px 8px rgba(0,0,0,0.3)",
                   borderRadius: "5px",
                   flexWrap: "wrap",
                   height: "25px",
