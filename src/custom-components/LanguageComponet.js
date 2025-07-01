@@ -47,11 +47,11 @@ export const LanguageComponet = ({
 
   return (
     <Box
-      ref={containerRef}
       sx={{
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
+        position: "relative",
       }}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -72,105 +72,73 @@ export const LanguageComponet = ({
           {langaugeName}
         </Typography>
         {contentLanguages.length > 1 && (
-          <>
-            <Box
-              component={"span"}
-              onClick={() => {
-                setShowLanguages(true);
-              }}
-              onMouseEnter={() => {
-                setIsHovered(true);
-                setShowLanguages(true);
-              }}
-              onMouseLeave={() => {
-                setIsHovered(false);
-              }}
-              sx={{
-                borderRadius: "1rem",
-                border: `1px solid ${getBorderColor()}`,
-                fontSize: {
-                  xl: fontSize.typography.h6,
-                  lg: fontSize.typography.body1,
-                  xs: fontSize.typography.body1,
-                },
-                padding: {
-                  xl: "5px",
-                  lg: "2px 5px",
-                  sm: "2px 5px",
-                  xs: "2px 5px",
-                },
-                fontWeight: "bold",
-                position: "relative",
-                ml: "4px",
-                cursor: "pointer",
-                transition: "border-color 0.2s ease",
-                ...(showLanguages && {
-                  "&::before": {
-                    content: '""',
-                    position: "absolute",
-                    width: 0,
-                    height: 0,
-                    borderLeft: "7px solid transparent",
-                    borderRight: "7px solid transparent",
-                    borderTop: `7px solid ${getBorderColor()}`,
-                    left: "50%",
-                    top: "-27%",
-                    transform: "translateX(-50%)",
-                    zIndex: 100,
-                  },
-                  "&::after": {
-                    content: '""',
-                    position: "absolute",
-                    width: 0,
-                    height: 0,
-                    borderLeft: "6px solid transparent",
-                    borderRight: "6px solid transparent",
-                    borderTop: `6px solid ${theme.palette.background.paper}`,
-                    left: "50%",
-                    top: "calc(100% + 1px)", // Slight offset to sit inside black stroke
-                    transform: "translateX(-50%)",
-                    zIndex: 101,
-                  },
-                }),
-              }}
-            >
-              +{contentLanguages.length}
-            </Box>
-            {showLanguages && (
-              <Box
-                sx={{
+          <Box
+            ref={containerRef}
+            component={"span"}
+            onMouseEnter={(e) => {
+              setIsHovered(true);
+              setShowLanguages(true);
+            }}
+            onMouseLeave={(e) => {
+              setIsHovered(false);
+              setShowLanguages(false);
+            }}
+            sx={{
+              display: "inline-block",
+              borderRadius: "1rem",
+              border: `1px solid ${getBorderColor()}`,
+              fontSize: {
+                xl: fontSize.typography.h6,
+                lg: fontSize.typography.body1,
+                xs: fontSize.typography.body1,
+              },
+              padding: {
+                xl: "5px",
+                lg: "2px 5px",
+                sm: "2px 5px",
+                xs: "2px 5px",
+              },
+              fontWeight: "bold",
+              position: "relative",
+              ml: "4px",
+              cursor: "pointer",
+              transition: "border-color 0.2s ease",
+              ...(showLanguages && {
+                "&::before": {
+                  content: '""',
                   position: "absolute",
                   // top: "33%",
                   top: "40%",
                   zIndex: 100,
-                  border: `1px solid ${getBorderColor()}`,
-                  display: "flex",
-                  justifyContent: "space-evenly",
-                  backgroundColor: theme.palette.background.paper,
-                  boxShadow: "0px 0px 8px rgba(0,0,0,0.3)",
-                  borderRadius: "5px",
-                  flexWrap: "wrap",
-                  height: "25px",
-                  overflow: "hidden",
-                }}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={(e) => {
-                  e.preventDefault();
-                  setIsHovered(false);
-                  setShowLanguages(false);
-                }}
-              >
-                <LangauePopUp
-                  languageList={contentLanguages}
-                  contentDetails={contentDetails}
-                  setSelectedContent={setSelectedContent}
-                  setShowLanguages={setShowLanguages}
-                />
-              </Box>
-            )}
-          </>
+                },
+                "&::after": {
+                  content: '""',
+                  position: "absolute",
+                  width: 0,
+                  height: 0,
+                  borderLeft: "6px solid transparent",
+                  borderRight: "6px solid transparent",
+                  borderTop: `6px solid ${theme.palette.background.paper}`,
+                  left: "50%",
+                  top: "calc(100% + 1px)", // Slight offset to sit inside black stroke
+                  transform: "translateX(-50%)",
+                  zIndex: 101,
+                },
+              }),
+            }}
+          >
+            +{contentLanguages.length}
+          </Box>
         )}
       </Box>
+      {showLanguages && (
+          <LangauePopUp
+            languageList={contentLanguages}
+            contentDetails={contentDetails}
+            setSelectedContent={setSelectedContent}
+            setShowLanguages={setShowLanguages}
+          />
+        )}
     </Box>
   );
 };
