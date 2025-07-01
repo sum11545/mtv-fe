@@ -230,9 +230,16 @@ export const CONTENT_CONFIG = {
     feedbackTitle: "Send Feedback",
     sendMessage: "Send Message",
     links: {
-      privacyPolicy: "Privacy Policy",
       termsOfUse: "Terms of Use", 
       help: "Help",
+      aboutUs: "About Us",
+      contactUs: "Contact Us",
+      privacyPolicy: "Privacy Policy",
+      termsCondition: "Terms And Conditions",
+      mpu: "MPU - Market Pillars Uncovered",
+      sib: "SIB - Seeing Is Believing",
+      kyp: "KYP - Know Your Promoters",
+      ray: "RAY - Result Analysis For You",
     },
     icons: {
       youtube: "YT",

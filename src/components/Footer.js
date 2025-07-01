@@ -227,6 +227,7 @@ const MobileFooter = (props) => {
         </Box>
       </Box> */}
 
+      {/* Vertical Divider */}
       <Divider orientation="horizontal" flexItem sx={{ mb: 2 }} />
 
       {/* Links third */}
@@ -254,7 +255,9 @@ const MobileFooter = (props) => {
         {/* 2. grow@moneytv.live link */}
         <Typography
           color="primary.main"
-          onClick={() => window.open(`mailto:${getUrl('external', 'contactEmail')}`, "_self")}
+          onClick={() =>
+            window.open(`mailto:${getUrl("external", "contactEmail")}`, "_self")
+          }
           sx={{
             display: "block",
             mb: 2,
@@ -264,17 +267,19 @@ const MobileFooter = (props) => {
             cursor: "pointer",
             "&:hover": {
               color: "primary.dark",
-            }
+            },
           }}
         >
-          {getUrl('external', 'contactEmail')}
+          {getUrl("external", "contactEmail")}
         </Typography>
 
         {/* 3. Social media icons */}
         <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
           <IconButton
             size="small"
-            onClick={() => window.open(getUrl('social', 'footerYoutube'), "_blank")}
+            onClick={() =>
+              window.open(getUrl("social", "footerYoutube"), "_blank")
+            }
             sx={{
               "& .MuiSvgIcon-root": {
                 fontSize: fontSize.icon.medium,
@@ -293,7 +298,9 @@ const MobileFooter = (props) => {
           </IconButton>
           <IconButton
             size="small"
-            onClick={() => window.open(getUrl('social', 'footerInstagram'), "_blank")}
+            onClick={() =>
+              window.open(getUrl("social", "footerInstagram"), "_blank")
+            }
             sx={{
               "& .MuiSvgIcon-root": {
                 fontSize: fontSize.icon.medium,
@@ -310,7 +317,9 @@ const MobileFooter = (props) => {
           </IconButton>
           <IconButton
             size="small"
-            onClick={() => window.open(getUrl('social', 'footerTwitter'), "_blank")}
+            onClick={() =>
+              window.open(getUrl("social", "footerTwitter"), "_blank")
+            }
             sx={{
               "& .MuiSvgIcon-root": {
                 fontSize: fontSize.icon.medium,
@@ -327,7 +336,9 @@ const MobileFooter = (props) => {
           </IconButton>
           <IconButton
             size="small"
-            onClick={() => window.open(getUrl('social', 'footerLinkedin'), "_blank")}
+            onClick={() =>
+              window.open(getUrl("social", "footerLinkedin"), "_blank")
+            }
             sx={{
               "& .MuiSvgIcon-root": {
                 fontSize: fontSize.icon.medium,
@@ -344,7 +355,9 @@ const MobileFooter = (props) => {
           </IconButton>
           <IconButton
             size="small"
-            onClick={() => window.open(getUrl('social', 'footerFacebook'), "_blank")}
+            onClick={() =>
+              window.open(getUrl("social", "footerFacebook"), "_blank")
+            }
             sx={{
               "& .MuiSvgIcon-root": {
                 fontSize: fontSize.icon.medium,
@@ -363,7 +376,7 @@ const MobileFooter = (props) => {
 
         {/* 4. Privacy, Terms, Help links in a row */}
         <Stack direction="row" spacing={2}>
-          <Typography
+          {/* <Typography
             color="primary.main"
             onClick={() => router.push(getUrl('external', 'privacy'))}
             sx={{
@@ -390,7 +403,7 @@ const MobileFooter = (props) => {
             }}
           >
             {config.footer.links.termsOfUse}
-          </Typography>
+          </Typography> */}
           {/* <Typography
             color="primary.main"
             onClick={() => router.push(getUrl('external', 'help'))}
@@ -405,6 +418,156 @@ const MobileFooter = (props) => {
           >
             {config.footer.links.help}
           </Typography> */}
+        </Stack>
+
+        {/* 5. Additional footer links - First group */}
+        <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+          <Typography
+            color="primary.main"
+            onClick={() => {}}
+            sx={{
+              fontSize: fontSize.nav.primary,
+              ...fontStyles.openSans.regular,
+              cursor: "pointer",
+              textDecoration: "underline",
+              "&:hover": {
+                color: "primary.dark",
+              },
+            }}
+          >
+            {config.footer.links.mpu}
+          </Typography>
+          <Typography
+            color="primary.main"
+            onClick={() => {}}
+            sx={{
+              fontSize: fontSize.nav.primary,
+              ...fontStyles.openSans.regular,
+              cursor: "pointer",
+              textDecoration: "underline",
+              "&:hover": {
+                color: "primary.dark",
+              },
+            }}
+          >
+            {config.footer.links.sib}
+          </Typography>
+        </Stack>
+
+        {/* 6. Additional footer links - Second group */}
+        <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
+          <Typography
+            color="primary.main"
+            onClick={() => {}}
+            sx={{
+              fontSize: fontSize.nav.primary,
+              ...fontStyles.openSans.regular,
+              cursor: "pointer",
+              textDecoration: "underline",
+              "&:hover": {
+                color: "primary.dark",
+              },
+            }}
+          >
+            {config.footer.links.kyp}
+          </Typography>
+          <Typography
+            color="primary.main"
+            onClick={() => {}}
+            sx={{
+              fontSize: fontSize.nav.primary,
+              ...fontStyles.openSans.regular,
+              cursor: "pointer",
+              textDecoration: "underline",
+              "&:hover": {
+                color: "primary.dark",
+              },
+            }}
+          >
+            {config.footer.links.ray}
+          </Typography>
+        </Stack>
+
+        {/* Horizontal Divider between second and third group */}
+        <Divider orientation="horizontal" flexItem sx={{ mt: 3, mb: 2 }} />
+
+        {/* 7. Additional footer links - Third group */}
+        <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
+          <Typography
+            color="primary.main"
+            onClick={() =>
+              window.open(
+                "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html",
+                "_blank"
+              )
+            }
+            sx={{
+              fontSize: fontSize.nav.primary,
+              ...fontStyles.openSans.regular,
+              cursor: "pointer",
+              textDecoration: "underline",
+              "&:hover": {
+                color: "primary.dark",
+              },
+            }}
+          >
+            {config.footer.links.aboutUs}
+          </Typography>
+          <Typography
+            color="primary.main"
+            onClick={() =>
+              window.open(
+                "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
+                "_blank"
+              )
+            }
+            sx={{
+              fontSize: fontSize.nav.primary,
+              ...fontStyles.openSans.regular,
+              cursor: "pointer",
+              textDecoration: "underline",
+              "&:hover": {
+                color: "primary.dark",
+              },
+            }}
+          >
+            {config.footer.links.contactUs}
+          </Typography>
+        </Stack>
+
+        {/* 8. Terms & Conditions link */}
+        <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
+          <Typography
+            color="primary.main"
+            onClick={() => router.push(getUrl("external", "privacy"))}
+            sx={{
+              fontSize: fontSize.nav.primary,
+              ...fontStyles.openSans.regular,
+              cursor: "pointer",
+              textDecoration: "underline",
+              "&:hover": {
+                color: "primary.dark",
+              },
+            }}
+          >
+            {config.footer.links.privacyPolicy}
+          </Typography>
+
+          <Typography
+            color="primary.main"
+            onClick={() => router.push(getUrl("external", "terms"))}
+            sx={{
+              fontSize: fontSize.nav.primary,
+              ...fontStyles.openSans.regular,
+              cursor: "pointer",
+              textDecoration: "underline",
+              "&:hover": {
+                color: "primary.dark",
+              },
+            }}
+          >
+            {config.footer.links.termsCondition}
+          </Typography>
         </Stack>
       </Box>
     </Box>
@@ -513,9 +676,9 @@ const Footer = () => {
           gap: 4,
         }}
       >
-        {/* Left Side */}
+        {/* First Section - Logo and Contact */}
         <Box sx={{ flex: 1, paddingY: 4 }}>
-          <Box sx={{ mb: 9 }}>
+          <Box sx={{ mb: 6 }}>
             <LogoWrapper>
               <Image
                 src={
@@ -531,193 +694,293 @@ const Footer = () => {
             </LogoWrapper>
           </Box>
 
-          {/* <Divider sx={{ mb: 3 }} /> */}
+          <Box>
+            <Typography
+              color="primary.main"
+              sx={{
+                fontSize: fontSize.typography.body2,
+                ...fontStyles.montserrat.bold,
+              }}
+            >
+              {config.footer.slogan}
+            </Typography>
+            <Typography
+              color="primary.main"
+              onClick={() =>
+                window.open(
+                  `mailto:${getUrl("external", "contactEmail")}`,
+                  "_self"
+                )
+              }
+              sx={{
+                display: "block",
+                mb: 3,
+                textDecoration: "underline",
+                fontSize: fontSize.nav.primary,
+                ...fontStyles.openSans.regular,
+                cursor: "pointer",
+                "&:hover": {
+                  color: "primary.dark",
+                },
+              }}
+            >
+              {getUrl("external", "contactEmail")}
+            </Typography>
 
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "start",
-              justifyContent: "start",
-              gap: 4,
-              mt: 6,
-            }}
-          >
-            {/* Left section after divider */}
-            <Box>
-              <Typography
-                color="primary.main"
+            <Stack direction="row" spacing={1}>
+              <IconButton
+                size="small"
+                onClick={() =>
+                  window.open(getUrl("social", "footerYoutube"), "_blank")
+                }
                 sx={{
-                  fontSize: fontSize.typography.body2,
-                  ...fontStyles.montserrat.bold,
+                  "& .MuiSvgIcon-root": {
+                    fontSize: fontSize.icon.medium,
+                    color: "primary.main",
+                  },
                 }}
               >
-                {config.footer.slogan}
-              </Typography>
-              <Typography
-                color="primary.main"
-                onClick={() => window.open(`mailto:${getUrl('external', 'contactEmail')}`, "_self")}
+                <DynamicIcon
+                  width={"30px"}
+                  height={"30px"}
+                  keyword={config.footer.icons.youtube}
+                  style={{
+                    color: isDarkMode ? palette?.dark?.primary?.main : "",
+                  }}
+                />
+              </IconButton>
+              <IconButton
+                size="small"
+                onClick={() =>
+                  window.open(getUrl("social", "footerInstagram"), "_blank")
+                }
                 sx={{
-                  display: "block",
-                  mb: 2,
-                  textDecoration: "underline",
-                  fontSize: fontSize.nav.primary,
-                  ...fontStyles.openSans.regular,
-                  cursor: "pointer",
-                  "&:hover": {
-                    color: "primary.dark",
-                  }
+                  "& .MuiSvgIcon-root": {
+                    fontSize: fontSize.icon.medium,
+                    color: "primary.main",
+                  },
                 }}
               >
-                {getUrl('external', 'contactEmail')}
-              </Typography>
-              
-              <Stack direction="row" spacing={1}>
-                <IconButton
-                  size="small"
-                  onClick={() => window.open(getUrl('social', 'footerYoutube'), "_blank")}
-                  sx={{
-                    "& .MuiSvgIcon-root": {
-                      fontSize: fontSize.icon.medium,
-                      color: "primary.main",
-                    },
+                <DynamicIcon
+                  keyword={config.footer.icons.instagram}
+                  style={{
+                    color: isDarkMode ? palette?.dark?.primary?.main : "",
                   }}
-                >
-                  <DynamicIcon
-                    width={"30px"}
-                    height={"30px"}
-                    keyword={config.footer.icons.youtube}
-                    style={{
-                      color: isDarkMode ? palette?.dark?.primary?.main : "",
-                    }}
-                  />
-                </IconButton>
-                <IconButton
-                  size="small"
-                  onClick={() => window.open(getUrl('social', 'footerInstagram'), "_blank")}
-                  sx={{
-                    "& .MuiSvgIcon-root": {
-                      fontSize: fontSize.icon.medium,
-                      color: "primary.main",
-                    },
+                />
+              </IconButton>
+              <IconButton
+                size="small"
+                onClick={() =>
+                  window.open(getUrl("social", "footerTwitter"), "_blank")
+                }
+                sx={{
+                  "& .MuiSvgIcon-root": {
+                    fontSize: fontSize.icon.medium,
+                    color: "primary.main",
+                  },
+                }}
+              >
+                <DynamicIcon
+                  keyword={config.footer.icons.twitter}
+                  style={{
+                    color: isDarkMode ? palette?.dark?.primary?.main : "",
                   }}
-                >
-                  <DynamicIcon
-                    keyword={config.footer.icons.instagram}
-                    style={{
-                      color: isDarkMode ? palette?.dark?.primary?.main : "",
-                    }}
-                  />
-                </IconButton>
-                <IconButton
-                  size="small"
-                  onClick={() => window.open(getUrl('social', 'footerTwitter'), "_blank")}
-                  sx={{
-                    "& .MuiSvgIcon-root": {
-                      fontSize: fontSize.icon.medium,
-                      color: "primary.main",
-                    },
+                />
+              </IconButton>
+              <IconButton
+                size="small"
+                onClick={() =>
+                  window.open(getUrl("social", "footerLinkedin"), "_blank")
+                }
+                sx={{
+                  "& .MuiSvgIcon-root": {
+                    fontSize: fontSize.icon.medium,
+                    color: "primary.main",
+                  },
+                }}
+              >
+                <DynamicIcon
+                  keyword={config.footer.icons.linkedin}
+                  style={{
+                    color: isDarkMode ? palette?.dark?.primary?.main : "",
                   }}
-                >
-                  <DynamicIcon
-                    keyword={config.footer.icons.twitter}
-                    style={{
-                      color: isDarkMode ? palette?.dark?.primary?.main : "",
-                    }}
-                  />
-                </IconButton>
-                <IconButton
-                  size="small"
-                  onClick={() => window.open(getUrl('social', 'footerLinkedin'), "_blank")}
-                  sx={{
-                    "& .MuiSvgIcon-root": {
-                      fontSize: fontSize.icon.medium,
-                      color: "primary.main",
-                    },
+                />
+              </IconButton>
+              <IconButton
+                size="small"
+                onClick={() =>
+                  window.open(getUrl("social", "footerFacebook"), "_blank")
+                }
+                sx={{
+                  "& .MuiSvgIcon-root": {
+                    fontSize: fontSize.icon.medium,
+                    color: "primary.main",
+                  },
+                }}
+              >
+                <DynamicIcon
+                  keyword={config.footer.icons.facebook}
+                  style={{
+                    color: isDarkMode ? palette?.dark?.primary?.main : "",
                   }}
-                >
-                  <DynamicIcon
-                    keyword={config.footer.icons.linkedin}
-                    style={{
-                      color: isDarkMode ? palette?.dark?.primary?.main : "",
-                    }}
-                  />
-                </IconButton>
-                <IconButton
-                  size="small"
-                  onClick={() => window.open(getUrl('social', 'footerFacebook'), "_blank")}
-                  sx={{
-                    "& .MuiSvgIcon-root": {
-                      fontSize: fontSize.icon.medium,
-                      color: "primary.main",
-                    },
-                  }}
-                >
-                  <DynamicIcon
-                    keyword={config.footer.icons.facebook}
-                    style={{
-                      color: isDarkMode ? palette?.dark?.primary?.main : "",
-                    }}
-                  />
-                </IconButton>
-              </Stack>
-            </Box>
-
-            {/* Vertical Divider */}
-            <Divider orientation="vertical" flexItem sx={{ mx: 2 }} />
-
-            {/* Right section */}
-            <Box>
-              <Stack spacing={1}>
-                <Typography
-                  color="primary.main"
-                  onClick={() => router.push(getUrl('external', 'privacy'))}
-                  sx={{
-                    fontSize: fontSize.nav.primary,
-                    ...fontStyles.openSans.regular,
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                    "&:hover": {
-                      color: "primary.dark",
-                    }
-                  }}
-                >
-                  {config.footer.links.privacyPolicy}
-                </Typography>
-                <Typography
-                  color="primary.main"
-                  onClick={() => router.push(getUrl('external', 'terms'))}
-                  sx={{
-                    fontSize: fontSize.nav.primary,
-                    ...fontStyles.openSans.regular,
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                    "&:hover": {
-                      color: "primary.dark",
-                    }
-                  }}
-                >
-                  {config.footer.links.termsOfUse}
-                </Typography>
-                {/* <Typography
-                  color="primary.main"
-                  onClick={() => router.push(getUrl('external', 'help'))}
-                  sx={{
-                    fontSize: fontSize.nav.primary,
-                    ...fontStyles.openSans.regular,
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                    "&:hover": {
-                      color: "primary.dark",
-                    }
-                  }}
-                >
-                  {config.footer.links.help}
-                </Typography> */}
-              </Stack>
-            </Box>
+                />
+              </IconButton>
+            </Stack>
           </Box>
         </Box>
+        {/* Vertical Divider */}
+        <Divider orientation="vertical" flexItem sx={{ mx: 2, my: 5 }} />
 
+        {/* Second Section - First Group of Links */}
+        <Box sx={{ flex: 1, paddingTop: 7 }}>
+          <Stack spacing={2}>
+            <Typography
+              color="primary.main"
+              onClick={() => {}}
+              sx={{
+                fontSize: fontSize.nav.primary,
+                ...fontStyles.openSans.regular,
+                cursor: "pointer",
+                textDecoration: "underline",
+                "&:hover": {
+                  color: "primary.dark",
+                },
+              }}
+            >
+              {config.footer.links.mpu}
+            </Typography>
+
+            <Typography
+              color="primary.main"
+              onClick={() => {}}
+              sx={{
+                fontSize: fontSize.nav.primary,
+                ...fontStyles.openSans.regular,
+                cursor: "pointer",
+                textDecoration: "underline",
+                "&:hover": {
+                  color: "primary.dark",
+                },
+              }}
+            >
+              {config.footer.links.sib}
+            </Typography>
+
+            <Typography
+              color="primary.main"
+              onClick={() => {}}
+              sx={{
+                fontSize: fontSize.nav.primary,
+                ...fontStyles.openSans.regular,
+                cursor: "pointer",
+                textDecoration: "underline",
+                "&:hover": {
+                  color: "primary.dark",
+                },
+              }}
+            >
+              {config.footer.links.kyp}
+            </Typography>
+
+            <Typography
+              color="primary.main"
+              onClick={() => {}}
+              sx={{
+                fontSize: fontSize.nav.primary,
+                ...fontStyles.openSans.regular,
+                cursor: "pointer",
+                textDecoration: "underline",
+                "&:hover": {
+                  color: "primary.dark",
+                },
+              }}
+            >
+              {config.footer.links.ray}
+            </Typography>
+          </Stack>
+        </Box>
+
+        {/* Vertical Divider */}
+        <Divider orientation="vertical" flexItem sx={{ mx: 2, my: 5 }} />
+
+        {/* Third Section - Second Group of Links */}
+        <Box sx={{ flex: 1, paddingTop: 7 }}>
+          <Stack spacing={2}>
+            <Typography
+              color="primary.main"
+              onClick={() =>
+                window.open(
+                  "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html",
+                  "_blank"
+                )
+              }
+              sx={{
+                fontSize: fontSize.nav.primary,
+                ...fontStyles.openSans.regular,
+                cursor: "pointer",
+                textDecoration: "underline",
+                "&:hover": {
+                  color: "primary.dark",
+                },
+              }}
+            >
+              {config.footer.links.aboutUs}
+            </Typography>
+
+            <Typography
+              color="primary.main"
+              onClick={() =>
+                window.open(
+                  "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
+                  "_blank"
+                )
+              }
+              sx={{
+                fontSize: fontSize.nav.primary,
+                ...fontStyles.openSans.regular,
+                cursor: "pointer",
+                textDecoration: "underline",
+                "&:hover": {
+                  color: "primary.dark",
+                },
+              }}
+            >
+              {config.footer.links.contactUs}
+            </Typography>
+
+            <Typography
+              color="primary.main"
+              onClick={() => router.push(getUrl("external", "privacy"))}
+              sx={{
+                fontSize: fontSize.nav.primary,
+                ...fontStyles.openSans.regular,
+                cursor: "pointer",
+                textDecoration: "underline",
+                "&:hover": {
+                  color: "primary.dark",
+                },
+              }}
+            >
+              {config.footer.links.privacyPolicy}
+            </Typography>
+
+            <Typography
+              color="primary.main"
+              onClick={() => router.push(getUrl("external", "terms"))}
+              sx={{
+                fontSize: fontSize.nav.primary,
+                ...fontStyles.openSans.regular,
+                cursor: "pointer",
+                textDecoration: "underline",
+                "&:hover": {
+                  color: "primary.dark",
+                },
+              }}
+            >
+              {config.footer.links.termsCondition}
+            </Typography>
+          </Stack>
+        </Box>
         {/* Right Side - Feedback Form */}
         {/* <Box sx={{ flex: 1, padding: 4 }}>
           <Typography
