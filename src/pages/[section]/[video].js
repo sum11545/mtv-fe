@@ -364,6 +364,10 @@ const VideoDetailPage = () => {
                               lang.id === router.query.language
                                 ? theme.palette.common.white
                                 : theme.palette.background.language,
+                            color:
+                              lang.id === router.query.language
+                                ? theme.palette.common.black
+                                : "inherit",
                             borderRadius: "8px",
                             border:
                               lang.id === router.query.language
