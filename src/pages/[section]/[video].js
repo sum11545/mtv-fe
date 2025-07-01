@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Container,
   Box,
@@ -126,6 +126,8 @@ const VideoDetailPage = () => {
   const [videoDetailData, setVideoDetailData] = useState(null);
   const { fetchVideoDetailPageData, loading } = useMain();
   const [selectedContent, setSelectedContent] = useState(null);
+  const [leftContentHeight, setLeftContentHeight] = useState(0);
+  const leftContentRef = useRef(null);
   const {
     getButtonConfig,
     getSocialUrl,
@@ -146,7 +148,41 @@ const VideoDetailPage = () => {
       ? selectedContent?.description?.slice(0, maxChars) + "..."
       : selectedContent?.description;
 
-  const toggleShowMore = () => setShowMore((prev) => !prev);
+  const toggleShowMore = () => {
+    setShowMore((prev) => !prev);
+    // Re-measure after toggle
+    setTimeout(() => {
+      if (leftContentRef.current && !isMobile) {
+        const height = leftContentRef.current.getBoundingClientRect().height;
+        console.log("Height after toggle:", height);
+        setLeftContentHeight(height);
+      }
+    }, 50);
+  };
+
+  // Dynamic height measurement effect
+  useEffect(() => {
+    const measureLeftContent = () => {
+      if (leftContentRef.current && !isMobile) {
+        // Wait for layout to complete
+        requestAnimationFrame(() => {
+          const element = leftContentRef.current;
+          const height = element.getBoundingClientRect().height;
+
+          console.log("Measuring left content height:", height);
+          setLeftContentHeight(height);
+        });
+      }
+    };
+
+    // Measure after content loads/changes
+    const timer = setTimeout(measureLeftContent, 100);
+
+    // Re-measure when content changes
+    measureLeftContent();
+
+    return () => clearTimeout(timer);
+  }, [selectedContent, showMore, videoDetailData, isMobile]);
   useEffect(() => {
     // Set share URL only after component mounts on client side
     setShareUrl(window.location.href);
@@ -233,7 +269,7 @@ const VideoDetailPage = () => {
       >
         <Grid container spacing={2} sx={{ px: { lg: 2.5, sm: 0 } }}>
           {/* Left side - Video and details */}
-          <Grid item xs={12} md={9}>
+          <Grid item xs={12} md={9} ref={leftContentRef}>
             {/* Video Player */}
             <Box
               sx={{
@@ -573,20 +609,24 @@ const VideoDetailPage = () => {
                   sm: 0,
                 },
                 height: {
-                  md: "calc(50.25vw * 9/16 + 200px)", // Match video height + title/actions area
+                  md: leftContentHeight > 0 ? `${leftContentHeight}px` : "auto",
                   xs: "auto",
                 },
                 maxHeight: {
-                  md: "calc(100vh - 200px)", // Ensure content overflows to show scrollbar
+                  md: "calc(100vh - 100px)", // Ensure it doesn't exceed viewport
                   xs: "none",
                 },
                 overflowY: {
-                  md: "auto",
+                  md:
+                    typeof window !== "undefined" &&
+                    leftContentHeight > window.innerHeight - 100
+                      ? "auto"
+                      : "visible",
                   xs: "visible",
                 },
                 pb: { md: 3, lg: 3 },
                 "&::-webkit-scrollbar": {
-                  width: "8px !important",
+                  width: "4px !important",
                   height: "8px !important",
                   backgroundColor:
                     theme.palette.mode === "dark"

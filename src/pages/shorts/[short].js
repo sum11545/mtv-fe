@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+  useMemo,
+} from "react";
 import { useRouter } from "next/router";
 import {
   Box,
@@ -52,6 +58,7 @@ const ActionButton = ({
       padding: "4px 8px",
       transition: "all 0.2s ease-in-out",
       "&:hover": {
+        // backgroundColor: "rgba(0, 0, 0, 0.04)",
         "& .MuiTypography-root": {
           color: hoverTextColor || "grey.700",
         },
@@ -115,7 +122,7 @@ const ActionButton = ({
 );
 
 // Mobile Action Button for overlay
-const MobileActionButton = ({ icon, onClick, label }) => (
+const MobileActionButton = React.memo(({ icon, onClick, label }) => (
   <Box
     onClick={onClick}
     sx={{
@@ -143,18 +150,8 @@ const MobileActionButton = ({ icon, onClick, label }) => (
         sx: { fontSize: 36, transition: "color 0.2s ease-in-out" },
       })}
     </IconButton>
-    {/* <Typography
-      variant="caption"
-      sx={{
-        color: "white",
-        fontSize: "0.7rem",
-        textAlign: "center",
-      }}
-    >
-      {label}
-    </Typography> */}
   </Box>
-);
+));
 
 const getEmbedUrl = (url) => {
   if (!url) return "";
@@ -173,355 +170,68 @@ const getEmbedUrl = (url) => {
   return url;
 };
 
-const Short = () => {
-  const router = useRouter();
-  const { short } = router.query;
-  const { fetchShortDetailPageData, loading } = useMain();
-  const [allShorts, setAllShorts] = useState([]);
-  const [currentShortIndex, setCurrentShortIndex] = useState(0);
-  const [shareDialogOpen, setShareDialogOpen] = useState(false);
-  const [shareUrl, setShareUrl] = useState("");
-  const [isWhatsAppHovered, setIsWhatsAppHovered] = useState(false);
-  const [isShareHovered, setIsShareHovered] = useState(false);
-  const [isCopyHovered, setIsCopyHovered] = useState(false);
+// Individual Short Item Component - Scrollable Version with File1 Layout
+const ShortItem = React.memo(
+  ({ short, isActive, onShare, onWhatsApp, onCopy, isMobile, index }) => {
+    const theme = useTheme();
+    const isDarkMode = theme.palette.mode === "dark";
+    const [isWhatsAppHovered, setIsWhatsAppHovered] = useState(false);
+    const [isShareHovered, setIsShareHovered] = useState(false);
+    const [isCopyHovered, setIsCopyHovered] = useState(false);
 
-  // Responsive breakpoint
-  const theme = useTheme();
-  const isDarkMode = theme.palette.mode === "dark";
-  const isMobile = useMediaQuery("(max-width:899px)"); // Simplified breakpoint to ensure all mobile devices are covered
+    const { getButtonConfig, isFeatureEnabled } = useContent();
 
-  const { getButtonConfig, getSocialUrl, getSuccessMessage, isFeatureEnabled } =
-    useContent();
-
-  // Get button configurations
-  const whatsappConfig = getButtonConfig("whatsapp");
-  const shareConfig = getButtonConfig("share");
-  const copyConfig = getButtonConfig("copy");
-
-  // Touch gesture handling for mobile
-  const touchStartY = useRef(0);
-  const touchEndY = useRef(0);
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    setShareUrl(window.location.href);
-  }, []);
-
-  useEffect(() => {
-    if (short) {
-      const loadData = async () => {
-        try {
-          const res = await fetchShortDetailPageData(short);
-          console.log(res.data.response);
-
-          // Get original shorts from backend
-          let shortsArray = [];
-          if (
-            res?.data?.response?.contents &&
-            Array.isArray(res.data.response.contents)
-          ) {
-            shortsArray = res.data.response.contents;
-          } else if (res?.data?.response) {
-            // If response is a single short object, wrap it in array
-            shortsArray = [res.data.response];
-          }
-
-          setAllShorts(shortsArray);
-
-          // Find the index of the requested short
-          const requestedIndex = shortsArray.findIndex((s) => s.id === short);
-          setCurrentShortIndex(requestedIndex >= 0 ? requestedIndex : 0);
-        } catch (err) {
-          console.error("Error fetching home data:", err);
-        }
-      };
-      loadData();
-    }
-  }, [router.query]);
-
-  const currentShort = allShorts[currentShortIndex];
-
-  const handleShare = () => setShareDialogOpen(true);
-
-  const handleWhatsApp = () => {
-    if (currentShort) {
-      const shareUrl = getSocialUrl(
-        "whatsapp",
-        window.location.href,
-        currentShort.content_details[0].url
-      );
-      window.open(shareUrl, "_blank");
-    }
-  };
-
-  const handleCopyToClipboard = () => {
-    if (currentShort) {
-      navigator.clipboard
-        .writeText(currentShort?.content_details[0]?.url)
-        .then(() => console.log("URL copied to clipboard"))
-        .catch((err) => console.error("Failed to copy URL: ", err));
-    }
-  };
-
-  const handlePrevious = () => {
-    if (currentShortIndex > 0) {
-      setCurrentShortIndex((prev) => prev - 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentShortIndex < allShorts.length - 1) {
-      setCurrentShortIndex((prev) => prev + 1);
-    }
-  };
-
-  // Touch gesture handlers for mobile
-  const handleTouchStart = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    touchStartY.current = e.touches[0].clientY;
-  };
-
-  const handleTouchMove = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    touchEndY.current = e.touches[0].clientY;
-  };
-
-  const handleTouchEnd = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (!touchStartY.current || !touchEndY.current) return;
-
-    const distance = touchStartY.current - touchEndY.current;
-    const isSwipeUp = distance > 50; // Swipe up
-    const isSwipeDown = distance < -50; // Swipe down
-
-    if (isSwipeUp && currentShortIndex < allShorts.length - 1) {
-      handleNext();
-    }
-
-    if (isSwipeDown && currentShortIndex > 0) {
-      handlePrevious();
-    }
-
-    // Reset touch points
-    touchStartY.current = 0;
-    touchEndY.current = 0;
-  };
-
-  const isPreviousDisabled = currentShortIndex === 0;
-  const isNextDisabled = currentShortIndex === allShorts.length - 1;
-
-  if (!currentShort) {
-    return (
-      <Box
-        sx={{
-          height: "80vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {/* <Typography>Loading...</Typography> */}
-        <Backdrop
-          sx={{ background: "transparent", zIndex: 100, height: "100vh" }}
-          open={loading}
-        >
-          <CircularProgress />
-        </Backdrop>
-      </Box>
+    // Memoize button configs to prevent re-computation
+    const buttonConfigs = useMemo(
+      () => ({
+        whatsapp: getButtonConfig("whatsapp"),
+        share: getButtonConfig("share"),
+        copy: getButtonConfig("copy"),
+      }),
+      [getButtonConfig]
     );
-  }
 
-  // Mobile Layout
-  if (isMobile) {
-    return (
-      <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-        {/* Header */}
-        {/* <Box
-          sx={{
-            bgcolor: "primary.main",
-            color: "white",
-            p: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            zIndex: 10, // Increase z-index to ensure it's visible
-            position: "relative", // Ensure proper positioning
-          }}
-        >
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <IconButton
-              onClick={() => router.back()}
-              sx={{
-                color: "white",
-                "&:hover": {
-                  bgcolor: "rgba(255, 255, 255, 0.1)",
-                },
-              }}
-            >
-              <ArrowBack />
-            </IconButton>
-            <Typography variant="h6" sx={{ ...fontStyles.openSans.bold }}>
-              Shorts
-            </Typography>
-          </Box>
-        </Box> */}
+    // Memoize handlers to prevent re-creation on every render
+    const handleShare = useCallback(() => onShare(short), [onShare, short]);
+    const handleWhatsApp = useCallback(
+      () => onWhatsApp(short),
+      [onWhatsApp, short]
+    );
+    const handleCopy = useCallback(() => onCopy(short), [onCopy, short]);
 
-        {/* Video Container */}
+    if (isMobile) {
+      return (
         <Box
-          ref={containerRef}
           sx={{
-            flex: 1,
-            position: "relative",
-            bgcolor: "black",
-            overflow: "hidden",
-          }}
-        >
-          {/* Video */}
-          {currentShort && (
-            <iframe
-              key={currentShort.id}
-              src={getEmbedUrl(currentShort?.content_details[0]?.url)}
-              title={currentShort?.name}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              style={{
-                width: "100%",
-                height: "100%",
-                border: 0,
-                pointerEvents: "none", // Disable iframe interaction
-              }}
-            />
-          )}
-
-          {/* Transparent Touch Overlay */}
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              zIndex: 3,
-              backgroundColor: "transparent",
-            }}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          />
-
-          {/* Video Name Overlay - Bottom Center */}
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: 40,
-              left: "50%",
-              transform: "translateX(-50%)",
-              zIndex: 4,
-              maxWidth: "60%",
-              textAlign: "center",
-              pointerEvents: "none", // Allow touch events to pass through
-            }}
-          >
-            <Typography
-              variant="h6"
-              sx={{
-                color: "white",
-                ...fontStyles.openSans.bold,
-                fontSize: fontSize.typography.h6,
-                textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
-                lineHeight: 1.3,
-              }}
-            >
-              {currentShort?.name}
-            </Typography>
-          </Box>
-
-          {/* Action Buttons - Bottom Right */}
-          <Box
-            sx={{
-              position: "absolute",
-              bottom: 100,
-              right: 20,
-              display: "flex",
-              flexDirection: "column",
-              gap: 1,
-              zIndex: 5, // Higher z-index for buttons to remain clickable
-            }}
-          >
-            <MobileActionButton
-              icon={<ShortWhatsAppMobileIcon />}
-              onClick={handleWhatsApp}
-              label="Whats App"
-            />
-            <MobileActionButton
-              icon={<ShortCopyMobileIcon />}
-              onClick={handleCopyToClipboard}
-              label="Copy"
-            />
-            <MobileActionButton
-              icon={<ShareShortMobileIcon />}
-              onClick={handleShare}
-              label="Share"
-            />
-          </Box>
-        </Box>
-
-        <ShareDialog
-          open={shareDialogOpen}
-          onClose={() => setShareDialogOpen(false)}
-          url={shareUrl}
-          title={currentShort?.name}
-          videoUrl={currentShort?.content_details[0]?.url}
-        />
-      </Box>
-    );
-  }
-
-  // Desktop Layout (Current Grid Layout without prev/next icons)
-  return (
-    <>
-      <Grid
-        container
-        sx={{
-          alignItems: "center",
-        }}
-      >
-        {/* Left Empty Space */}
-        <Grid item xs={12} md={5} />
-
-        {/* Center: Video */}
-        <Grid
-          item
-          xs={12}
-          md={3}
-          sx={{
+            height: "100vh",
             display: "flex",
-            justifyContent: "flex-end",
-            alignItems: "center",
+            flexDirection: "column",
+            justifyContent: "flex-start",
+            pt: 2, // Add top padding
           }}
         >
+          {/* Video Container - Mobile with File1 styling */}
           <Box
             sx={{
-              width: { xs: "100vw", md: 606 },
-              height: { xs: "calc(100vh - 120px)", md: "calc(100vh - 120px)" },
+              width: "100vw",
+              maxWidth: "400px", // Limit width for better 9:16 ratio on mobile
+              aspectRatio: "9/16", // Force 9:16 aspect ratio
+              maxHeight: "calc(100vh - 100px)",
+              position: "relative",
               bgcolor: "black",
               overflow: "hidden",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              borderRadius: 2,
+              mx: "auto", // Center horizontally
             }}
           >
-            {currentShort && (
+            {/* Video - Only render if active to save resources */}
+            {isActive && (
               <iframe
-                key={currentShort.id}
-                src={getEmbedUrl(currentShort?.content_details[0]?.url)}
-                title={currentShort?.name}
+                key={`mobile-${short.id}`}
+                src={getEmbedUrl(short?.content_details[0]?.url)}
+                title={short?.name}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
@@ -529,13 +239,144 @@ const Short = () => {
                   width: "100%",
                   height: "100%",
                   border: 0,
+                  pointerEvents: "none", // Disable iframe interaction for touch gestures
+                  objectFit: "cover",
+                }}
+              />
+            )}
+
+            {/* Video Name Overlay - Bottom Center (File1 style) */}
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: 40,
+                left: "50%",
+                transform: "translateX(-50%)",
+                zIndex: 4,
+                maxWidth: "60%",
+                textAlign: "center",
+                pointerEvents: "none",
+              }}
+            >
+              <Typography
+                variant="h6"
+                sx={{
+                  color: "white",
+                  ...fontStyles.openSans.bold,
+                  fontSize: fontSize.typography.h6,
+                  textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
+                  lineHeight: 1.3,
+                }}
+              >
+                {short?.name}
+              </Typography>
+            </Box>
+
+            {/* Action Buttons - Bottom Right (File1 style) */}
+            <Box
+              sx={{
+                position: "absolute",
+                bottom: 100,
+                right: 20,
+                display: "flex",
+                flexDirection: "column",
+                gap: 1,
+                zIndex: 5,
+              }}
+            >
+              {isFeatureEnabled("enableWhatsAppSharing") && (
+                <MobileActionButton
+                  icon={<ShortWhatsAppMobileIcon />}
+                  onClick={handleWhatsApp}
+                  label="WhatsApp"
+                />
+              )}
+              {isFeatureEnabled("enableCopyLink") && (
+                <MobileActionButton
+                  icon={<ShortCopyMobileIcon />}
+                  onClick={handleCopy}
+                  label="Copy"
+                />
+              )}
+              {isFeatureEnabled("enableSharing") && (
+                <MobileActionButton
+                  icon={<ShareShortMobileIcon />}
+                  onClick={handleShare}
+                  label="Share"
+                />
+              )}
+            </Box>
+          </Box>
+        </Box>
+      );
+    }
+
+    // Desktop Layout - Using File1 Grid Layout with scrollable capability
+    return (
+      <Grid
+        container
+        sx={{
+          height: "100vh",
+          alignItems: "flex-start",
+          scrollSnapAlign: "start",
+          maxWidth: "100vw",
+          overflow: "hidden",
+          pt: { xs: 0, md: 2 },
+        }}
+      >
+        {/* Left Empty Space */}
+        <Grid item xs={12} md={5} />
+
+        {/* Center: Video - File1 dimensions */}
+        <Grid
+          item
+          xs={12}
+          md={3}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "flex-start",
+            pt: { xs: 0, md: 2 },
+          }}
+        >
+          <Box
+            sx={{
+              width: { xs: "100vw", md: 400 }, // Fixed width for desktop
+              maxWidth: { xs: "400px", md: "400px" }, // Limit width to maintain ratio
+              aspectRatio: "9/16", // Force 9:16 aspect ratio
+              maxHeight: {
+                xs: "calc(100vh - 160px)",
+                md: "calc(100vh - 160px)",
+              }, // Ensure it doesn't exceed viewport
+              bgcolor: "black",
+              overflow: "hidden",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 2,
+              mx: "auto", // Center horizontally
+            }}
+          >
+            {isActive && (
+              <iframe
+                key={`desktop-${short.id}`}
+                src={getEmbedUrl(short?.content_details[0]?.url)}
+                title={short?.name}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  border: 0,
+                  objectFit: "cover",
                 }}
               />
             )}
           </Box>
         </Grid>
 
-        {/* Right: Info and Navigation */}
+        {/* Right: Info and Navigation - File1 Layout */}
         <Grid
           item
           xs={12}
@@ -543,11 +384,12 @@ const Short = () => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
             pt: { xs: 2, md: 4 },
             pb: { md: 30 },
             height: "80vh",
+            pr: { md: 8, lg: 10 }, // Add right padding to avoid overlap with navigation buttons
           }}
         >
           {/* Top: Video name and actions */}
@@ -561,27 +403,27 @@ const Short = () => {
                 pl: 3,
               }}
             >
-              {currentShort?.name}
+              {short?.name}
             </Typography>
             <Divider sx={{ mb: 2 }} />
             <Box
               sx={{
                 display: "flex",
-                gap: 2,
+                justifyContent: "space-between",
+                alignItems: "center",
+                width: "100%",
+                px: 3,
+                py: 1,
               }}
             >
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  width: "100%",
-                  gap: 2,
-                  mb: 1,
-                  pl: 3,
-                }}
-              >
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+              <Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    ...fontStyles.sfPro.condensed.regular,
+                  }}
+                >
                   {isFeatureEnabled("enableWhatsAppSharing") && (
                     <ActionButton
                       icon={
@@ -589,26 +431,30 @@ const Short = () => {
                           style={{
                             color: isDarkMode
                               ? isWhatsAppHovered
-                                ? whatsappConfig.colors?.hover
-                                : whatsappConfig.colors?.normal
+                                ? buttonConfigs.whatsapp.colors?.hover
+                                : buttonConfigs.whatsapp.colors?.normal
                               : isWhatsAppHovered
                               ? "#111"
                               : "",
                           }}
                           height={"15px"}
                           width={"15px"}
-                          keyword={whatsappConfig.icon}
+                          keyword={buttonConfigs.whatsapp.icon}
                         />
                       }
-                      label={whatsappConfig.label}
+                      label={buttonConfigs.whatsapp.label}
                       onClick={handleWhatsApp}
                       onMouseEnter={() => setIsWhatsAppHovered(true)}
                       onMouseLeave={() => setIsWhatsAppHovered(false)}
                       textColor={
-                        isDarkMode ? whatsappConfig.colors?.normal : "grey.500"
+                        isDarkMode
+                          ? buttonConfigs.whatsapp.colors?.normal
+                          : "grey.500"
                       }
                       hoverTextColor={
-                        isDarkMode ? whatsappConfig.colors?.hover : "#111"
+                        isDarkMode
+                          ? buttonConfigs.whatsapp.colors?.hover
+                          : "#111"
                       }
                     />
                   )}
@@ -616,21 +462,23 @@ const Short = () => {
                   {isFeatureEnabled("enableCopyLink") && (
                     <CopyButton
                       color={isCopyHovered ? "#fff" : ""}
-                      text={currentShort?.content_details[0]?.url}
-                      label={copyConfig.label}
+                      text={short?.content_details[0]?.url}
+                      label={buttonConfigs.copy.label}
                       onMouseEnter={() => setIsCopyHovered(true)}
                       onMouseLeave={() => setIsCopyHovered(false)}
                       textColor={
-                        isDarkMode ? copyConfig.colors?.normal : "grey.500"
+                        isDarkMode
+                          ? buttonConfigs.copy.colors?.normal
+                          : "grey.500"
                       }
                       hoverTextColor={
-                        isDarkMode ? copyConfig.colors?.hover : "#111"
+                        isDarkMode ? buttonConfigs.copy.colors?.hover : "#111"
                       }
                       iconColor={
                         isDarkMode
                           ? isCopyHovered
-                            ? copyConfig.colors?.hover
-                            : copyConfig.colors?.normal
+                            ? buttonConfigs.copy.colors?.hover
+                            : buttonConfigs.copy.colors?.normal
                           : isCopyHovered
                           ? "#111"
                           : ""
@@ -638,129 +486,605 @@ const Short = () => {
                     />
                   )}
                 </Box>
-                {isFeatureEnabled("enableSharing") && (
+              </Box>
+
+              {isFeatureEnabled("enableSharing") && (
+                <Box sx={{ flexShrink: 0 }}>
                   <ActionButton
                     icon={
                       <DynamicIcon
                         style={{
                           color: isDarkMode
                             ? isShareHovered
-                              ? shareConfig.colors?.hover
-                              : shareConfig.colors?.normal
+                              ? buttonConfigs.share.colors?.hover
+                              : buttonConfigs.share.colors?.normal
                             : isShareHovered
                             ? "#111"
                             : "",
                         }}
                         height={"15px"}
                         width={"15px"}
-                        keyword={shareConfig.icon}
+                        keyword={buttonConfigs.share.icon}
                       />
                     }
-                    label={shareConfig.label}
+                    label={buttonConfigs.share.label}
                     onClick={handleShare}
                     onMouseEnter={() => setIsShareHovered(true)}
                     onMouseLeave={() => setIsShareHovered(false)}
                     textColor={
-                      isDarkMode ? shareConfig.colors?.normal : "grey.500"
+                      isDarkMode
+                        ? buttonConfigs.share.colors?.normal
+                        : "grey.500"
                     }
                     hoverTextColor={
-                      isDarkMode ? shareConfig.colors?.hover : "#111"
+                      isDarkMode ? buttonConfigs.share.colors?.hover : "#111"
                     }
                     isReversed={true}
                   />
-                )}
-              </Box>
+                </Box>
+              )}
             </Box>
           </Box>
+        </Grid>
+      </Grid>
+    );
+  }
+);
 
-          {/* Center: Navigation - Desktop Only */}
+const Short = () => {
+  const router = useRouter();
+  const { short } = router.query;
+  const { fetchShortDetailPageData, loading } = useMain();
+
+  // State management
+  const [allShorts, setAllShorts] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [shareUrl, setShareUrl] = useState("");
+  const [selectedShort, setSelectedShort] = useState(null);
+  const [dataLoaded, setDataLoaded] = useState(false);
+
+  // Refs
+  const containerRef = useRef(null);
+  const scrollTimeoutRef = useRef(null);
+  const isScrollingRef = useRef(false);
+  const lastFetchedShort = useRef(null);
+
+  // Responsive
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === "dark";
+  const isMobile = useMediaQuery("(max-width:899px)");
+
+  const { getSocialUrl, getButtonConfig, isFeatureEnabled } = useContent();
+
+  // Memoize action handlers to prevent re-creation
+  const handleShare = useCallback((shortItem) => {
+    setSelectedShort(shortItem);
+    setShareDialogOpen(true);
+  }, []);
+
+  const handleWhatsApp = useCallback(
+    (shortItem) => {
+      const shareUrl = getSocialUrl(
+        "whatsapp",
+        window.location.href,
+        shortItem.content_details[0].url
+      );
+      window.open(shareUrl, "_blank");
+    },
+    [getSocialUrl]
+  );
+
+  const handleCopy = useCallback((shortItem) => {
+    navigator.clipboard
+      .writeText(shortItem?.content_details[0]?.url)
+      .then(() => console.log("URL copied to clipboard"))
+      .catch((err) => console.error("Failed to copy URL: ", err));
+  }, []);
+
+  // Load data - Prevent infinite API calls
+  useEffect(() => {
+    if (!short || loading) {
+      return;
+    }
+
+    // Reset data loaded state on new short
+    if (lastFetchedShort.current !== short) {
+      setDataLoaded(false);
+      setAllShorts([]);
+      setCurrentIndex(0);
+    }
+
+    // Don't fetch if we already have data for this short
+    if (lastFetchedShort.current === short && dataLoaded) {
+      return;
+    }
+
+    const loadData = async () => {
+      try {
+        lastFetchedShort.current = short;
+        console.log("Fetching data for short:", short);
+
+        const res = await fetchShortDetailPageData(short);
+
+        let shortsArray = [];
+        if (
+          res?.data?.response?.contents &&
+          Array.isArray(res.data.response.contents)
+        ) {
+          shortsArray = res.data.response.contents;
+        } else if (res?.data?.response) {
+          shortsArray = [res.data.response];
+        }
+
+        console.log("Loaded shorts array:", shortsArray.length, "items");
+
+        setAllShorts(shortsArray);
+        setDataLoaded(true);
+
+        // Find initial index
+        const requestedIndex = shortsArray.findIndex((s) => s.id === short);
+        const initialIndex = requestedIndex >= 0 ? requestedIndex : 0;
+        setCurrentIndex(initialIndex);
+
+        console.log("Initial index set to:", initialIndex);
+
+        // Scroll to initial position after data loads
+        setTimeout(() => {
+          if (containerRef.current) {
+            const scrollTop = initialIndex * window.innerHeight;
+            console.log("Scrolling to initial position:", scrollTop);
+            containerRef.current.scrollTo({
+              top: scrollTop,
+              behavior: "auto",
+            });
+          }
+        }, 100);
+      } catch (err) {
+        console.error("Error fetching shorts data:", err);
+        lastFetchedShort.current = null;
+        setDataLoaded(false);
+      }
+    };
+
+    loadData();
+  }, [short, loading]);
+
+  // Set share URL only once
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setShareUrl(window.location.href);
+    }
+  }, []);
+
+  // Reset state when component unmounts or route changes
+  useEffect(() => {
+    return () => {
+      // Cleanup on unmount
+      setAllShorts([]);
+      setCurrentIndex(0);
+      setDataLoaded(false);
+      lastFetchedShort.current = null;
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Navigation function with File1 Previous/Next logic
+  const navigateToShort = useCallback(
+    (index) => {
+      console.log(
+        "navigateToShort called with index:",
+        index,
+        "allShorts.length:",
+        allShorts.length
+      );
+
+      if (index < 0 || index >= allShorts.length || !containerRef.current) {
+        console.log("Navigation blocked - invalid index or no container");
+        return;
+      }
+
+      console.log("Starting navigation to index:", index);
+
+      // Update current index immediately
+      setCurrentIndex(index);
+
+      isScrollingRef.current = true;
+      const scrollTop = index * window.innerHeight;
+      console.log("Scrolling to:", scrollTop);
+
+      containerRef.current.scrollTo({
+        top: scrollTop,
+        behavior: "smooth",
+      });
+
+      // Update URL without triggering data refetch
+      const newShort = allShorts[index];
+      if (newShort && newShort.id !== short) {
+        window.history.replaceState(null, "", `/shorts/${newShort.id}`);
+      }
+
+      setTimeout(() => {
+        isScrollingRef.current = false;
+        console.log("Navigation completed, isScrolling set to false");
+      }, 500);
+    },
+    [allShorts, short]
+  );
+
+  // File1 Previous/Next handlers
+  const handlePrevious = useCallback(() => {
+    console.log(
+      "Previous clicked, currentIndex:",
+      currentIndex,
+      "allShorts.length:",
+      allShorts.length
+    );
+    if (currentIndex > 0 && allShorts.length > 0) {
+      const newIndex = currentIndex - 1;
+      console.log("Navigating to index:", newIndex);
+      navigateToShort(newIndex);
+    }
+  }, [currentIndex, allShorts.length, navigateToShort]);
+
+  const handleNext = useCallback(() => {
+    console.log(
+      "Next clicked, currentIndex:",
+      currentIndex,
+      "allShorts.length:",
+      allShorts.length
+    );
+    if (currentIndex < allShorts.length - 1 && allShorts.length > 0) {
+      const newIndex = currentIndex + 1;
+      console.log("Navigating to index:", newIndex);
+      navigateToShort(newIndex);
+    }
+  }, [currentIndex, allShorts.length, navigateToShort]);
+
+  // Scroll handler with debounce
+  const handleScroll = useCallback(() => {
+    if (
+      !containerRef.current ||
+      isScrollingRef.current ||
+      allShorts.length === 0
+    )
+      return;
+
+    const container = containerRef.current;
+    const scrollTop = container.scrollTop;
+    const viewportHeight = window.innerHeight;
+    const newIndex = Math.round(scrollTop / viewportHeight);
+
+    // Only update if the index actually changed and is valid
+    if (
+      newIndex !== currentIndex &&
+      newIndex >= 0 &&
+      newIndex < allShorts.length
+    ) {
+      setCurrentIndex(newIndex);
+
+      const newShort = allShorts[newIndex];
+      if (newShort && newShort.id !== short) {
+        window.history.replaceState(null, "", `/shorts/${newShort.id}`);
+      }
+    }
+
+    // Debounced scroll correction for manual scrolling
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+
+    scrollTimeoutRef.current = setTimeout(() => {
+      // Only correct scroll if not currently navigating via buttons
+      if (!isScrollingRef.current) {
+        const targetScrollTop = newIndex * viewportHeight;
+        if (Math.abs(scrollTop - targetScrollTop) > 10) {
+          isScrollingRef.current = true;
+          container.scrollTo({
+            top: targetScrollTop,
+            behavior: "smooth",
+          });
+
+          setTimeout(() => {
+            isScrollingRef.current = false;
+          }, 300);
+        }
+      }
+    }, 150);
+  }, [currentIndex, allShorts, short]);
+
+  // Attach scroll listener
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+      if (scrollTimeoutRef.current) {
+        clearTimeout(scrollTimeoutRef.current);
+      }
+    };
+  }, [handleScroll]);
+
+  // Touch gesture handling
+  const touchStartY = useRef(0);
+  const touchEndY = useRef(0);
+
+  const handleTouchStart = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    touchStartY.current = e.touches[0].clientY;
+  }, []);
+
+  const handleTouchMove = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    touchEndY.current = e.touches[0].clientY;
+  }, []);
+
+  const handleTouchEnd = useCallback(
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (!touchStartY.current || !touchEndY.current) return;
+
+      const distance = touchStartY.current - touchEndY.current;
+      const isSwipeUp = distance > 50;
+      const isSwipeDown = distance < -50;
+
+      if (isSwipeUp && currentIndex < allShorts.length - 1) {
+        handleNext();
+      } else if (isSwipeDown && currentIndex > 0) {
+        handlePrevious();
+      }
+
+      touchStartY.current = 0;
+      touchEndY.current = 0;
+    },
+    [currentIndex, allShorts.length, handleNext, handlePrevious]
+  );
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        handlePrevious();
+      } else if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+        e.preventDefault();
+        handleNext();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handlePrevious, handleNext]);
+
+  // Calculate disabled states for File1 navigation buttons
+  const isPreviousDisabled = currentIndex === 0;
+  const isNextDisabled = currentIndex === allShorts.length - 1;
+
+  // Show loading state
+  if (loading || !dataLoaded || allShorts.length === 0) {
+    console.log("Showing loading state:", {
+      loading,
+      dataLoaded,
+      allShortsLength: allShorts.length,
+    });
+    return (
+      <Box
+        sx={{
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+          gap: 2,
+        }}
+      >
+        <Backdrop
+          sx={{ background: "transparent", zIndex: 100, height: "100vh" }}
+          open={true}
+        >
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              alignSelf: "flex-end",
-              mr: 2,
+              gap: 2,
             }}
           >
-            <Typography
-              variant="caption"
-              sx={{
-                color: "grey.500",
-                mb: 0.5,
-                fontSize: fontSize.button.small,
-                letterSpacing: 0.5,
-              }}
-            >
-              Previous
-            </Typography>
-            <IconButton
-              color="inherit"
-              size="small"
-              onClick={handlePrevious}
-              disabled={isPreviousDisabled}
-              sx={{
-                "&:hover": {
-                  bgcolor: isPreviousDisabled
-                    ? "transparent"
-                    : "rgba(0, 0, 0, 0.04)",
-                },
-                opacity: isPreviousDisabled ? 0.3 : 1,
-                cursor: isPreviousDisabled ? "not-allowed" : "pointer",
-              }}
-            >
-              {/* <ArrowUpward fontSize="large" /> */}
-              <DynamicIcon
-                keyword={"arrow-up"}
-                style={{
-                  color: isDarkMode ? palette?.dark?.primary?.main : "",
-                }}
-              />
-            </IconButton>
-            <IconButton
-              color="inherit"
-              size="small"
-              onClick={handleNext}
-              disabled={isNextDisabled}
-              sx={{
-                "&:hover": {
-                  bgcolor: isNextDisabled
-                    ? "transparent"
-                    : "rgba(0, 0, 0, 0.04)",
-                },
-                opacity: isNextDisabled ? 0.3 : 1,
-                cursor: isNextDisabled ? "not-allowed" : "pointer",
-                mt: 2,
-              }}
-            >
-              {/* <ArrowDownward fontSize="large" /> */}
-              <DynamicIcon
-                keyword={"arrow-down"}
-                style={{
-                  color: isDarkMode ? palette?.dark?.primary?.main : "",
-                }}
-              />
-            </IconButton>
-            <Typography
-              variant="caption"
-              sx={{
-                color: "grey.500",
-                mt: 0.5,
-                fontSize: fontSize.button.small,
-                letterSpacing: 0.5,
-              }}
-            >
-              Next
-            </Typography>
+            <CircularProgress />
+            {/* <Typography variant="body2" color="text.secondary">
+              Loading short videos...
+            </Typography> */}
           </Box>
-        </Grid>
-      </Grid>
+        </Backdrop>
+      </Box>
+    );
+  }
+
+  // Mobile Layout
+  if (isMobile) {
+    return (
+      <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+        {/* Main Container - Scrollable */}
+        <Box
+          ref={containerRef}
+          sx={{
+            flex: 1,
+            overflowY: "auto",
+            overflowX: "hidden",
+            scrollSnapType: "y mandatory",
+            scrollBehavior: "smooth",
+          }}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {allShorts.map((shortItem, index) => (
+            <ShortItem
+              key={shortItem.id}
+              short={shortItem}
+              index={index}
+              isActive={Math.abs(index - currentIndex) <= 1}
+              onShare={handleShare}
+              onWhatsApp={handleWhatsApp}
+              onCopy={handleCopy}
+              isMobile={isMobile}
+            />
+          ))}
+        </Box>
+
+        <ShareDialog
+          open={shareDialogOpen}
+          onClose={() => setShareDialogOpen(false)}
+          url={shareUrl}
+          title={selectedShort?.name}
+          videoUrl={selectedShort?.content_details[0]?.url}
+        />
+      </Box>
+    );
+  }
+
+  // Desktop Layout - Scrollable with File1 Navigation Buttons
+  return (
+    <>
+      {/* Main Container - Scrollable */}
+      <Box
+        ref={containerRef}
+        sx={{
+          height: "100vh",
+          width: "100vw",
+          overflowY: "auto",
+          overflowX: "hidden",
+          scrollSnapType: "y mandatory",
+          scrollBehavior: "smooth",
+          position: "relative",
+        }}
+      >
+        {allShorts.map((shortItem, index) => (
+          <ShortItem
+            key={shortItem.id}
+            short={shortItem}
+            index={index}
+            isActive={Math.abs(index - currentIndex) <= 1}
+            onShare={handleShare}
+            onWhatsApp={handleWhatsApp}
+            onCopy={handleCopy}
+            isMobile={isMobile}
+          />
+        ))}
+      </Box>
+
+      {/* File1 Navigation Buttons - Fixed Position */}
+      <Box
+        sx={{
+          position: "fixed",
+          right: { md: 40, lg: 60 },
+          top: "50%",
+          transform: "translateY(-50%)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          zIndex: 1000,
+          // bgcolor: "rgba(255, 255, 255, 0.1)",
+          bgcolor: "transparent",
+          // backdropFilter: "blur(8px)",
+          borderRadius: 2,
+          p: 2,
+          m: 2,
+        }}
+      >
+        <Typography
+          variant="caption"
+          sx={{
+            color: isDarkMode ? "grey.300" : "grey.600",
+            mb: 1,
+            fontSize: "10px",
+            fontWeight: 500,
+            letterSpacing: 0.5,
+            textAlign: "center",
+          }}
+        >
+          Previous
+        </Typography>
+        <IconButton
+          color="inherit"
+          size="medium"
+          onClick={handlePrevious}
+          disabled={isPreviousDisabled}
+          sx={{
+            "&:hover": {
+              bgcolor: isPreviousDisabled
+                ? "transparent"
+                : isDarkMode
+                ? "rgba(255, 255, 255, 0.1)"
+                : "rgba(0, 0, 0, 0.04)",
+            },
+            opacity: isPreviousDisabled ? 0.3 : 1,
+            cursor: isPreviousDisabled ? "not-allowed" : "pointer",
+            mb: 1,
+          }}
+        >
+          <DynamicIcon
+            keyword={"arrow-up"}
+            style={{
+              color: isDarkMode ? palette?.dark?.primary?.main : "",
+              fontSize: "20px",
+            }}
+          />
+        </IconButton>
+        <IconButton
+          color="inherit"
+          size="medium"
+          onClick={handleNext}
+          disabled={isNextDisabled}
+          sx={{
+            "&:hover": {
+              bgcolor: isNextDisabled
+                ? "transparent"
+                : isDarkMode
+                ? "rgba(255, 255, 255, 0.1)"
+                : "rgba(0, 0, 0, 0.04)",
+            },
+            opacity: isNextDisabled ? 0.3 : 1,
+            cursor: isNextDisabled ? "not-allowed" : "pointer",
+            mb: 1,
+          }}
+        >
+          <DynamicIcon
+            keyword={"arrow-down"}
+            style={{
+              color: isDarkMode ? palette?.dark?.primary?.main : "",
+              fontSize: "20px",
+            }}
+          />
+        </IconButton>
+        <Typography
+          variant="caption"
+          sx={{
+            color: isDarkMode ? "grey.300" : "grey.600",
+            fontSize: "10px",
+            fontWeight: 500,
+            letterSpacing: 0.5,
+            textAlign: "center",
+          }}
+        >
+          Next
+        </Typography>
+      </Box>
+
       <ShareDialog
         open={shareDialogOpen}
         onClose={() => setShareDialogOpen(false)}
         url={shareUrl}
-        title={currentShort?.name}
-        videoUrl={currentShort?.content_details[0]?.url}
+        title={selectedShort?.name}
+        videoUrl={selectedShort?.content_details[0]?.url}
       />
     </>
   );

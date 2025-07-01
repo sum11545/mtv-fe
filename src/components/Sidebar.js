@@ -231,6 +231,128 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
             <List>
               <ListItem disablePadding>
                 <ListItemButton
+                  onClick={() =>
+                    window.open(
+                      "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html",
+                      "_blank"
+                    )
+                  }
+                  sx={{
+                    minHeight:
+                      theme.layout?.spacing?.buttonHeight?.bottomIconsCompact ||
+                      layout.spacing.buttonHeight.bottomIconsCompact,
+                    justifyContent: "center",
+                    px:
+                      theme.layout?.spacing?.padding?.xsmall ||
+                      layout.spacing.padding.xsmall,
+                    py:
+                      theme.layout?.spacing?.padding?.xxsmall ||
+                      layout.spacing.padding.xxsmall,
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap:
+                        theme.layout?.spacing?.gap?.xxsmall ||
+                        layout.spacing.gap.xxsmall,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        "& .MuiSvgIcon-root": {
+                          fontSize:
+                            theme.fontSize?.icon?.medium ||
+                            fontSize.icon.medium,
+                        },
+                        "& img": {
+                          width:
+                            theme.fontSize?.icon?.medium ||
+                            fontSize.icon.medium,
+                          height:
+                            theme.fontSize?.icon?.medium ||
+                            fontSize.icon.medium,
+                        },
+                      }}
+                    >
+                      {/* {isDarkMode ? <LightModeIcon /> : <MoonStarIcon />} */}
+                      <DynamicIcon keyword={"ABOUT_US"} style={iconStyle} />
+                    </Box>
+                  </Box>
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() =>
+                    window.open(
+                      "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
+                      "_blank"
+                    )
+                  }
+                  sx={{
+                    minHeight:
+                      theme.layout?.spacing?.buttonHeight?.bottomIconsCompact ||
+                      layout.spacing.buttonHeight.bottomIconsCompact,
+                    justifyContent: "center",
+                    px:
+                      theme.layout?.spacing?.padding?.xsmall ||
+                      layout.spacing.padding.xsmall,
+                    py:
+                      theme.layout?.spacing?.padding?.xxsmall ||
+                      layout.spacing.padding.xxsmall,
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap:
+                        theme.layout?.spacing?.gap?.xxsmall ||
+                        layout.spacing.gap.xxsmall,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        "& .MuiSvgIcon-root": {
+                          fontSize:
+                            theme.fontSize?.icon?.medium ||
+                            fontSize.icon.medium,
+                        },
+                        "& img": {
+                          width:
+                            theme.fontSize?.icon?.medium ||
+                            fontSize.icon.medium,
+                          height:
+                            theme.fontSize?.icon?.medium ||
+                            fontSize.icon.medium,
+                        },
+                      }}
+                    >
+                      {/* {isDarkMode ? <LightModeIcon /> : <MoonStarIcon />} */}
+                      <DynamicIcon keyword={"KYP"} style={iconStyle} />
+                    </Box>
+                  </Box>
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton
                   onClick={onToggleTheme}
                   sx={{
                     minHeight:
@@ -554,6 +676,89 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
           >
             <Divider />
             <List dense>
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() =>
+                    window.open(
+                      "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html",
+                      "_blank"
+                    )
+                  }
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth:
+                        theme.layout?.spacing?.iconContainer?.minWidth ||
+                        layout.spacing.iconContainer.minWidth,
+                      "& .MuiSvgIcon-root": {
+                        fontSize:
+                          theme.fontSize?.icon?.medium || fontSize.icon.medium,
+                      },
+                      "& img": {
+                        width:
+                          theme.fontSize?.icon?.medium || fontSize.icon.medium,
+                        height:
+                          theme.fontSize?.icon?.medium || fontSize.icon.medium,
+                      },
+                    }}
+                  >
+                    <DynamicIcon keyword={"ABOUT_US"} style={iconStyle} />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={"About Us"}
+                    sx={{
+                      "& .MuiListItemText-primary": {
+                        ...fontStyles.barlowCondensed.regular,
+                        fontSize:
+                          theme.fontSize?.nav?.primary || fontSize.nav.primary,
+                        textTransform: "uppercase",
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() =>
+                    window.open(
+                      "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
+                      "_blank"
+                    )
+                  }
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth:
+                        theme.layout?.spacing?.iconContainer?.minWidth ||
+                        layout.spacing.iconContainer.minWidth,
+                      "& .MuiSvgIcon-root": {
+                        fontSize:
+                          theme.fontSize?.icon?.medium || fontSize.icon.medium,
+                      },
+                      "& img": {
+                        width:
+                          theme.fontSize?.icon?.medium || fontSize.icon.medium,
+                        height:
+                          theme.fontSize?.icon?.medium || fontSize.icon.medium,
+                      },
+                    }}
+                  >
+                    <DynamicIcon keyword={"KYP"} style={iconStyle} />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={"Contact Us"}
+                    sx={{
+                      "& .MuiListItemText-primary": {
+                        ...fontStyles.barlowCondensed.regular,
+                        fontSize:
+                          theme.fontSize?.nav?.primary || fontSize.nav.primary,
+                        textTransform: "uppercase",
+                      },
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
               <ListItem disablePadding>
                 <ListItemButton onClick={onToggleTheme}>
                   <ListItemIcon
