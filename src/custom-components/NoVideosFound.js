@@ -104,7 +104,18 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum", mtvCode }) => {
         borderRadius: 2,
       }}
     >
-      <Grid container spacing={2}>
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100%",
+          width: "100%",
+        }}
+      >
         {/* Left side */}
         <Grid
           item
@@ -115,10 +126,10 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum", mtvCode }) => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            borderRight: {
-              xs: "none",
-              md: `1px solid ${theme.palette.divider}`,
-            },
+            // borderRight: {
+            //   xs: "none",
+            //   md: `1px solid ${theme.palette.divider}`,
+            // },
             pr: { xs: 0, md: 3 },
           }}
         >
@@ -162,7 +173,7 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum", mtvCode }) => {
         </Grid>
 
         {/* Right side */}
-        <Grid
+        {/* <Grid
           item
           xs={12}
           md={6}
@@ -199,28 +210,7 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum", mtvCode }) => {
                 You'll have the video soon!
               </span>
             </Typography>
-            {/* <Typography
-              variant={isMobile ? "body1" : "h6"}
-              sx={{
-                // fontWeight: 400,
-                // mb: 0.5,
-                // mt: -0.5,
-                ...fontStyles.sfPro.display.regular,
-              }}
-            >
-              your video request.
-            </Typography> */}
-            {/* <Typography
-              variant={isMobile ? "body1" : "h6"}
-              sx={{
-                // mt: -0.5,
-                ...fontStyles.sfPro.display.bold,
-              }}
-            >
-              You'll have the video soon!
-            </Typography> */}
-
-            {/* Mobile only divider - moved below the text */}
+            
             {isMobile && <Divider sx={{ width: "100%", my: 2 }} />}
 
             <Typography
@@ -300,7 +290,7 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum", mtvCode }) => {
               </Button>
             </Box>
           </Box>
-        </Grid>
+        </Grid> */}
       </Grid>
       <Snackbar
         open={snackbar.open}

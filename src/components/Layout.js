@@ -23,7 +23,7 @@ const MINI_DRAWER_WIDTH = 70;
 const Main = styled("main")(({ theme, isShortsPageMobile }) => ({
   flexGrow: 1,
   width: `calc(100% - ${MINI_DRAWER_WIDTH}px)`,
-  minHeight: "100vh",
+  minHeight: "80vh",
   backgroundColor: theme.palette.background.default,
   display: "flex",
   flexDirection: "column",

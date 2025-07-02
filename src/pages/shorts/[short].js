@@ -203,7 +203,7 @@ const ShortItem = React.memo(
       return (
         <Box
           sx={{
-            height: "100vh",
+            height: "80vh",
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-start",
@@ -958,7 +958,7 @@ const Short = () => {
       <Box
         ref={containerRef}
         sx={{
-          height: "100vh",
+          height: "80vh",
           width: "100vw",
           overflowY: "auto",
           overflowX: "hidden",
