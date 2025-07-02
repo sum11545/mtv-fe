@@ -165,7 +165,7 @@ const getEmbedUrl = (url) => {
       videoId = url.split("shorts/")[1];
     }
     videoId = videoId.split(/[?&]/)[0];
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}`;
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1&rel=0`;
   }
   return url;
 };
@@ -203,20 +203,21 @@ const ShortItem = React.memo(
       return (
         <Box
           sx={{
-            height: "80vh",
+            height: "100vh",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "flex-start",
-            pt: 2, // Add top padding
+            justifyContent: "center",
+            alignItems: "center",
+            scrollSnapAlign: "start",
+            scrollSnapStop: "always",
           }}
         >
           {/* Video Container - Mobile with File1 styling */}
           <Box
             sx={{
               width: "100vw",
+              height: "100vh",
               maxWidth: "400px", // Limit width for better 9:16 ratio on mobile
-              aspectRatio: "9/16", // Force 9:16 aspect ratio
-              maxHeight: "calc(100vh - 100px)",
               position: "relative",
               bgcolor: "black",
               overflow: "hidden",
@@ -228,32 +229,44 @@ const ShortItem = React.memo(
           >
             {/* Video - Only render if active to save resources */}
             {isActive && (
-              <iframe
-                key={`mobile-${short.id}`}
-                src={getEmbedUrl(short?.content_details[0]?.url)}
-                title={short?.name}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                style={{
+              <Box
+                sx={{
                   width: "100%",
                   height: "100%",
-                  border: 0,
-                  pointerEvents: "none", // Disable iframe interaction for touch gestures
-                  objectFit: "cover",
+                  maxWidth: "400px",
+                  aspectRatio: "9/16",
+                  bgcolor: "black",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
-              />
+              >
+                <iframe
+                  key={`mobile-${short.id}-${index}`}
+                  src={getEmbedUrl(short?.content_details[0]?.url)}
+                  title={short?.name}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    border: 0,
+                    objectFit: "cover",
+                  }}
+                />
+              </Box>
             )}
 
             {/* Video Name Overlay - Bottom Center (File1 style) */}
             <Box
               sx={{
                 position: "absolute",
-                bottom: 40,
+                bottom: 120,
                 left: "50%",
                 transform: "translateX(-50%)",
                 zIndex: 4,
-                maxWidth: "60%",
+                maxWidth: "70%",
                 textAlign: "center",
                 pointerEvents: "none",
               }}
@@ -276,7 +289,7 @@ const ShortItem = React.memo(
             <Box
               sx={{
                 position: "absolute",
-                bottom: 100,
+                bottom: 150,
                 right: 20,
                 display: "flex",
                 flexDirection: "column",
@@ -316,7 +329,7 @@ const ShortItem = React.memo(
       <Grid
         container
         sx={{
-          height: "100vh",
+          height: isMobile ? "100vh" : "80vh",
           alignItems: "flex-start",
           scrollSnapAlign: "start",
           maxWidth: "100vw",
@@ -359,7 +372,7 @@ const ShortItem = React.memo(
           >
             {isActive && (
               <iframe
-                key={`desktop-${short.id}`}
+                key={`desktop-${short.id}-${index}`}
                 src={getEmbedUrl(short?.content_details[0]?.url)}
                 title={short?.name}
                 frameBorder="0"
@@ -878,7 +891,7 @@ const Short = () => {
     return (
       <Box
         sx={{
-          height: "100vh",
+          height: isMobile ? "100vh" : "80vh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -917,10 +930,12 @@ const Short = () => {
           ref={containerRef}
           sx={{
             flex: 1,
+            height: "100vh",
             overflowY: "auto",
             overflowX: "hidden",
             scrollSnapType: "y mandatory",
             scrollBehavior: "smooth",
+            WebkitOverflowScrolling: "touch", // Smooth scrolling on iOS
           }}
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
@@ -931,7 +946,7 @@ const Short = () => {
               key={shortItem.id}
               short={shortItem}
               index={index}
-              isActive={Math.abs(index - currentIndex) <= 1}
+              isActive={index === currentIndex}
               onShare={handleShare}
               onWhatsApp={handleWhatsApp}
               onCopy={handleCopy}
@@ -972,7 +987,7 @@ const Short = () => {
             key={shortItem.id}
             short={shortItem}
             index={index}
-            isActive={Math.abs(index - currentIndex) <= 1}
+            isActive={index === currentIndex}
             onShare={handleShare}
             onWhatsApp={handleWhatsApp}
             onCopy={handleCopy}

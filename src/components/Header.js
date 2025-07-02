@@ -32,7 +32,7 @@ const Header = ({ toggleSidebar }) => {
     height: "40px",
     width: "170px",
     // border: "1px solid green",
-    marginLeft: " -25px",
+    marginLeft: isMobile ? "-10px" : " -25px",
   });
 
   // const LogoWrapper = styled(Box)({
