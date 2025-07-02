@@ -175,13 +175,23 @@ const VideoDetailPage = () => {
       }
     };
 
-    // Measure after content loads/changes
-    const timer = setTimeout(measureLeftContent, 100);
-
-    // Re-measure when content changes
+    // Initial measurement
     measureLeftContent();
 
-    return () => clearTimeout(timer);
+    // Measure after a delay to ensure content is fully loaded
+    const timer = setTimeout(measureLeftContent, 200);
+
+    // Add resize listener for dynamic updates
+    const handleResize = () => {
+      measureLeftContent();
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", handleResize);
+    };
   }, [selectedContent, showMore, videoDetailData, isMobile]);
   useEffect(() => {
     // Set share URL only after component mounts on client side
@@ -620,15 +630,14 @@ const VideoDetailPage = () => {
                   xs: "auto",
                 },
                 maxHeight: {
-                  md: "calc(100vh - 100px)", // Ensure it doesn't exceed viewport
+                  md:
+                    leftContentHeight > 0
+                      ? `${leftContentHeight}px`
+                      : "calc(100vh - 100px)",
                   xs: "none",
                 },
                 overflowY: {
-                  md:
-                    typeof window !== "undefined" &&
-                    leftContentHeight > window.innerHeight - 100
-                      ? "auto"
-                      : "visible",
+                  md: "auto",
                   xs: "visible",
                 },
                 pb: { md: 3, lg: 3 },
