@@ -307,6 +307,7 @@ const VideoDetailPage = () => {
                   md: 0,
                   xs: "10px",
                 },
+                ml: 2,
               }}
             >
               <Box component="section" sx={{ mb: 1 }}>
@@ -415,7 +416,9 @@ const VideoDetailPage = () => {
                   mb: 1,
                 }}
               >
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <Box
+                  sx={{ display: "flex", alignItems: "center", gap: 1, ml: -1 }}
+                >
                   {isFeatureEnabled("enableWhatsAppSharing") && (
                     <ActionButton
                       icon={
