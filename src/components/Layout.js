@@ -119,6 +119,8 @@ const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [navigationHistory, setNavigationHistory] = useState([]);
+  const [isNavigatingBack, setIsNavigatingBack] = useState(false);
+  const [cachedBackLabel, setCachedBackLabel] = useState(null);
   const isMobile = useMediaQuery("(max-width:600px)");
   const router = useRouter();
 
@@ -138,6 +140,7 @@ const Layout = ({ children }) => {
     if (!route) return "Home";
 
     const { pathname, query } = route;
+    console.log("route", route);
 
     if (pathname === "/") return "Home";
     if (pathname === "/search") return "Search";
@@ -208,13 +211,23 @@ const Layout = ({ children }) => {
 
       return {
         show: true,
-        label: `Back to ${previousLabel}`,
+        label:
+          isNavigatingBack && cachedBackLabel
+            ? cachedBackLabel
+            : `Back to ${previousLabel}`,
         action: () => {
           if (previousRoute) {
-            // Remove current route from history and navigate to previous
-            setNavigationHistory((prev) => prev.slice(0, -1));
+            // Cache the current label and set navigation state
+            setCachedBackLabel(`Back to ${previousLabel}`);
+            setIsNavigatingBack(true);
+
+            // Store the route to navigate to before updating history
+            const routeToNavigate = { ...previousRoute };
             try {
-              navigateToRoute(previousRoute);
+              // Navigate to the previous route
+              navigateToRoute(routeToNavigate);
+              // Remove current route from history
+              setNavigationHistory((prev) => prev.slice(0, -1));
             } catch (error) {
               console.error("Navigation failed, falling back to home:", error);
               router.push("/");
@@ -235,6 +248,10 @@ const Layout = ({ children }) => {
   // Track route changes and build navigation history
   useEffect(() => {
     const handleRouteChangeComplete = (url) => {
+      // Reset navigation state when route change completes
+      setIsNavigatingBack(false);
+      setCachedBackLabel(null);
+
       const currentRoute = {
         pathname: router.pathname,
         query: router.query,
@@ -264,11 +281,19 @@ const Layout = ({ children }) => {
       handleRouteChangeComplete(router.asPath);
     }
 
+    const handleRouteChangeError = () => {
+      // Reset navigation state if route change fails
+      setIsNavigatingBack(false);
+      setCachedBackLabel(null);
+    };
+
     // Listen for route changes
     router.events.on("routeChangeComplete", handleRouteChangeComplete);
+    router.events.on("routeChangeError", handleRouteChangeError);
 
     return () => {
       router.events.off("routeChangeComplete", handleRouteChangeComplete);
+      router.events.off("routeChangeError", handleRouteChangeError);
     };
   }, [router.isReady, router.pathname, router.query, router.asPath]);
 
