@@ -127,7 +127,8 @@ const StackVideoCard = ({
         sx={{ flex: 1, py: 0.5, overflow: "hidden", textOverflow: "ellipsis" }}
       >
         <Typography
-          variant="body2"
+          component="h2"
+          variant="stackCardVideoTitle"
           sx={{
             overflow: "hidden",
             textOverflow: "ellipsis",
@@ -137,7 +138,6 @@ const StackVideoCard = ({
             wordBreak: "break-all",
             lineHeight: 1.2,
             mb: 0.5,
-            fontSize: fontSize.typography.caption,
             color: (theme) =>
               theme.palette.mode === "light" ? "black" : "inherit",
             ...fontStyles.openSans.bold,

@@ -71,6 +71,7 @@ const SearchPage = () => {
           fontFamily: { ...fontStyles.montserrat.bold },
           wordBreak: "break-word",
           overflowWrap: "break-word",
+          typography: "searchResultText",
         }}
         title={
           router.query?.searchQuery

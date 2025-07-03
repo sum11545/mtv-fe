@@ -60,10 +60,9 @@ const ActionButton = ({
     {isReversed ? (
       <>
         <Typography
-          variant="caption"
+          variant="sendCopyShareLabel"
           sx={{
             color: textColor || "grey.500",
-            fontSize: fontSize.typography.caption,
             userSelect: "none",
             mr: 0.5,
             transition: "color 0.2s ease-in-out",
@@ -90,10 +89,9 @@ const ActionButton = ({
           },
         })}
         <Typography
-          variant="caption"
+          variant="sendCopyShareLabel"
           sx={{
             color: textColor || "grey.500",
-            fontSize: fontSize.typography.caption,
             userSelect: "none",
             ml: 0.5,
             transition: "color 0.2s ease-in-out",
@@ -291,14 +289,15 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
             }}
           >
             <Typography
+              component="h2"
               sx={{
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 minHeight: "4em",
                 maxHeight: "4em",
-                fontSize: fontSize.typography.body2,
                 ...fontStyles.openSans.bold,
               }}
+              variant="videoTitle"
               onClick={handleCardClick}
             >
               {selectedContent?.name}

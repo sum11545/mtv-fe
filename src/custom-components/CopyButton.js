@@ -67,10 +67,9 @@ const CopyButton = ({
           }}
         />
         <Typography
-          variant="caption"
+          variant="sendCopyShareLabel"
           sx={{
             color: copied ? "success.main" : textColor || "grey.500",
-            fontSize: fontSize.typography.caption,
             userSelect: "none",
             ml: 0.5,
             transition: "color 0.2s ease-in-out",

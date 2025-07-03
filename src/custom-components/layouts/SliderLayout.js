@@ -33,7 +33,8 @@ const SliderLayout = ({
   const [showLeftScroll, setShowLeftScroll] = useState(false);
   const [showRightScroll, setShowRightScroll] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
-  const { getButtonLabel, getButtonConfig, getColor, isDarkMode } = useContent();
+  const { getButtonLabel, getButtonConfig, getColor, isDarkMode } =
+    useContent();
   const size = section?.layout_config?.size;
   const height = section?.layout_config?.height;
   const width = section?.layout_config?.width;
@@ -95,15 +96,16 @@ const SliderLayout = ({
           }}
         >
           <CustomTooltip text={section.name}>
-        <Typography
-          variant="sectionTitle"
-          sx={{
-            color: router?.pathname === "/" ? "primary.main" : "inherit",
-            ...fontStyles.montserrat.bold,
-          }}
-        >
-          {section.name}
-        </Typography>
+            <Typography
+              component="h1"
+              sx={{
+                color: router?.pathname === "/" ? "primary.main" : "inherit",
+                ...fontStyles.montserrat.bold,
+                typography: "sectionTitle",
+              }}
+            >
+              {section.name}
+            </Typography>
           </CustomTooltip>
         </Box>
 
@@ -118,11 +120,10 @@ const SliderLayout = ({
             return (
               sponsor && (
                 <Typography
-                  variant="body1"
+                  variant="adSponsored"
                   sx={{
                     lineHeight: 1.1,
                     color: theme.palette.custom.adText,
-                    fontSize: fontSize.typography.caption,
                     ...fontStyles.montserrat.regular,
                     fontStyle: "italic",
                   }}
@@ -137,37 +138,43 @@ const SliderLayout = ({
         {section.total_contents > section.contents.length &&
           router?.pathname === "/" && (
             <Button
-              endIcon={<DynamicIcon 
-                keyword={isHovered ? 'ARROW-YELLOW' : 'ARROW'}
-                height={"15px"} 
-                width={"15px"}
-                style={{
-                  color: isDarkMode 
-                    ? (isHovered ? '' : '#fff')
-                    : (isHovered ? 'black' : '')
-                }}
-              />}
+              endIcon={
+                <DynamicIcon
+                  keyword={isHovered ? "ARROW-YELLOW" : "ARROW"}
+                  height={"15px"}
+                  width={"15px"}
+                  style={{
+                    color: isDarkMode
+                      ? isHovered
+                        ? ""
+                        : "#fff"
+                      : isHovered
+                      ? "black"
+                      : "",
+                  }}
+                />
+              }
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               sx={{
                 textTransform: "none",
                 ...fontStyles.openSans.regular,
-                color: isDarkMode ? '#fff' : getColor('primary'),
-                '&:hover': {
-                  bgcolor: 'transparent',
-                  color: isDarkMode ? getColor('secondary') : 'common.black',
-                  '& .MuiButton-endIcon': {
-                    transform: 'translateX(5px)',
-                    transition: 'transform 0.3s ease-in-out'
-                  }
+                color: isDarkMode ? "#fff" : getColor("primary"),
+                "&:hover": {
+                  bgcolor: "transparent",
+                  color: isDarkMode ? getColor("secondary") : "common.black",
+                  "& .MuiButton-endIcon": {
+                    transform: "translateX(5px)",
+                    transition: "transform 0.3s ease-in-out",
+                  },
                 },
-                '& .MuiButton-endIcon': {
-                  transition: 'transform 0.3s ease-in-out'
-                }
+                "& .MuiButton-endIcon": {
+                  transition: "transform 0.3s ease-in-out",
+                },
               }}
               onClick={handleViewMore}
             >
-              {isMobile ? "" : getButtonLabel('viewMore')}
+              {isMobile ? "" : getButtonLabel("viewMore")}
             </Button>
           )}
       </Box>

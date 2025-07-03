@@ -92,7 +92,6 @@ const BackButton = ({ onClick, label }) => {
         sx={{
           textTransform: "none",
           ...fontStyles.openSans.regular,
-          fontSize: fontSize.button.medium,
           color: isDarkMode ? "#fff" : "black",
           "&:hover": {
             bgcolor: "transparent",
@@ -106,6 +105,7 @@ const BackButton = ({ onClick, label }) => {
             transition: "transform 0.3s ease-in-out",
             transform: "rotate(180deg)",
           },
+          typography: "backToText",
         }}
       >
         {label}

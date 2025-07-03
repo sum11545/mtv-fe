@@ -241,10 +241,9 @@ const MobileFooter = (props) => {
       >
         {/* 1. Let's find true value here text */}
         <Typography
-          variant="h6"
+          variant="footerSlogan"
           color="primary.main"
           sx={{
-            fontSize: fontSize.typography.body1,
             mb: 1,
             ...fontStyles.montserrat.bold,
           }}
@@ -255,6 +254,7 @@ const MobileFooter = (props) => {
         {/* 2. grow@moneytv.live link */}
         <Typography
           color="primary.main"
+          variant="footerEmail"
           onClick={() =>
             window.open(`mailto:${getUrl("external", "contactEmail")}`, "_self")
           }
@@ -262,7 +262,6 @@ const MobileFooter = (props) => {
             display: "block",
             mb: 2,
             textDecoration: "underline",
-            fontSize: fontSize.nav.primary,
             ...fontStyles.openSans.regular,
             cursor: "pointer",
             "&:hover": {
@@ -424,9 +423,9 @@ const MobileFooter = (props) => {
         <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
           <Typography
             color="primary.main"
+            variant="footerLinks"
             onClick={() => {}}
             sx={{
-              fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
               cursor: "pointer",
               textDecoration: "underline",
@@ -439,9 +438,9 @@ const MobileFooter = (props) => {
           </Typography>
           <Typography
             color="primary.main"
+            variant="footerLinks"
             onClick={() => {}}
             sx={{
-              fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
               cursor: "pointer",
               textDecoration: "underline",
@@ -458,9 +457,9 @@ const MobileFooter = (props) => {
         <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
           <Typography
             color="primary.main"
+            variant="footerLinks"
             onClick={() => {}}
             sx={{
-              fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
               cursor: "pointer",
               textDecoration: "underline",
@@ -473,9 +472,9 @@ const MobileFooter = (props) => {
           </Typography>
           <Typography
             color="primary.main"
+            variant="footerLinks"
             onClick={() => {}}
             sx={{
-              fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
               cursor: "pointer",
               textDecoration: "underline",
@@ -495,6 +494,7 @@ const MobileFooter = (props) => {
         <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
           <Typography
             color="primary.main"
+            variant="footerLinks"
             onClick={() =>
               window.open(
                 "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html",
@@ -502,7 +502,6 @@ const MobileFooter = (props) => {
               )
             }
             sx={{
-              fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
               cursor: "pointer",
               textDecoration: "underline",
@@ -515,6 +514,7 @@ const MobileFooter = (props) => {
           </Typography>
           <Typography
             color="primary.main"
+            variant="footerLinks"
             onClick={() =>
               window.open(
                 "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
@@ -522,7 +522,6 @@ const MobileFooter = (props) => {
               )
             }
             sx={{
-              fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
               cursor: "pointer",
               textDecoration: "underline",
@@ -539,9 +538,9 @@ const MobileFooter = (props) => {
         <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
           <Typography
             color="primary.main"
+            variant="footerLinks"
             onClick={() => router.push(getUrl("external", "privacy"))}
             sx={{
-              fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
               cursor: "pointer",
               textDecoration: "underline",
@@ -555,9 +554,9 @@ const MobileFooter = (props) => {
 
           <Typography
             color="primary.main"
+            variant="footerLinks"
             onClick={() => router.push(getUrl("external", "terms"))}
             sx={{
-              fontSize: fontSize.nav.primary,
               ...fontStyles.openSans.regular,
               cursor: "pointer",
               textDecoration: "underline",
@@ -697,8 +696,8 @@ const Footer = () => {
           <Box>
             <Typography
               color="primary.main"
+              variant="footerSlogan"
               sx={{
-                fontSize: fontSize.typography.body2,
                 ...fontStyles.montserrat.bold,
               }}
             >
@@ -706,6 +705,7 @@ const Footer = () => {
             </Typography>
             <Typography
               color="primary.main"
+              variant="footerEmail"
               onClick={() =>
                 window.open(
                   `mailto:${getUrl("external", "contactEmail")}`,
@@ -716,7 +716,6 @@ const Footer = () => {
                 display: "block",
                 mb: 3,
                 textDecoration: "underline",
-                fontSize: fontSize.nav.primary,
                 ...fontStyles.openSans.regular,
                 cursor: "pointer",
                 "&:hover": {
@@ -836,9 +835,9 @@ const Footer = () => {
           <Stack spacing={2}>
             <Typography
               color="primary.main"
+              variant="footerLinks"
               onClick={() => {}}
               sx={{
-                fontSize: fontSize.nav.primary,
                 ...fontStyles.openSans.regular,
                 cursor: "pointer",
                 textDecoration: "underline",
@@ -852,9 +851,9 @@ const Footer = () => {
 
             <Typography
               color="primary.main"
+              variant="footerLinks"
               onClick={() => {}}
               sx={{
-                fontSize: fontSize.nav.primary,
                 ...fontStyles.openSans.regular,
                 cursor: "pointer",
                 textDecoration: "underline",
@@ -868,9 +867,9 @@ const Footer = () => {
 
             <Typography
               color="primary.main"
+              variant="footerLinks"
               onClick={() => {}}
               sx={{
-                fontSize: fontSize.nav.primary,
                 ...fontStyles.openSans.regular,
                 cursor: "pointer",
                 textDecoration: "underline",
@@ -884,9 +883,9 @@ const Footer = () => {
 
             <Typography
               color="primary.main"
+              variant="footerLinks"
               onClick={() => {}}
               sx={{
-                fontSize: fontSize.nav.primary,
                 ...fontStyles.openSans.regular,
                 cursor: "pointer",
                 textDecoration: "underline",
@@ -908,6 +907,7 @@ const Footer = () => {
           <Stack spacing={2}>
             <Typography
               color="primary.main"
+              variant="footerLinks"
               onClick={() =>
                 window.open(
                   "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html",
@@ -915,7 +915,6 @@ const Footer = () => {
                 )
               }
               sx={{
-                fontSize: fontSize.nav.primary,
                 ...fontStyles.openSans.regular,
                 cursor: "pointer",
                 textDecoration: "underline",
@@ -929,6 +928,7 @@ const Footer = () => {
 
             <Typography
               color="primary.main"
+              variant="footerLinks"
               onClick={() =>
                 window.open(
                   "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
@@ -936,7 +936,6 @@ const Footer = () => {
                 )
               }
               sx={{
-                fontSize: fontSize.nav.primary,
                 ...fontStyles.openSans.regular,
                 cursor: "pointer",
                 textDecoration: "underline",
@@ -950,9 +949,9 @@ const Footer = () => {
 
             <Typography
               color="primary.main"
+              variant="footerLinks"
               onClick={() => router.push(getUrl("external", "privacy"))}
               sx={{
-                fontSize: fontSize.nav.primary,
                 ...fontStyles.openSans.regular,
                 cursor: "pointer",
                 textDecoration: "underline",
@@ -966,9 +965,9 @@ const Footer = () => {
 
             <Typography
               color="primary.main"
+              variant="footerLinks"
               onClick={() => router.push(getUrl("external", "terms"))}
               sx={{
-                fontSize: fontSize.nav.primary,
                 ...fontStyles.openSans.regular,
                 cursor: "pointer",
                 textDecoration: "underline",

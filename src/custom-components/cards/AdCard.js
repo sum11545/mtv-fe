@@ -61,11 +61,10 @@ const AdCard = ({ ad }) => {
           }}
         >
           <Typography
-            variant="body1"
+            variant="adDescription"
             sx={{
               lineHeight: 1.1,
               color: theme.palette.custom.adText,
-              fontSize: fontSize.typography.body2,
               ...fontStyles.montserrat.bold,
             }}
           >
@@ -82,11 +81,10 @@ const AdCard = ({ ad }) => {
             {/* not showing sponsor name inside card in mobile device */}
             {!isMobile && (
               <Typography
-                variant="body1"
+                variant="adSponsored"
                 sx={{
                   lineHeight: 1.1,
                   color: theme.palette.custom.adText,
-                  fontSize: fontSize.typography.body2,
                   ...fontStyles.montserrat.regular,
                   fontStyle: "italic",
                 }}
@@ -106,7 +104,6 @@ const AdCard = ({ ad }) => {
                   borderColor: theme.palette.common.black,
                 },
                 textTransform: "none",
-                fontSize: fontSize.button.large,
                 color: theme.palette.common.black,
                 borderColor: theme.palette.custom.adText,
                 ...fontStyles.sfPro.display.bold,
@@ -114,6 +111,7 @@ const AdCard = ({ ad }) => {
                   xl: "226px",
                   lg: "180px",
                 },
+                typography: "adLearnMoreLabel",
               }}
             >
               {ad.content_details[0]?.cta_label}

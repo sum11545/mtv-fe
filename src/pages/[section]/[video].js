@@ -64,10 +64,9 @@ const ActionButton = ({
     {isReversed ? (
       <>
         <Typography
-          variant="caption"
+          variant="sendCopyShareLabel"
           sx={{
             color: textColor || "grey.500",
-            fontSize: fontSize.typography.caption,
             userSelect: "none",
             mr: 0.5,
             transition: "color 0.2s ease-in-out",
@@ -94,10 +93,9 @@ const ActionButton = ({
           },
         })}
         <Typography
-          variant="caption"
+          variant="sendCopyShareLabel"
           sx={{
             color: textColor || "grey.500",
-            fontSize: fontSize.typography.caption,
             userSelect: "none",
             ml: 0.5,
             transition: "color 0.2s ease-in-out",
@@ -336,6 +334,8 @@ const VideoDetailPage = () => {
                     // fontWeight="bold"
                     // color="text.secondary"
                     // sx={{ whiteSpace: "nowrap" }} // prevent title from wrapping
+                    component="h1"
+                    variant="sectionTitleOfVideoDetailPage"
                     sx={{
                       mb: 1,
                       ...fontStyles.openSans.bold,
@@ -407,10 +407,11 @@ const VideoDetailPage = () => {
               {/* Video Title */}
               <Typography
                 variant="h5"
-                component="h1"
+                component="h2"
                 sx={{
                   mb: 1,
                   ...fontStyles.openSans.bold,
+                  typography: "videoTitleOfVideoDetailPage",
                 }}
               >
                 {selectedContent?.name}
@@ -521,10 +522,10 @@ const VideoDetailPage = () => {
               {/* Video Description */}
               <Box sx={{ mb: 2 }}>
                 <Typography
-                  variant="body1"
+                  variant="videoDescriptionOfVideoDetailPage"
                   sx={{
                     whiteSpace: "pre-wrap",
-                    fontSize: fontSize.typography.body2,
+                    ...fontStyles.sfPro.text.regular,
                     color: "text.secondary",
                   }}
                 >

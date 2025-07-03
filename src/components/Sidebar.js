@@ -204,9 +204,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                       variant="caption"
                       sx={{
                         ...fontStyles.barlowCondensed.regular,
-                        fontSize:
-                          theme.fontSize?.typography?.overline ||
-                          fontSize.typography.overline,
+                        typography: "menuItems",
                         textTransform: "uppercase",
                         textAlign: "center",
                         lineHeight:
@@ -592,9 +590,8 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
               color="primary.main"
               sx={{
                 ...fontStyles.barlowCondensed.bold,
-                fontSize:
-                  theme.fontSize?.typography?.h6 || fontSize.typography.h6,
                 textTransform: "uppercase",
+                typography: "welcomeUserText",
               }}
             >
               Welcome User
@@ -655,8 +652,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                     sx={{
                       "& .MuiListItemText-primary": {
                         ...fontStyles.barlowCondensed.regular,
-                        fontSize:
-                          theme.fontSize?.nav?.primary || fontSize.nav.primary,
+                        typography: "menuItems",
                         textTransform: "uppercase",
                       },
                     }}
@@ -709,8 +705,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                     sx={{
                       "& .MuiListItemText-primary": {
                         ...fontStyles.barlowCondensed.regular,
-                        fontSize:
-                          theme.fontSize?.nav?.primary || fontSize.nav.primary,
+                        typography: "menuItems",
                         textTransform: "uppercase",
                       },
                     }}
@@ -751,8 +746,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                     sx={{
                       "& .MuiListItemText-primary": {
                         ...fontStyles.barlowCondensed.regular,
-                        fontSize:
-                          theme.fontSize?.nav?.primary || fontSize.nav.primary,
+                        typography: "menuItems",
                         textTransform: "uppercase",
                       },
                     }}
@@ -785,8 +779,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                     sx={{
                       "& .MuiListItemText-primary": {
                         ...fontStyles.barlowCondensed.regular,
-                        fontSize:
-                          theme.fontSize?.nav?.primary || fontSize.nav.primary,
+                        typography: "menuItems",
                         textTransform: "uppercase",
                       },
                     }}
@@ -815,9 +808,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                       sx={{
                         "& .MuiListItemText-primary": {
                           ...fontStyles.barlowCondensed.regular,
-                          fontSize:
-                            theme.fontSize?.nav?.primary ||
-                            fontSize.nav.primary,
+                          typography: "menuItems",
                           textTransform: "uppercase",
                         },
                       }}
@@ -888,6 +879,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                     textAlign: "left",
                     wordBreak: { xs: "break-word", sm: "normal" },
                     overflow: "hidden",
+                    typography: "menuItems",
                   }}
                 >
                   Subscribe To YouTube

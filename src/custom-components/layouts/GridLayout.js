@@ -181,7 +181,7 @@ const GridLayout = ({
         >
           <CustomTooltip text={section.name}>
             <Typography
-              variant={isAd ? "advertisementTitle" : "sectionTitle"}
+              component={isAd ? "h4" : "h1"}
               sx={{
                 color: isAd
                   ? theme.palette.custom.advertisementColor
@@ -190,6 +190,7 @@ const GridLayout = ({
                   ? { ...fontStyles.openSans.bold }
                   : { ...fontStyles.montserrat.bold },
                 marginLeft: "10px",
+                typography: isAd ? "advertisementTitle" : "sectionTitle",
               }}
             >
               {section.name}
@@ -208,11 +209,10 @@ const GridLayout = ({
             return (
               sponsor && (
                 <Typography
-                  variant="body1"
+                  variant="adSponsored"
                   sx={{
                     lineHeight: 1.1,
                     color: theme.palette.custom.adText,
-                    fontSize: fontSize.typography.caption,
                     ...fontStyles.montserrat.regular,
                     fontStyle: "italic",
                   }}
@@ -262,6 +262,7 @@ const GridLayout = ({
                 "& .MuiButton-endIcon": {
                   transition: "transform 0.3s ease-in-out",
                 },
+                typography: "viewMoreLabel",
               }}
               onClick={handleViewMore}
             >
@@ -363,6 +364,7 @@ const GridLayout = ({
                     >
                       <CustomTooltip text={video.name}>
                         <Typography
+                          component={video.is_ad ? "h4" : "h1"}
                           variant={
                             video.is_ad ? "advertisementTitle" : "sectionTitle"
                           }
@@ -391,11 +393,10 @@ const GridLayout = ({
                         return (
                           sponsor && (
                             <Typography
-                              variant="body1"
+                              variant="adSponsored"
                               sx={{
                                 lineHeight: 1.1,
                                 color: theme.palette.custom.adText,
-                                fontSize: fontSize.typography.caption,
                                 ...fontStyles.montserrat.regular,
                                 fontStyle: "italic",
                               }}
@@ -527,11 +528,10 @@ const GridLayout = ({
                         return (
                           sponsor && (
                             <Typography
-                              variant="body1"
+                              variant="adSponsored"
                               sx={{
                                 lineHeight: 1.1,
                                 color: theme.palette.custom.adText,
-                                fontSize: fontSize.typography.caption,
                                 ...fontStyles.montserrat.regular,
                                 fontStyle: "italic",
                               }}
