@@ -375,6 +375,7 @@ const Layout = ({ children }) => {
               : isShortsPage || isMobile
               ? "70px"
               : "80px",
+            // : "50px",
           }}
         >
           {children}

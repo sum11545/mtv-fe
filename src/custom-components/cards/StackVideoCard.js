@@ -7,12 +7,10 @@ import { LanguageComponet } from "../LanguageComponet";
 
 const StackVideoCard = ({
   video,
-  layout,
   sectionData,
   section,
   id,
   showLanguageComponent = false,
-  isMobile,
 }) => {
   const router = useRouter();
   const [selectedContent, setSelectedContent] = useState(
@@ -92,18 +90,18 @@ const StackVideoCard = ({
       <Box
         sx={{
           width: {
-            xl: layout?.width?.xl || 100,
-            lg: layout?.width?.lg || 100,
-            md: layout?.width?.md || 100,
-            sm: layout?.width?.sm || 100,
-            xs: layout?.width?.xs || 100,
+            xl: 124,
+            lg: 100,
+            md: 100,
+            sm: 124,
+            xs: 124,
           },
           height: {
-            xl: layout?.height?.xl || 50,
-            lg: layout?.height?.lg || 50,
-            md: layout?.height?.md || 50,
-            sm: layout?.height?.sm || 50,
-            xs: layout?.height?.xs || 50,
+            xl: 70,
+            lg: 50,
+            md: 50,
+            sm: 70,
+            xs: 70,
           },
           position: "relative",
         }}

@@ -12,23 +12,13 @@ import { useRouter } from "next/router";
 import { useMain } from "@/context/MainContext";
 import { fontSize, fontStyles } from "@/theme/theme";
 
-const SliderCard = ({ short, sectionIndex, id, sectionData, styles }) => {
+const SliderCard = ({ short, sectionIndex, id, sectionData }) => {
   const router = useRouter();
   const [formattedDate, setFormattedDate] = useState("recently");
   const [mounted, setMounted] = useState(false);
-  const height = styles.height;
-  const width = styles.width;
 
-  const { contentConfigurations } = useMain();
-
-  // Finding the content type id and then applying height and width according to configuration
-  const layout = contentConfigurations?.find(
-    (item) => item.content_type_id == short?.content_details[0]?.content_type_id
-  );
   let isShort = short?.content_details[0]?.content_type_id == "CTSR"; // CTSR  is for shorts.
 
-  // let height = layout?.layout?.height;
-  // let width = layout?.layout?.width;
   const getThumbnailUrl = () => {
     const details = short?.content_details?.[0];
     if (!details || details.platform !== "PY")
@@ -92,19 +82,19 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, styles }) => {
     <>
       <Card
         sx={{
-          width: width && {
-            xl: width.xl,
-            lg: width.lg,
-            md: width.md,
-            sm: width.sm,
-            xs: width.xs,
+          width: {
+            xl: "326px",
+            lg: "210px",
+            md: "230px",
+            sm: "194px",
+            xs: "194px",
           },
-          height: height && {
-            xl: height.xl,
-            lg: height.lg,
-            md: height.md,
-            sm: height.sm,
-            xs: height.xs,
+          height: {
+            xl: "580px",
+            lg: "380px",
+            md: "380px",
+            sm: "345px",
+            xs: "345px",
           },
           borderRadius: 3,
           "&:hover": {

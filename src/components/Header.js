@@ -127,9 +127,9 @@ const Header = ({ toggleSidebar }) => {
           </Box>
 
           {/* Bottom row with search bar */}
-          <Box sx={{ width: "100%", px: { xs: 0.5, sm: 1 } }}>
+          {/* <Box sx={{ width: "100%", px: { xs: 0.5, sm: 1 } }}>
             <SearchBar />
-          </Box>
+          </Box> */}
         </Toolbar>
       </AppBar>
     );
@@ -184,7 +184,7 @@ const Header = ({ toggleSidebar }) => {
           </Link>
 
           {/* Search Bar */}
-          <SearchBar />
+          {/* <SearchBar /> */}
         </Box>
 
         {/* Right side icons */}

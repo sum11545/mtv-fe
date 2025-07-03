@@ -35,9 +35,6 @@ const SliderLayout = ({
   const [isHovered, setIsHovered] = useState(false);
   const { getButtonLabel, getButtonConfig, getColor, isDarkMode } =
     useContent();
-  const size = section?.layout_config?.size;
-  const height = section?.layout_config?.height;
-  const width = section?.layout_config?.width;
   const isAd = section?.is_ad;
 
   const handleScroll = () => {
@@ -212,12 +209,6 @@ const SliderLayout = ({
             },
             // px: 1,
             maxWidth: "100%", // Ensure container doesn't exceed viewport
-            // height: height && {
-            //   lg: height.lg,
-            //   md: height.md,
-            //   xl: height.xl,
-            //   xs: height.xs,
-            // },
           }}
         >
           {section?.contents?.map((short) => (
@@ -228,7 +219,6 @@ const SliderLayout = ({
                 sectionIndex={sectionIndex}
                 sectionData={sectionData}
                 section={section}
-                styles={{ height, width }}
               />
             </Box>
           ))}
