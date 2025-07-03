@@ -308,11 +308,11 @@ export const palette = {
 // Breakpoint configuration
 const breakpoints = {
   values: {
-    xs: 0,
-    sm: 600,
-    md: 960,
-    lg: 1200,
-    xl: 1920,
+    xs: 0, // extra small devices
+    sm: 600, // small tablets
+    md: 960, // tablets / small laptops
+    lg: 1200, // desktops / normal laptops
+    xl: 1920, // large monitors
   },
 };
 
@@ -374,21 +374,342 @@ const typography = {
     fontSize: fontSize.typography.overline,
     textTransform: "uppercase",
   },
-  sectionTitle: {
-    fontSize: "1rem", // sm (default)
 
-    "@media (min-width:900px)": {
-      fontSize: "1.25rem", // lg
+  // Home Page
+
+  sectionTitle: {
+    fontSize: "16px", // for xs and sm (<960px)
+
+    "@media (min-width:960px)": {
+      fontSize: "20px", // md (≥960px)
     },
+
     "@media (min-width:1400px)": {
-      fontSize: "1.563rem", // xl
+      fontSize: "23.50px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "25px", // xl (≥1920px)
     },
   },
-  advertisementTitle: {
-    fontSize: "0.75rem", // sm (default)
 
-    "@media (min-width:900px)": {
-      fontSize: "0.80rem", // lg
+  sectionTitleOfStackLayout: {
+    fontSize: "16px", // default // design doesn't have so adding my default size
+  },
+
+  advertisementTitle: {
+    fontSize: "12px", // // default
+
+    "@media (min-width:1920px)": {
+      fontSize: "14px", // xl (≥1920px)
+    },
+  },
+
+  videoTitle: {
+    fontSize: "16px", // default
+
+    "@media (min-width:1920px)": {
+      fontSize: "20px", // xl (≥1920px)
+    },
+  },
+
+  stackCardVideoTitle: {
+    fontSize: "12px",
+
+    "@media (min-width:1920px)": {
+      fontSize: "16px",
+    },
+  },
+
+  sendCopyShareLabel: {
+    fontSize: "16px", // for xs and sm (<960px)
+
+    "@media (min-width:960px)": {
+      fontSize: "11.25px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "11.25px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "16px", // xl (≥1920px)
+    },
+  },
+
+  viewMoreLabel: {
+    fontSize: "14px", // default
+
+    "@media (min-width:1920px)": {
+      fontSize: "18px", // xl (≥1920px)
+    },
+  },
+
+  languageText: {
+    fontSize: "12px", // default
+
+    "@media (min-width:960px)": {
+      fontSize: "11.25px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "11.25px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "16px", // xl (≥1920px)
+    },
+  },
+
+  adDescription: {
+    fontSize: "14px", // default
+    "@media (min-width:960px)": {
+      fontSize: "13.125px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "13.125px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "18px", // xl (≥1920px)
+    },
+  },
+
+  adSponsored: {
+    fontSize: "12px", // default
+    "@media (min-width:960px)": {
+      fontSize: "13.125px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "13.125px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "18px", // xl (≥1920px)
+    },
+  },
+
+  adLearnMoreLabel: {
+    fontSize: "14px", // default
+
+    "@media (min-width:960px)": {
+      fontSize: "14px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "14px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "19px !important", // xl (≥1920px)
+    },
+  },
+
+  footerSlogan: {
+    fontSize: "16px", // default
+
+    "@media (min-width:960px)": {
+      fontSize: "13.125px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "13.125px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "16px", // xl (≥1920px)
+    },
+  },
+
+  footerEmail: {
+    fontSize: "16px", // default
+
+    "@media (min-width:960px)": {
+      fontSize: "13.125px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "13.125px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "16px", // xl (≥1920px)
+    },
+  },
+
+  footerLinks: {
+    fontSize: "16px", // default
+
+    "@media (min-width:960px)": {
+      fontSize: "13.125px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "13.125px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "16px", // xl (≥1920px)
+    },
+  },
+
+  // Video Detail Page
+
+  backToText: {
+    fontSize: "16px", // default
+
+    "@media (min-width:960px)": {
+      fontSize: "13.125px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "13.125px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "16px !important", // xl (≥1920px)
+    },
+  },
+
+  sectionTitleOfVideoDetailPage: {
+    fontSize: "12px", // default // design doesn't have so adding my default size
+
+    "@media (min-width:960px)": {
+      fontSize: "14px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "14px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "16px !important", // xl (≥1920px)
+    },
+  },
+
+  videoTitleOfVideoDetailPage: {
+    fontSize: "16px", // default
+
+    "@media (min-width:960px)": {
+      fontSize: "19px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "19px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "30px !important", // xl (≥1920px)
+    },
+  },
+
+  videoDescriptionOfVideoDetailPage: {
+    fontSize: "20px", // default
+
+    "@media (min-width:960px)": {
+      fontSize: "14px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "14px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "20px !important", // xl (≥1920px)
+    },
+  },
+
+  // Short Detail Page
+
+  shortTitleOfShortDetailPage: {
+    fontSize: "16px", // default
+
+    "@media (min-width:960px)": {
+      fontSize: "15px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "15px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "24px !important", // xl (≥1920px)
+    },
+  },
+
+  previousNextOfShortDetailPage: {
+    fontSize: "12px", // default
+
+    "@media (min-width:960px)": {
+      fontSize: "10px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "10px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "14px", // xl (≥1920px)
+    },
+  },
+
+  // Sidebar
+
+  welcomeUserText: {
+    fontSize: "14px",
+  },
+
+  menuItems: {
+    fontSize: "14px", // default  //  design not given for small device so adding my default
+
+    "@media (min-width:960px)": {
+      fontSize: "12px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "12px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "14px !important", // xl (≥1920px)
+    },
+  },
+
+  // Search video page
+
+  searchResultText: {
+    fontSize: "15px", // default
+
+    "@media (min-width:1920px)": {
+      fontSize: "25px !important", // xl (≥1920px)
+    },
+  },
+
+  noVideosFoundText: {
+    fontSize: "20px", // default
+
+    "@media (min-width:1920px)": {
+      fontSize: "36px", // xl (≥1920px)
+    },
+  },
+
+  // Search video page
+
+  searchResultText: {
+    fontSize: "15px", // default
+
+    "@media (min-width:1920px)": {
+      fontSize: "25px !important", // xl (≥1920px)
+    },
+  },
+
+  noVideosFoundText: {
+    fontSize: "20px", // default
+
+    "@media (min-width:1920px)": {
+      fontSize: "36px", // xl (≥1920px)
     },
   },
 };

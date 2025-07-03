@@ -74,10 +74,9 @@ const ActionButton = ({
     {isReversed ? (
       <>
         <Typography
-          variant="caption"
+          variant="sendCopyShareLabel"
           sx={{
             color: textColor || "grey.500",
-            fontSize: fontSize.typography.caption,
             userSelect: "none",
             mr: 0.5,
             transition: "color 0.2s ease-in-out",
@@ -104,10 +103,9 @@ const ActionButton = ({
           },
         })}
         <Typography
-          variant="caption"
+          variant="sendCopyShareLabel"
           sx={{
             color: textColor || "grey.500",
-            fontSize: fontSize.typography.caption,
             userSelect: "none",
             ml: 0.5,
             transition: "color 0.2s ease-in-out",
@@ -276,9 +274,9 @@ const ShortItem = React.memo(
                 sx={{
                   color: "white",
                   ...fontStyles.openSans.bold,
-                  fontSize: fontSize.typography.h6,
                   textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
                   lineHeight: 1.3,
+                  typography: "shortTitleOfShortDetailPage",
                 }}
               >
                 {short?.name}
@@ -412,6 +410,7 @@ const ShortItem = React.memo(
               sx={{
                 ...fontStyles.openSans.bold,
                 mb: 2,
+                typography: "shortTitleOfShortDetailPage",
                 textAlign: "left",
                 pl: 3,
               }}
@@ -1016,11 +1015,10 @@ const Short = () => {
         }}
       >
         <Typography
-          variant="caption"
+          variant="previousNextOfShortDetailPage"
           sx={{
             color: isDarkMode ? "grey.300" : "grey.600",
             mb: 1,
-            fontSize: "10px",
             fontWeight: 500,
             letterSpacing: 0.5,
             textAlign: "center",
@@ -1081,10 +1079,9 @@ const Short = () => {
           />
         </IconButton>
         <Typography
-          variant="caption"
+          variant="previousNextOfShortDetailPage"
           sx={{
             color: isDarkMode ? "grey.300" : "grey.600",
-            fontSize: "10px",
             fontWeight: 500,
             letterSpacing: 0.5,
             textAlign: "center",

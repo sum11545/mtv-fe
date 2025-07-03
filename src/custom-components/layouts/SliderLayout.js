@@ -118,11 +118,10 @@ const SliderLayout = ({
             return (
               sponsor && (
                 <Typography
-                  variant="body1"
+                  variant="adSponsored"
                   sx={{
                     lineHeight: 1.1,
                     color: theme.palette.custom.adText,
-                    fontSize: fontSize.typography.caption,
                     ...fontStyles.montserrat.regular,
                     fontStyle: "italic",
                   }}

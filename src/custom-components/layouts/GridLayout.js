@@ -208,11 +208,10 @@ const GridLayout = ({
             return (
               sponsor && (
                 <Typography
-                  variant="body1"
+                  variant="adSponsored"
                   sx={{
                     lineHeight: 1.1,
                     color: theme.palette.custom.adText,
-                    fontSize: fontSize.typography.caption,
                     ...fontStyles.montserrat.regular,
                     fontStyle: "italic",
                   }}
@@ -262,6 +261,7 @@ const GridLayout = ({
                 "& .MuiButton-endIcon": {
                   transition: "transform 0.3s ease-in-out",
                 },
+                typography: "viewMoreLabel",
               }}
               onClick={handleViewMore}
             >
@@ -391,11 +391,10 @@ const GridLayout = ({
                         return (
                           sponsor && (
                             <Typography
-                              variant="body1"
+                              variant="adSponsored"
                               sx={{
                                 lineHeight: 1.1,
                                 color: theme.palette.custom.adText,
-                                fontSize: fontSize.typography.caption,
                                 ...fontStyles.montserrat.regular,
                                 fontStyle: "italic",
                               }}
@@ -527,11 +526,10 @@ const GridLayout = ({
                         return (
                           sponsor && (
                             <Typography
-                              variant="body1"
+                              variant="adSponsored"
                               sx={{
                                 lineHeight: 1.1,
                                 color: theme.palette.custom.adText,
-                                fontSize: fontSize.typography.caption,
                                 ...fontStyles.montserrat.regular,
                                 fontStyle: "italic",
                               }}

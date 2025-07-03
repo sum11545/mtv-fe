@@ -145,7 +145,7 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum", mtvCode }) => {
             <SadEmoji />
           </Box>
           <Typography
-            variant={isMobile ? "h6" : "h5"}
+            variant="noVideosFoundText"
             align="center"
             sx={{
               ...fontStyles.sfPro.display.regular,
@@ -157,7 +157,7 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum", mtvCode }) => {
             No Videos found for
           </Typography>
           <Typography
-            variant={isMobile ? "h6" : "h5"}
+            variant="noVideosFoundText"
             gutterBottom
             align="center"
             color="primary"

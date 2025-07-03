@@ -63,15 +63,11 @@ export const LanguageComponet = ({
               lg: "4px 20px",
               xs: "4px 20px",
             },
-            fontSize: {
-              xl: fontSize.typography.h6,
-              lg: fontSize.typography.caption,
-              xs: fontSize.typography.caption,
-            },
             backgroundColor: theme.palette.background.language,
             borderRadius: "8px",
           }}
           component="span"
+          variant="languageText"
         >
           {langaugeName}
         </Typography>
@@ -144,7 +140,8 @@ export const LanguageComponet = ({
               <Box
                 sx={{
                   position: "absolute",
-                  top: "33%",
+                  // top: "33%",
+                  top: "40%",
                   zIndex: 100,
                   border: `1px solid ${getBorderColor()}`,
                   display: "flex",

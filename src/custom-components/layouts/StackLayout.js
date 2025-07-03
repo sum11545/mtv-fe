@@ -55,7 +55,7 @@ const StackLayout = ({ name, contents, id, sectionData, section }) => {
           >
             <Typography
               ref={textRef}
-              variant="subtitle1"
+              variant="sectionTitleOfStackLayout"
               fontWeight="bold"
               sx={{
                 overflow: "hidden",
@@ -64,6 +64,7 @@ const StackLayout = ({ name, contents, id, sectionData, section }) => {
                 display: "block",
                 maxWidth: "100%",
                 cursor: "pointer",
+                ...fontStyles.openSans.bold,
               }}
             >
               {section?.name}
