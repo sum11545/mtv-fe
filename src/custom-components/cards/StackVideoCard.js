@@ -127,6 +127,7 @@ const StackVideoCard = ({
         sx={{ flex: 1, py: 0.5, overflow: "hidden", textOverflow: "ellipsis" }}
       >
         <Typography
+          component="h2"
           variant="stackCardVideoTitle"
           sx={{
             overflow: "hidden",

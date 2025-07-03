@@ -289,6 +289,7 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
             }}
           >
             <Typography
+              component="h2"
               sx={{
                 overflow: "hidden",
                 textOverflow: "ellipsis",

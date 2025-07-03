@@ -181,7 +181,7 @@ const GridLayout = ({
         >
           <CustomTooltip text={section.name}>
             <Typography
-              variant={isAd ? "advertisementTitle" : "sectionTitle"}
+              component={isAd ? "h4" : "h1"}
               sx={{
                 color: isAd
                   ? theme.palette.custom.advertisementColor
@@ -190,6 +190,7 @@ const GridLayout = ({
                   ? { ...fontStyles.openSans.bold }
                   : { ...fontStyles.montserrat.bold },
                 marginLeft: "10px",
+                typography: isAd ? "advertisementTitle" : "sectionTitle",
               }}
             >
               {section.name}
@@ -363,6 +364,7 @@ const GridLayout = ({
                     >
                       <CustomTooltip text={video.name}>
                         <Typography
+                          component={video.is_ad ? "h4" : "h1"}
                           variant={
                             video.is_ad ? "advertisementTitle" : "sectionTitle"
                           }

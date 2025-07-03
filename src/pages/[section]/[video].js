@@ -334,6 +334,7 @@ const VideoDetailPage = () => {
                     // fontWeight="bold"
                     // color="text.secondary"
                     // sx={{ whiteSpace: "nowrap" }} // prevent title from wrapping
+                    component="h1"
                     variant="sectionTitleOfVideoDetailPage"
                     sx={{
                       mb: 1,
@@ -406,7 +407,7 @@ const VideoDetailPage = () => {
               {/* Video Title */}
               <Typography
                 variant="h5"
-                component="h1"
+                component="h2"
                 sx={{
                   mb: 1,
                   ...fontStyles.openSans.bold,

@@ -270,6 +270,7 @@ const ShortItem = React.memo(
               }}
             >
               <Typography
+                component="h2"
                 variant="h6"
                 sx={{
                   color: "white",
@@ -406,6 +407,7 @@ const ShortItem = React.memo(
           {/* Top: Video name and actions */}
           <Box sx={{ width: "100%" }}>
             <Typography
+              component="h2"
               variant="h6"
               sx={{
                 ...fontStyles.openSans.bold,
