@@ -36,27 +36,28 @@ const GridLayout = ({
   const isSm = useMediaQuery(theme.breakpoints.only("sm")); // 600px - 899.99px
   const isMd = useMediaQuery(theme.breakpoints.only("md")); // 900px - 1199.99px
   const isLg = useMediaQuery(theme.breakpoints.only("lg")); // 1200px - 1535.99px
-  const isXl = useMediaQuery(theme.breakpoints.up("xl"));
+  const isLgPlus = useMediaQuery(theme.breakpoints.up("lgPlus")); //  1500px - 1920px
+  const isXl = useMediaQuery(theme.breakpoints.up("xl")); // >= 1920
   const scrollContainerRef = useRef(null);
   const [showLeftScroll, setShowLeftScroll] = useState(false);
   const [showRightScroll, setShowRightScroll] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const { getButtonLabel, getButtonConfig, getColor, isDarkMode } =
     useContent();
-  const size = section.layout_config.size;
-  const height = section?.layout_config?.height;
-  const width = section?.layout_config?.width;
-  const spacing = section?.layout_config?.spacing;
   const isAd = section?.is_ad;
 
-  // for alternate background color issue
+  const isShort =
+    sectionData[0]?.contents[0]?.content_details[0]?.content_type_id == "CTSR";
+
+  // for alternate background color issue // here giving same value as grid sizes given below
   const getItemsPerRow = () => {
-    if (isMobile) return size.xs;
-    if (isSm) return size.sm;
-    if (isMd) return size.md;
-    if (isLg) return size.lg;
-    if (isXl) return size.xl;
-    return size.xl; // fallback
+    if (isMobile) return 12;
+    if (isSm) return isShort ? 6 : 6;
+    if (isMd) return isShort ? 4 : 4;
+    if (isLg) return isShort ? 2.4 : 4;
+    if (isXl) return isShort ? 2.4 : 3;
+    if (isLgPlus) return isShort ? 2.4 : 3;
+    return isShort ? 2.4 : 3; // fallback
   };
 
   // for alternate background color issue
@@ -292,16 +293,18 @@ const GridLayout = ({
                   px: router.pathname === "/[section]" ? 2.5 : "", // for alternate background color issue
                 }}
               >
-                <Grid container spacing={spacing ?? 2}>
+                <Grid container spacing={2}>
                   {group.items.map((video, itemIndex) => {
                     return (
                       <Grid
                         item
                         key={video.id}
-                        lg={12 / size.lg}
-                        md={12 / size.md}
-                        xl={12 / size.xl}
-                        xs={12 / size.xs}
+                        lg={isShort ? 2.4 : 3}
+                        xl={isShort ? 2.4 : 3}
+                        lgPlus={isShort ? 2.4 : 3}
+                        md={4}
+                        sm={6}
+                        xs={12}
                       >
                         {itemIndex !== 0 &&
                         router.pathname === "/" &&
@@ -309,7 +312,6 @@ const GridLayout = ({
                         isMobile ? (
                           <StackVideoCard
                             video={video}
-                            layout={section?.layout_config}
                             id={section.id}
                             sectionData={sectionData}
                             section={section}
@@ -322,7 +324,6 @@ const GridLayout = ({
                             id={section.id}
                             sectionData={sectionData}
                             section={section}
-                            styles={{ height, width }}
                           />
                         )}
                       </Grid>
@@ -336,7 +337,7 @@ const GridLayout = ({
             return (
               <Grid
                 container
-                spacing={spacing ?? 2}
+                spacing={2}
                 key={`section-${groupIndex}`}
                 sx={{
                   mb: 2,
@@ -414,20 +415,17 @@ const GridLayout = ({
                       <Grid
                         item
                         key={vid.id}
-                        lg={12 / (video?.layout_config?.size?.lg || 4)}
-                        md={12 / (video?.layout_config?.size?.md || 3)}
-                        xl={12 / (video?.layout_config?.size?.xl || 4)}
-                        xs={12 / (video?.layout_config?.size?.xs || 2)}
+                        lg={6}
+                        xl={6}
+                        md={6}
+                        sm={6}
+                        xs={12}
                       >
                         <GridCard
                           video={vid}
                           id={video.id}
                           sectionData={video}
                           section={video}
-                          styles={{
-                            height: video?.layout_config?.height || "auto",
-                            width: video?.layout_config?.width || "100%",
-                          }}
                         />
                       </Grid>
                     ))}
@@ -441,17 +439,18 @@ const GridLayout = ({
         })
       ) : (
         // Home page: Use original rendering logic
-        <Grid container spacing={spacing ?? 2}>
+        <Grid container spacing={!isAd && 2}>
           {section.contents.map((video, index) => {
             if (video.type === "content" || video.type === "ad_content") {
               return (
                 <Grid
                   item
                   key={video.id}
-                  lg={12 / size.lg}
-                  md={12 / size.md}
-                  xl={12 / size.xl}
-                  xs={12 / size.xs}
+                  lg={video.type == "ad_content" ? 6 : 3}
+                  xl={video.type == "ad_content" ? 6 : 3}
+                  md={video.type == "ad_content" ? 6 : 4}
+                  sm={6}
+                  xs={12}
                 >
                   {index !== 0 &&
                   router.pathname === "/" &&
@@ -459,7 +458,6 @@ const GridLayout = ({
                   isMobile ? (
                     <StackVideoCard
                       video={video}
-                      layout={section?.layout_config}
                       id={section.id}
                       sectionData={sectionData}
                       section={section}
@@ -472,7 +470,6 @@ const GridLayout = ({
                       id={section.id}
                       sectionData={sectionData}
                       section={section}
-                      styles={{ height, width }}
                     />
                   )}
                 </Grid>
@@ -549,20 +546,17 @@ const GridLayout = ({
                       <Grid
                         item
                         key={vid.id}
-                        lg={12 / (video?.layout_config?.size?.lg || 4)}
-                        md={12 / (video?.layout_config?.size?.md || 3)}
-                        xl={12 / (video?.layout_config?.size?.xl || 4)}
-                        xs={12 / (video?.layout_config?.size?.xs || 2)}
+                        lg={3}
+                        xl={3}
+                        md={4}
+                        sm={6}
+                        xs={12}
                       >
                         <GridCard
                           video={vid}
                           id={video.id}
                           sectionData={video}
                           section={video}
-                          styles={{
-                            height: video?.layout_config?.height || "auto",
-                            width: video?.layout_config?.width || "100%",
-                          }}
                         />
                       </Grid>
                     ))}

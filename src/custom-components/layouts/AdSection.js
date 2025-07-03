@@ -7,7 +7,6 @@ const AdSection = ({ title, ads, id, sectionData, section }) => {
   // Only take the first ad
   // const ad = ads[0];
   // const ad =section.content
-  const size = section.layout_config.size;
 
   return (
     <Box sx={{ mb: 4 }}>

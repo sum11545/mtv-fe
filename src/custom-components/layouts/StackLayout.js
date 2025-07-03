@@ -99,11 +99,7 @@ const StackLayout = ({ name, contents, id, sectionData, section }) => {
                   router.push(`/${section.slug}/${video.id}`);
                 }}
               >
-                <StackVideoCard
-                  video={video}
-                  layout={section?.layout_config}
-                  isMobile={isMobile}
-                />
+                <StackVideoCard video={video} isMobile={isMobile} />
               </Paper>
               {index !== arr.length - 1 ? <Divider sx={{ my: 1 }} /> : <></>}
             </>

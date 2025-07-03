@@ -312,6 +312,7 @@ const breakpoints = {
     sm: 600, // small tablets
     md: 960, // tablets / small laptops
     lg: 1200, // desktops / normal laptops
+    lgPlus: 1500, // custom
     xl: 1920, // large monitors
   },
 };

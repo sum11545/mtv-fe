@@ -105,7 +105,7 @@ const ActionButton = ({
   </Box>
 );
 
-const GridCard = ({ video, id, sectionData, section, styles }) => {
+const GridCard = ({ video, id, sectionData, section }) => {
   const theme = useTheme();
   const router = useRouter();
   const [shareUrl, setShareUrl] = useState("");
@@ -133,9 +133,6 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
   });
   let isAd = ["ATI", "ATV", "ATT"].includes(selectedContent?.content_type_id);
   let isShort = selectedContent?.content_type_id == "CTSR"; // CTSR  is for shorts.
-
-  const height = styles.height;
-  const width = styles.width;
 
   useEffect(() => {
     // Set share URL only after component mounts on client side
@@ -216,7 +213,7 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
     }
 
     return videoId
-      ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+      ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
       : "/images/404-not-found.jpg";
   };
   return (
@@ -237,19 +234,13 @@ const GridCard = ({ video, id, sectionData, section, styles }) => {
         <Box
           onClick={handleCardClick}
           sx={{
-            width: width && {
-              xl: width?.xl,
-              lg: width?.lg,
-              md: width?.md,
-              sm: width?.sm,
-              xs: width?.xs,
-            },
-            height: height && {
-              xl: height?.xl,
-              lg: height?.lg,
-              md: height?.md,
-              sm: height?.sm,
-              xs: height?.xs,
+            height: {
+              xs: isAd ? "140px" : isShort ? "80vh" : "215px",
+              sm: isAd ? "140px" : isShort ? "550px" : "155px",
+              md: isAd ? "120px" : isShort ? "480px" : "158px",
+              lg: isAd ? "120px" : isShort ? "420px" : "191px",
+              lgPlus: isAd ? "120px" : isShort ? "480px" : "210px",
+              xl: isAd ? "120px" : isShort ? "580px" : "245px",
             },
           }}
         >
