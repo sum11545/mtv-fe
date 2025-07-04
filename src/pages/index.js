@@ -61,8 +61,8 @@ export default function Home() {
         }}
       >
         {sectionData?.map((section, index) => {
-          switch (section.layout_config?.type) {
-            case "grid":
+          switch (section.layout_type) {
+            case "LGRID":
               const isAd = section.is_ad;
               const bgColor = getBackgroundColor(isAd);
               return (
@@ -74,7 +74,7 @@ export default function Home() {
                   key={`${section.type}-${index}`}
                 />
               );
-            case "slider":
+            case "LSLIDER":
               return (
                 <SliderLayout
                   name={section.name}

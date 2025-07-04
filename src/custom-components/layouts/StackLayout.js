@@ -101,7 +101,6 @@ const StackLayout = ({ name, contents, id, sectionData, section }) => {
               >
                 <StackVideoCard
                   video={video}
-                  layout={section?.layout_config}
                   sectionData={sectionData}
                   section={section}
                   id={id}

@@ -134,6 +134,12 @@ const GridCard = ({ video, id, sectionData, section }) => {
   let isAd = ["ATI", "ATV", "ATT"].includes(selectedContent?.content_type_id);
   let isShort = selectedContent?.content_type_id == "CTSR"; // CTSR  is for shorts.
 
+  const heightMap = isAd
+    ? theme.customHeightsForGridCard.ad
+    : isShort
+    ? theme.customHeightsForGridCard.short
+    : theme.customHeightsForGridCard.content;
+
   useEffect(() => {
     // Set share URL only after component mounts on client side
     setShareUrl(window.location.href);
@@ -216,6 +222,7 @@ const GridCard = ({ video, id, sectionData, section }) => {
       ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
       : "/images/404-not-found.jpg";
   };
+
   return (
     <>
       <Card
@@ -235,12 +242,12 @@ const GridCard = ({ video, id, sectionData, section }) => {
           onClick={handleCardClick}
           sx={{
             height: {
-              xs: isAd ? "140px" : isShort ? "80vh" : "215px",
-              sm: isAd ? "140px" : isShort ? "550px" : "155px",
-              md: isAd ? "120px" : isShort ? "480px" : "158px",
-              lg: isAd ? "120px" : isShort ? "420px" : "191px",
-              lgPlus: isAd ? "120px" : isShort ? "480px" : "210px",
-              xl: isAd ? "120px" : isShort ? "580px" : "245px",
+              xs: heightMap.xs,
+              sm: heightMap.sm,
+              md: heightMap.md,
+              lg: heightMap.lg,
+              lgPlus: heightMap.lgPlus,
+              xl: heightMap.xl,
             },
           }}
         >

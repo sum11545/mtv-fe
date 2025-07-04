@@ -114,8 +114,8 @@ const SearchPage = () => {
         }}
       >
         {sectionData?.map((section, index) => {
-          switch (section.layout_config?.type) {
-            case "grid":
+          switch (section.layout_type) {
+            case "LGRID":
               return (
                 <GridLayout
                   section={section}
@@ -123,7 +123,7 @@ const SearchPage = () => {
                   key={`${section.type}-${index}`}
                 />
               );
-            case "slider":
+            case "LSLIDER":
               return (
                 <SliderLayout
                   name={section.name}
@@ -132,7 +132,7 @@ const SearchPage = () => {
                   sectionData={sectionData}
                 />
               );
-            case "stack":
+            case "LSTACK":
               return (
                 <StackLayout
                   key={`${section.type}-${index}`}
