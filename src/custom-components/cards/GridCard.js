@@ -116,12 +116,15 @@ const GridCard = ({ video, id, sectionData, section }) => {
   const [selectedContent, setSelectedContent] = useState(
     video?.content_details[0]
   );
+  const [showTooltip, setShowTooltip] = useState(false);
+  const titleRef = React.useRef(null);
   const {
     getButtonConfig,
     getSocialUrl,
     getSuccessMessage,
     isDarkMode,
     isFeatureEnabled,
+    config,
   } = useContent();
 
   // Get button configurations
@@ -154,10 +157,13 @@ const GridCard = ({ video, id, sectionData, section }) => {
 
   const handleWhatsApp = (e) => {
     e.stopPropagation(); // Prevent card click event
+
+    const shareMessage = config.messages.shareMessage;
+
     const shareUrl = getSocialUrl(
       "whatsapp",
       window.location.href,
-      selectedContent?.url
+      `${shareMessage}${selectedContent?.url}`
     );
     window.open(shareUrl, "_blank");
   };
@@ -223,6 +229,24 @@ const GridCard = ({ video, id, sectionData, section }) => {
       : "/images/404-not-found.jpg";
   };
 
+  // Check if text is overflowing to show tooltip conditionally
+  useEffect(() => {
+    const checkOverflow = () => {
+      if (titleRef.current) {
+        const element = titleRef.current;
+        const isOverflowing = element.scrollHeight > element.clientHeight;
+        setShowTooltip(isOverflowing);
+      }
+    };
+
+    // Check on mount and when content changes
+    checkOverflow();
+
+    // Add resize listener to recheck on window resize
+    window.addEventListener("resize", checkOverflow);
+    return () => window.removeEventListener("resize", checkOverflow);
+  }, [selectedContent?.name]);
+
   return (
     <>
       <Card
@@ -286,20 +310,54 @@ const GridCard = ({ video, id, sectionData, section }) => {
               },
             }}
           >
-            <Typography
-              component="h2"
+            <Box
               sx={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                minHeight: "4em",
-                maxHeight: "4em",
-                ...fontStyles.openSans.bold,
+                minHeight: "3em", // Fixed height to ensure consistent button positioning
+                display: "flex",
+                alignItems: "flex-start", // Align title to top of container
+                mb: 1, // Add margin bottom for spacing
               }}
-              variant="videoTitle"
-              onClick={handleCardClick}
             >
-              {selectedContent?.name}
-            </Typography>
+              {showTooltip ? (
+                <Tooltip title={selectedContent?.name} arrow placement="top">
+                  <Typography
+                    component="h2"
+                    sx={{
+                      overflow: "hidden",
+                      display: "-webkit-box",
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: "vertical",
+                      textOverflow: "ellipsis",
+                      cursor: "pointer",
+                      ...fontStyles.openSans.bold,
+                    }}
+                    variant="videoTitle"
+                    onClick={handleCardClick}
+                    ref={titleRef}
+                  >
+                    {selectedContent?.name}
+                  </Typography>
+                </Tooltip>
+              ) : (
+                <Typography
+                  component="h2"
+                  sx={{
+                    overflow: "hidden",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: "vertical",
+                    textOverflow: "ellipsis",
+                    cursor: "pointer",
+                    ...fontStyles.openSans.bold,
+                  }}
+                  variant="videoTitle"
+                  onClick={handleCardClick}
+                  ref={titleRef}
+                >
+                  {selectedContent?.name}
+                </Typography>
+              )}
+            </Box>
             {!isShort && (
               <Box
                 sx={{

@@ -34,17 +34,24 @@ const ShareDialog = ({ open, onClose, url, title, videoUrl }) => {
   const [copied, setCopied] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const { getSocialUrl } = useContent();
+  const { config } = useContent();
 
   // Social platforms configuration - using getSocialUrl for consistent URL formatting
+
+  const shareMessage = config.messages.shareMessage;
+
   const socialPlatforms = [
     {
       name: "WhatsApp",
       icon: WhatsApp,
       color: "#25D366",
-      shareUrl: (url, title) => getSocialUrl("whatsapp", url, videoUrl),
+      shareUrl: (url) =>
+        `https://api.whatsapp.com/send?text=${encodeURIComponent(
+          `${shareMessage}${url}`
+        )}`,
     },
     {
-      name: "Facebook",
+      name: "Facebook", // facebook doesn't allow to send text message body
       icon: Facebook,
       color: "#1877F2",
       shareUrl: (url) =>
@@ -56,14 +63,16 @@ const ShareDialog = ({ open, onClose, url, title, videoUrl }) => {
       name: "Twitter",
       icon: Twitter,
       color: "#1DA1F2",
-      shareUrl: (url, title) =>
-        `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`,
+      shareUrl: (url) =>
+        `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+          `${shareMessage}${url}`
+        )}`,
     },
     {
-      name: "LinkedIn",
+      name: "LinkedIn", //  linkedin doesn't allow to send text message body
       icon: LinkedIn,
       color: "#0A66C2",
-      shareUrl: (url, title) =>
+      shareUrl: (url) =>
         `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
           url
         )}`,
@@ -72,21 +81,28 @@ const ShareDialog = ({ open, onClose, url, title, videoUrl }) => {
       name: "Reddit",
       icon: Reddit,
       color: "#FF4500",
-      shareUrl: (url, title) =>
-        `https://reddit.com/submit?url=${encodeURIComponent(url)}`,
+      shareUrl: (url) =>
+        `https://reddit.com/submit?url=${encodeURIComponent(
+          url
+        )}&title=${encodeURIComponent(shareMessage.trim())}`,
     },
     {
       name: "Email",
       icon: Email,
       color: "#EA4335",
-      shareUrl: (url, title) => `mailto:?body=${encodeURIComponent(url)}`,
+      shareUrl: (url) =>
+        `mailto:?subject=Check this out&body=${encodeURIComponent(
+          `${shareMessage}${url}`
+        )}`,
     },
     {
       name: "Telegram",
       icon: Telegram,
       color: "#0088cc",
-      shareUrl: (url, title) =>
-        `https://t.me/share/url?url=${encodeURIComponent(url)}`,
+      shareUrl: (url) =>
+        `https://t.me/share/url?url=${encodeURIComponent(
+          url
+        )}&text=${encodeURIComponent(shareMessage)}`,
     },
   ];
 

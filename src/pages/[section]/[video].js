@@ -132,6 +132,7 @@ const VideoDetailPage = () => {
     getSuccessMessage,
     isDarkMode,
     isFeatureEnabled,
+    config,
   } = useContent();
 
   // Get button configurations
@@ -248,11 +249,13 @@ const VideoDetailPage = () => {
   };
 
   const handleWhatsApp = () => {
+    const shareMessage = config.messages.shareMessage;
+
     if (videoDetailData) {
       const shareUrl = getSocialUrl(
         "whatsapp",
         window.location.href,
-        videoDetailData.content_details[0].url
+        `${shareMessage}${videoDetailData.content_details[0].url}`
       );
       window.open(shareUrl, "_blank");
     }
