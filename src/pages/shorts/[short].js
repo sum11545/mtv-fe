@@ -569,7 +569,8 @@ const Short = () => {
   const isDarkMode = theme.palette.mode === "dark";
   const isMobile = useMediaQuery("(max-width:899px)");
 
-  const { getSocialUrl, getButtonConfig, isFeatureEnabled } = useContent();
+  const { getSocialUrl, getButtonConfig, isFeatureEnabled, config } =
+    useContent();
 
   // Memoize action handlers to prevent re-creation
   const handleShare = useCallback((shortItem) => {
@@ -579,10 +580,12 @@ const Short = () => {
 
   const handleWhatsApp = useCallback(
     (shortItem) => {
+      const shareMessage = config.messages.shareMessage;
+
       const shareUrl = getSocialUrl(
         "whatsapp",
         window.location.href,
-        shortItem.content_details[0].url
+        `${shareMessage}${shortItem.content_details[0].url}`
       );
       window.open(shareUrl, "_blank");
     },

@@ -1,6 +1,12 @@
 import { fontSize, fontStyles } from "@/theme/theme";
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
-import React, { useState } from "react";
+import {
+  Box,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  Tooltip,
+} from "@mui/material";
+import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import LangauePopUp from "../LangauePopUp";
 import { LanguageComponet } from "../LanguageComponet";
@@ -15,6 +21,8 @@ const StackVideoCard = ({
   const router = useRouter();
   const theme = useTheme();
   const dims = theme.customDimensionsForStackCard;
+  const textRef = useRef(null);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const [selectedContent, setSelectedContent] = useState(
     video?.content_details[0]
@@ -22,6 +30,16 @@ const StackVideoCard = ({
   const contentLanguages = video?.content_details?.map((v) => {
     return { ...v.language, content_id: v.id };
   });
+
+  // Check if text is truncated (has ellipsis)
+  useEffect(() => {
+    if (textRef.current && video?.name) {
+      const element = textRef.current;
+      const isOverflowing = element.scrollHeight > element.clientHeight;
+      setShowTooltip(isOverflowing);
+    }
+  }, [video?.name]);
+
   const getThumbnailUrl = () => {
     const details = video?.content_details?.[0];
     if (!details || details.platform !== "PY")
@@ -152,6 +170,8 @@ const StackVideoCard = ({
           display: "flex",
           justifyContent: "space-between",
           flexDirection: "column",
+          flex: 1,
+          // minWidth: 0,
         }}
       >
         <Box
@@ -159,11 +179,17 @@ const StackVideoCard = ({
             flex: 1,
             py: 0.5,
             overflow: "hidden",
-            textOverflow: "ellipsis",
+            // minWidth: 0,
           }}
         >
+          <Tooltip
+            title={showTooltip ? video?.name : ""}
+            arrow
+            placement="bottom"
+          >
           <Typography
             variant="body2"
+              ref={textRef}
             sx={{
               overflow: "hidden",
               textOverflow: "ellipsis",
@@ -182,6 +208,7 @@ const StackVideoCard = ({
           >
             {video?.name}
           </Typography>
+          </Tooltip>
         </Box>
 
         {showLanguageComponent ? (
