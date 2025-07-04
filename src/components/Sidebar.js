@@ -12,6 +12,7 @@ import {
   Divider,
   useTheme,
   useMediaQuery,
+  Tooltip,
 } from "@mui/material";
 import {
   Subscriptions as SubscriptionsIcon,
@@ -151,75 +152,77 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
           <List>
             {sidebarItems.map((item) => (
               <ListItem key={item.text} disablePadding>
-                <ListItemButton
-                  onClick={() => handleIconClick(item.section_slug)}
-                  sx={{
-                    minHeight:
-                      theme.layout?.spacing?.buttonHeight?.topIconsCompact ||
-                      layout.spacing.buttonHeight.topIconsCompact,
-                    justifyContent: "center",
-                    px:
-                      theme.layout?.spacing?.padding?.xsmall ||
-                      layout.spacing.padding.xsmall,
-                    py:
-                      theme.layout?.spacing?.padding?.xsmall ||
-                      layout.spacing.padding.xsmall,
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <Box
+                <Tooltip title={item.text} placement="left" arrow>
+                  <ListItemButton
+                    onClick={() => handleIconClick(item.section_slug)}
                     sx={{
-                      display: "flex",
+                      minHeight:
+                        theme.layout?.spacing?.buttonHeight?.topIconsCompact ||
+                        layout.spacing.buttonHeight.topIconsCompact,
+                      justifyContent: "center",
+                      px:
+                        theme.layout?.spacing?.padding?.xsmall ||
+                        layout.spacing.padding.xsmall,
+                      py:
+                        theme.layout?.spacing?.padding?.xsmall ||
+                        layout.spacing.padding.xsmall,
                       flexDirection: "column",
                       alignItems: "center",
-                      justifyContent: "center",
-                      gap:
-                        theme.layout?.spacing?.gap?.xxsmall ||
-                        layout.spacing.gap.xxsmall,
                     }}
                   >
                     <Box
                       sx={{
                         display: "flex",
-                        justifyContent: "center",
+                        flexDirection: "column",
                         alignItems: "center",
-                        "& img": {
-                          width:
-                            theme.fontSize?.icon?.medium ||
-                            fontSize.icon.medium,
-                          height:
-                            theme.fontSize?.icon?.medium ||
-                            fontSize.icon.medium,
-                        },
-                        cursor: "pointer",
-                        "&:hover": {
-                          opacity: 0.8,
-                        },
+                        justifyContent: "center",
+                        gap:
+                          theme.layout?.spacing?.gap?.xxsmall ||
+                          layout.spacing.gap.xxsmall,
                       }}
                     >
-                      {item.icon}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          "& img": {
+                            width:
+                              theme.fontSize?.icon?.medium ||
+                              fontSize.icon.medium,
+                            height:
+                              theme.fontSize?.icon?.medium ||
+                              fontSize.icon.medium,
+                          },
+                          cursor: "pointer",
+                          "&:hover": {
+                            opacity: 0.8,
+                          },
+                        }}
+                      >
+                        {item.icon}
+                      </Box>
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          ...fontStyles.barlowCondensed.regular,
+                          typography: "menuItems",
+                          textTransform: "uppercase",
+                          textAlign: "center",
+                          lineHeight:
+                            theme.layout?.text?.lineHeight?.tight ||
+                            layout.text.lineHeight.tight,
+                          maxWidth:
+                            theme.layout?.text?.maxWidth?.iconLabel ||
+                            layout.text.maxWidth.iconLabel,
+                          wordWrap: "break-word",
+                        }}
+                      >
+                        {item.keyword}
+                      </Typography>
                     </Box>
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        ...fontStyles.barlowCondensed.regular,
-                        typography: "menuItems",
-                        textTransform: "uppercase",
-                        textAlign: "center",
-                        lineHeight:
-                          theme.layout?.text?.lineHeight?.tight ||
-                          layout.text.lineHeight.tight,
-                        maxWidth:
-                          theme.layout?.text?.maxWidth?.iconLabel ||
-                          layout.text.maxWidth.iconLabel,
-                        wordWrap: "break-word",
-                      }}
-                    >
-                      {item.keyword}
-                    </Typography>
-                  </Box>
-                </ListItemButton>
+                  </ListItemButton>
+                </Tooltip>
               </ListItem>
             ))}
           </List>
@@ -228,185 +231,14 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
           <Box>
             <List>
               <ListItem disablePadding>
-                <ListItemButton
-                  onClick={() =>
-                    window.open(
-                      "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html",
-                      "_blank"
-                    )
-                  }
-                  sx={{
-                    minHeight:
-                      theme.layout?.spacing?.buttonHeight?.bottomIconsCompact ||
-                      layout.spacing.buttonHeight.bottomIconsCompact,
-                    justifyContent: "center",
-                    px:
-                      theme.layout?.spacing?.padding?.xsmall ||
-                      layout.spacing.padding.xsmall,
-                    py:
-                      theme.layout?.spacing?.padding?.xxsmall ||
-                      layout.spacing.padding.xxsmall,
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap:
-                        theme.layout?.spacing?.gap?.xxsmall ||
-                        layout.spacing.gap.xxsmall,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        "& .MuiSvgIcon-root": {
-                          fontSize:
-                            theme.fontSize?.icon?.medium ||
-                            fontSize.icon.medium,
-                        },
-                        "& img": {
-                          width:
-                            theme.fontSize?.icon?.medium ||
-                            fontSize.icon.medium,
-                          height:
-                            theme.fontSize?.icon?.medium ||
-                            fontSize.icon.medium,
-                        },
-                      }}
-                    >
-                      {/* {isDarkMode ? <LightModeIcon /> : <MoonStarIcon />} */}
-                      <DynamicIcon keyword={"ABOUT_US"} style={iconStyle} />
-                    </Box>
-                  </Box>
-                </ListItemButton>
-              </ListItem>
-
-              <ListItem disablePadding>
-                <ListItemButton
-                  onClick={() =>
-                    window.open(
-                      "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
-                      "_blank"
-                    )
-                  }
-                  sx={{
-                    minHeight:
-                      theme.layout?.spacing?.buttonHeight?.bottomIconsCompact ||
-                      layout.spacing.buttonHeight.bottomIconsCompact,
-                    justifyContent: "center",
-                    px:
-                      theme.layout?.spacing?.padding?.xsmall ||
-                      layout.spacing.padding.xsmall,
-                    py:
-                      theme.layout?.spacing?.padding?.xxsmall ||
-                      layout.spacing.padding.xxsmall,
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap:
-                        theme.layout?.spacing?.gap?.xxsmall ||
-                        layout.spacing.gap.xxsmall,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        "& .MuiSvgIcon-root": {
-                          fontSize:
-                            theme.fontSize?.icon?.medium ||
-                            fontSize.icon.medium,
-                        },
-                        "& img": {
-                          width:
-                            theme.fontSize?.icon?.medium ||
-                            fontSize.icon.medium,
-                          height:
-                            theme.fontSize?.icon?.medium ||
-                            fontSize.icon.medium,
-                        },
-                      }}
-                    >
-                      {/* {isDarkMode ? <LightModeIcon /> : <MoonStarIcon />} */}
-                      <DynamicIcon keyword={"KYP"} style={iconStyle} />
-                    </Box>
-                  </Box>
-                </ListItemButton>
-              </ListItem>
-
-              <ListItem disablePadding>
-                <ListItemButton
-                  onClick={onToggleTheme}
-                  sx={{
-                    minHeight:
-                      theme.layout?.spacing?.buttonHeight?.bottomIconsCompact ||
-                      layout.spacing.buttonHeight.bottomIconsCompact,
-                    justifyContent: "center",
-                    px:
-                      theme.layout?.spacing?.padding?.xsmall ||
-                      layout.spacing.padding.xsmall,
-                    py:
-                      theme.layout?.spacing?.padding?.xxsmall ||
-                      layout.spacing.padding.xxsmall,
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap:
-                        theme.layout?.spacing?.gap?.xxsmall ||
-                        layout.spacing.gap.xxsmall,
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        "& .MuiSvgIcon-root": {
-                          fontSize:
-                            theme.fontSize?.icon?.medium ||
-                            fontSize.icon.medium,
-                        },
-                        "& img": {
-                          width:
-                            theme.fontSize?.icon?.medium ||
-                            fontSize.icon.medium,
-                          height:
-                            theme.fontSize?.icon?.medium ||
-                            fontSize.icon.medium,
-                        },
-                      }}
-                    >
-                      {isDarkMode ? <LightModeIcon /> : <MoonStarIcon />}
-                    </Box>
-                  </Box>
-                </ListItemButton>
-              </ListItem>
-
-              {bottomSidebarItems.map((item) => (
-                <ListItem key={item.text} disablePadding>
+                <Tooltip title="About Us" placement="left" arrow>
                   <ListItemButton
+                    onClick={() =>
+                      window.open(
+                        "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html",
+                        "_blank"
+                      )
+                    }
                     sx={{
                       minHeight:
                         theme.layout?.spacing?.buttonHeight
@@ -444,73 +276,262 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                               theme.fontSize?.icon?.medium ||
                               fontSize.icon.medium,
                           },
+                          "& img": {
+                            width:
+                              theme.fontSize?.icon?.medium ||
+                              fontSize.icon.medium,
+                            height:
+                              theme.fontSize?.icon?.medium ||
+                              fontSize.icon.medium,
+                          },
                         }}
                       >
-                        {item.icon}
+                        {/* {isDarkMode ? <LightModeIcon /> : <MoonStarIcon />} */}
+                        <DynamicIcon keyword={"ABOUT_US"} style={iconStyle} />
                       </Box>
                     </Box>
                   </ListItemButton>
-                </ListItem>
-              ))}
+                </Tooltip>
+              </ListItem>
 
               <ListItem disablePadding>
-                <ListItemButton
-                  sx={{
-                    minHeight:
-                      theme.layout?.spacing?.buttonHeight?.bottomIconsCompact ||
-                      layout.spacing.buttonHeight.bottomIconsCompact,
-                    justifyContent: "center",
-                    px:
-                      theme.layout?.spacing?.padding?.xsmall ||
-                      layout.spacing.padding.xsmall,
-                    py:
-                      theme.layout?.spacing?.padding?.xxsmall ||
-                      layout.spacing.padding.xxsmall,
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                  onClick={() =>
-                    window.open(
-                      "https://www.youtube.com/@moneytvlive",
-                      "_blank"
-                    )
-                  }
-                >
-                  <Box
+                <Tooltip title="Contact Us" placement="left" arrow>
+                  <ListItemButton
+                    onClick={() =>
+                      window.open(
+                        "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
+                        "_blank"
+                      )
+                    }
                     sx={{
-                      display: "flex",
+                      minHeight:
+                        theme.layout?.spacing?.buttonHeight
+                          ?.bottomIconsCompact ||
+                        layout.spacing.buttonHeight.bottomIconsCompact,
+                      justifyContent: "center",
+                      px:
+                        theme.layout?.spacing?.padding?.xsmall ||
+                        layout.spacing.padding.xsmall,
+                      py:
+                        theme.layout?.spacing?.padding?.xxsmall ||
+                        layout.spacing.padding.xxsmall,
                       flexDirection: "column",
                       alignItems: "center",
-                      justifyContent: "center",
-                      gap:
-                        theme.layout?.spacing?.gap?.xxsmall ||
-                        layout.spacing.gap.xxsmall,
                     }}
                   >
                     <Box
                       sx={{
                         display: "flex",
-                        justifyContent: "center",
+                        flexDirection: "column",
                         alignItems: "center",
-                        "& .MuiSvgIcon-root": {
-                          fontSize:
-                            theme.fontSize?.icon?.medium ||
-                            fontSize.icon.medium,
-                          color:
-                            theme.palette.custom?.youtube?.main || "#FF0000",
-                        },
+                        justifyContent: "center",
+                        gap:
+                          theme.layout?.spacing?.gap?.xxsmall ||
+                          layout.spacing.gap.xxsmall,
                       }}
                     >
-                      {/* <SubscriptionsIcon /> */}
-                      <DynamicIcon
-                        keyword={"YOUTUBE"}
-                        style={{
-                          color: "", // Use theme's primary text color for consistency
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          "& .MuiSvgIcon-root": {
+                            fontSize:
+                              theme.fontSize?.icon?.medium ||
+                              fontSize.icon.medium,
+                          },
+                          "& img": {
+                            width:
+                              theme.fontSize?.icon?.medium ||
+                              fontSize.icon.medium,
+                            height:
+                              theme.fontSize?.icon?.medium ||
+                              fontSize.icon.medium,
+                          },
                         }}
-                      />
+                      >
+                        {/* {isDarkMode ? <LightModeIcon /> : <MoonStarIcon />} */}
+                        <DynamicIcon keyword={"KYP"} style={iconStyle} />
+                      </Box>
                     </Box>
-                  </Box>
-                </ListItemButton>
+                  </ListItemButton>
+                </Tooltip>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <Tooltip
+                  title={isDarkMode ? "Switch to Light" : "Switch to Dark"}
+                  placement="left"
+                  arrow
+                >
+                  <ListItemButton
+                    onClick={onToggleTheme}
+                    sx={{
+                      minHeight:
+                        theme.layout?.spacing?.buttonHeight
+                          ?.bottomIconsCompact ||
+                        layout.spacing.buttonHeight.bottomIconsCompact,
+                      justifyContent: "center",
+                      px:
+                        theme.layout?.spacing?.padding?.xsmall ||
+                        layout.spacing.padding.xsmall,
+                      py:
+                        theme.layout?.spacing?.padding?.xxsmall ||
+                        layout.spacing.padding.xxsmall,
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap:
+                          theme.layout?.spacing?.gap?.xxsmall ||
+                          layout.spacing.gap.xxsmall,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          "& .MuiSvgIcon-root": {
+                            fontSize:
+                              theme.fontSize?.icon?.medium ||
+                              fontSize.icon.medium,
+                          },
+                          "& img": {
+                            width:
+                              theme.fontSize?.icon?.medium ||
+                              fontSize.icon.medium,
+                            height:
+                              theme.fontSize?.icon?.medium ||
+                              fontSize.icon.medium,
+                          },
+                        }}
+                      >
+                        {isDarkMode ? <LightModeIcon /> : <MoonStarIcon />}
+                      </Box>
+                    </Box>
+                  </ListItemButton>
+                </Tooltip>
+              </ListItem>
+
+              {bottomSidebarItems.map((item) => (
+                <ListItem key={item.text} disablePadding>
+                  <Tooltip title={item.text} placement="left" arrow>
+                    <ListItemButton
+                      sx={{
+                        minHeight:
+                          theme.layout?.spacing?.buttonHeight
+                            ?.bottomIconsCompact ||
+                          layout.spacing.buttonHeight.bottomIconsCompact,
+                        justifyContent: "center",
+                        px:
+                          theme.layout?.spacing?.padding?.xsmall ||
+                          layout.spacing.padding.xsmall,
+                        py:
+                          theme.layout?.spacing?.padding?.xxsmall ||
+                          layout.spacing.padding.xxsmall,
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap:
+                            theme.layout?.spacing?.gap?.xxsmall ||
+                            layout.spacing.gap.xxsmall,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            "& .MuiSvgIcon-root": {
+                              fontSize:
+                                theme.fontSize?.icon?.medium ||
+                                fontSize.icon.medium,
+                            },
+                          }}
+                        >
+                          {item.icon}
+                        </Box>
+                      </Box>
+                    </ListItemButton>
+                  </Tooltip>
+                </ListItem>
+              ))}
+
+              <ListItem disablePadding>
+                <Tooltip title="Subscribe to YouTube" placement="left" arrow>
+                  <ListItemButton
+                    sx={{
+                      minHeight:
+                        theme.layout?.spacing?.buttonHeight
+                          ?.bottomIconsCompact ||
+                        layout.spacing.buttonHeight.bottomIconsCompact,
+                      justifyContent: "center",
+                      px:
+                        theme.layout?.spacing?.padding?.xsmall ||
+                        layout.spacing.padding.xsmall,
+                      py:
+                        theme.layout?.spacing?.padding?.xxsmall ||
+                        layout.spacing.padding.xxsmall,
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                    onClick={() =>
+                      window.open(
+                        "https://www.youtube.com/@moneytvlive",
+                        "_blank"
+                      )
+                    }
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap:
+                          theme.layout?.spacing?.gap?.xxsmall ||
+                          layout.spacing.gap.xxsmall,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          "& .MuiSvgIcon-root": {
+                            fontSize:
+                              theme.fontSize?.icon?.medium ||
+                              fontSize.icon.medium,
+                            color:
+                              theme.palette.custom?.youtube?.main || "#FF0000",
+                          },
+                        }}
+                      >
+                        {/* <SubscriptionsIcon /> */}
+                        <DynamicIcon
+                          keyword={"YOUTUBE"}
+                          style={{
+                            color: "", // Use theme's primary text color for consistency
+                          }}
+                        />
+                      </Box>
+                    </Box>
+                  </ListItemButton>
+                </Tooltip>
               </ListItem>
             </List>
           </Box>
