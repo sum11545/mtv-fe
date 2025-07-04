@@ -51,12 +51,12 @@ const GridLayout = ({
 
   // for alternate background color issue // here giving same value as grid sizes given below
   const getItemsPerRow = () => {
-    if (isMobile) return 12;
-    if (isSm) return isShort ? 6 : 6;
-    if (isMd) return isShort ? 4 : 4;
+    if (isMobile) return 1;
+    if (isSm) return isShort ? 6 : 2;
+    if (isMd) return isShort ? 4 : 3;
     if (isLg) return isShort ? 2.4 : 4;
-    if (isXl) return isShort ? 2.4 : 3;
-    if (isLgPlus) return isShort ? 2.4 : 3;
+    if (isXl) return isShort ? 2.4 : 4;
+    if (isLgPlus) return isShort ? 2.4 : 4;
     return isShort ? 2.4 : 3; // fallback
   };
 
@@ -96,7 +96,7 @@ const GridLayout = ({
 
   // Function to get row background color // for alternate background color issue
   const getRowBackgroundColor = (rowIndex) => {
-    if (isAd || isMobile || isSm) return theme.palette.background.default;
+    if (isAd || isMobile) return theme.palette.background.default;
 
     if (router.pathname === "/[section]") {
       // For section pages, just alternate based on row index only
