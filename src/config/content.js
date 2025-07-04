@@ -5,7 +5,7 @@ export const CONTENT_CONFIG = {
   // Button Labels
   buttons: {
     viewMore: "View More",
-    send: "Send", 
+    send: "Send",
     copy: "Copy",
     copied: "Copied!",
     share: "Share",
@@ -33,7 +33,7 @@ export const CONTENT_CONFIG = {
       shorts: "Shorts",
       about: "About",
       contact: "Contact",
-    }
+    },
   },
 
   // Messages and Notifications
@@ -53,7 +53,7 @@ export const CONTENT_CONFIG = {
       loadingVideos: "Loading videos...",
       processing: "Processing...",
       pleaseWait: "Please wait...",
-    }
+    },
   },
 
   // URLs and Links
@@ -81,11 +81,12 @@ export const CONTENT_CONFIG = {
       contactEmail: "grow@moneytv.live",
     },
     api: {
-      baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3700/api/v1",
+      baseUrl:
+        process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3700/api/v1",
       videos: "/api/videos",
       sections: "/api/sections",
       search: "/api/search",
-    }
+    },
   },
 
   // Placeholder Texts
@@ -103,7 +104,7 @@ export const CONTENT_CONFIG = {
   forms: {
     labels: {
       email: "Email Address",
-      password: "Password", 
+      password: "Password",
       confirmPassword: "Confirm Password",
       firstName: "First Name",
       lastName: "Last Name",
@@ -123,14 +124,16 @@ export const CONTENT_CONFIG = {
       invalidPhone: "Please enter a valid phone number",
       nameMinLength: "Name must be at least 2 characters",
       messageMinLength: "Message must be at least 10 characters",
-    }
+    },
   },
 
   // SEO and Meta Content
   seo: {
     defaultTitle: "Money TV - Your Financial Video Hub",
-    defaultDescription: "Watch the latest financial videos, market analysis, and investment insights on Money TV.",
-    defaultKeywords: "finance, videos, market analysis, investment, money, financial education",
+    defaultDescription:
+      "Watch the latest financial videos, market analysis, and investment insights on Money TV.",
+    defaultKeywords:
+      "finance, videos, market analysis, investment, money, financial education",
     ogImage: "/assets/images/og-image.jpg",
     twitterCard: "summary_large_image",
   },
@@ -160,7 +163,7 @@ export const CONTENT_CONFIG = {
   // Color Themes (can be overridden by theme system)
   colors: {
     primary: "#001691",
-    secondary: "#F4A512", 
+    secondary: "#F4A512",
     success: "#4CAF50",
     error: "#F44336",
     warning: "#FF9800",
@@ -174,26 +177,26 @@ export const CONTENT_CONFIG = {
       icon: "WHATSAPP",
       color: {
         light: { normal: "", hover: "#111" },
-        dark: { normal: "", hover: "#fff" }
-      }
+        dark: { normal: "", hover: "#fff" },
+      },
     },
     copy: {
-      label: "Copy", 
+      label: "Copy",
       labelSuccess: "Copied!",
       icon: "COPY",
       color: {
         light: { normal: "grey.500", hover: "#111" },
-        dark: { normal: "", hover: "#fff" }
-      }
+        dark: { normal: "", hover: "#fff" },
+      },
     },
     share: {
       label: "Share",
-      icon: "SHARE", 
+      icon: "SHARE",
       color: {
         light: { normal: "grey.500", hover: "#111" },
-        dark: { normal: "", hover: "#fff" }
-      }
-    }
+        dark: { normal: "", hover: "#fff" },
+      },
+    },
   },
 
   // Date and Time Formats
@@ -213,15 +216,15 @@ export const CONTENT_CONFIG = {
       autoplay: false,
     },
     short: {
-      defaultThumbnail: "/images/default-short-thumbnail.jpg", 
+      defaultThumbnail: "/images/default-short-thumbnail.jpg",
       aspectRatio: "9:16",
       autoplay: true,
     },
     ad: {
       defaultThumbnail: "/images/default-ad-thumbnail.jpg",
-      aspectRatio: "16:9", 
+      aspectRatio: "16:9",
       autoplay: false,
-    }
+    },
   },
 
   // Footer Content
@@ -230,9 +233,9 @@ export const CONTENT_CONFIG = {
     feedbackTitle: "Send Feedback",
     sendMessage: "Send Message",
     links: {
-      termsOfUse: "Terms of Use", 
+      termsOfUse: "Terms of Use",
       help: "Help",
-      aboutUs: "About US",
+      aboutUs: "About Us",
       contactUs: "Contact Us",
       privacyPolicy: "Privacy Policy",
       termsCondition: "Terms And Conditions",
@@ -243,20 +246,20 @@ export const CONTENT_CONFIG = {
     },
     icons: {
       youtube: "YT",
-      instagram: "INSTA", 
+      instagram: "INSTA",
       twitter: "X",
       linkedin: "IN",
       facebook: "FB",
       feedback: "FEEDBACK",
-    }
+    },
   },
 };
 
 // Environment-specific overrides
 export const getContentConfig = () => {
   const env = process.env.NODE_ENV;
-  
-  if (env === 'development') {
+
+  if (env === "development") {
     return {
       ...CONTENT_CONFIG,
       urls: {
@@ -264,12 +267,12 @@ export const getContentConfig = () => {
         api: {
           ...CONTENT_CONFIG.urls.api,
           baseUrl: "http://localhost:3001",
-        }
-      }
+        },
+      },
     };
   }
-  
-  if (env === 'staging') {
+
+  if (env === "staging") {
     return {
       ...CONTENT_CONFIG,
       urls: {
@@ -277,19 +280,24 @@ export const getContentConfig = () => {
         api: {
           ...CONTENT_CONFIG.urls.api,
           baseUrl: "https://staging-api.moneytv.com",
-        }
-      }
+        },
+      },
     };
   }
-  
+
   return CONTENT_CONFIG;
 };
 
 // Helper functions for easy access
-export const getButtonLabel = (buttonKey) => CONTENT_CONFIG.buttons[buttonKey] || buttonKey;
-export const getMessage = (type, messageKey) => CONTENT_CONFIG.messages[type]?.[messageKey] || "";
-export const getUrl = (category, urlKey) => CONTENT_CONFIG.urls[category]?.[urlKey] || "";
-export const getFeature = (featureKey) => CONTENT_CONFIG.features[featureKey] || false;
-export const getActionButton = (buttonKey) => CONTENT_CONFIG.actionButtons[buttonKey] || {};
+export const getButtonLabel = (buttonKey) =>
+  CONTENT_CONFIG.buttons[buttonKey] || buttonKey;
+export const getMessage = (type, messageKey) =>
+  CONTENT_CONFIG.messages[type]?.[messageKey] || "";
+export const getUrl = (category, urlKey) =>
+  CONTENT_CONFIG.urls[category]?.[urlKey] || "";
+export const getFeature = (featureKey) =>
+  CONTENT_CONFIG.features[featureKey] || false;
+export const getActionButton = (buttonKey) =>
+  CONTENT_CONFIG.actionButtons[buttonKey] || {};
 
-export default CONTENT_CONFIG; 
+export default CONTENT_CONFIG;

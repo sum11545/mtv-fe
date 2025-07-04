@@ -66,8 +66,8 @@ export default function SectionPage({ sectionSlug }) {
       <Container disableGutters maxWidth="xl">
         <Box>
           {sectionData?.map((section, index) => {
-            switch (section.layout_config?.type) {
-              case "grid":
+            switch (section.layout_type) {
+              case "LGRID":
                 const isAd = section.is_ad;
                 const bgColor = getBackgroundColor(isAd);
                 return (
@@ -80,7 +80,7 @@ export default function SectionPage({ sectionSlug }) {
                     bgColor={bgColor}
                   />
                 );
-              case "slider":
+              case "LSLIDER":
                 return (
                   <SliderLayout
                     key={`${section.type}-${section.id}`}

@@ -5,6 +5,7 @@ import {
   CardMedia,
   Typography,
   Stack,
+  useTheme,
 } from "@mui/material";
 import { formatDistanceToNow } from "date-fns";
 import { useState, useEffect } from "react";
@@ -16,6 +17,8 @@ const SliderCard = ({ short, sectionIndex, id, sectionData }) => {
   const router = useRouter();
   const [formattedDate, setFormattedDate] = useState("recently");
   const [mounted, setMounted] = useState(false);
+  const theme = useTheme();
+  const dims = theme.customDimensionForSliderCard;
 
   let isShort = short?.content_details[0]?.content_type_id == "CTSR"; // CTSR  is for shorts.
 
@@ -83,18 +86,18 @@ const SliderCard = ({ short, sectionIndex, id, sectionData }) => {
       <Card
         sx={{
           width: {
-            xl: "326px",
-            lg: "210px",
-            md: "230px",
-            sm: "194px",
-            xs: "194px",
+            xs: dims.xs.width,
+            sm: dims.sm.width,
+            md: dims.md.width,
+            lg: dims.lg.width,
+            xl: dims.xl.width,
           },
           height: {
-            xl: "580px",
-            lg: "380px",
-            md: "380px",
-            sm: "345px",
-            xs: "345px",
+            xs: dims.xs.height,
+            sm: dims.sm.height,
+            md: dims.md.height,
+            lg: dims.lg.height,
+            xl: dims.xl.height,
           },
           borderRadius: 3,
           "&:hover": {

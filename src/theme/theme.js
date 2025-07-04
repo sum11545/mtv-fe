@@ -380,6 +380,11 @@ const typography = {
 
   sectionTitle: {
     fontSize: "16px", // for xs and sm (<960px)
+    // fontSize: "14px", // for xs and sm (<960px)
+
+    // "@media (min-width:390px)": {
+    //   fontSize: "16px", // md (≥960px)
+    // },
 
     "@media (min-width:960px)": {
       fontSize: "20px", // md (≥960px)
@@ -715,6 +720,79 @@ const typography = {
   },
 };
 
+const customHeightsForGridCard = {
+  ad: {
+    xs: "140px",
+    sm: "140px",
+    md: "120px",
+    lg: "120px",
+    lgPlus: "120px",
+    xl: "120px",
+  },
+  short: {
+    xs: "80vh",
+    sm: "550px",
+    md: "480px",
+    lg: "420px",
+    lgPlus: "480px",
+    xl: "580px",
+  },
+  content: {
+    xs: "215px",
+    sm: "155px",
+    md: "158px",
+    lg: "191px",
+    lgPlus: "210px",
+    xl: "245px",
+  },
+};
+
+const customDimensionForSliderCard = {
+  xs: {
+    width: "194px",
+    height: "345px",
+  },
+  sm: {
+    width: "194px",
+    height: "345px",
+  },
+  md: {
+    width: "230px",
+    height: "380px",
+  },
+  lg: {
+    width: "210px",
+    height: "380px",
+  },
+  xl: {
+    width: "326px",
+    height: "580px",
+  },
+};
+
+const customDimensionsForStackCard = {
+  xs: {
+    width: "124px",
+    height: "70px",
+  },
+  sm: {
+    width: "124px",
+    height: "70px",
+  },
+  md: {
+    width: "100px",
+    height: "50px",
+  },
+  lg: {
+    width: "100px",
+    height: "50px",
+  },
+  xl: {
+    width: "124px",
+    height: "70px",
+  },
+};
+
 // Theme configuration
 export const getDesignTokens = (mode) => ({
   palette: {
@@ -814,6 +892,9 @@ export const getDesignTokens = (mode) => ({
       },
     },
   },
+  customHeightsForGridCard,
+  customDimensionForSliderCard,
+  customDimensionsForStackCard,
 });
 
 // Create theme instance

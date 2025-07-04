@@ -13,6 +13,9 @@ const StackVideoCard = ({
   showLanguageComponent = false,
 }) => {
   const router = useRouter();
+  const theme = useTheme();
+  const dims = theme.customDimensionsForStackCard;
+
   const [selectedContent, setSelectedContent] = useState(
     video?.content_details[0]
   );
@@ -95,6 +98,7 @@ const StackVideoCard = ({
       }
     }
   };
+
   return (
     <Box
       sx={{
@@ -110,18 +114,18 @@ const StackVideoCard = ({
       <Box
         sx={{
           width: {
-            xl: 124,
-            lg: 100,
-            md: 100,
-            sm: 124,
-            xs: 124,
+            xs: dims.xs.width,
+            sm: dims.sm.width,
+            md: dims.md.width,
+            lg: dims.lg.width,
+            xl: dims.xl.width,
           },
           height: {
-            xl: 70,
-            lg: 50,
-            md: 50,
-            sm: 70,
-            xs: 70,
+            xs: dims.xs.height,
+            sm: dims.sm.height,
+            md: dims.md.height,
+            lg: dims.lg.height,
+            xl: dims.xl.height,
           },
           position: "relative",
         }}

@@ -677,8 +677,8 @@ const VideoDetailPage = () => {
               }}
             >
               {videoDetailData?.sections?.map((section, index) => {
-                switch (section.layout_config?.type) {
-                  case "grid":
+                switch (section.layout_type) {
+                  case "LGRID":
                     return (
                       <GridLayout
                         key={`${section.type}-${index}`}
@@ -687,7 +687,7 @@ const VideoDetailPage = () => {
                         sectionData={section.contents}
                       />
                     );
-                  case "stack":
+                  case "LSTACK":
                     return (
                       <StackLayout
                         key={`${section.type}-${index}`}
@@ -696,7 +696,7 @@ const VideoDetailPage = () => {
                         sectionData={videoDetailData}
                       />
                     );
-                  case "slider":
+                  case "LSLIDER":
                     return (
                       <SliderLayout
                         key={`${section.type}-${section.id}`}

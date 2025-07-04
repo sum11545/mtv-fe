@@ -49,7 +49,9 @@ const GridLayout = ({
   const isShort =
     sectionData[0]?.contents[0]?.content_details[0]?.content_type_id == "CTSR";
 
-  // for alternate background color issue // here giving same value as grid sizes given below
+  // for alternate background color issue
+  // here i am giving direct values of how much content should be visible in each row so whenever
+  // you are changing grid size make changes here as well otherwise you won't get bg color row wise
   const getItemsPerRow = () => {
     if (isMobile) return 1;
     if (isSm) return isShort ? 6 : 2;
