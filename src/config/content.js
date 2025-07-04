@@ -232,7 +232,7 @@ export const CONTENT_CONFIG = {
     links: {
       termsOfUse: "Terms of Use", 
       help: "Help",
-      aboutUs: "About Us",
+      aboutUs: "About US",
       contactUs: "Contact Us",
       privacyPolicy: "Privacy Policy",
       termsCondition: "Terms And Conditions",
