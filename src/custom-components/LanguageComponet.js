@@ -35,7 +35,6 @@ export const LanguageComponet = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showLanguages]);
-  //
 
   // Determine border color based on state
   const getBorderColor = () => {
@@ -53,6 +52,7 @@ export const LanguageComponet = ({
         alignItems: "center",
         position: "relative",
       }}
+      ref={containerRef}
     >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography
@@ -73,15 +73,10 @@ export const LanguageComponet = ({
         </Typography>
         {contentLanguages.length > 1 && (
           <Box
-            ref={containerRef}
             component={"span"}
             onMouseEnter={(e) => {
               setIsHovered(true);
               setShowLanguages(true);
-            }}
-            onMouseLeave={(e) => {
-              setIsHovered(false);
-              setShowLanguages(false);
             }}
             sx={{
               display: "inline-block",
@@ -132,13 +127,13 @@ export const LanguageComponet = ({
         )}
       </Box>
       {showLanguages && (
-          <LangauePopUp
-            languageList={contentLanguages}
-            contentDetails={contentDetails}
-            setSelectedContent={setSelectedContent}
-            setShowLanguages={setShowLanguages}
-          />
-        )}
+        <LangauePopUp
+          languageList={contentLanguages}
+          contentDetails={contentDetails}
+          setSelectedContent={setSelectedContent}
+          setShowLanguages={setShowLanguages}
+        />
+      )}
     </Box>
   );
 };
