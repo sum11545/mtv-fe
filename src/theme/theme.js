@@ -379,12 +379,12 @@ const typography = {
   // Home Page
 
   sectionTitle: {
-    fontSize: "16px", // for xs and sm (<960px)
-    // fontSize: "14px", // for xs and sm (<960px)
+    // fontSize: "16px", // for xs and sm (<960px)
+    fontSize: "10px", // <=390px)
 
-    // "@media (min-width:390px)": {
-    //   fontSize: "16px", // md (≥960px)
-    // },
+    "@media (min-width:390px)": {
+      fontSize: "16px", // md (≥390px)
+    },
 
     "@media (min-width:960px)": {
       fontSize: "20px", // md (≥960px)
