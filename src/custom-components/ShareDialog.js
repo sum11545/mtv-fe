@@ -27,14 +27,15 @@ import {
 } from "@mui/icons-material";
 import { fontStyles, fontSize } from "../theme/theme";
 import { useContent } from "../hooks/useContent";
+import { DynamicIcon } from "@/components/icons";
 
 const ShareDialog = ({ open, onClose, url, title, videoUrl }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const [copied, setCopied] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const { getSocialUrl } = useContent();
-  const { config } = useContent();
+  const { getSocialUrl, config } = useContent();
 
   // Social platforms configuration - using getSocialUrl for consistent URL formatting
 
@@ -60,7 +61,7 @@ const ShareDialog = ({ open, onClose, url, title, videoUrl }) => {
         )}`,
     },
     {
-      name: "Twitter",
+      name: "X",
       icon: Twitter,
       color: "#1DA1F2",
       shareUrl: (url) =>
@@ -121,6 +122,7 @@ const ShareDialog = ({ open, onClose, url, title, videoUrl }) => {
     setTimeout(() => setCopied(false), 3000);
   };
 
+  console.log(theme.palette.mode);
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
@@ -179,13 +181,29 @@ const ShareDialog = ({ open, onClose, url, title, videoUrl }) => {
                     },
                   }}
                 >
-                  <platform.icon
-                    sx={{
-                      color: platform.color,
-                      fontSize: fontSize.icon.large,
-                      mb: 1,
-                    }}
-                  />
+                  {platform.name.toLowerCase() === "x" ? (
+                    <DynamicIcon
+                      keyword={config.footer.icons.twitter}
+                      style={{
+                        marginBottom: "8px",
+                        color:
+                          theme.palette.mode === "dark"
+                            ? theme.palette?.primary?.main
+                            : "",
+                        width: "30px",
+                        height: "30px",
+                      }}
+                    />
+                  ) : (
+                    <platform.icon
+                      sx={{
+                        color: platform.color,
+                        fontSize: fontSize.icon.large,
+                        mb: 1,
+                      }}
+                    />
+                  )}
+
                   <Typography
                     variant="caption"
                     sx={{
