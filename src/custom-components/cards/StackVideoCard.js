@@ -55,8 +55,24 @@ const StackVideoCard = ({
         // If content type is not short then redirect to dynamic section/contentId page
 
         // If we're in a section list page, use the section prop directly
-        if (section?.slug) {
-          router.push(`/${section.slug}/${video.id}`);
+        if (section?.slug && selectedContent?.language?.id) {
+          router
+            .push(
+              `/${section.slug}/${video.id}?language=${
+                selectedContent.language.id
+              }&ts=${Date.now()}`
+            )
+            .then(() => {
+              router.replace(
+                {
+                  pathname: `/${section.slug}/${video.id}`,
+                  query: { language: selectedContent.language.id },
+                },
+                undefined,
+                { shallow: true }
+              );
+            });
+
           return;
         }
 
@@ -69,7 +85,12 @@ const StackVideoCard = ({
         });
 
         if (foundSection) {
-          router.push(`/${foundSection.slug}/${video.id}`);
+          router.push({
+            pathname: `/${foundSection.slug}/${video.id}`,
+            query: {
+              language: selectedContent?.language?.id,
+            },
+          });
         }
       }
     }
@@ -85,7 +106,6 @@ const StackVideoCard = ({
           opacity: 0.8,
         },
       }}
-      onClick={handleCardClick}
     >
       <Box
         sx={{
@@ -105,6 +125,7 @@ const StackVideoCard = ({
           },
           position: "relative",
         }}
+        onClick={handleCardClick}
       >
         <Box
           component={"img"}
@@ -119,30 +140,46 @@ const StackVideoCard = ({
             objectFit: "cover",
             borderRadius: 2,
           }}
+          onClick={handleCardClick}
         />
       </Box>
       <Box
-        sx={{ flex: 1, py: 0.5, overflow: "hidden", textOverflow: "ellipsis" }}
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          flexDirection: "column",
+        }}
       >
-        <Typography
-          component="h2"
-          variant="stackCardVideoTitle"
+        <Box
           sx={{
+            flex: 1,
+            py: 0.5,
             overflow: "hidden",
             textOverflow: "ellipsis",
-            display: "-webkit-box",
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: "vertical",
-            wordBreak: "break-all",
-            lineHeight: 1.2,
-            mb: 0.5,
-            color: (theme) =>
-              theme.palette.mode === "light" ? "black" : "inherit",
-            ...fontStyles.openSans.bold,
           }}
         >
-          {video?.name}
-        </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: "vertical",
+              wordBreak: "break-all",
+              lineHeight: 1.2,
+              mb: 0.5,
+              fontSize: fontSize.typography.caption,
+              color: (theme) =>
+                theme.palette.mode === "light" ? "black" : "inherit",
+              ...fontStyles.openSans.bold,
+            }}
+            onClick={handleCardClick}
+          >
+            {video?.name}
+          </Typography>
+        </Box>
+
         {showLanguageComponent ? (
           <LanguageComponet
             contentDetails={video?.content_details}

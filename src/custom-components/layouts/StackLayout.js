@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -74,7 +74,7 @@ const StackLayout = ({ name, contents, id, sectionData, section }) => {
         </Box>
         <Stack spacing={2}>
           {section?.contents?.map((video, index, arr) => (
-            <>
+            <React.Fragment key={video.id}>
               <Paper
                 key={video.id}
                 elevation={0}
@@ -99,10 +99,17 @@ const StackLayout = ({ name, contents, id, sectionData, section }) => {
                   router.push(`/${section.slug}/${video.id}`);
                 }}
               >
-                <StackVideoCard video={video} isMobile={isMobile} />
+                <StackVideoCard
+                  video={video}
+                  layout={section?.layout_config}
+                  sectionData={sectionData}
+                  section={section}
+                  id={id}
+                  isMobile={isMobile}
+                />
               </Paper>
               {index !== arr.length - 1 ? <Divider sx={{ my: 1 }} /> : <></>}
-            </>
+            </React.Fragment>
           ))}
         </Stack>
       </Box>
