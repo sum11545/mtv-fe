@@ -539,7 +539,7 @@ const MobileFooter = (props) => {
           <Typography
             color="primary.main"
             variant="footerLinks"
-            onClick={() => router.push(getUrl("external", "privacy"))}
+            onClick={() => window.open(getUrl("external", "privacy"), "_blank")}
             sx={{
               ...fontStyles.openSans.regular,
               cursor: "pointer",
@@ -555,7 +555,7 @@ const MobileFooter = (props) => {
           <Typography
             color="primary.main"
             variant="footerLinks"
-            onClick={() => router.push(getUrl("external", "terms"))}
+            onClick={() => window.open(getUrl("external", "terms"), "_blank")}
             sx={{
               ...fontStyles.openSans.regular,
               cursor: "pointer",
@@ -950,7 +950,9 @@ const Footer = () => {
             <Typography
               color="primary.main"
               variant="footerLinks"
-              onClick={() => router.push(getUrl("external", "privacy"))}
+              onClick={() =>
+                window.open(getUrl("external", "privacy"), "_blank")
+              }
               sx={{
                 ...fontStyles.openSans.regular,
                 cursor: "pointer",
@@ -966,7 +968,7 @@ const Footer = () => {
             <Typography
               color="primary.main"
               variant="footerLinks"
-              onClick={() => router.push(getUrl("external", "terms"))}
+              onClick={() => window.open(getUrl("external", "terms"), "_blank")}
               sx={{
                 ...fontStyles.openSans.regular,
                 cursor: "pointer",
