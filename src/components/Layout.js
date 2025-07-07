@@ -201,7 +201,6 @@ const Layout = ({ children }) => {
       "/shorts/[short]",
       "/[section]",
       "/search",
-      "/privacy-policy",
       "/terms-of-service",
       "/help",
     ].includes(pathname);
