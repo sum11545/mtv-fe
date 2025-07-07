@@ -176,7 +176,7 @@ const GridLayout = ({
       >
         <Box
           sx={{
-            flex: "0 1 auto",
+            flex: isMobile ? "1 1 auto" : "0 1 auto",
             minWidth: 0,
             width: isMobile ? "calc(100% - 120px)" : "calc(100% - 150px)",
             px: router.pathname === "/[section]" ? 2.5 : "", // for alternate background color issue
@@ -190,10 +190,16 @@ const GridLayout = ({
                   ? theme.palette.custom.advertisementColor
                   : "primary.main",
                 fontFamily: isAd
-                  ? { ...fontStyles.openSans.bold }
-                  : { ...fontStyles.montserrat.bold },
+                  ? fontStyles.openSans.bold
+                  : fontStyles.montserrat.bold,
                 marginLeft: "10px",
                 typography: isAd ? "advertisementTitle" : "sectionTitle",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                display: "inline-block", // Ensure the element has a defined width for overflow detection
+                width: "100%", // Ensure it takes full available width
+                boxSizing: "border-box", // Prevent padding/margins from breaking width
               }}
             >
               {section.name}
