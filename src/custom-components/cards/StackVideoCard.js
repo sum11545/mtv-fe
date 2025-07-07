@@ -187,27 +187,27 @@ const StackVideoCard = ({
             arrow
             placement="bottom"
           >
-          <Typography
-            variant="body2"
+            <Typography
+              variant="body2"
               ref={textRef}
-            sx={{
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              display: "-webkit-box",
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: "vertical",
-              wordBreak: "break-all",
-              lineHeight: 1.2,
-              mb: 0.5,
-              fontSize: fontSize.typography.caption,
-              color: (theme) =>
-                theme.palette.mode === "light" ? "black" : "inherit",
-              ...fontStyles.openSans.bold,
-            }}
-            onClick={handleCardClick}
-          >
-            {video?.name}
-          </Typography>
+              sx={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: "vertical",
+                wordBreak: "break-all",
+                lineHeight: 1.2,
+                mb: 0.5,
+                fontSize: fontSize.typography.caption,
+                color: (theme) =>
+                  theme.palette.mode === "light" ? "black" : "inherit",
+                ...fontStyles.openSans.bold,
+              }}
+              onClick={handleCardClick}
+            >
+              {video?.name}
+            </Typography>
           </Tooltip>
         </Box>
 
@@ -217,6 +217,8 @@ const StackVideoCard = ({
             langaugeName={selectedContent?.language?.name}
             setSelectedContent={setSelectedContent}
             contentLanguages={contentLanguages}
+            section={section}
+            video={video}
           />
         ) : (
           <></>

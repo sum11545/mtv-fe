@@ -371,6 +371,8 @@ const GridCard = ({ video, id, sectionData, section }) => {
                   contentLanguages={contentLanguages}
                   contentDetails={video?.content_details}
                   setSelectedContent={setSelectedContent}
+                  section={section}
+                  video={video}
                 />
                 <Box>
                   <Box

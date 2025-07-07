@@ -8,6 +8,8 @@ export const LanguageComponet = ({
   contentLanguages = [],
   contentDetails,
   setSelectedContent,
+  section,
+  video,
 }) => {
   const [showLanguages, setShowLanguages] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -132,6 +134,8 @@ export const LanguageComponet = ({
           contentDetails={contentDetails}
           setSelectedContent={setSelectedContent}
           setShowLanguages={setShowLanguages}
+          section={section}
+          video={video}
         />
       )}
     </Box>

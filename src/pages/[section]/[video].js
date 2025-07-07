@@ -168,7 +168,6 @@ const VideoDetailPage = () => {
           const element = leftContentRef.current;
           const height = element.getBoundingClientRect().height;
 
-          console.log("Measuring left content height:", height);
           setLeftContentHeight(height);
         });
       }
@@ -354,6 +353,8 @@ const VideoDetailPage = () => {
                       langaugeName={selectedContent?.language?.name}
                       setSelectedContent={setSelectedContent}
                       contentLanguages={langaugeList}
+                      section={section}
+                      video={video}
                     />
                   ) : (
                     <Box

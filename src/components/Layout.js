@@ -140,7 +140,6 @@ const Layout = ({ children }) => {
     if (!route) return "Home";
 
     const { pathname, query } = route;
-    console.log("route", route);
 
     if (pathname === "/") return "Home";
     if (pathname === "/search") return "Search";

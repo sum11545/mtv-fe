@@ -1,14 +1,19 @@
 import { fontSize } from "@/theme/theme";
 import { Box, Typography, useTheme } from "@mui/material";
 import React from "react";
+import { useRouter } from "next/router";
 
 const LangauePopUp = ({
   languageList,
   contentDetails,
   setSelectedContent,
   setShowLanguages,
+  section,
+  video,
 }) => {
   const theme = useTheme();
+  const router = useRouter();
+
   return languageList.length > 0 ? (
     <Box
       sx={{
@@ -49,10 +54,29 @@ const LangauePopUp = ({
             setSelectedContent({
               ...content,
             });
+
+            // Navigate to the video single view with the new language
+            if (section?.slug) {
+              router.push({
+                pathname: `/${section.slug}/${video.id}`,
+                query: {
+                  language: content?.language?.id,
+                },
+              });
+              return;
+            } else {
+              router.replace({
+                pathname: router.pathname,
+                query: {
+                  ...router.query,
+                  language: content?.language?.id,
+                },
+              });
+            }
           }}
           key={lang.id}
         >
-          {lang.name}
+          {lang?.name}
         </Typography>
       ))}
     </Box>
