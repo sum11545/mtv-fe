@@ -194,7 +194,7 @@ const StackVideoCard = ({
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 display: "-webkit-box",
-                WebkitLineClamp: 3,
+                WebkitLineClamp: 2,
                 WebkitBoxOrient: "vertical",
                 wordBreak: "break-all",
                 lineHeight: 1.2,
