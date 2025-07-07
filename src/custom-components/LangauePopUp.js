@@ -1,4 +1,5 @@
-import { Box, Typography } from "@mui/material";
+import { fontSize } from "@/theme/theme";
+import { Box, Typography, useTheme } from "@mui/material";
 import React from "react";
 
 const LangauePopUp = ({
@@ -7,15 +8,16 @@ const LangauePopUp = ({
   setSelectedContent,
   setShowLanguages,
 }) => {
+  const theme = useTheme();
   return languageList.length > 0 ? (
     <Box
       sx={{
         position: "absolute",
         zIndex: 100,
-        border: "1px solid #000",
+        border: `1px solid ${theme.palette.custom.languageCountBorder}`,
         display: "flex",
         justifyContent: "space-evenly",
-        backgroundColor: "#fff",
+        backgroundColor: theme.palette.background.paper,
         boxShadow: "0px 0px 8px #00000038",
         borderRadius: "5px",
         bottom: "120%",
@@ -29,8 +31,15 @@ const LangauePopUp = ({
         <Typography
           sx={{
             padding: "3px 5px",
-            fontSize: "0.75rem",
+            fontSize: {
+              xl: fontSize.typography.caption,
+              lg: fontSize.typography.overline,
+            },
             cursor: "pointer",
+            color:
+              theme.palette.mode === "dark"
+                ? theme.palette.common.white
+                : theme.palette.common.black,
           }}
           onClick={() => {
             const content = contentDetails?.find(
