@@ -380,9 +380,13 @@ const typography = {
 
   sectionTitle: {
     // fontSize: "16px", // for xs and sm (<960px)
-    fontSize: "10px", // <=390px)
+    fontSize: "11px", // <=390px)
 
     "@media (min-width:390px)": {
+      fontSize: "14px", // md (≥390px)
+    },
+
+    "@media (min-width:450px)": {
       fontSize: "16px", // md (≥390px)
     },
 
