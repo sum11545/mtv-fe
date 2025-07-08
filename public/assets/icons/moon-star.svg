@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
+  <defs>
+    <clipPath id="clip-Icon-8">
+      <rect width="40" height="40"/>
+    </clipPath>
+  </defs>
+  <g id="Icon-8" clip-path="url(#clip-Icon-8)">
+    <g id="moon-night-stars-svgrepo-com" transform="translate(2.926 3)">
+      <path id="Path_31446" data-name="Path 31446" d="M17,5c-.27,0-.54.02-.8.04A9,9,0,1,1,5.15,18.83,12,12,0,1,0,17,5Z" fill="#535353"/>
+      <g id="Group_110" data-name="Group 110" transform="translate(3)">
+        <path id="Path_31447" data-name="Path 31447" d="M11,9c-2.58.62-3.38,1.42-4,4-.62-2.58-1.42-3.38-4-4,2.58-.62,3.38-1.42,4-4C7.62,7.58,8.42,8.38,11,9Z" fill="#535353"/>
+      </g>
+      <path id="Union_1" data-name="Union 1" d="M-1877-13a1,1,0,0,1-1-1,1,1,0,0,1,1-1,1,1,0,0,1,1-1,1,1,0,0,1,1,1,1,1,0,0,1,1,1,1,1,0,0,1-1,1,1,1,0,0,1-1,1A1,1,0,0,1-1877-13Z" transform="translate(1890 29)" fill="#535353"/>
+    </g>
+  </g>
+</svg>
