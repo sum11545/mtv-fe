@@ -225,6 +225,34 @@ const ShortItem = React.memo(
               mx: "auto", // Center horizontally
             }}
           >
+            {/* ADD THIS NEW SECTION HERE - "Shorts" text - Top Left */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: 60,
+                left: 20,
+                zIndex: 1000,
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                pointerEvents: "none",
+                mt: 6,
+              }}
+            >
+              <Typography
+                sx={{
+                  color: "white",
+                  fontSize: 18,
+                  fontWeight: 600,
+                  textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
+                  ...fontStyles.openSans.bold,
+                  userSelect: "none",
+                }}
+              >
+                Shorts
+              </Typography>
+            </Box>
+
             {/* Video - Only render if active to save resources */}
             {isActive && (
               <Box

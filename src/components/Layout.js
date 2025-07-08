@@ -197,7 +197,7 @@ const Layout = ({ children }) => {
     // Show back button for pages that should have navigation
     const shouldShowBackButton = [
       "/[section]/[video]",
-      "/shorts/[short]",
+      // "/shorts/[short]",
       "/[section]",
       "/search",
       "/terms-of-service",
