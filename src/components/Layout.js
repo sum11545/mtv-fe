@@ -181,12 +181,19 @@ const Layout = ({ children }) => {
       query.section &&
       query.video
     ) {
-      router.push(`/${query.section}/${query.video}`);
+      // router.push(`/${query.section}/${query.video}`);
+      router.push({
+        pathname: `/${query.section}/${query.video}`,
+        query: {
+          language: query.language,
+        },
+      });
     } else if (pathname === "/shorts/[short]" && query.short) {
       router.push(`/shorts/${query.short}`);
     } else {
       router.push(pathname);
     }
+    // router.back();
   };
 
   // Determine if we should show back button and what the back action should be
