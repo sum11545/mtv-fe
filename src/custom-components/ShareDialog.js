@@ -122,7 +122,6 @@ const ShareDialog = ({ open, onClose, url, title, videoUrl }) => {
     setTimeout(() => setCopied(false), 3000);
   };
 
-  console.log(theme.palette.mode);
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
