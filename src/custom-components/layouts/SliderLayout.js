@@ -168,6 +168,7 @@ const SliderLayout = ({
                 "& .MuiButton-endIcon": {
                   transition: "transform 0.3s ease-in-out",
                 },
+                typography: "viewMoreLabel",
               }}
               onClick={handleViewMore}
             >
