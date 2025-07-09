@@ -471,6 +471,20 @@ const typography = {
     },
   },
 
+  // For small device language list text
+  languageOptionText: {
+    fontSize: "18px",
+  },
+
+  // For large device language list text
+  languageOptionTextLarge: {
+    fontSize: "12px",
+
+    "@media (min-width:1920px)": {
+      fontSize: "14px", // xl (≥1920px)
+    },
+  },
+
   adDescription: {
     fontSize: "14px", // default
     "@media (min-width:960px)": {

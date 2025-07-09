@@ -355,6 +355,7 @@ const VideoDetailPage = () => {
                       contentLanguages={langaugeList}
                       section={section}
                       video={video}
+                      selectedContent={selectedContent}
                     />
                   ) : (
                     <Box
