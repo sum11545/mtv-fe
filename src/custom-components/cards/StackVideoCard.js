@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
-import LangauePopUp from "../LangauePopUp";
 import { LanguageComponet } from "../LanguageComponet";
 
 const StackVideoCard = ({
@@ -219,6 +218,7 @@ const StackVideoCard = ({
             contentLanguages={contentLanguages}
             section={section}
             video={video}
+            selectedContent={selectedContent}
           />
         ) : (
           <></>
