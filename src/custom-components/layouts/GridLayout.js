@@ -554,9 +554,9 @@ const GridLayout = ({
                       <Grid
                         item
                         key={vid.id}
-                        lg={3}
-                        xl={3}
-                        md={4}
+                        lg={vid.type == "ad_content" ? 6 : 3}
+                        xl={vid.type == "ad_content" ? 6 : 3}
+                        md={vid.type == "ad_content" ? 6 : 4}
                         sm={6}
                         xs={12}
                       >
