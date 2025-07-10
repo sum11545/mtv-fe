@@ -24,6 +24,30 @@ const LanguagePopUp = ({
 }) => {
   const theme = useTheme();
 
+  // custom font family for language for making selected language bold because Montserrat doesn't supports bold
+  // weights for certain non-Latin scripts like Tamil, Bengali, Kannada, Marathi, Telugu, Gujarati, or Hindi
+  const getFontFamily = (langId) => {
+    switch (langId) {
+      case "LTN":
+        return "'Noto Sans Tamil', sans-serif";
+      case "LBE":
+        return "'Noto Sans Bengali', sans-serif";
+      case "LKA":
+        return "'Noto Sans Kannada', sans-serif";
+      case "LMAR":
+      case "LHI":
+        return "'Noto Sans Devanagari', sans-serif";
+      case "LTL":
+        return "'Noto Sans Telugu', sans-serif";
+      case "LGJ":
+        return "'Noto Sans Gujarati', sans-serif";
+      case "LEN":
+        return "'Open Sans', sans-serif";
+      default:
+        return "'Open Sans', sans-serif";
+    }
+  };
+
   return languageList.length > 0 ? (
     <Modal
       open={true}
@@ -141,6 +165,7 @@ const LanguagePopUp = ({
                 <Typography
                   sx={{
                     typography: "languageOptionText",
+                    fontFamily: getFontFamily(lang.id),
                     fontWeight: isSelected ? 700 : 400,
                     color: theme.palette.text.primary,
                   }}
@@ -265,7 +290,7 @@ export const LanguageComponet = ({
                 onClick={handleButtonClick}
                 sx={{
                   display: "inline-block",
-                  borderRadius: "1rem",
+                  borderRadius: "50%",
                   border: `1px solid ${getBorderColor()}`,
                   fontSize: {
                     xl: fontSize.typography.h6,
@@ -273,10 +298,10 @@ export const LanguageComponet = ({
                     xs: fontSize.typography.body1,
                   },
                   padding: {
-                    xl: "5px",
-                    lg: "2px 5px",
-                    sm: "2px 5px",
-                    xs: "2px 5px",
+                    xl: "6px 10px",
+                    lg: "1px 5px",
+                    sm: "1px 5px",
+                    xs: "1px 5px",
                   },
                   fontWeight: "bold",
                   position: "relative",
@@ -325,7 +350,10 @@ export const LanguageComponet = ({
                         key={idx}
                         variant="languageOptionTextLarge"
                         onClick={() => handleLanguageSelect(lang)}
-                        sx={{ cursor: "pointer" }}
+                        sx={{
+                          cursor: "pointer",
+                          ...fontStyles.openSans.regular,
+                        }}
                       >
                         {lang?.name}
                       </Typography>
@@ -382,7 +410,7 @@ export const LanguageComponet = ({
                   component="span"
                   sx={{
                     display: "inline-block",
-                    borderRadius: "1rem",
+                    borderRadius: "50%",
                     border: `1px solid ${theme.palette.divider}`,
                     fontSize: {
                       xl: fontSize.typography.h6,
@@ -390,10 +418,10 @@ export const LanguageComponet = ({
                       xs: fontSize.typography.body1,
                     },
                     padding: {
-                      xl: "5px",
-                      lg: "2px 5px",
-                      sm: "2px 5px",
-                      xs: "2px 5px",
+                      xl: "6px 10px",
+                      lg: "1px 5px",
+                      sm: "1px 5px",
+                      xs: "1px 5px",
                     },
                     fontWeight: "bold",
                     // position: "relative",

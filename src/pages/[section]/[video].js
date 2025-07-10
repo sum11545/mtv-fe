@@ -260,6 +260,31 @@ const VideoDetailPage = () => {
       window.open(shareUrl, "_blank");
     }
   };
+
+  // custom font family for language for making selected language bold because Montserrat doesn't supports bold
+  // weights for certain non-Latin scripts like Tamil, Bengali, Kannada, Marathi, Telugu, Gujarati, or Hindi
+  const getFontFamily = (langId) => {
+    switch (langId) {
+      case "LTN":
+        return "'Noto Sans Tamil', sans-serif";
+      case "LBE":
+        return "'Noto Sans Bengali', sans-serif";
+      case "LKA":
+        return "'Noto Sans Kannada', sans-serif";
+      case "LMAR":
+      case "LHI":
+        return "'Noto Sans Devanagari', sans-serif";
+      case "LTL":
+        return "'Noto Sans Telugu', sans-serif";
+      case "LGJ":
+        return "'Noto Sans Gujarati', sans-serif";
+      case "LEN":
+        return "'Open Sans', sans-serif";
+      default:
+        return "'Open Sans', sans-serif";
+    }
+  };
+
   return (
     <>
       <Backdrop
@@ -390,7 +415,9 @@ const VideoDetailPage = () => {
                               lang.id === router.query.language
                                 ? `1px solid ${theme.palette.common.black}`
                                 : "none",
-                            ...fontStyles.montserrat.regular,
+                            fontFamily: getFontFamily(lang.id),
+                            fontWeight:
+                              lang.id === router.query.language ? 700 : 400,
                           }}
                           onClick={() =>
                             router.replace({
