@@ -95,9 +95,6 @@ const StackLayout = ({ name, contents, id, sectionData, section }) => {
                         : "rgba(255, 255, 255, 0.08)",
                   },
                 }}
-                onClick={() => {
-                  router.push(`/${section.slug}/${video.id}`);
-                }}
               >
                 <StackVideoCard
                   video={video}
