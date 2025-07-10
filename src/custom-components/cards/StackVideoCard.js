@@ -76,22 +76,19 @@ const StackVideoCard = ({
 
         // If we're in a section list page, use the section prop directly
         if (section?.slug && selectedContent?.language?.id) {
-          router
-            .push(
-              `/${section.slug}/${video.id}?language=${
-                selectedContent.language.id
-              }&ts=${Date.now()}`
-            )
-            .then(() => {
-              router.replace(
-                {
-                  pathname: `/${section.slug}/${video.id}`,
-                  query: { language: selectedContent.language.id },
-                },
-                undefined,
-                { shallow: true }
-              );
-            });
+          router.push(
+            `/${section.slug}/${video.id}?language=${selectedContent.language.id}`
+          );
+          // .then(() => {
+          //   router.replace(
+          //     {
+          //       pathname: `/${section.slug}/${video.id}`,
+          //       query: { language: selectedContent.language.id },
+          //     },
+          //     undefined,
+          //     { shallow: true }
+          //   );
+          // });
 
           return;
         }
@@ -126,7 +123,9 @@ const StackVideoCard = ({
         "&:hover": {
           opacity: 0.8,
         },
+        width: "100%",
       }}
+      onClick={() => handleCardClick()}
     >
       <Box
         sx={{
@@ -146,7 +145,6 @@ const StackVideoCard = ({
           },
           position: "relative",
         }}
-        onClick={handleCardClick}
       >
         <Box
           component={"img"}
@@ -161,7 +159,6 @@ const StackVideoCard = ({
             objectFit: "cover",
             borderRadius: 2,
           }}
-          onClick={handleCardClick}
         />
       </Box>
       <Box
@@ -203,7 +200,6 @@ const StackVideoCard = ({
                   theme.palette.mode === "light" ? "black" : "inherit",
                 ...fontStyles.openSans.bold,
               }}
-              onClick={handleCardClick}
             >
               {video?.name}
             </Typography>
