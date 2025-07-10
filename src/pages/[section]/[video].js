@@ -126,6 +126,7 @@ const VideoDetailPage = () => {
   const [selectedContent, setSelectedContent] = useState(null);
   const [leftContentHeight, setLeftContentHeight] = useState(0);
   const leftContentRef = useRef(null);
+
   const {
     getButtonConfig,
     getSocialUrl,
@@ -134,6 +135,8 @@ const VideoDetailPage = () => {
     isFeatureEnabled,
     config,
   } = useContent();
+
+  const shareMessage = config.messages.shareMessage;
 
   // Get button configurations
   const whatsappConfig = getButtonConfig("whatsapp");
@@ -248,8 +251,6 @@ const VideoDetailPage = () => {
   };
 
   const handleWhatsApp = () => {
-    const shareMessage = config.messages.shareMessage;
-
     if (videoDetailData) {
       const shareUrl = getSocialUrl(
         "whatsapp",
@@ -469,7 +470,7 @@ const VideoDetailPage = () => {
                   {isFeatureEnabled("enableCopyLink") && (
                     <CopyButton
                       color={isCopyHovered ? "#fff" : ""}
-                      text={selectedContent?.url}
+                      text={`${shareMessage} ${selectedContent?.url}`}
                       label={copyConfig.label}
                       onMouseEnter={() => setIsCopyHovered(true)}
                       onMouseLeave={() => setIsCopyHovered(false)}

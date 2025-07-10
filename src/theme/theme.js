@@ -156,7 +156,7 @@ export const layout = {
   sidebar: {
     drawer: {
       width: 300,
-      mobileWidth: "50%",
+      mobileWidth: "75%",
     },
     mini: {
       width: 70,
@@ -197,7 +197,7 @@ export const layout = {
 
     // Icon container dimensions
     iconContainer: {
-      minWidth: 40,
+      minWidth: 30,
       maxWidth: 60,
     },
 
@@ -564,7 +564,7 @@ const typography = {
   },
 
   footerLinks: {
-    fontSize: "16px", // default
+    fontSize: "14px", // default
 
     "@media (min-width:960px)": {
       fontSize: "13.125px", // md (≥960px)
