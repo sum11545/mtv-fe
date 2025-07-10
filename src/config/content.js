@@ -54,7 +54,7 @@ export const CONTENT_CONFIG = {
       processing: "Processing...",
       pleaseWait: "Please wait...",
     },
-    shareMessage: `If the word 'Stock Market' means something to you…\nYou have to watch this till the end.\nIt might just change everything.\n`,
+    shareMessage: `If the word 'Stock Market' means something to you…\nYOU have to watch this till the end.\nIt might just change everything.\n`,
   },
 
   // URLs and Links

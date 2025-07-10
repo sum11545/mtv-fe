@@ -373,54 +373,12 @@ const MobileFooter = (props) => {
           </IconButton>
         </Stack>
 
-        {/* 4. Privacy, Terms, Help links in a row */}
-        <Stack direction="row" spacing={2}>
-          {/* <Typography
-            color="primary.main"
-            onClick={() => router.push(getUrl('external', 'privacy'))}
-            sx={{
-              fontSize: fontSize.nav.primary,
-              ...fontStyles.openSans.regular,
-              cursor: "pointer",
-              "&:hover": {
-                color: "primary.dark",
-              }
-            }}
-          >
-            {config.footer.links.privacyPolicy}
-          </Typography>
-          <Typography
-            color="primary.main"
-            onClick={() => router.push(getUrl('external', 'terms'))}
-            sx={{
-              fontSize: fontSize.nav.primary,
-              ...fontStyles.openSans.regular,
-              cursor: "pointer",
-              "&:hover": {
-                color: "primary.dark",
-              }
-            }}
-          >
-            {config.footer.links.termsOfUse}
-          </Typography> */}
-          {/* <Typography
-            color="primary.main"
-            onClick={() => router.push(getUrl('external', 'help'))}
-            sx={{
-              fontSize: fontSize.nav.primary,
-              ...fontStyles.openSans.regular,
-              cursor: "pointer",
-              "&:hover": {
-                color: "primary.dark",
-              }
-            }}
-          >
-            {config.footer.links.help}
-          </Typography> */}
-        </Stack>
-
         {/* 5. Additional footer links - First group */}
-        <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+        <Stack
+          direction="column"
+          spacing={1.5}
+          sx={{ mt: 2, alignItems: "center" }}
+        >
           <Typography
             color="primary.main"
             variant="footerLinks"
@@ -451,10 +409,6 @@ const MobileFooter = (props) => {
           >
             {config.footer.links.sib}
           </Typography>
-        </Stack>
-
-        {/* 6. Additional footer links - Second group */}
-        <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
           <Typography
             color="primary.main"
             variant="footerLinks"
@@ -487,11 +441,15 @@ const MobileFooter = (props) => {
           </Typography>
         </Stack>
 
-        {/* Horizontal Divider between second and third group */}
+        {/* Horizontal Divider between first and second group */}
         <Divider orientation="horizontal" flexItem sx={{ mt: 3, mb: 2 }} />
 
-        {/* 7. Additional footer links - Third group */}
-        <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
+        {/* 7. Additional footer links - Second group */}
+        <Stack
+          direction="column"
+          spacing={1.5}
+          sx={{ mt: 1, alignItems: "center" }}
+        >
           <Typography
             color="primary.main"
             variant="footerLinks"
@@ -532,10 +490,6 @@ const MobileFooter = (props) => {
           >
             {config.footer.links.contactUs}
           </Typography>
-        </Stack>
-
-        {/* 8. Terms & Conditions link */}
-        <Stack direction="row" spacing={2} sx={{ mt: 1 }}>
           <Typography
             color="primary.main"
             variant="footerLinks"

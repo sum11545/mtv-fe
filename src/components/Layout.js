@@ -29,7 +29,7 @@ const Main = styled("main")(({ theme, isShortsPageMobile }) => ({
   flexDirection: "column",
   [theme.breakpoints.down("sm")]: {
     width: "100%",
-    marginTop: isShortsPageMobile ? 0 : theme.spacing(15),
+    marginTop: isShortsPageMobile ? 0 : theme.spacing("60px"),
   },
 }));
 
@@ -379,8 +379,7 @@ const Layout = ({ children }) => {
                 : "120px"
               : isShortsPage || isMobile
               ? "70px"
-              : "80px",
-            // : "50px",
+              : "60px",
           }}
         >
           {children}

@@ -177,7 +177,8 @@ const ShortItem = React.memo(
     const [isShareHovered, setIsShareHovered] = useState(false);
     const [isCopyHovered, setIsCopyHovered] = useState(false);
 
-    const { getButtonConfig, isFeatureEnabled } = useContent();
+    const { getButtonConfig, isFeatureEnabled, config } = useContent();
+    const shareMessage = config.messages.shareMessage;
 
     // Memoize button configs to prevent re-computation
     const buttonConfigs = useMemo(
@@ -504,7 +505,7 @@ const ShortItem = React.memo(
                   {isFeatureEnabled("enableCopyLink") && (
                     <CopyButton
                       color={isCopyHovered ? "#fff" : ""}
-                      text={short?.content_details[0]?.url}
+                      text={`${shareMessage} ${short?.content_details[0]?.url}`}
                       label={buttonConfigs.copy.label}
                       onMouseEnter={() => setIsCopyHovered(true)}
                       onMouseLeave={() => setIsCopyHovered(false)}
@@ -599,6 +600,7 @@ const Short = () => {
 
   const { getSocialUrl, getButtonConfig, isFeatureEnabled, config } =
     useContent();
+  const shareMessage = config.messages.shareMessage;
 
   // Memoize action handlers to prevent re-creation
   const handleShare = useCallback((shortItem) => {
@@ -608,8 +610,6 @@ const Short = () => {
 
   const handleWhatsApp = useCallback(
     (shortItem) => {
-      const shareMessage = config.messages.shareMessage;
-
       const shareUrl = getSocialUrl(
         "whatsapp",
         window.location.href,
@@ -622,7 +622,7 @@ const Short = () => {
 
   const handleCopy = useCallback((shortItem) => {
     navigator.clipboard
-      .writeText(shortItem?.content_details[0]?.url)
+      .writeText(`${shareMessage} ${shortItem?.content_details[0]?.url}`)
       .then(() => console.log("URL copied to clipboard"))
       .catch((err) => console.error("Failed to copy URL: ", err));
   }, []);

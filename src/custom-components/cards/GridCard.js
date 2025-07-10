@@ -125,6 +125,8 @@ const GridCard = ({ video, id, sectionData, section }) => {
     config,
   } = useContent();
 
+  const shareMessage = config.messages.shareMessage;
+
   // These below states and ref code are for language component tooltip alignment
   const [tooltipOffset, setTooltipOffset] = useState(0);
   const cardRef = React.useRef(null);
@@ -183,8 +185,6 @@ const GridCard = ({ video, id, sectionData, section }) => {
 
   const handleWhatsApp = (e) => {
     e.stopPropagation(); // Prevent card click event
-
-    const shareMessage = config.messages.shareMessage;
 
     const shareUrl = getSocialUrl(
       "whatsapp",
@@ -449,7 +449,7 @@ const GridCard = ({ video, id, sectionData, section }) => {
                     {isFeatureEnabled("enableCopyLink") && (
                       <CopyButton
                         color={isCopyHovered ? "#fff" : ""}
-                        text={video?.content_details[0]?.url}
+                        text={`${shareMessage} ${video?.content_details[0]?.url}`}
                         label={copyConfig.label}
                         onMouseEnter={() => setIsCopyHovered(true)}
                         onMouseLeave={() => setIsCopyHovered(false)}
