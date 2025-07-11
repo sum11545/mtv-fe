@@ -4,18 +4,22 @@ import {
   Box,
   CircularProgress,
   Container,
+  useMediaQuery,
   useTheme,
 } from "@mui/material";
 import GridLayout from "../custom-components/layouts/GridLayout";
 import SliderLayout from "../custom-components/layouts/SliderLayout";
 import AdSection from "../custom-components/layouts/AdSection";
 import { useMain } from "@/context/MainContext";
+import { useRouter } from "next/router";
 
 export default function Home() {
   const [sectionData, setSectionData] = useState(null);
   const theme = useTheme();
   const { loading, error, fetchHomePageData } = useMain();
   let sectionIndex = 0;
+  const router = useRouter();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   useEffect(() => {
     const loadData = async () => {
@@ -58,6 +62,7 @@ export default function Home() {
         sx={{
           width: "100%",
           maxWidth: "100% !important",
+          marginTop: router.pathname == "/" && isMobile && "-60px",
         }}
       >
         {sectionData?.map((section, index) => {

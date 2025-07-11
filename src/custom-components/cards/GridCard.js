@@ -21,7 +21,6 @@ import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import ShareIcon from "@/components/icons/ShareIcon";
 import { DynamicIcon } from "@/components/icons";
 import { useContent } from "@/hooks/useContent";
-import LangauePopUp from "../LangauePopUp";
 import { LanguageComponet } from "../LanguageComponet";
 
 const ActionButton = ({
@@ -112,7 +111,6 @@ const GridCard = ({ video, id, sectionData, section }) => {
   const [isWhatsAppHovered, setIsWhatsAppHovered] = useState(false);
   const [isShareHovered, setIsShareHovered] = useState(false);
   const [isCopyHovered, setIsCopyHovered] = useState(false);
-  const [showLanguages, setShowLanguages] = useState(false);
   const [selectedContent, setSelectedContent] = useState(
     video?.content_details[0]
   );
@@ -126,6 +124,36 @@ const GridCard = ({ video, id, sectionData, section }) => {
     isFeatureEnabled,
     config,
   } = useContent();
+
+  const shareMessage = config.messages.shareMessage;
+
+  // These below states and ref code are for language component tooltip alignment
+  const [tooltipOffset, setTooltipOffset] = useState(0);
+  const cardRef = React.useRef(null);
+  const languageButtonRef = React.useRef(null);
+
+  // Calculate tooltip offset based on card and button positions
+  useEffect(() => {
+    const calculateOffset = () => {
+      if (cardRef.current && languageButtonRef.current) {
+        const cardRect = cardRef.current.getBoundingClientRect();
+        const buttonRect = languageButtonRef.current.getBoundingClientRect();
+
+        // Calculate the distance from button to the start of the card
+        const offset = buttonRect.left - cardRect.left;
+        setTooltipOffset(-offset);
+      }
+    };
+
+    // Calculate on mount and when content changes
+    calculateOffset();
+
+    // Recalculate on window resize
+    const handleResize = () => calculateOffset();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [selectedContent]);
 
   // Get button configurations
   const whatsappConfig = getButtonConfig("whatsapp");
@@ -157,8 +185,6 @@ const GridCard = ({ video, id, sectionData, section }) => {
 
   const handleWhatsApp = (e) => {
     e.stopPropagation(); // Prevent card click event
-
-    const shareMessage = config.messages.shareMessage;
 
     const shareUrl = getSocialUrl(
       "whatsapp",
@@ -250,6 +276,7 @@ const GridCard = ({ video, id, sectionData, section }) => {
   return (
     <>
       <Card
+        ref={cardRef} // for language component tooltip horizontal alignment
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -373,6 +400,9 @@ const GridCard = ({ video, id, sectionData, section }) => {
                   setSelectedContent={setSelectedContent}
                   section={section}
                   video={video}
+                  selectedContent={selectedContent}
+                  tooltipOffset={tooltipOffset}
+                  languageButtonRef={languageButtonRef}
                 />
                 <Box>
                   <Box
@@ -419,7 +449,7 @@ const GridCard = ({ video, id, sectionData, section }) => {
                     {isFeatureEnabled("enableCopyLink") && (
                       <CopyButton
                         color={isCopyHovered ? "#fff" : ""}
-                        text={video?.content_details[0]?.url}
+                        text={`${shareMessage} ${video?.content_details[0]?.url}`}
                         label={copyConfig.label}
                         onMouseEnter={() => setIsCopyHovered(true)}
                         onMouseLeave={() => setIsCopyHovered(false)}

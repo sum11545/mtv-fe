@@ -87,7 +87,7 @@ const SliderLayout = ({
       >
         <Box
           sx={{
-            flex: "0 1 auto",
+            flex: isMobile ? "1 1 auto" : "0 1 auto",
             minWidth: 0,
             width: isMobile ? "calc(100% - 120px)" : "calc(100% - 150px)",
           }}
@@ -99,6 +99,11 @@ const SliderLayout = ({
                 color: router?.pathname === "/" ? "primary.main" : "inherit",
                 ...fontStyles.montserrat.bold,
                 typography: "sectionTitle",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+                width: "100%",
+                display: "inline",
               }}
             >
               {section.name}
@@ -168,6 +173,7 @@ const SliderLayout = ({
                 "& .MuiButton-endIcon": {
                   transition: "transform 0.3s ease-in-out",
                 },
+                typography: "viewMoreLabel",
               }}
               onClick={handleViewMore}
             >

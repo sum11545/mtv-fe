@@ -6,17 +6,20 @@ import {
   Typography,
   Stack,
   useTheme,
+  IconButton,
 } from "@mui/material";
 import { formatDistanceToNow } from "date-fns";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useMain } from "@/context/MainContext";
 import { fontSize, fontStyles } from "@/theme/theme";
+import { DynamicIcon } from "@/components/icons";
 
 const SliderCard = ({ short, sectionIndex, id, sectionData }) => {
   const router = useRouter();
   const [formattedDate, setFormattedDate] = useState("recently");
   const [mounted, setMounted] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const theme = useTheme();
   const dims = theme.customDimensionForSliderCard;
 
@@ -102,11 +105,11 @@ const SliderCard = ({ short, sectionIndex, id, sectionData }) => {
           borderRadius: 3,
           "&:hover": {
             cursor: "pointer",
-            // transform: "scale(1.02)",
-            // transition: "transform 0.2s ease-in-out",
           },
         }}
         onClick={handleCardClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <Box sx={{ position: "relative", height: "100%" }}>
           <CardMedia
@@ -118,6 +121,31 @@ const SliderCard = ({ short, sectionIndex, id, sectionData }) => {
               objectFit: "cover",
             }}
           />
+
+          {/* Copy Icon - Top Right (visible on hover) */}
+          {/* {isHovered && (
+            <Box
+              sx={{
+                position: "absolute",
+                top: 8,
+                right: 8,
+                backgroundColor: "rgba(255, 255, 255, 0.9)",
+                borderRadius: "50%",
+                width: 32,
+                height: 32,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <DynamicIcon
+                keyword="ENLARGE"
+                height="16px"
+                width="16px"
+                style={{ color: "#666" }}
+              />
+            </Box>
+          )} */}
         </Box>
       </Card>
     </>

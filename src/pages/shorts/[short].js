@@ -177,7 +177,8 @@ const ShortItem = React.memo(
     const [isShareHovered, setIsShareHovered] = useState(false);
     const [isCopyHovered, setIsCopyHovered] = useState(false);
 
-    const { getButtonConfig, isFeatureEnabled } = useContent();
+    const { getButtonConfig, isFeatureEnabled, config } = useContent();
+    const shareMessage = config.messages.shareMessage;
 
     // Memoize button configs to prevent re-computation
     const buttonConfigs = useMemo(
@@ -225,6 +226,34 @@ const ShortItem = React.memo(
               mx: "auto", // Center horizontally
             }}
           >
+            {/* ADD THIS NEW SECTION HERE - "Shorts" text - Top Left */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: 60,
+                left: 20,
+                zIndex: 1000,
+                display: "flex",
+                alignItems: "center",
+                gap: 1,
+                pointerEvents: "none",
+                mt: 6,
+              }}
+            >
+              <Typography
+                sx={{
+                  color: "white",
+                  fontSize: 18,
+                  fontWeight: 600,
+                  textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
+                  ...fontStyles.openSans.bold,
+                  userSelect: "none",
+                }}
+              >
+                Shorts
+              </Typography>
+            </Box>
+
             {/* Video - Only render if active to save resources */}
             {isActive && (
               <Box
@@ -476,7 +505,7 @@ const ShortItem = React.memo(
                   {isFeatureEnabled("enableCopyLink") && (
                     <CopyButton
                       color={isCopyHovered ? "#fff" : ""}
-                      text={short?.content_details[0]?.url}
+                      text={`${shareMessage} ${short?.content_details[0]?.url}`}
                       label={buttonConfigs.copy.label}
                       onMouseEnter={() => setIsCopyHovered(true)}
                       onMouseLeave={() => setIsCopyHovered(false)}
@@ -571,6 +600,7 @@ const Short = () => {
 
   const { getSocialUrl, getButtonConfig, isFeatureEnabled, config } =
     useContent();
+  const shareMessage = config.messages.shareMessage;
 
   // Memoize action handlers to prevent re-creation
   const handleShare = useCallback((shortItem) => {
@@ -580,8 +610,6 @@ const Short = () => {
 
   const handleWhatsApp = useCallback(
     (shortItem) => {
-      const shareMessage = config.messages.shareMessage;
-
       const shareUrl = getSocialUrl(
         "whatsapp",
         window.location.href,
@@ -594,7 +622,7 @@ const Short = () => {
 
   const handleCopy = useCallback((shortItem) => {
     navigator.clipboard
-      .writeText(shortItem?.content_details[0]?.url)
+      .writeText(`${shareMessage} ${shortItem?.content_details[0]?.url}`)
       .then(() => console.log("URL copied to clipboard"))
       .catch((err) => console.error("Failed to copy URL: ", err));
   }, []);

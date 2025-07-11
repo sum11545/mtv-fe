@@ -115,14 +115,13 @@ const ShareDialog = ({ open, onClose, url, title, videoUrl }) => {
 
   const handleCopyLink = () => {
     // Use videoUrl if provided, otherwise fallback to page url
-    const urlToCopy = videoUrl || url;
+    const urlToCopy = `${shareMessage} ${videoUrl ?? url}`;
     navigator.clipboard.writeText(urlToCopy);
     setCopied(true);
     setSnackbarOpen(true);
     setTimeout(() => setCopied(false), 3000);
   };
 
-  console.log(theme.palette.mode);
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
   };
@@ -248,6 +247,7 @@ const ShareDialog = ({ open, onClose, url, title, videoUrl }) => {
           >
             <TextField
               fullWidth
+              // value={`${shareMessage} ${videoUrl ?? url}`}
               value={videoUrl || url}
               variant="outlined"
               size="small"
