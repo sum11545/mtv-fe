@@ -248,6 +248,7 @@ export const palette = {
       sectionBg: "#FAFAFA",
       videoDetailSectionBg: "#F2F2F2",
       language: "#F3F3F3",
+      videoDetailDescription: "#000000",
     },
     text: {
       primary: "#000000",
@@ -283,6 +284,7 @@ export const palette = {
       sectionBg: "#03092B",
       videoDetailSectionBg: "#03092B",
       language: "#1a2152",
+      videoDetailDescription: "#D6D8E0",
     },
     text: {
       primary: "#ffffff",
@@ -735,6 +737,11 @@ const typography = {
     "@media (min-width:1920px)": {
       fontSize: "36px", // xl (≥1920px)
     },
+  },
+
+  // Read more button text of mobile size in video detail page
+  readMoreText: {
+    fontSize: "20px",
   },
 };
 
