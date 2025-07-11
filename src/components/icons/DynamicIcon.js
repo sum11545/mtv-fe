@@ -31,6 +31,8 @@ const DynamicIcon = ({
     "ARROW-LEFT": "arrow-left",
     "ARROW-LEFT_YELLOW": "arrow-left-yellow",
     "ARROW-YELLOW": "arrow-yellow",
+    "ARROW-LEFT_BLUE": "arrow-left-blue",
+    "ARROW-LEFT_WHITE": "arrow-left-white",
     WHATSAPP: "whats-app-icon",
     COPY: "copy-icon",
     SHARE: "share-icon",
