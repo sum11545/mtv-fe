@@ -488,7 +488,12 @@ const typography = {
   },
 
   adDescription: {
-    fontSize: "14px", // default
+    fontSize: "12px", // default
+
+    "@media (min-width:450px)": {
+      fontSize: "14px", // md (≥960px)
+    },
+
     "@media (min-width:960px)": {
       fontSize: "13.125px", // md (≥960px)
     },
@@ -747,12 +752,12 @@ const typography = {
 
 const customHeightsForGridCard = {
   ad: {
-    xs: "140px",
-    sm: "140px",
+    xs: "104px",
+    sm: "104px",
     md: "120px",
-    lg: "120px",
-    lgPlus: "120px",
-    xl: "120px",
+    lg: "110px",
+    lgPlus: "110px",
+    xl: "140px",
   },
   short: {
     xs: "80vh",
