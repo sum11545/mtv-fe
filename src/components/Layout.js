@@ -71,17 +71,18 @@ const BackButton = ({ onClick, label }) => {
       <Button
         startIcon={
           <DynamicIcon
-            keyword={isHovered ? "ARROW-LEFT_YELLOW" : "ARROW-LEFT"}
+            keyword={
+              isDarkMode
+                ? isHovered
+                  ? "ARROW-LEFT_YELLOW"
+                  : "ARROW-LEFT_WHITE"
+                : isHovered
+                ? "ARROW-LEFT_BLUE"
+                : "ARROW-LEFT"
+            }
             height={"15px"}
             width={"15px"}
             style={{
-              color: isDarkMode
-                ? isHovered
-                  ? ""
-                  : "#fff"
-                : isHovered
-                ? "black"
-                : "",
               transform: "rotate(180deg)", // Rotate arrow to point left for back
             }}
           />
@@ -95,7 +96,7 @@ const BackButton = ({ onClick, label }) => {
           color: isDarkMode ? "#fff" : "black",
           "&:hover": {
             bgcolor: "transparent",
-            color: isDarkMode ? getColor("secondary") : "common.black",
+            // color: isDarkMode ? getColor("secondary") : "common.black",
             "& .MuiButton-startIcon": {
               transform: "translateX(-5px) rotate(180deg)",
               transition: "transform 0.3s ease-in-out",
