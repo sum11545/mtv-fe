@@ -71,17 +71,18 @@ const BackButton = ({ onClick, label }) => {
       <Button
         startIcon={
           <DynamicIcon
-            keyword={isHovered ? "ARROW-LEFT_YELLOW" : "ARROW-LEFT"}
+            keyword={
+              isDarkMode
+                ? isHovered
+                  ? "ARROW-LEFT_YELLOW"
+                  : "ARROW-LEFT_WHITE"
+                : isHovered
+                ? "ARROW-LEFT_BLUE"
+                : "ARROW-LEFT"
+            }
             height={"15px"}
             width={"15px"}
             style={{
-              color: isDarkMode
-                ? isHovered
-                  ? ""
-                  : "#fff"
-                : isHovered
-                ? "black"
-                : "",
               transform: "rotate(180deg)", // Rotate arrow to point left for back
             }}
           />
@@ -95,7 +96,7 @@ const BackButton = ({ onClick, label }) => {
           color: isDarkMode ? "#fff" : "black",
           "&:hover": {
             bgcolor: "transparent",
-            color: isDarkMode ? getColor("secondary") : "common.black",
+            // color: isDarkMode ? getColor("secondary") : "common.black",
             "& .MuiButton-startIcon": {
               transform: "translateX(-5px) rotate(180deg)",
               transition: "transform 0.3s ease-in-out",
@@ -181,12 +182,19 @@ const Layout = ({ children }) => {
       query.section &&
       query.video
     ) {
-      router.push(`/${query.section}/${query.video}`);
+      // router.push(`/${query.section}/${query.video}`);
+      router.push({
+        pathname: `/${query.section}/${query.video}`,
+        query: {
+          language: query.language,
+        },
+      });
     } else if (pathname === "/shorts/[short]" && query.short) {
       router.push(`/shorts/${query.short}`);
     } else {
       router.push(pathname);
     }
+    // router.back();
   };
 
   // Determine if we should show back button and what the back action should be
@@ -197,7 +205,7 @@ const Layout = ({ children }) => {
     // Show back button for pages that should have navigation
     const shouldShowBackButton = [
       "/[section]/[video]",
-      "/shorts/[short]",
+      // "/shorts/[short]",
       "/[section]",
       "/search",
       "/terms-of-service",
@@ -372,8 +380,7 @@ const Layout = ({ children }) => {
                 : "120px"
               : isShortsPage || isMobile
               ? "70px"
-              : "80px",
-            // : "50px",
+              : "60px",
           }}
         >
           {children}

@@ -197,9 +197,8 @@ const GridLayout = ({
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
-                display: "inline-block", // Ensure the element has a defined width for overflow detection
-                width: "100%", // Ensure it takes full available width
-                boxSizing: "border-box", // Prevent padding/margins from breaking width
+                width: "100%",
+                display: "inline",
               }}
             >
               {section.name}
@@ -554,9 +553,9 @@ const GridLayout = ({
                       <Grid
                         item
                         key={vid.id}
-                        lg={3}
-                        xl={3}
-                        md={4}
+                        lg={vid.type == "ad_content" ? 6 : 3}
+                        xl={vid.type == "ad_content" ? 6 : 3}
+                        md={vid.type == "ad_content" ? 6 : 4}
                         sm={6}
                         xs={12}
                       >

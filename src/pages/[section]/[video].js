@@ -15,7 +15,12 @@ import {
   Backdrop,
   CircularProgress,
 } from "@mui/material";
-import { WhatsApp, ContentCopy, Reply } from "@mui/icons-material";
+import {
+  WhatsApp,
+  ContentCopy,
+  Reply,
+  KeyboardArrowDown,
+} from "@mui/icons-material";
 import GridLayout from "../../custom-components/layouts/GridLayout";
 import SliderLayout from "../../custom-components/layouts/SliderLayout";
 import ShareDialog from "../../custom-components/ShareDialog";
@@ -126,6 +131,7 @@ const VideoDetailPage = () => {
   const [selectedContent, setSelectedContent] = useState(null);
   const [leftContentHeight, setLeftContentHeight] = useState(0);
   const leftContentRef = useRef(null);
+
   const {
     getButtonConfig,
     getSocialUrl,
@@ -134,6 +140,8 @@ const VideoDetailPage = () => {
     isFeatureEnabled,
     config,
   } = useContent();
+
+  const shareMessage = config.messages.shareMessage;
 
   // Get button configurations
   const whatsappConfig = getButtonConfig("whatsapp");
@@ -248,8 +256,6 @@ const VideoDetailPage = () => {
   };
 
   const handleWhatsApp = () => {
-    const shareMessage = config.messages.shareMessage;
-
     if (videoDetailData) {
       const shareUrl = getSocialUrl(
         "whatsapp",
@@ -259,6 +265,31 @@ const VideoDetailPage = () => {
       window.open(shareUrl, "_blank");
     }
   };
+
+  // custom font family for language for making selected language bold because Montserrat doesn't supports bold
+  // weights for certain non-Latin scripts like Tamil, Bengali, Kannada, Marathi, Telugu, Gujarati, or Hindi
+  const getFontFamily = (langId) => {
+    switch (langId) {
+      case "LTN":
+        return "'Noto Sans Tamil', sans-serif";
+      case "LBE":
+        return "'Noto Sans Bengali', sans-serif";
+      case "LKA":
+        return "'Noto Sans Kannada', sans-serif";
+      case "LMAR":
+      case "LHI":
+        return "'Noto Sans Devanagari', sans-serif";
+      case "LTL":
+        return "'Noto Sans Telugu', sans-serif";
+      case "LGJ":
+        return "'Noto Sans Gujarati', sans-serif";
+      case "LEN":
+        return "'Open Sans', sans-serif";
+      default:
+        return "'Open Sans', sans-serif";
+    }
+  };
+
   return (
     <>
       <Backdrop
@@ -285,13 +316,19 @@ const VideoDetailPage = () => {
               sx={{
                 width: "100%",
                 position: "relative",
-                paddingTop: "50.25%", // 16:9 aspect ratio
+                aspectRatio: {
+                  xl: "100 / 60",
+                  lg: "100 / 50",
+                  lgPlus: "100 / 46",
+                  md: "100 / 50",
+                  sm: "100 / 50",
+                },
+
                 bgcolor: "black",
                 borderRadius: {
                   md: "12px",
                   xs: "12px",
                 },
-
                 overflow: "hidden",
                 mb: 2,
               }}
@@ -303,14 +340,13 @@ const VideoDetailPage = () => {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
                 style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
                   width: "100%",
                   height: "100%",
+                  border: 0,
                 }}
               />
             </Box>
+
             <Box
               sx={{
                 px: {
@@ -355,6 +391,7 @@ const VideoDetailPage = () => {
                       contentLanguages={langaugeList}
                       section={section}
                       video={video}
+                      selectedContent={selectedContent}
                     />
                   ) : (
                     <Box
@@ -388,7 +425,9 @@ const VideoDetailPage = () => {
                               lang.id === router.query.language
                                 ? `1px solid ${theme.palette.common.black}`
                                 : "none",
-                            ...fontStyles.montserrat.regular,
+                            fontFamily: getFontFamily(lang.id),
+                            fontWeight:
+                              lang.id === router.query.language ? 700 : 400,
                           }}
                           onClick={() =>
                             router.replace({
@@ -468,7 +507,7 @@ const VideoDetailPage = () => {
                   {isFeatureEnabled("enableCopyLink") && (
                     <CopyButton
                       color={isCopyHovered ? "#fff" : ""}
-                      text={selectedContent?.url}
+                      text={`${shareMessage} ${selectedContent?.url}`}
                       label={copyConfig.label}
                       onMouseEnter={() => setIsCopyHovered(true)}
                       onMouseLeave={() => setIsCopyHovered(false)}
@@ -529,8 +568,8 @@ const VideoDetailPage = () => {
                   variant="videoDescriptionOfVideoDetailPage"
                   sx={{
                     whiteSpace: "pre-wrap",
-                    ...fontStyles.sfPro.text.regular,
-                    color: "text.secondary",
+                    ...fontStyles.sfPro.display.regular,
+                    color: theme.palette.background.videoDetailDescription,
                   }}
                 >
                   {displayText}
@@ -538,18 +577,47 @@ const VideoDetailPage = () => {
                     <Button
                       onClick={toggleShowMore}
                       sx={{
-                        display: "block",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "0.25rem",
                         background: "none",
                         border: "none",
-                        color: theme.palette.primary,
+                        color: isDarkMode
+                          ? theme.palette.background.videoDetailDescription
+                          : theme.palette.primary.main,
                         cursor: "pointer",
                         padding: 0,
                         textAlign: "center",
                         margin: "auto",
                         pt: "1rem",
+                        "&:hover": {
+                          backgroundColor: "transparent",
+                          color: isDarkMode ? "#fff" : "black",
+                          "& svg": {
+                            transform: "translateY(2px)",
+                            color: isDarkMode ? "#fff" : "black",
+                          },
+                        },
+                        "& svg": {
+                          transition: "all 0.3s ease",
+                          color: isDarkMode
+                            ? theme.palette.background.videoDetailDescription
+                            : theme.palette.primary.main,
+                        },
+                        typography: "readMoreText",
+                        ...fontStyles.sfPro.display.regular,
                       }}
                     >
                       {showMore ? "Read Less" : "Read More"}
+                      <KeyboardArrowDown
+                        sx={{
+                          fontSize: "1.6rem",
+                          transform: showMore
+                            ? "rotate(180deg)"
+                            : "rotate(0deg)", // optional: rotate for 'Read Less'
+                          transition: "transform 0.3s ease",
+                        }}
+                      />
                     </Button>
                   )}
                 </Typography>

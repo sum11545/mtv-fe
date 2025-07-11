@@ -156,7 +156,7 @@ export const layout = {
   sidebar: {
     drawer: {
       width: 300,
-      mobileWidth: "50%",
+      mobileWidth: "75%",
     },
     mini: {
       width: 70,
@@ -197,7 +197,7 @@ export const layout = {
 
     // Icon container dimensions
     iconContainer: {
-      minWidth: 40,
+      minWidth: 30,
       maxWidth: 60,
     },
 
@@ -248,6 +248,7 @@ export const palette = {
       sectionBg: "#FAFAFA",
       videoDetailSectionBg: "#F2F2F2",
       language: "#F3F3F3",
+      videoDetailDescription: "#000000",
     },
     text: {
       primary: "#000000",
@@ -283,6 +284,7 @@ export const palette = {
       sectionBg: "#03092B",
       videoDetailSectionBg: "#03092B",
       language: "#1a2152",
+      videoDetailDescription: "#D6D8E0",
     },
     text: {
       primary: "#ffffff",
@@ -471,8 +473,27 @@ const typography = {
     },
   },
 
+  // For small device language list text
+  languageOptionText: {
+    fontSize: "18px",
+  },
+
+  // For large device language list text
+  languageOptionTextLarge: {
+    fontSize: "12px",
+
+    "@media (min-width:1920px)": {
+      fontSize: "14px", // xl (≥1920px)
+    },
+  },
+
   adDescription: {
-    fontSize: "14px", // default
+    fontSize: "12px", // default
+
+    "@media (min-width:450px)": {
+      fontSize: "14px", // md (≥960px)
+    },
+
     "@media (min-width:960px)": {
       fontSize: "13.125px", // md (≥960px)
     },
@@ -550,7 +571,7 @@ const typography = {
   },
 
   footerLinks: {
-    fontSize: "16px", // default
+    fontSize: "14px", // default
 
     "@media (min-width:960px)": {
       fontSize: "13.125px", // md (≥960px)
@@ -722,16 +743,21 @@ const typography = {
       fontSize: "36px", // xl (≥1920px)
     },
   },
+
+  // Read more button text of mobile size in video detail page
+  readMoreText: {
+    fontSize: "20px",
+  },
 };
 
 const customHeightsForGridCard = {
   ad: {
-    xs: "140px",
-    sm: "140px",
+    xs: "104px",
+    sm: "104px",
     md: "120px",
-    lg: "120px",
-    lgPlus: "120px",
-    xl: "120px",
+    lg: "110px",
+    lgPlus: "110px",
+    xl: "140px",
   },
   short: {
     xs: "80vh",

@@ -22,7 +22,11 @@ const AdCard = ({ ad }) => {
       // Ad type is ad-video
       return (
         <CardMedia
-          sx={{ background: "green", height: "100%", width: "100%" }}
+          sx={{
+            background: "green",
+            height: "100%",
+            width: "100%",
+          }}
           component="img"
           image={ad.content_details[0].thumbnail_url}
           alt="Ad image"
@@ -34,7 +38,7 @@ const AdCard = ({ ad }) => {
         <CardMedia
           sx={{
             background: "blue",
-            height: isMobile ? "100%" : "85%",
+            height: "100%",
             width: "100%",
           }}
           component="img"
@@ -49,14 +53,14 @@ const AdCard = ({ ad }) => {
         <CardContent
           sx={{
             background: "#FFDA93",
-            height: "85%",
+            height: "100%",
             width: "100%",
-            padding: "1rem",
+            padding: "1.2rem",
             display: "flex",
             flexDirection: "column",
             justifyContent: "space-between",
             "&:last-child": {
-              // paddingBottom: "1rem",
+              paddingBottom: "1.2rem",
             },
           }}
         >
