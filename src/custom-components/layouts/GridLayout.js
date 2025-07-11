@@ -197,9 +197,8 @@ const GridLayout = ({
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
-                display: "inline-block", // Ensure the element has a defined width for overflow detection
-                width: "100%", // Ensure it takes full available width
-                boxSizing: "border-box", // Prevent padding/margins from breaking width
+                width: "100%",
+                display: "inline",
               }}
             >
               {section.name}
