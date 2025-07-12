@@ -29,7 +29,7 @@ import { fontStyles, fontSize } from "../theme/theme";
 import { useContent } from "../hooks/useContent";
 import { DynamicIcon } from "@/components/icons";
 
-const ShareDialog = ({ open, onClose, url, title, videoUrl }) => {
+const ShareDialog = ({ open, onClose, url, videoUrl }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -110,7 +110,7 @@ const ShareDialog = ({ open, onClose, url, title, videoUrl }) => {
   const handleShare = (platform) => {
     // Use videoUrl if provided, otherwise fallback to page url
     const urlToShare = videoUrl || url;
-    window.open(platform.shareUrl(urlToShare, title), "_blank");
+    window.open(platform.shareUrl(urlToShare), "_blank");
   };
 
   const handleCopyLink = () => {
