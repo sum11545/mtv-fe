@@ -234,10 +234,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                 <Tooltip title="About Us" placement="left" arrow>
                   <ListItemButton
                     onClick={() =>
-                      window.open(
-                        "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html",
-                        "_blank"
-                      )
+                      window.open("https://moneytv.live/about/", "_blank")
                     }
                     sx={{
                       minHeight:
@@ -696,10 +693,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
               <ListItem disablePadding>
                 <ListItemButton
                   onClick={() =>
-                    window.open(
-                      "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html",
-                      "_blank"
-                    )
+                    window.open("https://moneytv.live/about/", "_blank")
                   }
                 >
                   <ListItemIcon
