@@ -271,7 +271,7 @@ const ShortItem = React.memo(
                 <iframe
                   key={`mobile-${short.id}-${index}`}
                   src={getEmbedUrl(short?.content_details[0]?.url)}
-                  title={short?.name}
+                  title={short?.content_details[0]?.name}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
@@ -309,7 +309,7 @@ const ShortItem = React.memo(
                   typography: "shortTitleOfShortDetailPage",
                 }}
               >
-                {short?.name}
+                {short?.content_details[0]?.name}
               </Typography>
             </Box>
 
@@ -402,7 +402,7 @@ const ShortItem = React.memo(
               <iframe
                 key={`desktop-${short.id}-${index}`}
                 src={getEmbedUrl(short?.content_details[0]?.url)}
-                title={short?.name}
+                title={short?.content_details[0]?.name}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
@@ -446,7 +446,7 @@ const ShortItem = React.memo(
                 pl: 3,
               }}
             >
-              {short?.name}
+              {short?.content_details[0]?.name}
             </Typography>
             <Divider sx={{ mb: 2 }} />
             <Box
@@ -991,7 +991,6 @@ const Short = () => {
           open={shareDialogOpen}
           onClose={() => setShareDialogOpen(false)}
           url={shareUrl}
-          title={selectedShort?.name}
           videoUrl={selectedShort?.content_details[0]?.url}
         />
       </Box>
@@ -1128,7 +1127,6 @@ const Short = () => {
         open={shareDialogOpen}
         onClose={() => setShareDialogOpen(false)}
         url={shareUrl}
-        title={selectedShort?.name}
         videoUrl={selectedShort?.content_details[0]?.url}
       />
     </>

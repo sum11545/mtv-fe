@@ -39,7 +39,7 @@ const SliderCard = ({ short, sectionIndex, id, sectionData }) => {
       const match = url.match(youtubeRegex);
       const videoId = match?.[1] ?? "";
       return videoId
-        ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+        ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
         : "/images/404-not-found.jpg";
     } catch (err) {
       return "/images/404-not-found.jpg";
