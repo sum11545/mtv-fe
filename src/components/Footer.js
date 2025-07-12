@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Container,
@@ -26,6 +26,7 @@ import { fontStyles, fontSize, palette } from "../theme/theme";
 import { DynamicIcon } from "./icons";
 import Link from "next/link";
 import { useContent } from "@/hooks/useContent";
+import { useMain } from "@/context/MainContext";
 
 const LogoWrapper = styled(Box)({
   display: "flex",
@@ -46,6 +47,8 @@ const MobileFooter = (props) => {
     handleSubmit,
     validateEmail,
     validateForm,
+    sidebarItems,
+    sidebarClickHandler,
   } = props;
   const theme = useTheme();
   const router = useRouter();
@@ -379,7 +382,7 @@ const MobileFooter = (props) => {
           spacing={1.5}
           sx={{ mt: 2, alignItems: "center" }}
         >
-          <Typography
+          {/* <Typography
             color="primary.main"
             variant="footerLinks"
             onClick={() => {}}
@@ -438,7 +441,26 @@ const MobileFooter = (props) => {
             }}
           >
             {config.footer.links.ray}
-          </Typography>
+          </Typography> */}
+          {sidebarItems?.map((item) => {
+            return (
+              <Typography
+                color="primary.main"
+                variant="footerLinks"
+                onClick={() => sidebarClickHandler(item)}
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  cursor: "pointer",
+                  textDecoration: "underline",
+                  "&:hover": {
+                    color: "primary.dark",
+                  },
+                }}
+              >
+                {item.name}
+              </Typography>
+            );
+          })}
         </Stack>
 
         {/* Horizontal Divider between first and second group */}
@@ -529,6 +551,17 @@ const Footer = () => {
   const isDarkMode = theme.palette.mode === "dark";
   const { config, getUrl } = useContent();
   const router = useRouter();
+  const { fetchSideBarData } = useMain();
+  const [sidebarItems, setSidebarItems] = useState([]);
+
+  useEffect(() => {
+    const SidebarData = async () => {
+      const res = await fetchSideBarData();
+      const data = res?.data?.response?.data;
+      setSidebarItems(data);
+    };
+    SidebarData();
+  }, []);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -612,6 +645,12 @@ const Footer = () => {
         email: "",
         message: "",
       });
+    }
+  };
+
+  const sidebarClickHandler = (item) => {
+    if (item.section_slug) {
+      router.push(`/${item.section_slug}`);
     }
   };
 
@@ -782,7 +821,7 @@ const Footer = () => {
         {/* Second Section - First Group of Links */}
         <Box sx={{ flex: 1, paddingTop: 7 }}>
           <Stack spacing={2}>
-            <Typography
+            {/* <Typography
               color="primary.main"
               variant="footerLinks"
               onClick={() => {}}
@@ -844,7 +883,26 @@ const Footer = () => {
               }}
             >
               {config.footer.links.ray}
-            </Typography>
+            </Typography> */}
+            {sidebarItems?.map((item) => {
+              return (
+                <Typography
+                  color="primary.main"
+                  variant="footerLinks"
+                  onClick={() => sidebarClickHandler(item)}
+                  sx={{
+                    ...fontStyles.openSans.regular,
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    "&:hover": {
+                      color: "primary.dark",
+                    },
+                  }}
+                >
+                  {item.name}
+                </Typography>
+              );
+            })}
           </Stack>
         </Box>
 
@@ -1102,6 +1160,8 @@ const Footer = () => {
             handleSubmit={handleSubmit}
             validateEmail={validateEmail}
             validateForm={validateForm}
+            sidebarItems={sidebarItems}
+            sidebarClickHandler={sidebarClickHandler}
           />
         ) : (
           renderDesktopFooter()
