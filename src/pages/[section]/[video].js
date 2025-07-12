@@ -317,17 +317,18 @@ const VideoDetailPage = () => {
                 width: "100%",
                 position: "relative",
                 aspectRatio: {
-                  xl: "100 / 60",
+                  xl: "100 / 57",
                   lg: "100 / 50",
                   lgPlus: "100 / 46",
-                  md: "100 / 50",
-                  sm: "100 / 50",
+                  // md: "16/9",
+                  // sm: "16/9",
+                  aspectRatio: 16 / 9,
                 },
 
                 bgcolor: "black",
                 borderRadius: {
-                  md: "12px",
-                  xs: "12px",
+                  md: !isMobile && "12px",
+                  xs: !isMobile && "12px",
                 },
                 overflow: "hidden",
                 mb: 2,
@@ -353,7 +354,14 @@ const VideoDetailPage = () => {
                   md: 0,
                   xs: "10px",
                 },
-                ml: 2,
+                ml: {
+                  xs: 0,
+                  sm: 0,
+                  md: 2,
+                  lg: 2,
+                  lgPlus: 2,
+                  xl: 2,
+                },
               }}
             >
               <Box component="section" sx={{ mb: 1 }}>

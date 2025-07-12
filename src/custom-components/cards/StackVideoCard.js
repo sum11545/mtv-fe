@@ -56,7 +56,7 @@ const StackVideoCard = ({
     }
 
     return videoId
-      ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+      ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
       : "/images/404-not-found.jpg";
   };
 
