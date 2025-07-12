@@ -255,7 +255,9 @@ export const LanguageComponet = ({
       });
     }
   };
-
+  const languageCount = contentLanguages.filter(
+    (lang) => lang.id !== selectedContent?.language?.id
+  ).length;
   return (
     <>
       <Box
@@ -310,7 +312,7 @@ export const LanguageComponet = ({
                   transition: "border-color 0.2s ease",
                 }}
               >
-                +{contentLanguages.length}
+                +{languageCount}
                 {showLanguages && (
                   <LanguagePopUp
                     languageList={contentLanguages}
@@ -433,7 +435,7 @@ export const LanguageComponet = ({
                     },
                   }}
                 >
-                  +{contentLanguages.length}
+                  +{languageCount}
                 </Box>
               </Tooltip>
             ))}
