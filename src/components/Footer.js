@@ -453,12 +453,7 @@ const MobileFooter = (props) => {
           <Typography
             color="primary.main"
             variant="footerLinks"
-            onClick={() =>
-              window.open(
-                "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html",
-                "_blank"
-              )
-            }
+            onClick={() => window.open("https://moneytv.live/about/", "_blank")}
             sx={{
               ...fontStyles.openSans.regular,
               cursor: "pointer",
@@ -863,10 +858,7 @@ const Footer = () => {
               color="primary.main"
               variant="footerLinks"
               onClick={() =>
-                window.open(
-                  "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html",
-                  "_blank"
-                )
+                window.open("https://moneytv.live/about/", "_blank")
               }
               sx={{
                 ...fontStyles.openSans.regular,
