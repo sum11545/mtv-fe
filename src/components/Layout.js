@@ -145,14 +145,12 @@ const Layout = ({ children }) => {
     if (pathname === "/") return "Home";
     if (pathname === "/search") return "Search";
     if (pathname === "/[section]" && query.section) {
-      return query.section
-        .replace(/-/g, " ")
-        .replace(/\b\w/g, (l) => l.toUpperCase());
+      let currentSectionName = sessionStorage.getItem("sectionName");
+      return currentSectionName;
     }
     if (pathname === "/[section]/[video]" && query.section) {
-      return query.section
-        .replace(/-/g, " ")
-        .replace(/\b\w/g, (l) => l.toUpperCase());
+      let currentSectionName = sessionStorage.getItem("sectionName");
+      return currentSectionName;
     }
     if (pathname === "/shorts/[short]") return "Shorts";
     if (pathname === "/privacy-policy") return "Privacy Policy";
