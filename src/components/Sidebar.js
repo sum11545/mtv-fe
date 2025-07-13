@@ -62,7 +62,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
         const mappedItems = data.map((item) => ({
           text: item.name,
           section_slug: item.section_slug,
-          icon: <DynamicIcon keyword={item.keyword} style={iconStyle} />, // Use DynamicIcon with theme-aware color
+          icon: <DynamicIcon keyword={item.icon} style={iconStyle} />, // Use DynamicIcon with theme-aware color
           keyword: item.keyword,
         }));
 
