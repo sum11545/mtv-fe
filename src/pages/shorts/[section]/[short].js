@@ -271,7 +271,7 @@ const ShortItem = React.memo(
                 <iframe
                   key={`mobile-${short.id}-${index}`}
                   src={getEmbedUrl(short?.content_details[0]?.url)}
-                  title={short?.content_details[0]?.name}
+                  title={short?.name}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
@@ -309,7 +309,7 @@ const ShortItem = React.memo(
                   typography: "shortTitleOfShortDetailPage",
                 }}
               >
-                {short?.content_details[0]?.name}
+                {short?.name}
               </Typography>
             </Box>
 
@@ -402,7 +402,7 @@ const ShortItem = React.memo(
               <iframe
                 key={`desktop-${short.id}-${index}`}
                 src={getEmbedUrl(short?.content_details[0]?.url)}
-                title={short?.content_details[0]?.name}
+                title={short?.name}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
@@ -446,7 +446,7 @@ const ShortItem = React.memo(
                 pl: 3,
               }}
             >
-              {short?.content_details[0]?.name}
+              {short?.name}
             </Typography>
             <Divider sx={{ mb: 2 }} />
             <Box
@@ -576,7 +576,7 @@ const ShortItem = React.memo(
 
 const Short = () => {
   const router = useRouter();
-  const { short } = router.query;
+  const { short, section } = router.query;
   const { fetchShortDetailPageData, loading } = useMain();
 
   // State management
@@ -629,7 +629,7 @@ const Short = () => {
 
   // Load data - Prevent infinite API calls
   useEffect(() => {
-    if (!short || loading) {
+    if (!short || !section) {
       return;
     }
 
@@ -650,7 +650,7 @@ const Short = () => {
         lastFetchedShort.current = short;
         console.log("Fetching data for short:", short);
 
-        const res = await fetchShortDetailPageData(short);
+        const res = await fetchShortDetailPageData(section, short);
 
         let shortsArray = [];
         if (
@@ -693,7 +693,7 @@ const Short = () => {
     };
 
     loadData();
-  }, [short, loading]);
+  }, [short]);
 
   // Set share URL only once
   useEffect(() => {
@@ -748,7 +748,11 @@ const Short = () => {
       // Update URL without triggering data refetch
       const newShort = allShorts[index];
       if (newShort && newShort.id !== short) {
-        window.history.replaceState(null, "", `/shorts/${newShort.id}`);
+        window.history.replaceState(
+          null,
+          "",
+          `/shorts/${section}/${newShort.id}`
+        );
       }
 
       setTimeout(() => {
@@ -812,7 +816,11 @@ const Short = () => {
 
       const newShort = allShorts[newIndex];
       if (newShort && newShort.id !== short) {
-        window.history.replaceState(null, "", `/shorts/${newShort.id}`);
+        window.history.replaceState(
+          null,
+          "",
+          `/shorts/${section}/${newShort.id}`
+        );
       }
     }
 
@@ -933,7 +941,7 @@ const Short = () => {
       >
         <Backdrop
           sx={{ background: "transparent", zIndex: 100, height: "100vh" }}
-          open={true}
+          open={loading}
         >
           <Box
             sx={{
@@ -991,6 +999,7 @@ const Short = () => {
           open={shareDialogOpen}
           onClose={() => setShareDialogOpen(false)}
           url={shareUrl}
+          title={selectedShort?.name}
           videoUrl={selectedShort?.content_details[0]?.url}
         />
       </Box>
@@ -1127,6 +1136,7 @@ const Short = () => {
         open={shareDialogOpen}
         onClose={() => setShareDialogOpen(false)}
         url={shareUrl}
+        title={selectedShort?.name}
         videoUrl={selectedShort?.content_details[0]?.url}
       />
     </>

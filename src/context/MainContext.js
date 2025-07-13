@@ -68,11 +68,13 @@ export const MainProvider = ({ children }) => {
     }
   };
 
-  const fetchShortDetailPageData = async (videoId) => {
+  const fetchShortDetailPageData = async (sectionName, videoId) => {
     try {
       setLoading(true);
       setError(null);
-      const response = await axiosInstance.get(`/shorts/${videoId}`);
+      const response = await axiosInstance.get(
+        `/shorts/${sectionName}/${videoId}`
+      );
       return response;
     } catch (err) {
       setError(err.message);
