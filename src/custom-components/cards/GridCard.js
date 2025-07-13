@@ -202,7 +202,7 @@ const GridCard = ({ video, id, sectionData, section }) => {
       // If content type is short then i am redirecting it to static shorts/id page i.e. short detail page
       if (isShort) {
         let shortId = video?.id;
-        router.push(`/shorts/${shortId}`);
+        router.push(`/shorts/${section.slug}/${shortId}`);
       } else {
         // If content type is not short then i am redirecting it to dynamic section/contentId page i.e. video detail page
 
@@ -309,7 +309,7 @@ const GridCard = ({ video, id, sectionData, section }) => {
             <CardMedia
               component="img"
               image={getThumbnailUrl()} // currently we don't have to show carousel in each content that's why mapping 0th element
-              alt={video.name}
+              alt={selectedContent?.name}
               sx={{
                 width: "100%",
                 height: "100%",
