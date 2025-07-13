@@ -145,14 +145,12 @@ const Layout = ({ children }) => {
     if (pathname === "/") return "Home";
     if (pathname === "/search") return "Search";
     if (pathname === "/[section]" && query.section) {
-      return query.section
-        .replace(/-/g, " ")
-        .replace(/\b\w/g, (l) => l.toUpperCase());
+      let currentSectionName = sessionStorage.getItem("sectionName");
+      return currentSectionName;
     }
     if (pathname === "/[section]/[video]" && query.section) {
-      return query.section
-        .replace(/-/g, " ")
-        .replace(/\b\w/g, (l) => l.toUpperCase());
+      let currentSectionName = sessionStorage.getItem("sectionName");
+      return currentSectionName;
     }
     if (pathname === "/shorts/[short]") return "Shorts";
     if (pathname === "/privacy-policy") return "Privacy Policy";
@@ -182,7 +180,6 @@ const Layout = ({ children }) => {
       query.section &&
       query.video
     ) {
-      // router.push(`/${query.section}/${query.video}`);
       router.push({
         pathname: `/${query.section}/${query.video}`,
         query: {
@@ -227,13 +224,14 @@ const Layout = ({ children }) => {
             setCachedBackLabel(`Back to ${previousLabel}`);
             setIsNavigatingBack(true);
 
-            // Store the route to navigate to before updating history
+            // Remove current route from history BEFORE navigating
+            setNavigationHistory((prev) => prev.slice(0, -1));
+
+            // Store the route to navigate to
             const routeToNavigate = { ...previousRoute };
             try {
               // Navigate to the previous route
               navigateToRoute(routeToNavigate);
-              // Remove current route from history
-              setNavigationHistory((prev) => prev.slice(0, -1));
             } catch (error) {
               console.error("Navigation failed, falling back to home:", error);
               router.push("/");
@@ -254,10 +252,6 @@ const Layout = ({ children }) => {
   // Track route changes and build navigation history
   useEffect(() => {
     const handleRouteChangeComplete = (url) => {
-      // Reset navigation state when route change completes
-      setIsNavigatingBack(false);
-      setCachedBackLabel(null);
-
       const currentRoute = {
         pathname: router.pathname,
         query: router.query,
@@ -266,6 +260,11 @@ const Layout = ({ children }) => {
       };
 
       setNavigationHistory((prev) => {
+        // If we're navigating back, don't add the route to history
+        if (isNavigatingBack) {
+          return prev;
+        }
+
         // Don't add the same route consecutively
         const lastRoute = prev[prev.length - 1];
         if (
@@ -280,10 +279,14 @@ const Layout = ({ children }) => {
         const newHistory = [...prev, currentRoute];
         return newHistory.slice(-10);
       });
+
+      // Reset navigation state after route change completes
+      setIsNavigatingBack(false);
+      setCachedBackLabel(null);
     };
 
     // Add current route to history on component mount
-    if (router.isReady) {
+    if (router.isReady && !isNavigatingBack) {
       handleRouteChangeComplete(router.asPath);
     }
 
@@ -301,7 +304,13 @@ const Layout = ({ children }) => {
       router.events.off("routeChangeComplete", handleRouteChangeComplete);
       router.events.off("routeChangeError", handleRouteChangeError);
     };
-  }, [router.isReady, router.pathname, router.query, router.asPath]);
+  }, [
+    router.isReady,
+    router.pathname,
+    router.query,
+    router.asPath,
+    isNavigatingBack,
+  ]);
 
   useEffect(() => {
     setMounted(true);
