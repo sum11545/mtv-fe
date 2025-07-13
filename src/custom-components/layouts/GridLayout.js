@@ -340,6 +340,7 @@ const GridLayout = ({
               </Box>
             );
           } else if (group.type === "section") {
+            // if the section is Advertisement
             const video = group.content;
             return (
               <Grid

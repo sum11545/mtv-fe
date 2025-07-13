@@ -309,7 +309,7 @@ const GridCard = ({ video, id, sectionData, section }) => {
             <CardMedia
               component="img"
               image={getThumbnailUrl()} // currently we don't have to show carousel in each content that's why mapping 0th element
-              alt={video.name}
+              alt={selectedContent?.name}
               sx={{
                 width: "100%",
                 height: "100%",

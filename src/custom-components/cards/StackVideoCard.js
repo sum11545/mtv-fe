@@ -32,12 +32,12 @@ const StackVideoCard = ({
 
   // Check if text is truncated (has ellipsis)
   useEffect(() => {
-    if (textRef.current && video?.name) {
+    if (textRef.current && video?.content_details[0]?.name) {
       const element = textRef.current;
       const isOverflowing = element.scrollHeight > element.clientHeight;
       setShowTooltip(isOverflowing);
     }
-  }, [video?.name]);
+  }, [video?.content_details[0]?.name]);
 
   const getThumbnailUrl = () => {
     const details = video?.content_details?.[0];
