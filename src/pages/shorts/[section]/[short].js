@@ -163,7 +163,7 @@ const getEmbedUrl = (url) => {
       videoId = url.split("shorts/")[1];
     }
     videoId = videoId.split(/[?&]/)[0];
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1&rel=0`;
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&controls=1&rel=0`;
   }
   return url;
 };
