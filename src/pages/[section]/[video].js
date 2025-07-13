@@ -181,7 +181,7 @@ const VideoDetailPage = () => {
         // Wait for layout to complete
         requestAnimationFrame(() => {
           const element = leftContentRef.current;
-          const height = element.getBoundingClientRect().height;
+          const height = element?.getBoundingClientRect().height;
 
           setLeftContentHeight(height);
         });
@@ -225,6 +225,24 @@ const VideoDetailPage = () => {
             (v) => v?.language?.id === router.query.language
           )
         );
+
+        // For showing the section name in back to button text in layout file
+        let sec1 = JSON.parse(localStorage.getItem("sections")) || [];
+        let sec2 =
+          res?.data?.response?.sections?.map((item) => ({
+            id: item.id,
+            name: item.name,
+            slug: item.slug,
+          })) || [];
+
+        let mergedSections = [...sec1, ...sec2].reduce((acc, current) => {
+          if (!acc.some((item) => item.slug === current.slug)) {
+            acc.push(current);
+          }
+          return acc;
+        }, []);
+
+        localStorage.setItem("sections", JSON.stringify(mergedSections));
       } catch (err) {
         console.error("Error fetching home data:", err);
       }

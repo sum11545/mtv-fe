@@ -142,8 +142,6 @@ const GridLayout = ({
     // Find the section by index to get its slug
     let currentSection = sectionData.find((item) => item.id == section.id);
     if (currentSection && currentSection.slug) {
-      // storing current section name in session storage inorder to access and show in back to button text in layout file
-      sessionStorage.setItem("sectionName", currentSection.name);
       router.push(`/${currentSection.slug}`);
     }
   };
