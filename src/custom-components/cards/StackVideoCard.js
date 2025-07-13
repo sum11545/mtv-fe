@@ -63,14 +63,14 @@ const StackVideoCard = ({
   const handleCardClick = () => {
     // if video type is ad then don't redirect it to any ad url
     if (video.type == "ad_content") {
-      window.open(video.content_details[0]?.cta_url, "_blank");
+      window.open(selectedContent?.cta_url, "_blank");
     } else {
-      let isShort = video?.content_details[0]?.content_type_id == "CTSR"; // CTSR is for shorts.
+      let isShort = selectedContent?.content_type_id == "CTSR"; // CTSR is for shorts.
 
       // If content type is short then redirect to static shorts/id page
       if (isShort) {
         let shortId = video?.id;
-        router.push(`/shorts/${shortId}`);
+        router.push(`/shorts/${section?.slug}/${shortId}`);
       } else {
         // If content type is not short then redirect to dynamic section/contentId page
 
@@ -79,16 +79,6 @@ const StackVideoCard = ({
           router.push(
             `/${section.slug}/${video.id}?language=${selectedContent.language.id}`
           );
-          // .then(() => {
-          //   router.replace(
-          //     {
-          //       pathname: `/${section.slug}/${video.id}`,
-          //       query: { language: selectedContent.language.id },
-          //     },
-          //     undefined,
-          //     { shallow: true }
-          //   );
-          // });
 
           return;
         }
@@ -149,7 +139,7 @@ const StackVideoCard = ({
         <Box
           component={"img"}
           src={getThumbnailUrl()}
-          alt={video.name}
+          alt={selectedContent.name}
           sx={{
             position: "absolute",
             top: 0,
@@ -179,7 +169,7 @@ const StackVideoCard = ({
           }}
         >
           <Tooltip
-            title={showTooltip ? video?.name : ""}
+            title={showTooltip ? selectedContent?.name : ""}
             arrow
             placement="bottom"
           >
@@ -201,7 +191,7 @@ const StackVideoCard = ({
                 ...fontStyles.openSans.bold,
               }}
             >
-              {video?.name}
+              {selectedContent?.name}
             </Typography>
           </Tooltip>
         </Box>
