@@ -33,6 +33,8 @@ import WhatsAppIcon from "@/components/icons/WhatsAppIcon";
 import { DynamicIcon } from "@/components/icons";
 import { useContent } from "@/hooks/useContent";
 import { LanguageComponet } from "@/custom-components/LanguageComponet";
+import truncate from "truncate-html";
+import DOMPurify from "dompurify";
 
 const ActionButton = ({
   icon,
@@ -148,12 +150,17 @@ const VideoDetailPage = () => {
   const shareConfig = getButtonConfig("share");
   const copyConfig = getButtonConfig("copy");
 
-  const shouldTruncate =
-    isMobile && selectedContent?.description?.length > maxChars;
+  const cleanHtml = DOMPurify.sanitize(selectedContent?.description, {
+    ALLOWED_TAGS: ["b", "i", "em", "strong", "a", "ul", "ol", "li", "p", "br"],
+    ALLOWED_ATTR: ["href", "target", "rel"],
+  });
+
+  const shouldTruncate = isMobile && cleanHtml.length > maxChars;
+
   const displayText =
     shouldTruncate && !showMore
-      ? selectedContent?.description?.slice(0, maxChars) + "..."
-      : selectedContent?.description;
+      ? truncate(cleanHtml, maxChars, { byWords: false }) + "..."
+      : cleanHtml;
 
   const toggleShowMore = () => {
     setShowMore((prev) => !prev);
@@ -573,62 +580,60 @@ const VideoDetailPage = () => {
               {/* Video Description */}
               <Box sx={{ mb: 2 }}>
                 <Typography
+                  component="div"
                   variant="videoDescriptionOfVideoDetailPage"
                   sx={{
                     whiteSpace: "pre-wrap",
                     ...fontStyles.sfPro.display.regular,
                     color: theme.palette.background.videoDetailDescription,
                   }}
-                >
-                  {displayText}
-                  {shouldTruncate && (
-                    <Button
-                      onClick={toggleShowMore}
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.25rem",
-                        background: "none",
-                        border: "none",
+                  dangerouslySetInnerHTML={{ __html: displayText }}
+                ></Typography>
+                {shouldTruncate && (
+                  <Button
+                    onClick={toggleShowMore}
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "0.25rem",
+                      background: "none",
+                      border: "none",
+                      color: isDarkMode
+                        ? theme.palette.background.videoDetailDescription
+                        : theme.palette.primary.main,
+                      cursor: "pointer",
+                      padding: 0,
+                      textAlign: "center",
+                      margin: "auto",
+                      pt: "1rem",
+                      "&:hover": {
+                        backgroundColor: "transparent",
+                        color: isDarkMode ? "#fff" : "black",
+                        "& svg": {
+                          transform: "translateY(2px)",
+                          color: isDarkMode ? "#fff" : "black",
+                        },
+                      },
+                      "& svg": {
+                        transition: "all 0.3s ease",
                         color: isDarkMode
                           ? theme.palette.background.videoDetailDescription
                           : theme.palette.primary.main,
-                        cursor: "pointer",
-                        padding: 0,
-                        textAlign: "center",
-                        margin: "auto",
-                        pt: "1rem",
-                        "&:hover": {
-                          backgroundColor: "transparent",
-                          color: isDarkMode ? "#fff" : "black",
-                          "& svg": {
-                            transform: "translateY(2px)",
-                            color: isDarkMode ? "#fff" : "black",
-                          },
-                        },
-                        "& svg": {
-                          transition: "all 0.3s ease",
-                          color: isDarkMode
-                            ? theme.palette.background.videoDetailDescription
-                            : theme.palette.primary.main,
-                        },
-                        typography: "readMoreText",
-                        ...fontStyles.sfPro.display.regular,
+                      },
+                      typography: "readMoreText",
+                      ...fontStyles.sfPro.display.regular,
+                    }}
+                  >
+                    {showMore ? "Read Less" : "Read More"}
+                    <KeyboardArrowDown
+                      sx={{
+                        fontSize: "1.6rem",
+                        transform: showMore ? "rotate(180deg)" : "rotate(0deg)", // optional: rotate for 'Read Less'
+                        transition: "transform 0.3s ease",
                       }}
-                    >
-                      {showMore ? "Read Less" : "Read More"}
-                      <KeyboardArrowDown
-                        sx={{
-                          fontSize: "1.6rem",
-                          transform: showMore
-                            ? "rotate(180deg)"
-                            : "rotate(0deg)", // optional: rotate for 'Read Less'
-                          transition: "transform 0.3s ease",
-                        }}
-                      />
-                    </Button>
-                  )}
-                </Typography>
+                    />
+                  </Button>
+                )}
               </Box>
             </Box>
             {/* Advertisement Section */}

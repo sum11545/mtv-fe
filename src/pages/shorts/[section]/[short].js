@@ -163,7 +163,7 @@ const getEmbedUrl = (url) => {
       videoId = url.split("shorts/")[1];
     }
     videoId = videoId.split(/[?&]/)[0];
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=1&rel=0`;
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&controls=1&rel=0`;
   }
   return url;
 };
@@ -576,7 +576,7 @@ const ShortItem = React.memo(
 
 const Short = () => {
   const router = useRouter();
-  const { short } = router.query;
+  const { short, section } = router.query;
   const { fetchShortDetailPageData, loading } = useMain();
 
   // State management
@@ -629,7 +629,7 @@ const Short = () => {
 
   // Load data - Prevent infinite API calls
   useEffect(() => {
-    if (!short || loading) {
+    if (!short || !section) {
       return;
     }
 
@@ -650,7 +650,7 @@ const Short = () => {
         lastFetchedShort.current = short;
         console.log("Fetching data for short:", short);
 
-        const res = await fetchShortDetailPageData(short);
+        const res = await fetchShortDetailPageData(section, short);
 
         let shortsArray = [];
         if (
@@ -693,7 +693,7 @@ const Short = () => {
     };
 
     loadData();
-  }, [short, loading]);
+  }, [short]);
 
   // Set share URL only once
   useEffect(() => {
@@ -748,7 +748,11 @@ const Short = () => {
       // Update URL without triggering data refetch
       const newShort = allShorts[index];
       if (newShort && newShort.id !== short) {
-        window.history.replaceState(null, "", `/shorts/${newShort.id}`);
+        window.history.replaceState(
+          null,
+          "",
+          `/shorts/${section}/${newShort.id}`
+        );
       }
 
       setTimeout(() => {
@@ -812,7 +816,11 @@ const Short = () => {
 
       const newShort = allShorts[newIndex];
       if (newShort && newShort.id !== short) {
-        window.history.replaceState(null, "", `/shorts/${newShort.id}`);
+        window.history.replaceState(
+          null,
+          "",
+          `/shorts/${section}/${newShort.id}`
+        );
       }
     }
 
@@ -933,7 +941,7 @@ const Short = () => {
       >
         <Backdrop
           sx={{ background: "transparent", zIndex: 100, height: "100vh" }}
-          open={true}
+          open={loading}
         >
           <Box
             sx={{

@@ -15,7 +15,7 @@ import { useMain } from "@/context/MainContext";
 import { fontSize, fontStyles } from "@/theme/theme";
 import { DynamicIcon } from "@/components/icons";
 
-const SliderCard = ({ short, sectionIndex, id, sectionData }) => {
+const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
   const router = useRouter();
   const [formattedDate, setFormattedDate] = useState("recently");
   const [mounted, setMounted] = useState(false);
@@ -65,7 +65,7 @@ const SliderCard = ({ short, sectionIndex, id, sectionData }) => {
       // If content type is short then i am redirecting it to static shorts/id page i.e. short detail page
       if (isShort) {
         let shortId = short?.id;
-        router.push(`/shorts/${shortId}`);
+        router.push(`/shorts/${section?.slug}/${shortId}`);
       } else {
         // If content type is not short then i am redirecting it to dynamic section/contentId page i.e. video detail page
 
