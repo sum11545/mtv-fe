@@ -145,14 +145,14 @@ const Layout = ({ children }) => {
     if (pathname === "/") return "Home";
     if (pathname === "/search") return "Search";
     if (pathname === "/[section]" && query.section) {
-      return query.section
-        .replace(/-/g, " ")
-        .replace(/\b\w/g, (l) => l.toUpperCase());
+      let storedSections = JSON.parse(localStorage.getItem("sections"));
+      let section = storedSections?.find((item) => item.slug == query.section);
+      return section?.name;
     }
     if (pathname === "/[section]/[video]" && query.section) {
-      return query.section
-        .replace(/-/g, " ")
-        .replace(/\b\w/g, (l) => l.toUpperCase());
+      let storedSections = JSON.parse(localStorage.getItem("sections"));
+      let section = storedSections?.find((item) => item.slug == query.section);
+      return section?.name;
     }
     if (pathname === "/shorts/[short]") return "Shorts";
     if (pathname === "/privacy-policy") return "Privacy Policy";
@@ -204,7 +204,7 @@ const Layout = ({ children }) => {
     // Show back button for pages that should have navigation
     const shouldShowBackButton = [
       "/[section]/[video]",
-      // "/shorts/[short]",
+      // "/shorts/[section]/[short]",
       "/[section]",
       "/search",
       "/terms-of-service",
