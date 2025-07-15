@@ -26,6 +26,8 @@ body {
 html {
   font-synthesis: none;
   text-size-adjust: 100%;
+  /*Disables double-tap zoom on some mobile browsers*/
+  touch-action: manipulation;
 }
 
 /* Font loading states to minimize FOUC */
