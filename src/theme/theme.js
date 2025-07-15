@@ -428,8 +428,8 @@ const typography = {
   stackCardVideoTitle: {
     fontSize: "12px",
 
-    "@media (min-width:1920px)": {
-      fontSize: "16px",
+    "@media (max-width:600px)": {
+      fontSize: "13px", // md (<=600px)
     },
   },
 

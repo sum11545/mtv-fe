@@ -174,7 +174,7 @@ const StackVideoCard = ({
             placement="bottom"
           >
             <Typography
-              variant="body2"
+              variant="stackCardVideoTitle"
               ref={textRef}
               sx={{
                 overflow: "hidden",
@@ -182,10 +182,8 @@ const StackVideoCard = ({
                 display: "-webkit-box",
                 WebkitLineClamp: 2,
                 WebkitBoxOrient: "vertical",
-                wordBreak: "break-all",
                 lineHeight: 1.2,
                 mb: 0.5,
-                fontSize: fontSize.typography.caption,
                 color: (theme) =>
                   theme.palette.mode === "light" ? "black" : "inherit",
                 ...fontStyles.openSans.bold,
