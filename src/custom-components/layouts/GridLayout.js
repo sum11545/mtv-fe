@@ -150,7 +150,7 @@ const GridLayout = ({
     <Box
       sx={{
         background: bgColor,
-        px: router.pathname == "/" ? 2.5 : "", // for alternate background color issue
+        px: router.pathname == "/" ? (isMobile ? "10px" : "20px") : "", // for alternate background color issue
         pb: {
           md: 0,
           xs: router.pathname === "/" ? "25px" : 0,
@@ -179,7 +179,12 @@ const GridLayout = ({
             flex: isMobile ? "1 1 auto" : "0 1 auto",
             minWidth: 0,
             width: isMobile ? "calc(100% - 120px)" : "calc(100% - 150px)",
-            px: router.pathname === "/[section]" ? 2.5 : "", // for alternate background color issue
+            px:
+              router.pathname === "/[section]"
+                ? isMobile
+                  ? "10px"
+                  : "20px"
+                : "", // for alternate background color issue
           }}
         >
           <CustomTooltip text={section.name}>
@@ -192,7 +197,7 @@ const GridLayout = ({
                 fontFamily: isAd
                   ? fontStyles.openSans.bold
                   : fontStyles.montserrat.bold,
-                marginLeft: "10px",
+                marginLeft: !isMobile && "10px",
                 typography: isAd ? "advertisementTitle" : "sectionTitle",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
@@ -297,7 +302,12 @@ const GridLayout = ({
                 sx={{
                   backgroundColor: getRowBackgroundColor(rowIndex),
                   mb: groupIndex < groupedContent.length - 1 ? 2 : 0,
-                  px: router.pathname === "/[section]" ? 2.5 : "", // for alternate background color issue
+                  px:
+                    router.pathname === "/[section]"
+                      ? isMobile
+                        ? "10px"
+                        : "20px"
+                      : "", // for alternate background color issue
                 }}
               >
                 <Grid container spacing={2}>
@@ -349,7 +359,12 @@ const GridLayout = ({
                 key={`section-${groupIndex}`}
                 sx={{
                   mb: 2,
-                  px: router.pathname === "/[section]" ? 2.5 : "", // for alternate background color issue
+                  px:
+                    router.pathname === "/[section]"
+                      ? isMobile
+                        ? "10px"
+                        : "20px"
+                      : "", // for alternate background color issue
                 }}
               >
                 <Grid item xs={12}>
