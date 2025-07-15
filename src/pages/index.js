@@ -104,7 +104,7 @@ export default function Home() {
                   section={section}
                   sectionData={sectionData}
                   key={`${section.type}-${index}`}
-                  styles={{ px: 2.5 }}
+                  styles={{ px: isMobile ? "10px" : "20px" }}
                 />
               );
             default:
