@@ -748,6 +748,17 @@ const typography = {
   readMoreText: {
     fontSize: "20px",
   },
+
+  // privacy policy and terms and conditions font
+  privacyPolicyText: {
+    fontSize: "16px",
+    wordSpacing: "0.2rem",
+  },
+
+  termsText: {
+    fontSize: "16px",
+    wordSpacing: "0.2rem",
+  },
 };
 
 const customHeightsForGridCard = {

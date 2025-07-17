@@ -20,18 +20,24 @@ import { useContent } from "@/hooks/useContent";
 
 const MINI_DRAWER_WIDTH = 70;
 
-const Main = styled("main")(({ theme, isShortsPageMobile }) => ({
-  flexGrow: 1,
-  width: `calc(100% - ${MINI_DRAWER_WIDTH}px)`,
-  minHeight: "80vh",
-  backgroundColor: theme.palette.background.default,
-  display: "flex",
-  flexDirection: "column",
-  [theme.breakpoints.down("sm")]: {
-    width: "100%",
-    marginTop: isShortsPageMobile ? 0 : theme.spacing(15),
-  },
-}));
+const Main = styled("main")(
+  ({ theme, isShortsPageMobile, isPrivacyPolicyPage, isTermsPage }) => ({
+    flexGrow: 1,
+    width: `calc(100% - ${MINI_DRAWER_WIDTH}px)`,
+    minHeight: "80vh",
+    backgroundColor: theme.palette.background.default,
+    display: "flex",
+    flexDirection: "column",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+      marginTop: isShortsPageMobile
+        ? 0
+        : isPrivacyPolicyPage || isTermsPage
+        ? 55
+        : theme.spacing(15),
+    },
+  })
+);
 
 const TabsContainer = styled(Box)(({ theme }) => ({
   position: "fixed",
@@ -127,6 +133,9 @@ const Layout = ({ children }) => {
 
   // Check if current page is shorts page
   const isShortsPage = router.pathname.includes("/shorts");
+
+  const isPrivacyPolicyPage = router.pathname.includes("/privacy-policy");
+  const isTermsPage = router.pathname.includes("/terms-of-use");
 
   // Get the previous route from navigation history
   const getPreviousRoute = () => {
@@ -393,6 +402,8 @@ const Layout = ({ children }) => {
               ? "70px"
               : "60px",
           }}
+          isPrivacyPolicyPage
+          isTermsPage
         >
           {children}
           {/* <NoVideosPage /> */}
