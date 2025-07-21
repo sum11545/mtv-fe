@@ -8,12 +8,14 @@ import Layout from "../components/Layout";
 import { initFontLoading } from "../utils/fontLoader";
 import "../../styles/global.css";
 import "../../styles/font.css";
+import Script from "next/script";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
 export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID;
 
   React.useEffect(() => {
     // Initialize font loading detection to minimize FOUC
@@ -54,6 +56,21 @@ export default function MyApp(props) {
           />
           <link rel="icon" href="/assets/icons/favicon.png" />
         </Head>
+
+        {/* Google Analytics */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '${GA_MEASUREMENT_ID}');
+      `}
+        </Script>
+
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
         <Layout>
