@@ -7,20 +7,22 @@ import {
   ListItemText,
   Link,
   Box,
+  ListItemIcon,
 } from "@mui/material";
 import { fontStyles } from "@/theme/theme";
+import { Circle } from "@mui/icons-material";
 
 const TermsAndConditions = () => {
   return (
     <Container
       maxWidth="md"
-      sx={{ py: 4, width: "800px", maxWidth: "100%", textAlign: "justify" }}
+      sx={{ py: 2, width: "800px", maxWidth: "100%", textAlign: "justify" }}
     >
       <Typography
-        variant="h3"
-        component="h1"
-        textAlign={"center"}
-        color="primary.main"
+        variant="h5"
+        component="h5"
+        textAlign="center"
+        color="text.primary"
         gutterBottom
         sx={{
           ...fontStyles.openSans.bold,
@@ -35,21 +37,18 @@ const TermsAndConditions = () => {
           ...fontStyles.openSans.regular,
         }}
         variant="termsText"
-        gutterBottom
+        paragraph
+        mb={4}
       >
         Last updated on: 11th July, 2025
       </Typography>
 
       <Typography
         variant="termsText"
-        lineHeight={1.8}
-        mt={4}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
+        sx={{ ...fontStyles.openSans.regular, mb: 2 }}
         paragraph
       >
-        Thank you for using / visiting{" "}
+        Thank you for using / visiting
         <Link
           href="https://www.moneytv.live"
           color="primary.main"
@@ -65,22 +64,15 @@ const TermsAndConditions = () => {
       </Typography>
       <Typography
         variant="termsText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
+        sx={{ ...fontStyles.openSans.regular, mb: 2 }}
         paragraph
       >
         By using the Platform including but not limited to accessing or visiting
         or browsing the website, You indicate your acceptance to these Terms and
         Conditions
         <Typography
-          component={"span"}
-          sx={{
-            ...fontStyles.openSans.regular,
-            fontWeight: 700,
-            ml: 0.25,
-          }}
+          variant="termsText"
+          sx={{ ...fontStyles.openSans.regular, fontWeight: 700, ml: 0.6 }}
         >
           (Terms)
         </Typography>{" "}
@@ -90,10 +82,7 @@ const TermsAndConditions = () => {
       </Typography>
       <Typography
         variant="termsText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
+        sx={{ ...fontStyles.openSans.regular, mb: 2 }}
         paragraph
       >
         The reference to the term 'Platform' includes, but is not limited to,
@@ -104,11 +93,7 @@ const TermsAndConditions = () => {
       </Typography>
       <Typography
         variant="termsText"
-        lineHeight={1.8}
-        // mb={2}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
+        sx={{ ...fontStyles.openSans.regular, mb: 2 }}
         paragraph
       >
         Additional agreement(s) like User or Service Agreement may apply to use
@@ -122,14 +107,12 @@ const TermsAndConditions = () => {
         variant="termsText"
         component="h2"
         mb={2}
-        gutterBottom
         sx={{
           ...fontStyles.openSans.regular,
           fontWeight: 700,
         }}
       >
         <Typography
-          component={"span"}
           variant="termsText"
           sx={{
             ...fontStyles.openSans.regular,
@@ -141,15 +124,13 @@ const TermsAndConditions = () => {
       </Typography>
       <Typography
         variant="termsText"
-        component="h3"
-        gutterBottom
         sx={{
           ...fontStyles.openSans.regular,
         }}
       >
-        1.1.{" "}
+        1.1.
         <Typography
-          component={"span"}
+          variant="termsText"
           sx={{ mx: 1, ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
           General:
@@ -157,7 +138,6 @@ const TermsAndConditions = () => {
       </Typography>
       <Typography
         variant="termsText"
-        lineHeight={1.8}
         sx={{
           ...fontStyles.openSans.regular,
         }}
@@ -169,22 +149,20 @@ const TermsAndConditions = () => {
       </Typography>
       <Typography
         variant="termsText"
-        component="h3"
-        gutterBottom
         sx={{
           ...fontStyles.openSans.regular,
         }}
       >
         1.2.
         <Typography
-          component={"span"}
+          variant="termsText"
           sx={{ mx: 1, ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
           Platform Usage:
         </Typography>
       </Typography>
-      <List>
-        <ListItem sx={{ mt: "-10px" }}>
+      <List sx={{ pl: 0, mb: 1, pt: 0, pb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -194,7 +172,7 @@ const TermsAndConditions = () => {
             primary="1.2.1. MoneyTV permits You to use the Platform rightfully subject to the validity of the Terms."
           />
         </ListItem>
-        <ListItem sx={{ mt: "-10px" }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -204,7 +182,7 @@ const TermsAndConditions = () => {
             primary="1.2.2. Visitor who wishes to use one or more of the services and/or one or more of the products presented on the Platform can contact us to ascertain the contractual obligations or conditions and charges applicable to those products and/or services."
           />
         </ListItem>
-        <ListItem sx={{ mt: "-10px" }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -214,7 +192,7 @@ const TermsAndConditions = () => {
             primary="1.2.3. If You are interested to use Platform and/or other services, in order to have full functionality or additional features of the Platform, You may be required to register or setup an account and sign additional agreement(s) like User or Service Agreement with the Company to become premium user on the MoneyTV Platform. In case of a conflict between the Terms and the specific conditions governing stated under the relevant User or Service Agreement, the specific conditions of relevant User or Service Agreement shall prevail."
           />
         </ListItem>
-        <ListItem sx={{ mt: "-10px" }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -224,7 +202,7 @@ const TermsAndConditions = () => {
             primary="1.2.4. Upon your successful onboarding to the Platform, the Company would grant access to the Platform or certain parts of it, which would allow You to use additional features of the Platform."
           />
         </ListItem>
-        <ListItem sx={{ mt: "-10px" }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -234,17 +212,17 @@ const TermsAndConditions = () => {
             primary="1.2.5. You acknowledge that you are legally eligible and has the skill and resources necessary to gain access to this Platform and use it. In case, You are accessing the platform on behalf of the entity, necessary authorization is obtained from such entity to abide by the Terms."
           />
         </ListItem>
-        <ListItem sx={{ mt: "-10px" }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
               ...fontStyles.openSans.regular,
               textAlign: "justify",
             }}
-            primary="1.2.6. You represent that all the information provided by You are true, correct, and accurate and You shall inform us of any change / amendment in such information from time to time. In addition, in case, you are using this Platform on behalf of the entity, you agree to keep us updated of any change / amendment in such authorization from such entity"
+            primary="1.2.6. You represent that all the information provided by You are true, correct, and accurate and You shall inform us of any change / amendment in such information from time to time. In addition, in case, you are using this Platform on behalf of the entity, you agree to keep us updated of any change / amendment in such authorization from such entity."
           />
         </ListItem>
-        <ListItem sx={{ mt: "-10px" }}>
+        <ListItem sx={{ py: 0, px: 0, pt: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -254,8 +232,8 @@ const TermsAndConditions = () => {
             primary="1.2.7. You are responsible for:"
           />
         </ListItem>
-        <List sx={{ pl: 4 }}>
-          <ListItem sx={{ mt: "-20px" }}>
+        <List sx={{ pl: 4, py: 0 }}>
+          <ListItem sx={{ py: 0, px: 0 }}>
             <ListItemText
               primaryTypographyProps={{
                 variant: "termsText",
@@ -265,7 +243,7 @@ const TermsAndConditions = () => {
               primary="(i) actions taken by any other person using user accounts added under Your subscription or by any other user using, accessing, or reviewing the Platform using Your accounts and passwords."
             />
           </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
+          <ListItem sx={{ py: 0, px: 0 }}>
             <ListItemText
               primaryTypographyProps={{
                 variant: "termsText",
@@ -275,18 +253,18 @@ const TermsAndConditions = () => {
               primary="(ii) Your user information."
             />
           </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
+          <ListItem sx={{ py: 0, px: 0 }}>
             <ListItemText
               primaryTypographyProps={{
                 variant: "termsText",
                 ...fontStyles.openSans.regular,
                 textAlign: "justify",
               }}
-              primary="(iii) Compliance to the Terms"
+              primary="(iii) Compliance to the Terms."
             />
           </ListItem>
         </List>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -299,14 +277,20 @@ const TermsAndConditions = () => {
       </List>
       <Typography
         variant="termsText"
-        component="h3"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+        }}
       >
-        1.3. Content
+        1.3.
+        <Typography
+          variant="termsText"
+          sx={{ mx: 1, ...fontStyles.openSans.regular, fontWeight: 700 }}
+        >
+          Content
+        </Typography>
       </Typography>
-      <List>
-        <ListItem>
+      <List sx={{ pl: 0, mb: 0, pt: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -316,7 +300,7 @@ const TermsAndConditions = () => {
             primary="1.3.1. We strive to ensure the accuracy, updating and exhaustiveness of the information on the Platform and reserve the right to change the content or presentation of the Platform at any time and without notice."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -326,7 +310,7 @@ const TermsAndConditions = () => {
             primary="1.3.2. We cannot be held liable for any decision made on the basis of information contained on the website."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -337,16 +321,24 @@ const TermsAndConditions = () => {
           />
         </ListItem>
       </List>
+
       <Typography
         variant="termsText"
-        component="h3"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+        }}
       >
-        1.4. Modifications
+        1.4.
+        <Typography
+          variant="termsText"
+          sx={{ mx: 1, ...fontStyles.openSans.regular, fontWeight: 700 }}
+        >
+          Modifications
+        </Typography>
       </Typography>
-      <List>
-        <ListItem>
+
+      <List sx={{ pl: 0, mb: 0, pt: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -356,7 +348,7 @@ const TermsAndConditions = () => {
             primary="1.4.1. The Company may from time to time (a) modify the Terms, or (b) cease providing any service on the Platform."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -366,7 +358,7 @@ const TermsAndConditions = () => {
             primary="1.4.2. The changes will become effective on the date published or as notified but in no case be less than 30 days after the date, we publish notice of those changes or modifications (except for new functionality which may take effect immediately)."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -379,20 +371,21 @@ const TermsAndConditions = () => {
       </List>
       <Typography
         variant="termsText"
-        component="h3"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+        }}
       >
-        1.5 License
+        1.5.
+        <Typography
+          variant="termsText"
+          sx={{ mx: 1, ...fontStyles.openSans.regular, fontWeight: 700 }}
+        >
+          License
+        </Typography>
       </Typography>
       <Typography
         variant="termsText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-          textAlign: "justify",
-        }}
-        ml={2}
+        sx={{ ...fontStyles.openSans.regular, pl: 0, mb: 0 }}
         paragraph
       >
         Permission is granted to use the materials (information or software) on
@@ -403,8 +396,11 @@ const TermsAndConditions = () => {
         access and use shall be governed by all of the terms and conditions set
         forth herein. and under this license you may not:
       </Typography>
-      <List sx={{ ml: 4 }}>
-        <ListItem sx={{ mt: "-10px" }}>
+      <List sx={{ pl: 2, py: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -414,7 +410,10 @@ const TermsAndConditions = () => {
             primary="modify or copy the materials;"
           />
         </ListItem>
-        <ListItem sx={{ mt: "-10px" }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -424,7 +423,10 @@ const TermsAndConditions = () => {
             primary="use the materials for any commercial purpose, or for any public display (commercial or non-commercial);"
           />
         </ListItem>
-        <ListItem sx={{ mt: "-10px" }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -434,7 +436,10 @@ const TermsAndConditions = () => {
             primary="attempt to decompile or reverse engineer any software contained on Site;"
           />
         </ListItem>
-        <ListItem sx={{ mt: "-10px" }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -444,7 +449,10 @@ const TermsAndConditions = () => {
             primary="remove any copyright or other proprietary notations from the materials; or"
           />
         </ListItem>
-        <ListItem sx={{ mt: "-10px" }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -457,11 +465,7 @@ const TermsAndConditions = () => {
       </List>
       <Typography
         variant="termsText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={2}
+        sx={{ ...fontStyles.openSans.regular, pl: 0, mb: 1 }}
         paragraph
       >
         This license shall automatically terminate if you violate any of these
@@ -472,20 +476,23 @@ const TermsAndConditions = () => {
       </Typography>
       <Typography
         variant="termsText"
-        component="h3"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
-      >
-        1.6. Optional Feedback
-      </Typography>
-      <Typography
-        variant="termsText"
-        lineHeight={1.8}
         sx={{
           ...fontStyles.openSans.regular,
         }}
+      >
+        1.6.
+        <Typography
+          variant="termsText"
+          sx={{ mx: 1, ...fontStyles.openSans.regular, fontWeight: 700 }}
+        >
+          Optional Feedback
+        </Typography>
+      </Typography>
+
+      <Typography
+        variant="termsText"
+        sx={{ ...fontStyles.openSans.regular, mb: 2 }}
         paragraph
-        ml={2}
       >
         You may provide comments and suggestions regarding the Platform, but You
         are not required to do so. If you provide comments or suggestions, the
@@ -498,14 +505,16 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
         2. Data Security
       </Typography>
-      <List>
-        <ListItem>
+
+      <List sx={{ pl: 0, px: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -515,7 +524,7 @@ const TermsAndConditions = () => {
             primary="2.1. You are responsible for taking and maintaining appropriate steps to protect the confidentiality, integrity, and security of Your use of the Platform."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -525,8 +534,8 @@ const TermsAndConditions = () => {
             primary="2.2. The Company would maintain reasonable physical and technical safeguards to prevent unauthorized disclosure of or access to Your user information, in accordance with the industry standards. The Company will notify You if it becomes aware of any unauthorized access to Your user information. The Company will not access, view, or process Your user information except"
           />
         </ListItem>
-        <List sx={{ pl: 4 }}>
-          <ListItem sx={{ mt: "-10px" }}>
+        <List sx={{ pl: 4, py: 0 }}>
+          <ListItem sx={{ py: 0, px: 0 }}>
             <ListItemText
               primaryTypographyProps={{
                 variant: "termsText",
@@ -536,7 +545,7 @@ const TermsAndConditions = () => {
               primary="(a) as provided in these Terms and in the Privacy Policy;"
             />
           </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
+          <ListItem sx={{ py: 0, px: 0 }}>
             <ListItemText
               primaryTypographyProps={{
                 variant: "termsText",
@@ -546,7 +555,7 @@ const TermsAndConditions = () => {
               primary="(b) as authorized or instructed by You;"
             />
           </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
+          <ListItem sx={{ py: 0, px: 0 }}>
             <ListItemText
               primaryTypographyProps={{
                 variant: "termsText",
@@ -557,14 +566,13 @@ const TermsAndConditions = () => {
             />
           </ListItem>
         </List>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
               ...fontStyles.openSans.regular,
               textAlign: "justify",
             }}
-            sx={{ mt: "-10px" }}
             primary="The Company has no other obligations with respect to Your user information."
           />
         </ListItem>
@@ -572,14 +580,16 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
-        3. COPYRIGHT & NO RETRANSMISSION OF INFORMATION:
+        3. Copyright & No Retransmission of Information
       </Typography>
-      <List>
-        <ListItem>
+
+      <List sx={{ pl: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0.5, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -587,17 +597,18 @@ const TermsAndConditions = () => {
             }}
             primary={
               <Typography
-                variant="termsText"
                 sx={{
                   ...fontStyles.openSans.regular,
                   textAlign: "justify",
+                  mb: 0,
                 }}
+                variant="termsText"
+                paragraph
               >
                 3.1 All parts of the Platform are protected by copyrights,
                 trademarks, and other proprietary rights, as a collective work
                 or compilation, pursuant to laws and international conventions (
                 <Typography
-                  component="span"
                   variant="termsText"
                   sx={{
                     ...fontStyles.openSans.regular,
@@ -615,8 +626,7 @@ const TermsAndConditions = () => {
             }
           />
         </ListItem>
-
-        <ListItem>
+        <ListItem sx={{ py: 0.5, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -626,7 +636,7 @@ const TermsAndConditions = () => {
             primary="3.2 MoneyTV as well as the design and information contained in this site is the valuable, exclusive property of MoneyTV, and nothing in this Agreement shall be construed as transferring or assigning any such ownership rights to You or any other person or entity. All information on MoneyTV is the proprietary, confidential property of MoneyTV and cannot be repeated for any reason outside the MoneyTV. You agree not to repeat or rebroadcast in any way any of the made available on MoneyTV for any reason whatsoever. You agree that if you do repeat or re-post any of MoneyTV information by any mean, you will be liable for actual and punitive damages as determined by MoneyTV and additional damages to be determined by a Indian court of Law."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0.5, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -640,14 +650,15 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
         4. Third Party Services
       </Typography>
-      <List>
-        <ListItem>
+      <List sx={{ pl: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -657,7 +668,7 @@ const TermsAndConditions = () => {
             primary="4.1. When using the Platform in conjunction with other third party services, You will comply with the terms of service of such third party services including any separate fees or charges imposed by the provider of the third party service."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -667,7 +678,7 @@ const TermsAndConditions = () => {
             primary="4.2. MoneyTV also holds discretion to suspend or terminate provision and hosting of any third party service at any time; and that such suspension or termination would not be deemed to be a material change."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -677,7 +688,7 @@ const TermsAndConditions = () => {
             primary="4.3. You may be able to access and view third party websites / apps through Platform. The links are provided for your convenience only and may not be updated at all times."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -687,7 +698,7 @@ const TermsAndConditions = () => {
             primary="4.4. You agree that your access to any third party website is governed by the Terms and Conditions of that website and has no relation to the Terms of the Platform. You agree and understand that it is your responsibility to comply with the terms and conditions of that website as well."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -701,14 +712,15 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
         5. Undertakings
       </Typography>
-      <List>
-        <ListItem sx={{ mt: "-10px" }}>
+      <List sx={{ pl: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -718,7 +730,7 @@ const TermsAndConditions = () => {
             primary="5.1. You assume full responsibility for Your use of the Platform in accordance with this Terms and with applicable local, state, federal, national, and international laws, regulations and treaties, and warrant that you have obtained all rights in the user information to authorize the Company to input, process, distribute and display the user information as contemplated by these Terms."
           />
         </ListItem>
-        <ListItem sx={{ mt: "-10px" }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -728,59 +740,107 @@ const TermsAndConditions = () => {
             primary="5.2. You will not use the Platform or user information for any use or purpose that:"
           />
         </ListItem>
-        <List sx={{ pl: 4 }}>
-          <ListItem sx={{ mt: "-10px" }}>
-            <ListItemText
-              primaryTypographyProps={{
-                variant: "termsText",
+
+        <Box ml={2}>
+          <Box display="flex" mb={0.5}>
+            <Typography
+              sx={{
+                minWidth: "2rem",
+                fontWeight: 700,
                 ...fontStyles.openSans.regular,
-                textAlign: "justify",
               }}
-              primary="i. is obscene, libelous, blasphemous, defamatory, inciting hatred, terrorism, or any similar offence."
-            />
-          </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
-            <ListItemText
-              primaryTypographyProps={{
-                variant: "termsText",
+            >
+              i.
+            </Typography>
+            <Typography
+              sx={{ flex: 1, ...fontStyles.openSans.regular }}
+              variant="termsText"
+            >
+              is obscene, libelous, blasphemous, defamatory, inciting hatred,
+              terrorism, or any similar offence.
+            </Typography>
+          </Box>
+
+          <Box display="flex" mb={0.5}>
+            <Typography
+              sx={{
+                minWidth: "2rem",
+                fontWeight: 700,
                 ...fontStyles.openSans.regular,
-                textAlign: "justify",
               }}
-              primary="ii. infringes or misappropriates the intellectual property rights or violates the privacy rights of any third party (including without limitation, copyright, trademark, patent, trade secret, or other intellectual property right, moral right, or right of publicity)."
-            />
-          </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
-            <ListItemText
-              primaryTypographyProps={{
-                variant: "termsText",
+            >
+              ii.
+            </Typography>
+            <Typography
+              sx={{ flex: 1, ...fontStyles.openSans.regular }}
+              variant="termsText"
+            >
+              infringes or misappropriates the intellectual property rights or
+              violates the privacy rights of any third party (including without
+              limitation, copyright, trademark, patent, trade secret, or other
+              intellectual property right, moral right, or right of publicity).
+            </Typography>
+          </Box>
+
+          <Box display="flex" mb={0.5}>
+            <Typography
+              sx={{
+                minWidth: "2rem",
+                fontWeight: 700,
                 ...fontStyles.openSans.regular,
-                textAlign: "justify",
               }}
-              primary="iii. contains any data that You do not have a right to upload into the Platform."
-            />
-          </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
-            <ListItemText
-              primaryTypographyProps={{
-                variant: "termsText",
+            >
+              iii.
+            </Typography>
+            <Typography
+              sx={{ flex: 1, ...fontStyles.openSans.regular }}
+              variant="termsText"
+            >
+              contains any data that You do not have a right to upload into the
+              Platform.
+            </Typography>
+          </Box>
+
+          <Box display="flex" mb={0.5}>
+            <Typography
+              sx={{
+                minWidth: "2rem",
+                fontWeight: 700,
                 ...fontStyles.openSans.regular,
-                textAlign: "justify",
               }}
-              primary="iv. is in violation or may encourage any manner of acting that would violate any applicable local, state, national and foreign laws, treatises, and regulations; or"
-            />
-          </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
-            <ListItemText
-              primaryTypographyProps={{
-                variant: "termsText",
+            >
+              iv.
+            </Typography>
+            <Typography
+              sx={{ flex: 1, ...fontStyles.openSans.regular }}
+              variant="termsText"
+            >
+              is in violation or may encourage any manner of acting that would
+              violate any applicable local, state, national and foreign laws,
+              treatises, and regulations; or
+            </Typography>
+          </Box>
+
+          <Box display="flex" mb={0.5}>
+            <Typography
+              sx={{
+                minWidth: "2rem",
+                fontWeight: 700,
                 ...fontStyles.openSans.regular,
-                textAlign: "justify",
               }}
-              primary="v. may drive or encourage any third party to do any of the above."
-            />
-          </ListItem>
-        </List>
-        <ListItem>
+            >
+              v.
+            </Typography>
+            <Typography
+              sx={{ flex: 1, ...fontStyles.openSans.regular }}
+              variant="termsText"
+            >
+              may drive or encourage any third party to do any of the above.
+            </Typography>
+          </Box>
+        </Box>
+
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -790,79 +850,148 @@ const TermsAndConditions = () => {
             primary="5.3. You will not:"
           />
         </ListItem>
-        <List sx={{ pl: 4 }}>
-          <ListItem sx={{ mt: "-10px" }}>
-            <ListItemText
-              primaryTypographyProps={{
-                variant: "termsText",
+
+        <Box ml={2}>
+          <Box display="flex" mb={0.5}>
+            <Typography
+              sx={{
+                minWidth: "2rem",
+                fontWeight: 700,
                 ...fontStyles.openSans.regular,
-                textAlign: "justify",
               }}
-              primary="i. use the Platform for non-business related purposes or abuse the Platform;"
-            />
-          </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
-            <ListItemText
-              primaryTypographyProps={{
-                variant: "termsText",
+            >
+              i.
+            </Typography>
+            <Typography
+              sx={{ flex: 1, ...fontStyles.openSans.regular }}
+              variant="termsText"
+            >
+              use the Platform for non-business related purposes or abuse the
+              Platform;
+            </Typography>
+          </Box>
+
+          <Box display="flex" mb={0.5}>
+            <Typography
+              sx={{
+                minWidth: "2rem",
+                fontWeight: 700,
                 ...fontStyles.openSans.regular,
-                textAlign: "justify",
               }}
-              primary="ii. modify, remove, or amend Company's name or logo, update, reproduce, duplicate, copy all or any part of the Platform;"
-            />
-          </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
-            <ListItemText
-              primaryTypographyProps={{
-                variant: "termsText",
+            >
+              ii.
+            </Typography>
+            <Typography
+              sx={{ flex: 1, ...fontStyles.openSans.regular }}
+              variant="termsText"
+            >
+              modify, remove, or amend Company's name or logo, update,
+              reproduce, duplicate, copy all or any part of the Platform;
+            </Typography>
+          </Box>
+
+          <Box display="flex" mb={0.5}>
+            <Typography
+              sx={{
+                minWidth: "2rem",
+                fontWeight: 700,
                 ...fontStyles.openSans.regular,
-                textAlign: "justify",
               }}
-              primary="iii. use the Platform in any way that restricts or inhibits the use of the Platform;"
-            />
-          </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
-            <ListItemText
-              primaryTypographyProps={{
-                variant: "termsText",
+            >
+              iii.
+            </Typography>
+            <Typography
+              sx={{ flex: 1, ...fontStyles.openSans.regular }}
+              variant="termsText"
+            >
+              use the Platform in any way that restricts or inhibits the use of
+              the Platform;
+            </Typography>
+          </Box>
+
+          <Box display="flex" mb={0.5}>
+            <Typography
+              sx={{
+                minWidth: "2rem",
+                fontWeight: 700,
                 ...fontStyles.openSans.regular,
-                textAlign: "justify",
               }}
-              primary="iv. access or attempt to access any of the Company's systems, programs or data that are not made available for public use, or attempt to bypass any registration processes on the Platform or any of the Platform's security and traffic management devices; or"
-            />
-          </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
-            <ListItemText
-              primaryTypographyProps={{
-                variant: "termsText",
+            >
+              iv.
+            </Typography>
+            <Typography
+              sx={{ flex: 1, ...fontStyles.openSans.regular }}
+              variant="termsText"
+            >
+              access or attempt to access any of the Company's systems, programs
+              or data that are not made available for public use, or attempt to
+              bypass any registration processes on the Platform or any of the
+              Platform's security and traffic management devices; or
+            </Typography>
+          </Box>
+
+          <Box display="flex" mb={0.5}>
+            <Typography
+              sx={{
+                minWidth: "2rem",
+                fontWeight: 700,
                 ...fontStyles.openSans.regular,
-                textAlign: "justify",
               }}
-              primary="v. attempt to decompile, disassemble, re-engineer or reverse engineer the Platform or otherwise create or attempt to create or permit, allow, or assist others to extract source code of the Platform, its structural framework or allow or facilitate a third party, to violate or infringe any rights of MoneyTV;"
-            />
-          </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
-            <ListItemText
-              primaryTypographyProps={{
-                variant: "termsText",
+            >
+              v.
+            </Typography>
+            <Typography
+              sx={{ flex: 1, ...fontStyles.openSans.regular }}
+              variant="termsText"
+            >
+              attempt to decompile, disassemble, re-engineer or reverse engineer
+              the Platform or otherwise create or attempt to create or permit,
+              allow, or assist others to extract source code of the Platform,
+              its structural framework or allow or facilitate a third party, to
+              violate or infringe any rights of MoneyTV;
+            </Typography>
+          </Box>
+
+          <Box display="flex" mb={0.5}>
+            <Typography
+              sx={{
+                minWidth: "2rem",
+                fontWeight: 700,
                 ...fontStyles.openSans.regular,
-                textAlign: "justify",
               }}
-              primary="vi. transmit any unnecessary information or unwanted electronic communication viz. spam to other users of the Platform;"
-            />
-          </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
-            <ListItemText
-              primaryTypographyProps={{
-                variant: "termsText",
+            >
+              vi.
+            </Typography>
+            <Typography
+              sx={{ flex: 1, ...fontStyles.openSans.regular }}
+              variant="termsText"
+            >
+              transmit any unnecessary information or unwanted electronic
+              communication viz. spam to other users of the Platform;
+            </Typography>
+          </Box>
+
+          <Box display="flex" mb={0.5}>
+            <Typography
+              sx={{
+                minWidth: "2rem",
+                fontWeight: 700,
                 ...fontStyles.openSans.regular,
-                textAlign: "justify",
               }}
-              primary="vii. misuse your right to the Platform by introducing viruses, trojans, worms or other material likely to cause harm to the Platform."
-            />
-          </ListItem>
-        </List>
-        <ListItem sx={{ mt: "-10px" }}>
+            >
+              vii.
+            </Typography>
+            <Typography
+              sx={{ flex: 1, ...fontStyles.openSans.regular }}
+              variant="termsText"
+            >
+              misuse your right to the Platform by introducing viruses, trojans,
+              worms or other material likely to cause harm to the Platform.
+            </Typography>
+          </Box>
+        </Box>
+
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -872,7 +1001,7 @@ const TermsAndConditions = () => {
             primary="5.4. If MoneyTV reasonably believes that a problem with the use of the Platform may be attributable to Your use of the Platform, You must cooperate to identify the source of the error and resolve the same."
           />
         </ListItem>
-        <ListItem sx={{ mt: "-10px" }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -886,14 +1015,15 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
         6. Disclaimers
       </Typography>
-      <List>
-        <ListItem>
+      <List sx={{ pl: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -903,7 +1033,7 @@ const TermsAndConditions = () => {
             primary="6.1. The Platform may be under constant upgrades, and some functions and features may not be fully operational."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -913,7 +1043,7 @@ const TermsAndConditions = () => {
             primary="6.2. You agree and understand that the information displayed on the Platform is for information purposes only and does not to amount to any advice."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -923,7 +1053,7 @@ const TermsAndConditions = () => {
             primary="6.3. We disclaim any liability arising due to the vagaries that can occur in the electronic distribution of information."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -933,7 +1063,7 @@ const TermsAndConditions = () => {
             primary="6.4. You acknowledge that third party services are available on the Platform. We may have formed partnerships or alliances with some of these third parties from time to time in order to facilitate the provision of certain services to you. However, you acknowledge and agree that at no time are we making any representation or warranty regarding any third party's services, nor will we be liable to you or any third party for any consequences or claims arising from or in connection with such third party including, and not limited to, any liability or responsibility for, death, injury or impairment experienced by you or any third party. You hereby disclaim and waive any rights and claims you may have against us with respect to third party's services."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -943,7 +1073,7 @@ const TermsAndConditions = () => {
             primary="6.5. We do not, in any way, endorse any information or service offered or described herein. In no event shall we be liable to you or any third party for any decision made or action taken in reliance on such information."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -953,7 +1083,7 @@ const TermsAndConditions = () => {
             primary="6.6. You assume all responsibility and risk with respect to your use of the Platform. The services are available 'as is,' and 'as available'. you understand and agree that, to the fullest extent permitted by law, we disclaim all warranties, representations, and endorsements, express or implied, with regard to the Platform, including, without limitation, implied warranties of title, merchantability, non-infringement and fitness for a particular purpose."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -967,14 +1097,15 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
         7. Warranties
       </Typography>
-      <List>
-        <ListItem>
+      <List sx={{ pl: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -984,7 +1115,7 @@ const TermsAndConditions = () => {
             primary="7.1. Each of You and the Company represents, warrants, and covenants to the other that: (a)  it has the full corporate right, power, and authority to enter into and perform and accept these Terms, and such execution and performance does not and will not violate any other agreement to which it is a party, and (b) these Terms constitute its legal, valid and binding obligation."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -994,7 +1125,7 @@ const TermsAndConditions = () => {
             primary="7.2. YOU EXPRESSLY AGREE THAT USE OF THE WEBSITE IS AT YOUR SOLE RISK. THE CONTENTS, INFORMATION, SOFTWARE, PRODUCTS, FEATURES AND SERVICES PUBLISHED ON THIS WEB SITE MAY INCLUDE INACCURACIES OR TYPOGRAPHICAL ERRORS. CHANGES ARE PERIODICALLY ADDED TO THE CONTENTS HEREIN. MoneyTV AND/OR ITS RESPECTIVE SUPPLIERS MAY MAKE IMPROVEMENTS AND/OR CHANGES IN THIS WEB SITE AT ANY TIME. THIS WEB SITE MAY BE TEMPORARILY UNAVAILABLE FROM TIME TO TIME DUE TO REQUIRED MAINTENANCE, TELECOMMUNICATIONS INTERRUPTIONS, OR OTHER DISRUPTIONS. MoneyTV (AND ITS OWNERS, SUPPLIERS, CONSULTANTS, ADVERTISERS, AFFILIATES, PARTNERS, EMPLOYEES OR ANY OTHER ASSOCIATED ENTITIES, ALL COLLECTIVELY REFERRED TO AS ASSOCIATED ENTITIES HEREAFTER) SHALL NOT BE LIABLE TO USER OR MEMBER OR ANY THIRD PARTY SHOULD MoneyTV EXERCISE ITS RIGHT TO MODIFY OR DISCONTINUE ANY OR ALL OF THE CONTENTS, INFORMATION, SOFTWARE, PRODUCTS, FEATURES AND SERVICES PUBLISHED ON THIS WEBSITE."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1004,7 +1135,7 @@ const TermsAndConditions = () => {
             primary="7.3 MoneyTV AND/OR ITS RESPECTIVE ASSOCIATED ENTITIES MAKE NO REPRESENTATIONS ABOUT THE SUITABILITY OF THE CONTENTS, INFORMATION, SOFTWARE, PRODUCTS, FEATURES AND SERVICES CONTAINED ON THIS WEB SITE FOR ANY PURPOSE. ALL SUCH CONTENTS, INFORMATION, SOFTWARE, PRODUCTS, FEATURES AND SERVICES ARE PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND. MoneyTV AND/OR ITS ASSOCIATED ENTITIES HEREBY DISCLAIM ALL WARRANTIES AND CONDITIONS WITH REGARD TO THESE CONTENTS, INFORMATION, SOFTWARE, PRODUCTS, FEATURES AND SERVICES, INCLUDING ALL IMPLIED WARRANTIES AND CONDITIONS OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, AND AVAILABILITY."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1014,7 +1145,7 @@ const TermsAndConditions = () => {
             primary="7.4 IN NO EVENT SHALL MoneyTV AND/OR ITS ASSOCIATED ENTITIES BE LIABLE FOR ANY DIRECT, INDIRECT, PUNITIVE, INCIDENTAL, SPECIAL OR CONSEQUENTIAL DAMAGES ARISING OUT OF OR IN ANY WAY CONNECTED WITH THE USE OF THIS WEB SITE OR ANY CONSEQUENCES ARISING OUT OF INFORMATION SUBMITTED BY YOU OR WITH THE DELAY OR INABILITY TO USE THIS WEBSITE, OR FOR ANY CONTENTS, INFORMATION, SOFTWARE, PRODUCTS, FEATURES AND SERVICES OBTAINED THROUGH THIS WEB SITE, OR OTHERWISE ARISING OUT OF THE USE OF THIS WEB SITE, WHETHER BASED ON CONTRACT, TORT, STRICT LIABILITY OR OTHERWISE, EVEN IF MoneyTV OR ANY OF ITS ASSOCIATED ENTITIES HAS BEEN ADVISED OF THE POSSIBILITY OF DAMAGES"
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1024,8 +1155,8 @@ const TermsAndConditions = () => {
             primary="7.5 EXCEPT AS EXPRESSLY PROVIDED ABOVE, TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, THE COMPANY EXPRESSLY DISCLAIMS ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. WITHOUT LIMITING THE ABOVE, WE MAKE NO WARRANTY WHATSOEVER WITH RESPECT TO"
           />
         </ListItem>
-        <List sx={{ pl: 4 }}>
-          <ListItem sx={{ mt: "-10px" }}>
+        <List sx={{ pl: 4, py: 0 }}>
+          <ListItem sx={{ py: 0, px: 0 }}>
             <ListItemText
               primaryTypographyProps={{
                 variant: "termsText",
@@ -1035,7 +1166,7 @@ const TermsAndConditions = () => {
               primary="(I) THE PLATFORM MEETING YOUR REQUIREMENTS, OR BEING UNINTERRUPTED, CONTINUOUS, TIMELY, OR ERROR OR VIRUS FREE;"
             />
           </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
+          <ListItem sx={{ py: 0, px: 0 }}>
             <ListItemText
               primaryTypographyProps={{
                 variant: "termsText",
@@ -1045,7 +1176,7 @@ const TermsAndConditions = () => {
               primary="(II) WHETHER YOUR USE OF THE PLATFORM WILL GENERATE ANY RESULTS OR CONSEQUENCES; OR"
             />
           </ListItem>
-          <ListItem sx={{ mt: "-10px" }}>
+          <ListItem sx={{ py: 0, px: 0 }}>
             <ListItemText
               primaryTypographyProps={{
                 variant: "termsText",
@@ -1060,14 +1191,15 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
         8. Confidentiality
       </Typography>
-      <List>
-        <ListItem>
+      <List sx={{ pl: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1076,11 +1208,15 @@ const TermsAndConditions = () => {
             primary={
               <Typography
                 variant="termsText"
-                sx={{ ...fontStyles.openSans.regular, textAlign: "justify" }}
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  textAlign: "justify",
+                  mb: 0,
+                }}
+                paragraph
               >
                 8.1.{" "}
                 <Typography
-                  component="span"
                   variant="termsText"
                   sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
                 >
@@ -1097,8 +1233,7 @@ const TermsAndConditions = () => {
             }
           />
         </ListItem>
-
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1108,7 +1243,7 @@ const TermsAndConditions = () => {
             primary="8.2. The Company's confidential information includes, without limitation, the Platform's features, functionality and performance and any feedback."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1118,7 +1253,7 @@ const TermsAndConditions = () => {
             primary="8.3. Your Confidential Information does not, for purposes of the Terms, include Your user information. If you disclose Your user information to us or if the access to Your user information is permitted by these Terms, including for purposes of providing support to you, the Company will use the same standard of care with respect to that data as it uses to protect its own Confidential Information."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1132,28 +1267,24 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
-        9. Termination:
+        9. Termination
       </Typography>
       <Typography
         variant="termsText"
-        // lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-          textAlign: "justify",
-        }}
-        ml={2}
+        sx={{ ...fontStyles.openSans.regular, pl: 0, mb: 0, mt: 1 }}
         paragraph
       >
         This Agreement and the license rights granted hereunder shall remain in
         full force and effect unless terminated or cancelled for any of the
         following reasons:
       </Typography>
-      <List sx={{ ml: 4 }}>
-        <ListItem sx={{ mt: "-10px" }}>
+      <List sx={{ pl: 2, mb: 0, py: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1163,7 +1294,7 @@ const TermsAndConditions = () => {
             primary="(a) immediately for any unauthorized access or use by You;"
           />
         </ListItem>
-        <ListItem sx={{ mt: "-10px" }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1173,7 +1304,7 @@ const TermsAndConditions = () => {
             primary="(b) immediately if You assign or transfer (or attempt the same) any rights granted to You under this Agreement;"
           />
         </ListItem>
-        <ListItem sx={{ mt: "-10px" }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1186,12 +1317,7 @@ const TermsAndConditions = () => {
       </List>
       <Typography
         variant="termsText"
-        // lineHeight={1}
-        sx={{
-          ...fontStyles.openSans.regular,
-          textAlign: "justify",
-        }}
-        ml={2}
+        sx={{ ...fontStyles.openSans.regular, pl: 0, mb: 2 }}
         paragraph
       >
         Termination or cancellation of this Agreement shall not affect any right
@@ -1204,14 +1330,15 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
         10. Indemnity
       </Typography>
-      <List>
-        <ListItem>
+      <List sx={{ pl: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1221,7 +1348,7 @@ const TermsAndConditions = () => {
             primary="10.1. You agree to indemnify and hold us and our affiliates, successors and assigns, officers, directors, employees, agents, representatives, licensors, advertisers, suppliers, and operational service providers harmless from and against any and all losses, expenses, damages, costs, and expenses (including attorneys' fees), resulting from your use of the Services and / or any violation of this Terms. We reserve the right to assume the exclusive defense and control of any demand, claim or action arising hereunder or in connection with the Platform and all negotiations for settlement or compromise. You agree to fully cooperate with us in the defense of any such demand, claim, action, settlement, or compromise negotiations, as requested by us."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1235,14 +1362,15 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
         11. Assignment
       </Typography>
-      <List>
-        <ListItem>
+      <List sx={{ pl: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1256,14 +1384,15 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
         12. Notices
       </Typography>
-      <List>
-        <ListItem>
+      <List sx={{ pl: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1273,7 +1402,7 @@ const TermsAndConditions = () => {
             primary="12.1. Any notice given by the Company under these Terms will be given (a) via email to the email address associated with Your account; or (b) any other method agreed upon the parties."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1283,7 +1412,7 @@ const TermsAndConditions = () => {
             primary={
               <Box sx={{ textAlign: "justify" }}>
                 <Typography
-                  variant="privacyPolicyText"
+                  variant="termsText"
                   sx={{ ...fontStyles.openSans.regular }}
                 >
                   12.2. You must direct notices arising out of Your use of the
@@ -1303,7 +1432,7 @@ const TermsAndConditions = () => {
             }
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1313,30 +1442,30 @@ const TermsAndConditions = () => {
             primary={
               <Box sx={{ textAlign: "justify" }}>
                 <Typography
-                  variant="privacyPolicyText"
+                  variant="termsText"
                   sx={{ ...fontStyles.openSans.regular }}
                 >
                   12.3. You must direct notices arising out of any condition
                   that requires a notice to be sent to the Company under these
-                  Terms, to the following address: -
+                  Terms, to the following address:-
                 </Typography>
                 <br />
                 <Typography
-                  variant="privacyPolicyText"
-                  sx={{ ...fontStyles.openSans.regular }}
+                  variant="termsText"
+                  sx={{ ...fontStyles.openSans.regular, mt: 1 }}
                 >
                   AIDIA TECHNOVATIONS PRIVATE LIMITED
                 </Typography>
                 <br />
                 <Typography
-                  variant="privacyPolicyText"
+                  variant="termsText"
                   sx={{ ...fontStyles.openSans.regular }}
                 >
                   702, 7th Floor, Umang, Near Telephone Exchange
                 </Typography>
                 <br />
                 <Typography
-                  variant="privacyPolicyText"
+                  variant="termsText"
                   sx={{ ...fontStyles.openSans.regular }}
                 >
                   P. M. Road, Vile Parle (East), Mumbai - 400057
@@ -1349,14 +1478,15 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
         13. Force Majeure
       </Typography>
-      <List>
-        <ListItem>
+      <List sx={{ pl: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1370,14 +1500,15 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
         14. Language
       </Typography>
-      <List>
-        <ListItem>
+      <List sx={{ pl: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1391,14 +1522,15 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
         15. Independent Parties & Third-party Rights
       </Typography>
-      <List>
-        <ListItem>
+      <List sx={{ pl: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1408,7 +1540,7 @@ const TermsAndConditions = () => {
             primary="15.1. The Company and You are independent parties, and the Terms is not to be construed to create a partnership, joint venture, agency, or employment relationship between us. Neither You nor the Company not any of our respective affiliates, officers, directors, or employees, is an agent of the other for any purpose or has an authority to bind the other."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1422,14 +1554,15 @@ const TermsAndConditions = () => {
 
       <Typography
         variant="termsText"
-        component="h2"
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        sx={{
+          ...fontStyles.openSans.regular,
+          fontWeight: 700,
+        }}
       >
         16. Governing Law & Jurisdiction
       </Typography>
-      <List>
-        <ListItem>
+      <List sx={{ pl: 0, mb: 0 }}>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",
@@ -1439,7 +1572,7 @@ const TermsAndConditions = () => {
             primary="16.1. The Terms will be governed by the law of India, without regard to any conflicts of law principles."
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, px: 0 }}>
           <ListItemText
             primaryTypographyProps={{
               variant: "termsText",

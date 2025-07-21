@@ -751,13 +751,19 @@ const typography = {
 
   // privacy policy and terms and conditions font
   privacyPolicyText: {
-    fontSize: "16px",
-    wordSpacing: "0.2rem",
+    fontSize: "15px",
+    "@media (min-width:1920px)": {
+      fontSize: "16px", // xl (≥1920px)
+    },
+    // wordSpacing: "0.2rem",
   },
 
   termsText: {
-    fontSize: "16px",
-    wordSpacing: "0.2rem",
+    fontSize: "15px",
+    "@media (min-width:1920px)": {
+      fontSize: "16px", // xl (≥1920px)
+    },
+    // wordSpacing: "0.2rem",
   },
 };
 

@@ -7,24 +7,26 @@ import {
   ListItemText,
   Link,
   Box,
+  ListItemIcon,
 } from "@mui/material";
 import { fontStyles } from "@/theme/theme";
+import { Circle } from "@mui/icons-material";
 
 const PrivacyPolicy = () => {
   return (
     <Container
       sx={{
-        py: 4,
+        py: 2,
         width: "800px",
         maxWidth: "100%",
         textAlign: "justify",
       }}
     >
       <Typography
-        variant="h3"
-        component="h1"
-        textAlign={"center"}
-        color="primary.main"
+        variant="h5"
+        component="h5"
+        textAlign="center"
+        color="text.primary"
         gutterBottom
         sx={{
           ...fontStyles.openSans.bold,
@@ -34,6 +36,7 @@ const PrivacyPolicy = () => {
       >
         PRIVACY POLICY
       </Typography>
+
       <Typography
         sx={{
           ...fontStyles.openSans.regular,
@@ -45,33 +48,35 @@ const PrivacyPolicy = () => {
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
         sx={{ ...fontStyles.openSans.regular }}
         mt={4}
         paragraph
       >
         Thank you for choosing to be part of our community at Aidia
         Technovations Private Limited, doing business as Money TV (“MoneyTV”,{" "}
-        <Typography component="span" sx={{ ...fontStyles.openSans.regular }}>
+        <Typography
+          variant="privacyPolicyText"
+          sx={{ ...fontStyles.openSans.regular }}
+        >
           “Company”
         </Typography>
         ,{" "}
         <Typography
-          component="span"
+          variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
           “we”
         </Typography>
         ,{" "}
         <Typography
-          component="span"
+          variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
           “us”
         </Typography>
         , or{" "}
         <Typography
-          component="span"
+          variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
           “our”
@@ -80,7 +85,7 @@ const PrivacyPolicy = () => {
         right to privacy and security of your personal data, your privacy is
         important to us. This Privacy Policy (
         <Typography
-          component="span"
+          variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
           “Policy”
@@ -88,30 +93,30 @@ const PrivacyPolicy = () => {
         ) applies to all products and/or services offered by us to all
         individuals (
         <Typography
-          component="span"
+          variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
           “you”
         </Typography>
         ,{" "}
         <Typography
-          component="span"
+          variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
           “your”
         </Typography>
         ,{" "}
         <Typography
-          component="span"
+          variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
           “user”
         </Typography>
         ).
       </Typography>
+
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
         sx={{
           ...fontStyles.openSans.regular,
         }}
@@ -135,12 +140,10 @@ const PrivacyPolicy = () => {
         interaction with us, and how you can exercise your privacy rights you
         have in relation to it.
       </Typography>
+
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
+        sx={{ ...fontStyles.openSans.regular }}
         paragraph
       >
         We hope you take some time to read through our Privacy Policy carefully,
@@ -148,12 +151,10 @@ const PrivacyPolicy = () => {
         you do not agree with, please discontinue use of our products and/or our
         services.
       </Typography>
+
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
+        sx={{ ...fontStyles.openSans.regular }}
         paragraph
       >
         This Policy applies to all information collected through our website
@@ -170,44 +171,55 @@ const PrivacyPolicy = () => {
         and/or using our Platform, you are consenting to process your personal
         data in the manner as set forth in this Policy.
       </Typography>
+
+      {/* Section 1: Data Privacy Disclaimer */}
       <Typography
         variant="privacyPolicyText"
-        mb={2}
-        gutterBottom
         sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        mb={2}
       >
-        1. Data Privacy Disclaimer
+        1.
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        ml={4}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        mt={2}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        mb={2}
+        ml={2}
+      >
+        Data Privacy Disclaimer
+      </Typography>
+      <Typography
+        variant="privacyPolicyText"
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={4}
+        pt={1}
         paragraph
       >
         The scope of this policy is limited to the product and/or services
         provided by us within the territory of India and applies to users who
         request for these products and/or services within the Indian territory.
       </Typography>
+
+      {/* Section 2: What personal data do we collect about you? */}
       <Typography
         variant="privacyPolicyText"
-        mb={2}
-        gutterBottom
         sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
       >
-        2. What personal data do we collect about you?
+        2.
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        ml={4}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        mt={2}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        mb={2}
+        ml={2}
+      >
+        What personal data do we collect about you?
+      </Typography>
+      <Typography
+        variant="privacyPolicyText"
+        sx={{ ...fontStyles.openSans.regular, mb: 1 }}
+        pl={4}
+        pt={1}
         paragraph
       >
         When you interact with us, we collect different types of information
@@ -215,11 +227,8 @@ const PrivacyPolicy = () => {
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        ml={4}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
+        sx={{ ...fontStyles.openSans.regular, mb: 1 }}
+        pl={4}
         paragraph
       >
         “Personal Data” means any data about an individual who is identifiable
@@ -227,11 +236,8 @@ const PrivacyPolicy = () => {
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        ml={4}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
+        sx={{ ...fontStyles.openSans.regular, mb: 1 }}
+        pl={4}
         paragraph
       >
         “Processing”, “Processed”, “Process” in relation to personal data, means
@@ -244,11 +250,8 @@ const PrivacyPolicy = () => {
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        ml={4}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
+        sx={{ ...fontStyles.openSans.regular, mb: 1 }}
+        pl={4}
         paragraph
       >
         We endeavour to collect only such personal data that is reasonably
@@ -256,163 +259,185 @@ const PrivacyPolicy = () => {
         Platform or otherwise with us, we may collect the following personal
         data from you directly:
       </Typography>
-      <List>
-        <ListItem>
+
+      <List sx={{ pl: 4, pt: 0 }}>
+        <ListItem sx={{ py: 0, alignItems: "flex-start" }}>
+          <ListItemIcon sx={{ minWidth: "20px", pt: 1.2 }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
           <ListItemText
             primary={
-              <Box ml={6} sx={{ mt: "-10px", textAlign: "justify" }}>
+              <Typography
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  mb: 0,
+                }}
+                variant="privacyPolicyText"
+                paragraph
+              >
                 <Typography
                   variant="privacyPolicyText"
-                  sx={{ ...fontStyles.openSans.regular }}
+                  sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
                 >
-                  <Typography
-                    component="span"
-                    sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
-                  >
-                    General Data
-                  </Typography>
-                  - your first name, last name, email, mobile number, address,
-                  country, state, gender, age or date of birth, application
-                  history and installation data
-                </Typography>
-              </Box>
+                  General Data
+                </Typography>{" "}
+                - your first name, last name, email, mobile number, address,
+                country, state, gender, age or date of birth, application
+                history and installation data
+              </Typography>
             }
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, alignItems: "flex-start" }}>
+          <ListItemIcon sx={{ minWidth: "20px", pt: 1.2 }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
           <ListItemText
             primary={
-              <Box ml={6} sx={{ mt: "-10px", textAlign: "justify" }}>
+              <Typography
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  mb: 0,
+                }}
+                variant="privacyPolicyText"
+                paragraph
+              >
                 <Typography
                   variant="privacyPolicyText"
-                  sx={{ ...fontStyles.openSans.regular }}
+                  sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
                 >
-                  <Typography
-                    component="span"
-                    sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
-                  >
-                    Identification Data
-                  </Typography>
-                  - data that enables us to identify you
-                </Typography>
-              </Box>
+                  Identification Data
+                </Typography>{" "}
+                - data that enables us to identify you
+              </Typography>
             }
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, alignItems: "flex-start" }}>
+          <ListItemIcon sx={{ minWidth: "20px", pt: 1.2 }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
           <ListItemText
             primary={
-              <Box ml={6} sx={{ mt: "-10px", textAlign: "justify" }}>
+              <Typography
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  mb: 0,
+                }}
+                variant="privacyPolicyText"
+                paragraph
+              >
                 <Typography
                   variant="privacyPolicyText"
-                  sx={{ ...fontStyles.openSans.regular }}
+                  sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
                 >
-                  <Typography
-                    component="span"
-                    sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
-                  >
-                    Technical and Network Activity Data
-                  </Typography>
-                  - data about your device and your usage of our Platform,
-                  including your IP address, device ID, user ID, hardware model
-                  and version, mobile network information, operating system and
-                  other online identifiers, type of browser, browsing history,
-                  search history, access time, pages viewed, URLs clicked on,
-                  forms submitted, and physical location
-                </Typography>
-              </Box>
+                  Technical and Network Activity Data
+                </Typography>{" "}
+                - data about your device and your usage of our Platform,
+                including your IP address, device ID, user ID, hardware model
+                and version, mobile network information, operating system and
+                other online identifiers, type of browser, browsing history,
+                search history, access time, pages viewed, URLs clicked on,
+                forms submitted, and physical location
+              </Typography>
             }
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, alignItems: "flex-start" }}>
+          <ListItemIcon sx={{ minWidth: "20px", pt: 1.2 }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
           <ListItemText
             primary={
-              <Box ml={6} sx={{ mt: "-10px", textAlign: "justify" }}>
+              <Typography
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  mb: 0,
+                }}
+                variant="privacyPolicyText"
+                paragraph
+              >
                 <Typography
                   variant="privacyPolicyText"
-                  sx={{ ...fontStyles.openSans.regular }}
+                  sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
                 >
-                  <Typography
-                    component="span"
-                    sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
-                  >
-                    Authentication
-                  </Typography>
-                  - data required for authentication, such as username, OTP,
-                  Captcha and password
-                </Typography>
-              </Box>
+                  Authentication
+                </Typography>{" "}
+                - data required for authentication, such as username, OTP,
+                Captcha and password
+              </Typography>
             }
           />
         </ListItem>
-        <ListItem>
+        <ListItem sx={{ py: 0, alignItems: "flex-start" }}>
+          <ListItemIcon sx={{ minWidth: "20px", pt: 1.2 }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
           <ListItemText
             primary={
-              <Box ml={6} sx={{ mt: "-10px", textAlign: "justify" }}>
+              <Typography
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  mb: 0,
+                }}
+                variant="privacyPolicyText"
+                paragraph
+              >
                 <Typography
                   variant="privacyPolicyText"
-                  sx={{ ...fontStyles.openSans.regular }}
+                  sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
                 >
-                  <Typography
-                    component="span"
-                    sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
-                  >
-                    Employment Data
-                  </Typography>
-                  - data about education qualification, occupation, designation,
-                  company name, resume.
-                </Typography>
-              </Box>
+                  Employment Data
+                </Typography>{" "}
+                - data about education qualification, occupation, designation,
+                company name, resume.
+              </Typography>
             }
           />
         </ListItem>
       </List>
+
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-          textAlign: "justify",
-        }}
-        ml={4}
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={4}
         paragraph
       >
         You can choose not to give us personal data when we ask you for it. If
         you decide not to give us your personal data, it may restrict our
         relationship with you.
       </Typography>
+
+      {/* Section 3: How do we collect your personal data? */}
       <Typography
         variant="privacyPolicyText"
-        mb={2}
-        gutterBottom
-        sx={{
-          ...fontStyles.openSans.regular,
-          fontWeight: 700,
-        }}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
       >
-        3. How do we collect your personal data?
+        3.
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        component="h3"
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        mb={2}
         ml={2}
+      >
+        How do we collect your personal data?
+      </Typography>
+      <Box sx={{ mb: 1 }}></Box>
+      <Typography
+        variant="privacyPolicyText"
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        pl={4}
         mt={2}
-        gutterBottom
-        sx={{
-          ...fontStyles.openSans.regular,
-          fontWeight: 700,
-        }}
+        mb={1}
       >
         a. Information you directly provide to us:
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={4}
-        mt={2}
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={6}
+        pt={1}
         paragraph
       >
         You may choose to provide us with the data, which is essential for us to
@@ -420,114 +445,151 @@ const PrivacyPolicy = () => {
         may not be able to provide you with all the requested products and/or
         services. We may collect the data when you do any of the following:
       </Typography>
+      <List sx={{ pl: 4, pt: 0 }} dense>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Use our Platform
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                When you register on our Platform
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Share or use your social media profile to contact us
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Engage with one of our representatives
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Subscribe to our services or updates
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Get in touch with us for support or to provide feedback/queries
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                When you subscribe for market news and latest updates
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Apply for job opportunities on our Platform
+              </Typography>
+            }
+          />
+        </ListItem>
+      </List>
+
       <Typography
+        variant="privacyPolicyText"
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        pl={4}
+        mt={2}
         mb={1}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-      >
-        Use our Platform
-      </Typography>
-      <Typography
-        mb={1}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-      >
-        When you register on our Platform
-      </Typography>
-      <Typography
-        mb={1}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-      >
-        Share or use your social media profile to contact us
-      </Typography>
-      <Typography
-        mb={1}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-      >
-        Engage with one of our representatives
-      </Typography>
-      <Typography
-        mb={1}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-      >
-        Subscribe to our services or updates
-      </Typography>
-      <Typography
-        mb={1}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-      >
-        Get in touch with us for support or to provide feedback/queries
-      </Typography>
-      <Typography
-        mb={1}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-      >
-        When you subscribe for market news and latest updates
-      </Typography>
-      <Typography
-        mb={2}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-      >
-        Apply for job opportunities on our Platform
-      </Typography>
-      <Typography
-        variant="privacyPolicyText"
-        component="h3"
-        ml={2}
-        gutterBottom
-        sx={{
-          ...fontStyles.openSans.regular,
-          fontWeight: 700,
-        }}
       >
         b. Information you provide to us voluntarily:
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={4}
-        mt={2}
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={6}
+        pt={1}
         paragraph
       >
         We may collect additional data at other times, when you provide
@@ -535,184 +597,221 @@ const PrivacyPolicy = () => {
         surveys, or communicate with us. This data may include your name, e-mail
         id, mobile number, etc.
       </Typography>
+
       <Typography
         variant="privacyPolicyText"
-        component="h3"
-        ml={2}
-        gutterBottom
-        sx={{
-          ...fontStyles.openSans.regular,
-          fontWeight: 700,
-        }}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        pl={4}
+        mb={1}
       >
         c. Information we collect automatically:
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={4}
-        mt={2}
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={6}
+        pt={1}
+        mb={1}
         paragraph
       >
         We collect data about you, your interactions with us, as well as data
         regarding your computer or other devices used to access our Platform.
         This source may include, but is not limited to:
       </Typography>
+
+      <List sx={{ pl: 4, pt: 0 }} dense>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Activities on the Platform such as type of pages viewed, time
+                spent on pages, search queries etc.
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Your interactions with our email, customer care and contact us
+                Platform
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Geo-location data through IP addresses
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Device information like device id, device model etc. and other
+                unique identifiers
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Data collected via the use of cookies.
+              </Typography>
+            }
+          />
+        </ListItem>
+      </List>
+
       <Typography
-        mb={1}
-        ml={6}
         variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-          textAlign: "justify",
-        }}
-      >
-        Activities on the Platform such as type of pages viewed, time spent on
-        pages, search queries etc.
-      </Typography>
-      <Typography
-        mb={1}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-          textAlign: "justify",
-        }}
-      >
-        Your interactions with our email, customer care and contact us Platform
-      </Typography>
-      <Typography
-        mb={1}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-          textAlign: "justify",
-        }}
-      >
-        Geo-location data through IP addresses
-      </Typography>
-      <Typography
-        mb={1}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-          textAlign: "justify",
-        }}
-      >
-        Device information like device id, device model etc. and other unique
-        identifiers
-      </Typography>
-      <Typography
-        mb={2}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-          textAlign: "justify",
-        }}
-      >
-        Data collected via the use of cookies.
-      </Typography>
-      <Typography
-        variant="privacyPolicyText"
-        component="h3"
-        ml={2}
-        gutterBottom
-        sx={{
-          ...fontStyles.openSans.regular,
-          fontWeight: 700,
-        }}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        pl={4}
       >
         d. Information we collect from other sources:
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-          textAlign: "justify",
-        }}
-        ml={4}
-        mt={2}
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={6}
         paragraph
+        mt={1}
+        mb={1}
       >
         We may collect or receive data about you from third-party sources and
         process this data in accordance with this policy. The sources may
         include, but is not limited to:
       </Typography>
+
+      <List sx={{ pl: 4, pt: 0 }} dense>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Publicly accessible sources
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Marketing & Advertising vendors
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Analytics Providers
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Event management agencies
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Social media Platforms
+              </Typography>
+            }
+          />
+        </ListItem>
+      </List>
+
       <Typography
-        mb={1}
-        ml={6}
         variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-      >
-        Publicly accessible sources
-      </Typography>
-      <Typography
-        mb={1}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-      >
-        Marketing & Advertising vendors
-      </Typography>
-      <Typography
-        mb={1}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-      >
-        Analytics Providers
-      </Typography>
-      <Typography
-        mb={1}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-      >
-        Event management agencies
-      </Typography>
-      <Typography
-        mb={1}
-        ml={6}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-      >
-        Social media Platforms
-      </Typography>
-      <Typography
-        variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-          textAlign: "justify",
-        }}
-        ml={4}
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={6}
         paragraph
       >
         If you connect your social media account to our Platform, you will share
@@ -720,184 +819,76 @@ const PrivacyPolicy = () => {
         include your name, email address, photo, list of social media contacts,
         and any other data you make accessible to us.
       </Typography>
+
+      {/* Section 4: Lawful basis for processing your personal data */}
       <Typography
         variant="privacyPolicyText"
-        mb={2}
-        gutterBottom
-        sx={{
-          ...fontStyles.openSans.regular,
-          fontWeight: 700,
-        }}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
       >
-        4. Lawful basis for processing your personal data
+        4.
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={4}
-        mt={2}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        mb={2}
+        pl={2}
+      >
+        Lawful basis for processing your personal data
+      </Typography>
+      <Typography
+        variant="privacyPolicyText"
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={4}
         paragraph
+        mt={1}
+        mb={1}
       >
         We will collect personal data by lawful and fair means and, where
         appropriate, with the knowledge of the individual concerned. We only
         collect and process personal data about you where we have a lawful
         basis. Lawful basis on which we would process data from you includes:
       </Typography>
-      <Typography
-        mb={1}
-        ml={10}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{ ...fontStyles.openSans.regular }}
-      >
-        Obtaining explicit consent from you,
-      </Typography>
-      <Typography
-        mb={1}
-        ml={10}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{ ...fontStyles.openSans.regular }}
-      >
-        Processing for legitimate uses where processing is necessary in order to
-        provide you with our products and/or services, such as:
-      </Typography>
-      <Typography
-        mb={1}
-        ml={10}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{ ...fontStyles.openSans.regular }}
-      >
-        i. To enforce our terms and conditions
-      </Typography>
-      <Typography
-        mb={1}
-        ml={10}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{ ...fontStyles.openSans.regular }}
-      >
-        ii. To ensure compliance with our legal obligations and to also comply
-        with our obligations towards public authorities
-      </Typography>
-      <Typography
-        mb={1}
-        ml={10}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{ ...fontStyles.openSans.regular }}
-      >
-        iii. To enforce any legal right or claim
-      </Typography>
-      <Typography
-        mb={1}
-        ml={10}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{ ...fontStyles.openSans.regular }}
-      >
-        iv. For responding to a medical emergency involving a threat to your
-        health or life or that of any other individual
-      </Typography>
-      <Typography
-        mb={1}
-        ml={10}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{ ...fontStyles.openSans.regular }}
-      >
-        v. For taking measures to ensure safety of, or provide assistance or
-        services to any individual during any disaster, or any breakdown of
-        public order
-      </Typography>
-      <Typography
-        mb={1}
-        ml={10}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{ ...fontStyles.openSans.regular }}
-      >
-        vi. For legal and compliance reasons, such as the prevention, detection,
-        or investigation of a crime, loss prevention or prevention of fraud
-      </Typography>
-      <Typography
-        mb={1}
-        ml={10}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{ ...fontStyles.openSans.regular }}
-      >
-        vii. As otherwise described to you at the time of collection of your
-        personal data
-      </Typography>
-      <Typography
-        mb={2}
-        ml={10}
-        variant="privacyPolicyText"
-        display="block"
-        sx={{ ...fontStyles.openSans.regular }}
-      >
-        viii. To improve services, optimize platform performance, and support
-        research and data analysis
-      </Typography>
-      <Typography
-        variant="privacyPolicyText"
-        mb={2}
-        gutterBottom
-        sx={{
-          ...fontStyles.openSans.regular,
-          fontWeight: 700,
-        }}
-      >
-        5. How do we use your personal data?
-      </Typography>
-      <Typography
-        variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={4}
-        mt={2}
-        paragraph
-      >
-        We use your personal data for the purposes we have described below in
-        this policy, or for purposes which are reasonably compatible to the ones
-        described.
-      </Typography>
-      <Typography
-        variant="privacyPolicyText"
-        component="h3"
-        ml={6}
-        gutterBottom
-        sx={{
-          ...fontStyles.openSans.regular,
-          fontWeight: 700,
-        }}
-      >
-        To manage our relationship with you.
-      </Typography>
-      <Typography
-        variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        paragraph
-        mt={2}
-        ml={6}
-      >
-        We will use your personal data to:
-      </Typography>
-      <Box ml={6}>
-        <Box display="flex" mb={1}>
+
+      <List sx={{ pl: 4, pt: 0, pb: 0 }} dense>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Obtaining explicit consent from you,
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Processing for legitimate uses where processing is necessary in
+                order to provide you with our products and/or services, such as:
+              </Typography>
+            }
+          />
+        </ListItem>
+      </List>
+      <Box pl={8} pt={1} mt={-1} mb={1.5}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -905,18 +896,16 @@ const PrivacyPolicy = () => {
             i.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
-            Verify your identity; to help provide our products and/or services
-            and to administer those products and/or services
+            To enforce our terms and conditions
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -924,18 +913,17 @@ const PrivacyPolicy = () => {
             ii.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
-            To register you on our Platform and/or for the events, seminars,
-            etc.
+            To ensure compliance with our legal obligations and to also comply
+            with our obligations towards public authorities
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -943,17 +931,16 @@ const PrivacyPolicy = () => {
             iii.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
-            Provision for you to subscribe the premium features of our Platform
+            To enforce any legal right or claim
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -961,7 +948,212 @@ const PrivacyPolicy = () => {
             iv.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
+            variant="privacyPolicyText"
+          >
+            For responding to a medical emergency involving a threat to your
+            health or life or that of any other individual
+          </Typography>
+        </Box>
+        <Box display="flex" mb={0.5}>
+          <Typography
+            sx={{
+              minWidth: "1.8rem",
+              fontWeight: 700,
+              ...fontStyles.openSans.regular,
+            }}
+          >
+            v.
+          </Typography>
+          <Typography
+            sx={{ ...fontStyles.openSans.regular }}
+            variant="privacyPolicyText"
+          >
+            For taking measures to ensure safety of, or provide assistance or
+            services to any individual during any disaster, or any breakdown of
+            public order
+          </Typography>
+        </Box>
+        <Box display="flex" mb={0.5}>
+          <Typography
+            sx={{
+              minWidth: "1.8rem",
+              fontWeight: 700,
+              ...fontStyles.openSans.regular,
+            }}
+          >
+            vi.
+          </Typography>
+          <Typography
+            sx={{ ...fontStyles.openSans.regular }}
+            variant="privacyPolicyText"
+          >
+            For legal and compliance reasons, such as the prevention, detection,
+            or investigation of a crime, loss prevention or prevention of fraud
+          </Typography>
+        </Box>
+        <Box display="flex" mb={0.5}>
+          <Typography
+            sx={{
+              minWidth: "1.8rem",
+              fontWeight: 700,
+              ...fontStyles.openSans.regular,
+            }}
+          >
+            vii.
+          </Typography>
+          <Typography
+            sx={{ ...fontStyles.openSans.regular }}
+            variant="privacyPolicyText"
+          >
+            As otherwise described to you at the time of collection of your
+            personal data
+          </Typography>
+        </Box>
+        <Box display="flex" mb={0.5}>
+          <Typography
+            sx={{
+              minWidth: "1.8rem",
+              fontWeight: 700,
+              ...fontStyles.openSans.regular,
+            }}
+          >
+            viii.
+          </Typography>
+          <Typography
+            sx={{ ...fontStyles.openSans.regular }}
+            variant="privacyPolicyText"
+          >
+            To improve services, optimize platform performance, and support
+            research and data analysis
+          </Typography>
+        </Box>
+      </Box>
+
+      {/* Section 5: How do we use your personal data? */}
+      <Typography
+        variant="privacyPolicyText"
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+      >
+        5.
+      </Typography>
+      <Typography
+        variant="privacyPolicyText"
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        mb={2}
+        ml={2}
+      >
+        How do we use your personal data?
+      </Typography>
+      <Typography
+        variant="privacyPolicyText"
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={4}
+        mt={1}
+        mb={0}
+        paragraph
+      >
+        We use your personal data for the purposes we have described below in
+        this policy, or for purposes which are reasonably compatible to the ones
+        described.
+      </Typography>
+
+      <List sx={{ pl: 2, pt: 0, pb: 0, mt: 0.5 }} dense>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  fontWeight: 700,
+                  mb: 0,
+                }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                To manage our relationship with you.
+              </Typography>
+            }
+          />
+        </ListItem>
+      </List>
+
+      <Typography
+        variant="privacyPolicyText"
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={7}
+      >
+        We will use your personal data to:
+      </Typography>
+      <Box pl={7} mt={1}>
+        <Box display="flex" mb={0.5}>
+          <Typography
+            sx={{
+              minWidth: "1.8rem",
+              fontWeight: 700,
+              ...fontStyles.openSans.regular,
+            }}
+          >
+            i.
+          </Typography>
+          <Typography
+            sx={{ ...fontStyles.openSans.regular }}
+            variant="privacyPolicyText"
+          >
+            Verify your identity; to help provide our products and/or services
+            and to administer those products and/or services
+          </Typography>
+        </Box>
+        <Box display="flex" mb={0.5}>
+          <Typography
+            sx={{
+              minWidth: "1.8rem",
+              fontWeight: 700,
+              ...fontStyles.openSans.regular,
+            }}
+          >
+            ii.
+          </Typography>
+          <Typography
+            sx={{ ...fontStyles.openSans.regular }}
+            variant="privacyPolicyText"
+          >
+            To register you on our Platform and/or for the events, seminars,
+            etc.
+          </Typography>
+        </Box>
+        <Box display="flex" mb={0.5}>
+          <Typography
+            sx={{
+              minWidth: "1.8rem",
+              fontWeight: 700,
+              ...fontStyles.openSans.regular,
+            }}
+          >
+            iii.
+          </Typography>
+          <Typography
+            sx={{ ...fontStyles.openSans.regular }}
+            variant="privacyPolicyText"
+          >
+            Provision for you to subscribe the premium features of our Platform
+          </Typography>
+        </Box>
+        <Box display="flex" mb={0.5}>
+          <Typography
+            sx={{
+              minWidth: "1.8rem",
+              fontWeight: 700,
+              ...fontStyles.openSans.regular,
+            }}
+          >
+            iv.
+          </Typography>
+          <Typography
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
             Communicate with you concerning our service (for example by email,
@@ -970,11 +1162,10 @@ const PrivacyPolicy = () => {
             about new features and content available on our Platform
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -982,18 +1173,17 @@ const PrivacyPolicy = () => {
             v.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
             To provide multiple rewards & offers to you for our products and/or
             services
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -1001,7 +1191,7 @@ const PrivacyPolicy = () => {
             vi.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
             For marketing (where you have agreed to this) and for market
@@ -1011,11 +1201,10 @@ const PrivacyPolicy = () => {
             services
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -1023,18 +1212,17 @@ const PrivacyPolicy = () => {
             vii.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
             Provide online or offline products and/or services such as contests
             and employment opportunities
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -1042,18 +1230,17 @@ const PrivacyPolicy = () => {
             viii.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
             Identify you and authenticate your access rights access to our
             Platform
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -1061,17 +1248,16 @@ const PrivacyPolicy = () => {
             ix.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
             Invite you to provide feedback or surveys or attend events
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -1079,17 +1265,16 @@ const PrivacyPolicy = () => {
             x.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
             To enhance personalized services
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -1097,18 +1282,17 @@ const PrivacyPolicy = () => {
             xi.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
             To send you communication, including through WhatsApp business
             messages, in relation to your use of the Platform and/or Services
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -1116,7 +1300,7 @@ const PrivacyPolicy = () => {
             xii.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
             To respond to your queries and provide you with data when you
@@ -1126,11 +1310,10 @@ const PrivacyPolicy = () => {
             at any time
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -1138,11 +1321,7 @@ const PrivacyPolicy = () => {
             xiii.
           </Typography>
           <Typography
-            sx={{
-              flex: 1,
-              ...fontStyles.openSans.regular,
-              textAlign: "justify",
-            }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
             Perform analytics, market research and segmentation to understand
@@ -1150,11 +1329,10 @@ const PrivacyPolicy = () => {
             communications to you
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -1162,7 +1340,7 @@ const PrivacyPolicy = () => {
             xiv.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
             To make platform and its content available and to further optimize &
@@ -1170,121 +1348,133 @@ const PrivacyPolicy = () => {
           </Typography>
         </Box>
       </Box>
+      <List sx={{ pl: 2, pt: 0, pb: 0, mt: 1 }} dense>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  fontWeight: 700,
+                  mb: 0,
+                }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                To manage and improve our processes and our business operations.
+              </Typography>
+            }
+          />
+        </ListItem>
+      </List>
+
       <Typography
         variant="privacyPolicyText"
-        component="h3"
-        ml={8}
-        mt={4}
-        mb={2}
-        gutterBottom
-        sx={{
-          ...fontStyles.openSans.regular,
-          fontWeight: 700,
-        }}
-      >
-        To manage and improve our processes and our business operations.
-      </Typography>
-      <Typography
-        variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={8}
-        mt={2}
-        paragraph
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={7}
       >
         We will use your personal data to:
       </Typography>
-      <Box display="flex" mb={1} ml={8}>
-        <Typography
-          sx={{
-            minWidth: "2rem",
-            fontWeight: 700,
-            ...fontStyles.openSans.regular,
-          }}
-        >
-          i.
-        </Typography>
-        <Typography
-          sx={{ flex: 1, ...fontStyles.openSans.regular }}
-          variant="privacyPolicyText"
-        >
-          Manage our network and information systems security
-        </Typography>
+      <Box pl={7} pt={1} pb={1}>
+        <Box display="flex" mb={0.5}>
+          <Typography
+            sx={{
+              minWidth: "1.8rem",
+              fontWeight: 700,
+              ...fontStyles.openSans.regular,
+            }}
+          >
+            i.
+          </Typography>
+          <Typography
+            sx={{ ...fontStyles.openSans.regular }}
+            variant="privacyPolicyText"
+          >
+            Manage our network and information systems security
+          </Typography>
+        </Box>
+        <Box display="flex" mb={0.5}>
+          <Typography
+            sx={{
+              minWidth: "1.8rem",
+              fontWeight: 700,
+              ...fontStyles.openSans.regular,
+            }}
+          >
+            ii.
+          </Typography>
+          <Typography
+            sx={{ ...fontStyles.openSans.regular }}
+            variant="privacyPolicyText"
+          >
+            Manage our workforce effectively
+          </Typography>
+        </Box>
+        <Box display="flex" mb={0.5}>
+          <Typography
+            sx={{
+              minWidth: "1.8rem",
+              fontWeight: 700,
+              ...fontStyles.openSans.regular,
+            }}
+          >
+            iii.
+          </Typography>
+          <Typography
+            sx={{ ...fontStyles.openSans.regular }}
+            variant="privacyPolicyText"
+          >
+            Perform data analyses, auditing and research to help us deliver and
+            improve our digital Platform, content and products and/or services
+          </Typography>
+        </Box>
+        <Box display="flex" mb={0.5}>
+          <Typography
+            sx={{
+              minWidth: "1.8rem",
+              fontWeight: 700,
+              ...fontStyles.openSans.regular,
+            }}
+          >
+            iv.
+          </Typography>
+          <Typography
+            sx={{ ...fontStyles.openSans.regular }}
+            variant="privacyPolicyText"
+          >
+            Monitor and analyse trends, usage and activities in connection with
+            our products and/or services to understand which parts of our
+            products and/or services are of the most interest and to improve
+            them accordingly
+          </Typography>
+        </Box>
       </Box>
-      <Box display="flex" mb={1} ml={8}>
-        <Typography
-          sx={{
-            minWidth: "2rem",
-            fontWeight: 700,
-            ...fontStyles.openSans.regular,
-          }}
-        >
-          ii.
-        </Typography>
-        <Typography
-          sx={{ flex: 1, ...fontStyles.openSans.regular }}
-          variant="privacyPolicyText"
-        >
-          Manage our workforce effectively
-        </Typography>
-      </Box>
-      <Box display="flex" mb={1} ml={8}>
-        <Typography
-          sx={{
-            minWidth: "2rem",
-            fontWeight: 700,
-            ...fontStyles.openSans.regular,
-          }}
-        >
-          iii.
-        </Typography>
-        <Typography
-          sx={{ flex: 1, ...fontStyles.openSans.regular }}
-          variant="privacyPolicyText"
-        >
-          Perform data analyses, auditing and research to help us deliver and
-          improve our digital Platform, content and products and/or services
-        </Typography>
-      </Box>
-      <Box display="flex" mb={3} ml={8}>
-        <Typography
-          sx={{
-            minWidth: "2rem",
-            fontWeight: 700,
-            ...fontStyles.openSans.regular,
-          }}
-        >
-          iv.
-        </Typography>
-        <Typography
-          sx={{ flex: 1, ...fontStyles.openSans.regular }}
-          variant="privacyPolicyText"
-        >
-          Monitor and analyse trends, usage and activities in connection with
-          our products and/or services to understand which parts of our products
-          and/or services are of the most interest and to improve them
-          accordingly
-        </Typography>
-      </Box>
+
+      {/* Section 6: How do we protect your personal data */}
       <Typography
         variant="privacyPolicyText"
-        mb={2}
-        gutterBottom
         sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
       >
-        6. How do we protect your personal data
+        6.
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={4}
-        mt={2}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        mb={2}
+        ml={2}
+      >
+        How do we protect your personal data
+      </Typography>
+      <Typography
+        variant="privacyPolicyText"
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={4}
+        mt={1}
         paragraph
+        mb={1}
       >
         We implement reasonable technical and organizational measures in
         relation to the data and personal data that is processed by us. We take
@@ -1295,11 +1485,8 @@ const PrivacyPolicy = () => {
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={4}
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={4}
         paragraph
       >
         While we endeavour to always protect our Platform, operations and data
@@ -1311,22 +1498,27 @@ const PrivacyPolicy = () => {
         from our Sites is at your own risk. You should only access the services
         within a secure environment.
       </Typography>
+
+      {/* Section 7: Your rights in connection with your personal data */}
       <Typography
         variant="privacyPolicyText"
-        mb={2}
-        gutterBottom
         sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
       >
-        7. Your rights in connection with your personal data
+        7.
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={4}
-        mt={2}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        mb={2}
+        ml={2}
+      >
+        Your rights in connection with your personal data
+      </Typography>
+      <Typography
+        variant="privacyPolicyText"
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={4}
+        mt={1}
         paragraph
       >
         We respect your right to access and control your personal data, and we
@@ -1336,189 +1528,298 @@ const PrivacyPolicy = () => {
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        pl={4}
+        mb={1}
+      >
+        You have the following rights:
+      </Typography>
+
+      <List sx={{ pt: 0, pb: 0, mt: 1 }} dense>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Box sx={{ textAlign: "justify" }}>
+                <Typography
+                  sx={{
+                    ...fontStyles.openSans.regular,
+                    fontWeight: 700,
+                    mb: 0,
+                  }}
+                  variant="privacyPolicyText"
+                  paragraph
+                >
+                  Right to rectification or update User Information
+                </Typography>
+
+                <Typography
+                  sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                  variant="privacyPolicyText"
+                  paragraph
+                >
+                  If You would like to correct or update personal information
+                  that You have provided to us, please contact us at
+                  <Link
+                    href="mailto:grow@moneytv.live"
+                    color="primary.main"
+                    sx={{ textDecoration: "underline", mx: "0.35rem" }}
+                  >
+                    grow@moneytv.live
+                  </Link>
+                  to receive instructions to update your profile.
+                </Typography>
+              </Box>
+            }
+          />
+        </ListItem>
+
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Box sx={{ textAlign: "justify" }}>
+                <Typography
+                  sx={{
+                    ...fontStyles.openSans.regular,
+                    fontWeight: 700,
+                    mb: 0,
+                  }}
+                  variant="privacyPolicyText"
+                  paragraph
+                >
+                  Right not to provide consent or withdraw consent
+                </Typography>
+
+                <Typography
+                  sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                  variant="privacyPolicyText"
+                  paragraph
+                >
+                  We may seek to rely on Your consent to process certain
+                  personal data. Where we do so, You have the right not to
+                  provide Your consent or to withdraw Your consent at any time.
+                  This does not affect the lawfulness of the processing based on
+                  consent before its withdrawal.
+                </Typography>
+              </Box>
+            }
+          />
+        </ListItem>
+
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Box sx={{ textAlign: "justify" }}>
+                <Typography
+                  sx={{
+                    ...fontStyles.openSans.regular,
+                    fontWeight: 700,
+                    mb: 0,
+                  }}
+                  variant="privacyPolicyText"
+                  paragraph
+                >
+                  Right to access
+                </Typography>
+
+                <Typography
+                  sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                  variant="privacyPolicyText"
+                  paragraph
+                >
+                  You may have the right to access the User Information that we
+                  hold about You.
+                </Typography>
+              </Box>
+            }
+          />
+        </ListItem>
+
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Box sx={{ textAlign: "justify" }}>
+                <Typography
+                  sx={{
+                    ...fontStyles.openSans.regular,
+                    fontWeight: 700,
+                    mb: 0,
+                  }}
+                  variant="privacyPolicyText"
+                  paragraph
+                >
+                  Right of erasure
+                </Typography>
+
+                <Typography
+                  sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                  variant="privacyPolicyText"
+                  paragraph
+                >
+                  In certain circumstances, You may have the right to the
+                  erasure of User Information that we hold about You (for
+                  example if it is no longer necessary for the purposes for
+                  which it was originally collected).
+                </Typography>
+              </Box>
+            }
+          />
+        </ListItem>
+
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Box sx={{ textAlign: "justify" }}>
+                <Typography
+                  sx={{
+                    ...fontStyles.openSans.regular,
+                    fontWeight: 700,
+                    mb: 0,
+                  }}
+                  variant="privacyPolicyText"
+                  paragraph
+                >
+                  Right to object to or restrict processing
+                </Typography>
+
+                <Typography
+                  sx={{ ...fontStyles.openSans.regular, mb: 0 }}
+                  variant="privacyPolicyText"
+                  paragraph
+                >
+                  You may have the right to request that we restrict processing
+                  of Your User Information in certain circumstances (for
+                  example, where You believe that the User Information we hold
+                  about You is not accurate).
+                </Typography>
+              </Box>
+            }
+          />
+        </ListItem>
+
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Box sx={{ textAlign: "justify" }}>
+                <Typography
+                  sx={{
+                    ...fontStyles.openSans.regular,
+                    fontWeight: 700,
+                    mb: 0,
+                  }}
+                  variant="privacyPolicyText"
+                  paragraph
+                >
+                  Right to opt out
+                </Typography>
+
+                <Typography
+                  sx={{ ...fontStyles.openSans.regular, mb: 1 }}
+                  variant="privacyPolicyText"
+                  paragraph
+                >
+                  You may have the right to opt out from the promotional
+                  email/SMS/call services, upon which all communications
+                  pertaining to new products, features, launches and other
+                  materials will not be sent to You.
+                </Typography>
+                <Typography
+                  sx={{ ...fontStyles.openSans.regular, mb: 2 }}
+                  variant="privacyPolicyText"
+                  paragraph
+                >
+                  For exercising any of your rights, you can contact us using{" "}
+                  <Link
+                    href="mailto:grow@moneytv.live"
+                    color="primary.main"
+                    sx={{ textDecoration: "underline", mx: 1 }}
+                  >
+                    grow@moneytv.live
+                  </Link>
+                  . We will need you to furnish proof of your identity before
+                  you can exercise these rights. We may not be able to process
+                  any requests made in the event you fail to establish your
+                  identity, or if we are unable to authenticate your identity.
+                </Typography>
+              </Box>
+            }
+          />
+        </ListItem>
+      </List>
+
+      <List sx={{ pt: 0, pb: 1, mt: -2 }} dense>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Box sx={{ textAlign: "justify" }}>
+                <Typography
+                  sx={{
+                    ...fontStyles.openSans.regular,
+                    mb: 0,
+                  }}
+                  variant="privacyPolicyText"
+                  paragraph
+                >
+                  Please note for all the information and data sought by the
+                  Company, in case you do not wish provide certain such data or
+                  seek to withdraw Your consent or information/data already
+                  provided, or wish to opt out from a particular service or wish
+                  to erase certain information / data or seek restriction in
+                  processing of certain such information / data, in such cases,
+                  the Company may not be in a position to continue provisioning
+                  of its services and shall have the right to de-register /
+                  debar You from the use of the Platform, until such time the
+                  requisite data/information and the consents are provided.
+                </Typography>
+              </Box>
+            }
+          />
+        </ListItem>
+      </List>
+
+      {/* Section 8: Will your information be shared with anyone */}
+      <Typography
+        variant="privacyPolicyText"
         sx={{
           ...fontStyles.openSans.regular,
           fontWeight: 700,
         }}
-        ml={4}
-        paragraph
       >
-        You have the following rights:
-      </Typography>
-      <Box mb={2} ml={4}>
-        <Typography
-          sx={{
-            ...fontStyles.openSans.regular,
-            fontWeight: 700,
-          }}
-          variant="privacyPolicyText"
-          display="block"
-        >
-          Right to rectification or update User Information:-
-        </Typography>
-        <Typography
-          variant="privacyPolicyText"
-          sx={{
-            ...fontStyles.openSans.regular,
-          }}
-        >
-          If You would like to correct or update personal information that You
-          have provided to us, please contact us at Email ID to receive
-          instructions to update your profile.
-        </Typography>
-      </Box>
-      <Box mb={2} ml={4}>
-        <Typography
-          sx={{
-            ...fontStyles.openSans.regular,
-            fontWeight: 700,
-          }}
-          variant="privacyPolicyText"
-          display="block"
-        >
-          Right not to provide consent or withdraw consent
-        </Typography>
-        <Typography
-          variant="privacyPolicyText"
-          sx={{ ...fontStyles.openSans.regular }}
-        >
-          We may seek to rely on Your consent to process certain personal data.
-          Where we do so, You have the right not to provide Your consent or to
-          withdraw Your consent at any time. This does not affect the lawfulness
-          of the processing based on consent before its withdrawal.
-        </Typography>
-      </Box>
-      <Box mb={2} ml={4}>
-        <Typography
-          sx={{
-            ...fontStyles.openSans.regular,
-            fontWeight: 700,
-          }}
-          variant="privacyPolicyText"
-          display="block"
-        >
-          Right to access
-        </Typography>
-        <Typography
-          variant="privacyPolicyText"
-          sx={{ ...fontStyles.openSans.regular }}
-        >
-          You may have the right to access the User Information that we hold
-          about You.
-        </Typography>
-      </Box>
-      <Box mb={2} ml={4}>
-        <Typography
-          sx={{
-            ...fontStyles.openSans.regular,
-            fontWeight: 700,
-          }}
-          variant="privacyPolicyText"
-          display="block"
-        >
-          Right of erasure
-        </Typography>
-        <Typography
-          variant="privacyPolicyText"
-          sx={{ ...fontStyles.openSans.regular }}
-        >
-          In certain circumstances, You may have the right to the erasure of
-          User Information that we hold about You (for example if it is no
-          longer necessary for the purposes for which it was originally
-          collected).
-        </Typography>
-      </Box>
-      <Box mb={2} ml={4}>
-        <Typography
-          sx={{
-            ...fontStyles.openSans.regular,
-            fontWeight: 700,
-          }}
-          variant="privacyPolicyText"
-          display="block"
-        >
-          Right to object to or restrict processing
-        </Typography>
-        <Typography
-          variant="privacyPolicyText"
-          sx={{ ...fontStyles.openSans.regular }}
-        >
-          You may have the right to request that we restrict processing of Your
-          User Information in certain circumstances (for example, where You
-          believe that the User Information we hold about You is not accurate).
-        </Typography>
-      </Box>
-      <Box mb={2} ml={4}>
-        <Typography
-          sx={{
-            ...fontStyles.openSans.regular,
-            fontWeight: 700,
-          }}
-          variant="privacyPolicyText"
-          display="block"
-        >
-          Right to opt out
-        </Typography>
-        <Typography
-          variant="privacyPolicyText"
-          sx={{ ...fontStyles.openSans.regular }}
-        >
-          You may have the right to opt out from the promotional email/SMS/call
-          services, upon which all communications pertaining to new products,
-          features, launches and other materials will not be sent to You.
-        </Typography>
-      </Box>
-      <Typography
-        variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={4}
-        paragraph
-      >
-        For exercising any of your rights, you can contact us using{" "}
-        grow@moneytv.live . We will need you to furnish proof of your identity
-        before you can exercise these rights. We may not be able to process any
-        requests made in the event you fail to establish your identity, or if we
-        are unable to authenticate your identity.
+        8.
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={4}
-        paragraph
-      >
-        Please note for all the information and data sought by the Company, in
-        case you do not wish provide certain such data or seek to withdraw Your
-        consent or information/data already provided, or wish to opt out from a
-        particular service or wish to erase certain information / data or seek
-        restriction in processing of certain such information / data, in such
-        cases, the Company may not be in a position to continue provisioning of
-        its services and shall have the right to de-register / debar You from
-        the use of the Platform, until such time the requisite data/information
-        and the consents are provided.
-      </Typography>
-      <Typography
-        variant="privacyPolicyText"
-        mb={2}
-        gutterBottom
         sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        mb={2}
+        ml={2}
       >
-        8. Will your information be shared with anyone
+        Will your information be shared with anyone
       </Typography>
       <Typography
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={4}
+        mt={1}
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={4}
-        mt={2}
         paragraph
       >
         As far as this is necessary for the purposes set out above, we will
@@ -1526,32 +1827,39 @@ const PrivacyPolicy = () => {
         either have a need to know and who will process it for us based on our
         instructions and for no other purpose:
       </Typography>
+
+      <List sx={{ pt: 0, pb: 0, mt: 1 }} dense>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                variant="privacyPolicyText"
+                sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+              >
+                Compliance with Laws.
+              </Typography>
+            }
+          />
+        </ListItem>
+      </List>
+
       <Typography
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={5}
+        mb={1}
         variant="privacyPolicyText"
-        component="h3"
-        ml={4}
-        gutterBottom
-        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
-      >
-        Compliance with Laws.
-      </Typography>
-      <Typography
-        variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={4}
-        mt={1}
         paragraph
       >
         We will share personal data when required for the following purposes:
       </Typography>
-      <Box ml={4}>
-        <Box display="flex" mb={1}>
+      <Box pl={5}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -1559,7 +1867,7 @@ const PrivacyPolicy = () => {
             i.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
             To comply with legal obligations and respond to requests from
@@ -1567,11 +1875,10 @@ const PrivacyPolicy = () => {
             public authorities
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -1579,33 +1886,34 @@ const PrivacyPolicy = () => {
             ii.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
             To prevent or detect or investigate offences or cyber incidents or
             for the prosecution or punishment of offences
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
           >
             iii.
           </Typography>
-          <Typography sx={{ flex: 1 }} variant="privacyPolicyText">
+          <Typography
+            sx={{ ...fontStyles.openSans.regular }}
+            variant="privacyPolicyText"
+          >
             To raise or defend against legal claims
           </Typography>
         </Box>
-
-        <Box display="flex" mb={1}>
+        <Box display="flex" mb={0.5}>
           <Typography
             sx={{
-              minWidth: "2rem",
+              minWidth: "1.8rem",
               fontWeight: 700,
               ...fontStyles.openSans.regular,
             }}
@@ -1613,7 +1921,7 @@ const PrivacyPolicy = () => {
             iv.
           </Typography>
           <Typography
-            sx={{ flex: 1, ...fontStyles.openSans.regular }}
+            sx={{ ...fontStyles.openSans.regular }}
             variant="privacyPolicyText"
           >
             To protect our users, systems, and products and/or services.
@@ -1621,13 +1929,10 @@ const PrivacyPolicy = () => {
         </Box>
       </Box>
       <Typography
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={5}
+        pt={1}
         variant="privacyPolicyText"
-        lineHeight={1.8}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        ml={4}
-        mt={2}
         paragraph
       >
         We may disclose your information where we are legally required to do so
@@ -1636,53 +1941,62 @@ const PrivacyPolicy = () => {
         to a court order or a subpoena (including in response to public
         authorities to meet national security or law enforcement requirements).
       </Typography>
+
+      <List sx={{ pt: 0, pb: 0, mt: 1 }} dense>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                variant="privacyPolicyText"
+                sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+              >
+                Vital Interests and Legal Rights.
+              </Typography>
+            }
+          />
+        </ListItem>
+      </List>
+
       <Typography
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={5}
         variant="privacyPolicyText"
-        component="h3"
-        ml={4}
-        gutterBottom
-        fontWeight={"normal"}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
+        paragraph
       >
-        <Typography
-          component={"span"}
-          mr={1}
-          sx={{
-            ...fontStyles.openSans.regular,
-            fontWeight: 700,
-          }}
-        >
-          Vital Interests and Legal Rights.
-        </Typography>
         We may disclose your information where we believe it is necessary to
         investigate, prevent, or take action regarding potential violations of
         our policies, suspected fraud, situations involving potential threats to
         the safety of any person and illegal activities, or as evidence in
         litigation in which we are involved.
       </Typography>
+
+      <List sx={{ pt: 0, pb: 0, mt: 1 }} dense>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                variant="privacyPolicyText"
+                sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+              >
+                Vendors, Consultants and Other Third-Party Service Providers.
+              </Typography>
+            }
+          />
+        </ListItem>
+      </List>
+
       <Typography
+        sx={{ ...fontStyles.openSans.regular }}
+        pl={5}
         variant="privacyPolicyText"
-        component="h3"
-        ml={4}
-        mt={2}
-        gutterBottom
-        fontWeight={"normal"}
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
+        paragraph
       >
-        <Typography
-          component={"span"}
-          mr={1}
-          sx={{
-            ...fontStyles.openSans.regular,
-            fontWeight: 700,
-          }}
-        >
-          Vendors, Consultants and Other Third-Party Service Providers.
-        </Typography>
         We may share your data with third party vendors, service providers,
         advertisers, contractors or agents who perform services for us or on our
         behalf and require access to such information to do that work. For eg.
@@ -1701,27 +2015,34 @@ const PrivacyPolicy = () => {
         not share, sell, rent or trade any of your information with third
         parties for their promotional purposes.
       </Typography>
+
+      <List sx={{ pt: 0, pb: 0, mt: 1 }} dense>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, fontWeight: 700, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Business Transfers.
+              </Typography>
+            }
+          />
+        </ListItem>
+      </List>
+
       <Typography
-        variant="privacyPolicyText"
-        component="h3"
-        ml={4}
-        mt={2}
-        gutterBottom
-        fontWeight={"normal"}
+        ml={5}
         sx={{
           ...fontStyles.openSans.regular,
         }}
+        variant="privacyPolicyText"
+        paragraph
       >
-        <Typography
-          component={"span"}
-          mr={1}
-          sx={{
-            ...fontStyles.openSans.regular,
-            fontWeight: 700,
-          }}
-        >
-          Business Transfers.
-        </Typography>
         We may share or transfer your information in connection with, or during
         negotiations of, any merger, sale of company assets, financing,
         restructure, joint venture, assignment, transfer acquisition or other
@@ -1735,50 +2056,65 @@ const PrivacyPolicy = () => {
         re-structuring of business, we and our affiliates may share your
         personal data, wholly or in part, with another business entity.
       </Typography>
+
+      <List sx={{ pt: 0, pb: 0, mt: 1 }} dense>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ ...fontStyles.openSans.regular, fontWeight: 700, mb: 0 }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                With your Consent.
+              </Typography>
+            }
+          />
+        </ListItem>
+      </List>
+
       <Typography
-        variant="privacyPolicyText"
-        component="h3"
-        ml={4}
-        mt={2}
-        mb={3}
-        gutterBottom
-        fontWeight={"normal"}
+        ml={5}
+        mb={1.5}
         sx={{
           ...fontStyles.openSans.regular,
         }}
+        variant="privacyPolicyText"
+        paragraph
       >
-        <Typography
-          component={"span"}
-          mr={1}
-          sx={{
-            ...fontStyles.openSans.regular,
-            fontWeight: 700,
-          }}
-        >
-          With your Consent.
-        </Typography>
         We may disclose your personal information for any other purpose with
         your consent.
       </Typography>
+
       <Typography
         variant="privacyPolicyText"
-        mb={2}
-        gutterBottom
         sx={{
           ...fontStyles.openSans.regular,
           fontWeight: 700,
         }}
       >
-        9. Personal data transfer, storage and processing
+        9.
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        mb={2}
+        ml={2}
+      >
+        Personal data transfer, storage and processing
+      </Typography>
+
+      <Typography
         sx={{
           ...fontStyles.openSans.regular,
         }}
-        ml={4}
-        mt={2}
+        pl={4}
+        mt={1}
+        mb={2}
+        variant="privacyPolicyText"
         paragraph
       >
         We may transfer your personal data to our affiliates or third parties in
@@ -1786,25 +2122,32 @@ const PrivacyPolicy = () => {
         accordance with applicable data protection laws, provided that no such
         restriction is notified by the Government/ appropriate authority.
       </Typography>
+
       <Typography
         variant="privacyPolicyText"
-        mb={2}
-        gutterBottom
         sx={{
           ...fontStyles.openSans.regular,
           fontWeight: 700,
         }}
       >
-        10. How long do we keep your information
+        10.
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        mb={2}
+        ml={1}
+      >
+        How long do we keep your information
+      </Typography>
+
+      <Typography
         sx={{
           ...fontStyles.openSans.regular,
         }}
-        ml={4}
-        mt={2}
+        pl={4}
+        mt={1}
+        variant="privacyPolicyText"
         paragraph
       >
         We will retain your personal data which we have collected for as long as
@@ -1813,13 +2156,13 @@ const PrivacyPolicy = () => {
         accounting or other legal requirements). This is determined on a
         case-to-case basis.
       </Typography>
+
       <Typography
-        variant="privacyPolicyText"
-        lineHeight={1.8}
         sx={{
           ...fontStyles.openSans.regular,
         }}
-        ml={4}
+        pl={4}
+        variant="privacyPolicyText"
         paragraph
       >
         When we have no ongoing legitimate business need to process your
@@ -1829,13 +2172,14 @@ const PrivacyPolicy = () => {
         information and isolate it from any further processing until deletion is
         possible.
       </Typography>
+
       <Typography
-        variant="privacyPolicyText"
-        lineHeight={1.8}
         sx={{
           ...fontStyles.openSans.regular,
         }}
-        ml={4}
+        pl={4}
+        mb={2}
+        variant="privacyPolicyText"
         paragraph
       >
         We will delete your personal data whenever you request us to do so.
@@ -1843,194 +2187,288 @@ const PrivacyPolicy = () => {
         there are statutory retention obligations or potential legal claims are
         not, yet time barred.
       </Typography>
+
       <Typography
         variant="privacyPolicyText"
-        mb={2}
-        gutterBottom
         sx={{
           ...fontStyles.openSans.regular,
           fontWeight: 700,
         }}
       >
-        11. How to delete your account
+        11.
       </Typography>
       <Typography
-        mb={1}
-        ml={4}
-        mt={2}
         variant="privacyPolicyText"
-        display="block"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-      >
-        You may choose to delete Your account at any point of time by making
-        such choice through Site/Platform or you can send an email to{" "}
-        <Link
-          href="mailto:grow@moneytv.live"
-          color="primary.main"
-          sx={{ textDecoration: "underline", mr: "0.35rem" }}
-        >
-          grow@moneytv.live
-        </Link>
-        from your verified email id.
-      </Typography>
-      <Typography
-        mb={1}
-        ml={4}
-        variant="privacyPolicyText"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        display="block"
-      >
-        The account shall not be deleted till the time any transactions are open
-        on the platform.
-      </Typography>
-      <Typography
-        mb={1}
-        ml={4}
-        variant="privacyPolicyText"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        display="block"
-      >
-        We may retain Your certain Data in accordance with applicable laws and
-        regulations post the deletion of your account.
-      </Typography>
-      <Typography
-        mb={1}
-        ml={4}
-        variant="privacyPolicyText"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        display="block"
-      >
-        In the event of the pendency of any legal, regulatory and/or statutory
-        proceeding or receipt of any legal and / or regulatory direction to that
-        effect, we may be required by the law to retain your Personal Data for
-        longer periods.
-      </Typography>
-      <Typography
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         mb={2}
-        ml={4}
-        variant="privacyPolicyText"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        display="block"
+        ml={1}
       >
-        Subject to above, all your personal details submitted, financial data
-        submitted etc. shall be deleted or de-identified so that it is anonymous
-        and not attributable to You, within reasonable time, not exceeding 90
-        days.
+        How to delete your account
       </Typography>
+
+      <List sx={{ pt: 0, pb: 0, mt: 1, mb: 1.5 }} dense>
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  textAlign: "justify",
+                  mb: 0,
+                }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                You may choose to delete Your account at any point of time by
+                making such choice through Site/Platform or you can send an
+                email to{" "}
+                <Link
+                  href="mailto:grow@moneytv.live"
+                  color="primary.main"
+                  sx={{ textDecoration: "underline", mr: "0.35rem" }}
+                >
+                  grow@moneytv.live
+                </Link>
+                from your verified email id.
+              </Typography>
+            }
+          />
+        </ListItem>
+
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  textAlign: "justify",
+                  mb: 0,
+                }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                The account shall not be deleted till the time any transactions
+                are open on the platform.
+              </Typography>
+            }
+          />
+        </ListItem>
+
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  textAlign: "justify",
+                  mb: 0,
+                }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                We may retain Your certain Data in accordance with applicable
+                laws and regulations post the deletion of your account.
+              </Typography>
+            }
+          />
+        </ListItem>
+
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  textAlign: "justify",
+                  mb: 0,
+                }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                In the event of the pendency of any legal, regulatory and/or
+                statutory proceeding or receipt of any legal and / or regulatory
+                direction to that effect, we may be required by the law to
+                retain your Personal Data for longer periods.
+              </Typography>
+            }
+          />
+        </ListItem>
+
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  textAlign: "justify",
+                  mb: 0,
+                }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                Subject to above, all your personal details submitted, financial
+                data submitted etc. shall be deleted or de-identified so that it
+                is anonymous and not attributable to You, within reasonable
+                time, not exceeding 90 days.
+              </Typography>
+            }
+          />
+        </ListItem>
+
+        <ListItem sx={{ py: 0 }} alignItems="flex-start">
+          <ListItemIcon sx={{ minWidth: "20px" }}>
+            <Circle sx={{ fontSize: "8px", color: "text.primary" }} />
+          </ListItemIcon>
+          <ListItemText
+            primary={
+              <Typography
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  textAlign: "justify",
+                  mb: 0,
+                }}
+                variant="privacyPolicyText"
+                paragraph
+              >
+                You will not be able to retrieve / access the account and
+                related data in future once the account is deleted basis your
+                request.
+              </Typography>
+            }
+          />
+        </ListItem>
+      </List>
+
       <Typography
-        mb={2}
-        ml={4}
         variant="privacyPolicyText"
-        sx={{
-          ...fontStyles.openSans.regular,
-        }}
-        display="block"
-      >
-        You will not be able to retrieve / access the account and related data
-        in future once the account is deleted basis your request.
-      </Typography>
-      <Typography
-        variant="privacyPolicyText"
-        mb={2}
-        gutterBottom
         sx={{
           ...fontStyles.openSans.regular,
           fontWeight: 700,
         }}
       >
-        12. Do we collect information from minors
+        12.
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        mb={2}
+        ml={1}
+      >
+        Do we collect information from minors
+      </Typography>
+
+      <Typography
+        variant="privacyPolicyText"
         sx={{
           ...fontStyles.openSans.regular,
         }}
-        ml={4}
-        mt={2}
+        pl={4}
+        mt={1}
         paragraph
       >
         We do not knowingly collect or solicit personal data from minors. Our
         products and/or services are not designed for any person who is under 18
         years of age, and we do not knowingly permit such persons to register
         for products and/ or services or share data through any of the web forms
-        without verifiable consent from minors’ parents or lawful guardians. If
+        without verifiable consent from minors' parents or lawful guardians. If
         we learn that personal information from users less than 18 years of age
         has been collected, we will take reasonable measures to promptly delete
         such data from our records. Further, we do not undertake tracking or
         behavioural monitoring of children or targeted advertising directed at
         children.
       </Typography>
+
       <Typography
-        variant="privacyPolicyText"
-        lineHeight={1.8}
         sx={{
           ...fontStyles.openSans.regular,
         }}
         ml={4}
+        mb={1.5}
+        variant="privacyPolicyText"
         paragraph
       >
         If you believe that a child under 18 years may have provided us their
         personal data, please contact us on grow@moneytv.live
       </Typography>
+
       <Typography
         variant="privacyPolicyText"
-        mb={2}
-        gutterBottom
         sx={{
           ...fontStyles.openSans.regular,
           fontWeight: 700,
         }}
       >
-        13. Do we make updates to this Policy
+        13.
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        mb={2}
+        ml={1}
+      >
+        Do we make updates to this Policy
+      </Typography>
+
+      <Typography
         sx={{
           ...fontStyles.openSans.regular,
         }}
         ml={4}
-        mt={2}
+        mt={1}
+        mb={1.5}
+        variant="privacyPolicyText"
         paragraph
       >
         We reserve the right to change this Policy at our sole discretion at any
-        time. The updated version will be indicated by an updated “Revised” date
+        time. The updated version will be indicated by an updated "Revised" date
         and the updated version will be effective as soon as it is accessible.
         If we make material changes to this Policy, we may notify you either by
         prominently posting a notice of such changes or by directly sending you
         a notification. We encourage you to review this Policy frequently to be
         informed of how we are protecting your information.
       </Typography>
+
       <Typography
         variant="privacyPolicyText"
-        mb={2}
-        gutterBottom
         sx={{
           ...fontStyles.openSans.regular,
           fontWeight: 700,
         }}
       >
-        14. Contact information
+        14.
       </Typography>
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
+        sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
+        mb={2}
+        ml={1}
+      >
+        Contact information
+      </Typography>
+
+      <Typography
         sx={{
           ...fontStyles.openSans.regular,
         }}
         ml={4}
-        mt={2}
+        mb={0.5}
+        mt={1}
+        variant="privacyPolicyText"
         paragraph
       >
         If you have questions or comments regarding this Policy or want to
@@ -2038,42 +2476,43 @@ const PrivacyPolicy = () => {
         processing of your personal data, please contact us using the contact
         details given below:
       </Typography>
+
       <Typography
-        variant="privacyPolicyText"
         sx={{
           ...fontStyles.openSans.regular,
           fontWeight: 700,
         }}
         ml={4}
-        mb={1}
+        variant="privacyPolicyText"
         paragraph
+        mb={0}
       >
         Aidia Technovations Private Limited
       </Typography>
 
       <Typography
-        variant="privacyPolicyText"
         sx={{
           ...fontStyles.openSans.regular,
           fontStyle: "italic",
           fontWeight: 700,
         }}
         ml={4}
-        mb={1}
+        variant="privacyPolicyText"
         paragraph
+        mb={0}
       >
         Jigish Sonagara
       </Typography>
 
       <Typography
-        variant="privacyPolicyText"
         sx={{
           ...fontStyles.openSans.regular,
           fontStyle: "italic",
           fontWeight: 700,
         }}
         ml={4}
-        mb={3}
+        mb={2}
+        variant="privacyPolicyText"
         paragraph
       >
         <a href="mailto:grow@moneytv.live" style={{ textDecoration: "none" }}>
@@ -2083,12 +2522,11 @@ const PrivacyPolicy = () => {
 
       <Typography
         variant="privacyPolicyText"
-        lineHeight={1.8}
         sx={{
           ...fontStyles.openSans.regular,
         }}
-        ml={4}
         paragraph
+        ml={4}
       >
         If you are not satisfied with the resolution provided you may log your
         complaint with the Data Protection Board of India following the
