@@ -12,6 +12,22 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          {/* Open Graph Meta Tags */}
+          <meta
+            property="og:title"
+            content="Delivering transparent and actionable Content and intelligence."
+          />
+          <meta property="og:url" content="https://www.moneytv.live/" />
+          <meta
+            property="og:description"
+            content="Money TV is a visionary platform that bridges the gap between companies, investors and market intermediaries by delivering transparent, actionable and one-of-its-kind - Content and intelligence."
+          />
+          <meta
+            property="og:image"
+            content="https://www.moneytv.live/about/img/shared_image.jfif"
+          />
+          <meta property="og:type" content="website" />
+
           {/* Inline script to prevent FOUC - runs before React */}
           <script
             dangerouslySetInnerHTML={{
