@@ -58,28 +58,28 @@ const PrivacyPolicy = () => {
           variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular }}
         >
-          “Company”
+          "Company"
         </Typography>
         ,{" "}
         <Typography
           variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
-          “we”
+          "we"
         </Typography>
         ,{" "}
         <Typography
           variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
-          “us”
+          "us"
         </Typography>
         , or{" "}
         <Typography
           variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
-          “our”
+          "our"
         </Typography>
         ). We are committed to protecting your personal information and your
         right to privacy and security of your personal data, your privacy is
@@ -88,7 +88,7 @@ const PrivacyPolicy = () => {
           variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
-          “Policy”
+          "Policy"
         </Typography>
         ) applies to all products and/or services offered by us to all
         individuals (
@@ -96,21 +96,21 @@ const PrivacyPolicy = () => {
           variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
-          “you”
+          "you"
         </Typography>
         ,{" "}
         <Typography
           variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
-          “your”
+          "your"
         </Typography>
         ,{" "}
         <Typography
           variant="privacyPolicyText"
           sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         >
-          “user”
+          "user"
         </Typography>
         ).
       </Typography>
@@ -231,7 +231,7 @@ const PrivacyPolicy = () => {
         pl={4}
         paragraph
       >
-        “Personal Data” means any data about an individual who is identifiable
+        "Personal Data" means any data about an individual who is identifiable
         by or in relation to such data.
       </Typography>
       <Typography
@@ -240,7 +240,7 @@ const PrivacyPolicy = () => {
         pl={4}
         paragraph
       >
-        “Processing”, “Processed”, “Process” in relation to personal data, means
+        "Processing", "Processed", "Process" in relation to personal data, means
         a wholly or partly automated operation or set of operations performed on
         digital personal data, and includes operations such as collection,
         recording, organization, structuring, storage, adaptation, retrieval,
@@ -431,7 +431,10 @@ const PrivacyPolicy = () => {
         mt={2}
         mb={1}
       >
-        a. Information you directly provide to us:
+        <Typography component="span" fontWeight={"normal"}>
+          a.
+        </Typography>{" "}
+        Information you directly provide to us:
       </Typography>
       <Typography
         variant="privacyPolicyText"
@@ -583,7 +586,10 @@ const PrivacyPolicy = () => {
         mt={2}
         mb={1}
       >
-        b. Information you provide to us voluntarily:
+        <Typography component="span" fontWeight={"normal"}>
+          b.
+        </Typography>{" "}
+        Information you provide to us voluntarily:
       </Typography>
       <Typography
         variant="privacyPolicyText"
@@ -604,7 +610,10 @@ const PrivacyPolicy = () => {
         pl={4}
         mb={1}
       >
-        c. Information we collect automatically:
+        <Typography component="span" fontWeight={"normal"}>
+          c.
+        </Typography>{" "}
+        Information we collect automatically:
       </Typography>
       <Typography
         variant="privacyPolicyText"
@@ -710,7 +719,10 @@ const PrivacyPolicy = () => {
         sx={{ ...fontStyles.openSans.regular, fontWeight: 700 }}
         pl={4}
       >
-        d. Information we collect from other sources:
+        <Typography component="span" fontWeight={"normal"}>
+          d.
+        </Typography>{" "}
+        Information we collect from other sources:
       </Typography>
       <Typography
         variant="privacyPolicyText"

@@ -143,7 +143,7 @@ const TermsAndConditions = () => {
         }}
         paragraph
       >
-        “Money TV” is a visionary platform that bridges the gap between
+        "Money TV" is a visionary platform that bridges the gap between
         companies, investors and market intermediaries by delivering
         transparent, actionable and one-of-its-kind - Content and intelligence.
       </Typography>
