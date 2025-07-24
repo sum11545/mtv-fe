@@ -159,7 +159,7 @@ const VideoDetailPage = () => {
 
   const displayText =
     shouldTruncate && !showMore
-      ? truncate(cleanHtml, maxChars, { byWords: false }) + "..."
+      ? truncate(cleanHtml, maxChars, { byWords: false })
       : cleanHtml;
 
   const toggleShowMore = () => {

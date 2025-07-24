@@ -402,8 +402,8 @@ const Layout = ({ children }) => {
               ? "70px"
               : "60px",
           }}
-          isPrivacyPolicyPage
-          isTermsPage
+          isPrivacyPolicyPage={isPrivacyPolicyPage}
+          isTermsPage={isTermsPage}
         >
           {children}
           {/* <NoVideosPage /> */}
