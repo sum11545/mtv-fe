@@ -158,7 +158,7 @@ const Layout = ({ children }) => {
       let section = storedSections?.find((item) => item.slug == query.section);
       return section?.name;
     }
-    if (pathname === "/[section]/[video]" && query.section) {
+    if (pathname === "/[section]/[...slug]" && query.section) {
       let storedSections = JSON.parse(localStorage.getItem("sections"));
       let section = storedSections?.find((item) => item.slug == query.section);
       return section?.name;
@@ -187,12 +187,14 @@ const Layout = ({ children }) => {
     } else if (pathname === "/[section]" && query.section) {
       router.push(`/${query.section}`);
     } else if (
-      pathname === "/[section]/[video]" &&
+      pathname === "/[section]/[...slug]" &&
       query.section &&
-      query.video
+      query.slug
     ) {
+      let fullPath = `/${query.section}/${query.slug.join("/")}`;
+
       router.push({
-        pathname: `/${query.section}/${query.video}`,
+        pathname: fullPath,
         query: {
           language: query.language,
         },
@@ -212,7 +214,7 @@ const Layout = ({ children }) => {
 
     // Show back button for pages that should have navigation
     const shouldShowBackButton = [
-      "/[section]/[video]",
+      "/[section]/[...slug]",
       // "/shorts/[section]/[short]",
       "/[section]",
       "/search",

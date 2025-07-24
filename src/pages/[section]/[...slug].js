@@ -118,7 +118,7 @@ const ActionButton = ({
 const maxChars = 100;
 const VideoDetailPage = () => {
   const router = useRouter();
-  const { section, video } = router.query;
+  const { section, video, slug } = router.query;
   const [showMore, setShowMore] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -213,7 +213,11 @@ const VideoDetailPage = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const res = await fetchVideoDetailPageData(section, video);
+        // here 'slug.length - 1' is video id as the last item from slug is video id.
+        const res = await fetchVideoDetailPageData(
+          section,
+          slug[slug.length - 1]
+        );
         setVideoDetailData(res?.data?.response);
         setLanguageList(
           res?.data?.response?.content_details?.map((v) => {
