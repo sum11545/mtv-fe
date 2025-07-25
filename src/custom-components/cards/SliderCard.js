@@ -77,6 +77,7 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
           return s.type === "shorts";
         });
 
+        // Not added the code for language query param or guest and organiztion for slider card for now
         if (section) {
           router.push(`/${section.slug}/${short.id}`);
         }

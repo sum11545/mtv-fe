@@ -213,7 +213,11 @@ const VideoDetailPage = () => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const res = await fetchVideoDetailPageData(section, video);
+        // here 'video.length - 1' is video id as the last item from query params video
+        const res = await fetchVideoDetailPageData(
+          section,
+          video[video.length - 1]
+        );
         setVideoDetailData(res?.data?.response);
         setLanguageList(
           res?.data?.response?.content_details?.map((v) => {

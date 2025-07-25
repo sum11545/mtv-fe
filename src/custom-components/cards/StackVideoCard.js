@@ -76,10 +76,20 @@ const StackVideoCard = ({
 
         // If we're in a section list page, use the section prop directly
         if (section?.slug && selectedContent?.language?.id) {
-          router.push(
-            `/${section.slug}/${video.id}?language=${selectedContent.language.id}`
-          );
+          // if we get guest name or organization name then adding that in the url else not.
+          const OrgGuest = (video?.org_guest_url || "").replace(/^\/|\/$/g, "");
 
+          const fullPath = `/${section.slug}${OrgGuest ? `/${OrgGuest}` : ""}/${
+            video.id
+          }`;
+
+          // Navigate to that page with query params (e.g., language)
+          router.push({
+            pathname: fullPath,
+            query: {
+              language: selectedContent?.language?.id,
+            },
+          });
           return;
         }
 
@@ -92,8 +102,16 @@ const StackVideoCard = ({
         });
 
         if (foundSection) {
+          // if we get guest name or organization name then adding that in the url else not.
+          const OrgGuest = (video?.org_guest_url || "").replace(/^\/|\/$/g, "");
+
+          const fullPath = `/${foundSection.slug}${
+            OrgGuest ? `/${OrgGuest}` : ""
+          }/${video.id}`;
+
+          // Navigate to that page with query params (e.g., language)
           router.push({
-            pathname: `/${foundSection.slug}/${video.id}`,
+            pathname: fullPath,
             query: {
               language: selectedContent?.language?.id,
             },

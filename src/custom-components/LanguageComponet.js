@@ -238,8 +238,15 @@ export const LanguageComponet = ({
 
     // Navigate to the video single view with the new language
     if (section?.slug) {
+      // if we get guest name or organization name then adding that in the url else not.
+      const OrgGuest = (video?.org_guest_url || "").replace(/^\/|\/$/g, "");
+
+      const fullPath = `/${section.slug}${OrgGuest ? `/${OrgGuest}` : ""}/${
+        video.id
+      }`;
+
       router.push({
-        pathname: `/${section.slug}/${video.id}`,
+        pathname: fullPath,
         query: {
           language: content?.language?.id,
         },
