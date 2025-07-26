@@ -259,6 +259,12 @@ const VideoDetailPage = () => {
   const getEmbedUrl = (url) => {
     if (!url) return "";
 
+    // Detect if the device is iOS
+    const isIOS =
+      /(iPhone|iPad|iPod|Macintosh;.*OS X.*Version\/[\d.]+.*Safari)/i.test(
+        navigator.userAgent
+      );
+
     // Handle YouTube URLs
     if (url.includes("youtube.com") || url.includes("youtu.be")) {
       // Extract video ID from YouTube URL
@@ -270,8 +276,10 @@ const VideoDetailPage = () => {
       }
       // Remove any additional parameters (e.g., ?si=...)
       videoId = videoId.split(/[?&]/)[0];
-      // Add autoplay and mute parameters
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      // Add mute=1 for iOS, exclude for Android
+      const muteParam = isIOS ? "&mute=1" : "";
+      // return `https://www.youtube.com/embed/${videoId}?autoplay=1${muteParam}&playsinline=1`;
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1`;
     }
 
     // Handle other video platforms here if needed
@@ -369,6 +377,7 @@ const VideoDetailPage = () => {
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
+                playsInline
                 style={{
                   width: "100%",
                   height: "100%",
