@@ -17,6 +17,7 @@ import {
   useMediaQuery,
   Backdrop,
   CircularProgress,
+  Snackbar,
 } from "@mui/material";
 import {
   WhatsApp,
@@ -120,39 +121,87 @@ const ActionButton = ({
 );
 
 // Mobile Action Button for overlay
-const MobileActionButton = React.memo(({ icon, onClick, label }) => (
-  <Box
-    onClick={onClick}
-    sx={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: 0.5,
-      cursor: "pointer",
-      p: 0,
-    }}
-  >
-    <IconButton
-      sx={{
-        color: "grey.500",
-        "&:hover": {
-          bgcolor: "rgba(255, 255, 255, 1)",
-          "& .MuiSvgIcon-root": {
-            color: "grey.700",
-          },
-        },
-        transition: "all 0.2s ease-in-out",
-      }}
-    >
-      {React.cloneElement(icon, {
-        sx: { fontSize: 36, transition: "color 0.2s ease-in-out" },
-      })}
-    </IconButton>
-  </Box>
-));
+const MobileActionButton = React.memo(
+  ({ icon, onClick, label, isCopyButton = false }) => {
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const { getSuccessMessage, snackbarDuration } = useContent();
+
+    const successMessage = getSuccessMessage("linkCopied");
+
+    const handleClick = (e) => {
+      e.stopPropagation(); // Prevent parent touch handlers from interfering
+      onClick();
+
+      // If it's a copy button, show success message
+      if (isCopyButton) {
+        setSnackbarOpen(true);
+      }
+    };
+
+    const handleSnackbarClose = () => {
+      setSnackbarOpen(false);
+    };
+
+    return (
+      <>
+        <Box
+          onClick={handleClick}
+          onTouchStart={(e) => {
+            e.stopPropagation(); // Prevent parent touch handlers from interfering
+            // handleClick(e);
+          }}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 0.5,
+            cursor: "pointer",
+            p: 0,
+            pointerEvents: "auto", // Ensure touch events are captured
+          }}
+        >
+          <IconButton
+            sx={{
+              color: "grey.500",
+              "&:hover": {
+                bgcolor: "rgba(255, 255, 255, 1)",
+                "& .MuiSvgIcon-root": {
+                  color: "grey.700",
+                },
+              },
+              transition: "all 0.2s ease-in-out",
+            }}
+          >
+            {React.cloneElement(icon, {
+              sx: { fontSize: 36, transition: "color 0.2s ease-in-out" },
+            })}
+          </IconButton>
+        </Box>
+
+        {/* Success Snackbar for copy button */}
+        {isCopyButton && (
+          <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={snackbarDuration}
+            onClose={handleSnackbarClose}
+            message={successMessage}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          />
+        )}
+      </>
+    );
+  }
+);
 
 const getEmbedUrl = (url) => {
   if (!url) return "";
+
+  // Detect if the device is iOS
+  const isIOS =
+    /(iPhone|iPad|iPod|Macintosh;.*OS X.*Version\/[\d.]+.*Safari)/i.test(
+      navigator.userAgent
+    );
+
   if (url.includes("youtube.com") || url.includes("youtu.be")) {
     let videoId = "";
     if (url.includes("youtube.com/watch?v=")) {
@@ -163,14 +212,26 @@ const getEmbedUrl = (url) => {
       videoId = url.split("shorts/")[1];
     }
     videoId = videoId.split(/[?&]/)[0];
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&controls=1&rel=0`;
+    // Add mute=1 for iOS, exclude for Android
+    const muteParam = isIOS ? "&mute=1" : "";
+    // return `https://www.youtube.com/embed/${videoId}?autoplay=1${muteParam}&loop=1&playlist=${videoId}&controls=1&rel=0&playsinline=1`;
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&controls=1&rel=0&playsinline=1`;
   }
   return url;
 };
 
 // Individual Short Item Component - Scrollable Version with File1 Layout
 const ShortItem = React.memo(
-  ({ short, isActive, onShare, onWhatsApp, onCopy, isMobile, index }) => {
+  ({
+    short,
+    isActive,
+    onShare,
+    onWhatsApp,
+    onCopy,
+    isMobile,
+    index,
+    section,
+  }) => {
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === "dark";
     const [isWhatsAppHovered, setIsWhatsAppHovered] = useState(false);
@@ -203,10 +264,10 @@ const ShortItem = React.memo(
         <Box
           sx={{
             height: "100vh",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
+            width: "100vw",
+            position: "relative",
+            bgcolor: "black",
+            overflow: "hidden",
             scrollSnapAlign: "start",
             scrollSnapStop: "always",
           }}
@@ -216,13 +277,9 @@ const ShortItem = React.memo(
             sx={{
               width: "100vw",
               height: "100vh",
-              maxWidth: "400px", // Limit width for better 9:16 ratio on mobile
               position: "relative",
               bgcolor: "black",
               overflow: "hidden",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
               mx: "auto", // Center horizontally
             }}
           >
@@ -230,14 +287,14 @@ const ShortItem = React.memo(
             <Box
               sx={{
                 position: "absolute",
-                top: 60,
+                top: 60, // Increased from 20 to prevent cropping
                 left: 20,
                 zIndex: 1000,
                 display: "flex",
                 alignItems: "center",
                 gap: 1,
                 pointerEvents: "none",
-                mt: 6,
+                mt: 3,
               }}
             >
               <Typography
@@ -250,7 +307,7 @@ const ShortItem = React.memo(
                   userSelect: "none",
                 }}
               >
-                Shorts
+                {section}
               </Typography>
             </Box>
 
@@ -258,14 +315,13 @@ const ShortItem = React.memo(
             {isActive && (
               <Box
                 sx={{
-                  width: "100%",
-                  height: "100%",
-                  maxWidth: "400px",
-                  aspectRatio: "9/16",
+                  width: "100vw",
+                  height: "100vh",
+                  position: "absolute",
+                  top: 15,
+                  left: 0,
                   bgcolor: "black",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+                  pointerEvents: "none", // Prevent iframe from capturing touch events
                 }}
               >
                 <iframe
@@ -275,11 +331,16 @@ const ShortItem = React.memo(
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
+                  playsInline
                   style={{
-                    width: "100%",
-                    height: "100%",
+                    width: "100vw",
+                    height: "100vh",
                     border: 0,
                     objectFit: "cover",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    pointerEvents: "auto", // Re-enable pointer events on the iframe itself
                   }}
                 />
               </Box>
@@ -289,13 +350,24 @@ const ShortItem = React.memo(
             <Box
               sx={{
                 position: "absolute",
-                bottom: 120,
-                left: "50%",
-                transform: "translateX(-50%)",
+                bottom: "11vh", // Use viewport height for consistent bottom positioning
                 zIndex: 4,
-                maxWidth: "70%",
+                maxWidth: "100%%", // Increased for better text display
                 textAlign: "center",
                 pointerEvents: "none",
+                px: 1.5, // Add horizontal padding
+                width: "100%",
+                mx: "auto",
+                //  // Fallback for older browsers
+                //  "@media (max-width: 480px)": {
+                //   bottom: "70px",
+                // },
+                // "@media (min-width: 481px) and (max-width: 768px)": {
+                //   bottom: "80px",
+                // },
+                // "@media (min-width: 769px) and (max-width: 1024px)": {
+                //   bottom: "90px",
+                // },
               }}
             >
               <Typography
@@ -307,6 +379,11 @@ const ShortItem = React.memo(
                   textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
                   lineHeight: 1.3,
                   typography: "shortTitleOfShortDetailPage",
+                  textAlign: "center",
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2, // Limit to 3 lines
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
                 }}
               >
                 {short?.content_details[0]?.name}
@@ -315,14 +392,26 @@ const ShortItem = React.memo(
 
             {/* Action Buttons - Bottom Right (File1 style) */}
             <Box
+              className="action-button-container" // Add class for touch event filtering
               sx={{
                 position: "absolute",
-                bottom: 150,
+                bottom: "15vh", // Use viewport height for consistent positioning above video name
                 right: 20,
                 display: "flex",
                 flexDirection: "column",
                 gap: 1,
-                zIndex: 5,
+                zIndex: 10,
+                pointerEvents: "auto", // Ensure buttons are clickable on mobile
+                // // Fallback for older browsers
+                // "@media (max-width: 480px)": {
+                //   bottom: "110px",
+                // },
+                // "@media (min-width: 481px) and (max-width: 768px)": {
+                //   bottom: "120px",
+                // },
+                // "@media (min-width: 769px) and (max-width: 1024px)": {
+                //   bottom: "130px",
+                // },
               }}
             >
               {isFeatureEnabled("enableWhatsAppSharing") && (
@@ -337,6 +426,7 @@ const ShortItem = React.memo(
                   icon={<ShortCopyMobileIcon />}
                   onClick={handleCopy}
                   label="Copy"
+                  isCopyButton={true}
                 />
               )}
               {isFeatureEnabled("enableSharing") && (
@@ -357,12 +447,12 @@ const ShortItem = React.memo(
       <Grid
         container
         sx={{
-          height: isMobile ? "100vh" : "80vh",
+          height: "100vh",
           alignItems: "flex-start",
           scrollSnapAlign: "start",
           maxWidth: "100vw",
           overflow: "hidden",
-          pt: { xs: 0, md: 2 },
+          pt: { xs: 0, md: 1 },
         }}
       >
         {/* Left Empty Space */}
@@ -377,40 +467,35 @@ const ShortItem = React.memo(
             display: "flex",
             justifyContent: "center",
             alignItems: "flex-start",
-            pt: { xs: 0, md: 2 },
+            // pt: { xs: 0, md: 2 },
           }}
         >
           <Box
             sx={{
-              width: { xs: "100vw", md: 400 }, // Fixed width for desktop
-              maxWidth: { xs: "400px", md: "400px" }, // Limit width to maintain ratio
               aspectRatio: "9/16", // Force 9:16 aspect ratio
-              maxHeight: {
-                xs: "calc(100vh - 160px)",
-                md: "calc(100vh - 160px)",
-              }, // Ensure it doesn't exceed viewport
+              height: "100%",
+              width: "100%",
               bgcolor: "black",
               overflow: "hidden",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
               borderRadius: 2,
-              mx: "auto", // Center horizontally
+              mx: "auto",
+              // height: "642px",
+              width: "361px",
             }}
           >
             {isActive && (
               <iframe
                 key={`desktop-${short.id}-${index}`}
-                src={getEmbedUrl(short?.content_details[0]?.url)}
-                title={short?.content_details[0]?.name}
+                src={getEmbedUrl(short?.content_details[0]?.url)} // should be an "embed" URL
+                title={short?.name}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
+                playsInline
                 style={{
                   width: "100%",
                   height: "100%",
                   border: 0,
-                  objectFit: "cover",
                 }}
               />
             )}
@@ -429,8 +514,8 @@ const ShortItem = React.memo(
             alignItems: "flex-start",
             pt: { xs: 2, md: 4 },
             pb: { md: 30 },
-            height: "80vh",
-            pr: { md: 8, lg: 10 }, // Add right padding to avoid overlap with navigation buttons
+            height: "100%",
+            pr: { md: 8, lg: 10 },
           }}
         >
           {/* Top: Video name and actions */}
@@ -867,21 +952,40 @@ const Short = () => {
   const touchEndY = useRef(0);
 
   const handleTouchStart = useCallback((e) => {
+    const target = e.target;
+    // Check if the touch is on an action button
+    if (
+      target.closest(".action-button-container") ||
+      target.closest(".MuiIconButton-root")
+    ) {
+      return; // Allow default behavior for buttons
+    }
     e.preventDefault();
-    e.stopPropagation();
     touchStartY.current = e.touches[0].clientY;
   }, []);
 
   const handleTouchMove = useCallback((e) => {
+    const target = e.target;
+    if (
+      target.closest(".action-button-container") ||
+      target.closest(".MuiIconButton-root")
+    ) {
+      return; // Allow default behavior for buttons
+    }
     e.preventDefault();
-    e.stopPropagation();
     touchEndY.current = e.touches[0].clientY;
   }, []);
 
   const handleTouchEnd = useCallback(
     (e) => {
+      const target = e.target;
+      if (
+        target.closest(".action-button-container") ||
+        target.closest(".MuiIconButton-root")
+      ) {
+        return; // Allow default behavior for buttons
+      }
       e.preventDefault();
-      e.stopPropagation();
 
       if (!touchStartY.current || !touchEndY.current) return;
 
@@ -991,6 +1095,7 @@ const Short = () => {
               onWhatsApp={handleWhatsApp}
               onCopy={handleCopy}
               isMobile={isMobile}
+              section={section}
             />
           ))}
         </Box>
@@ -1012,7 +1117,7 @@ const Short = () => {
       <Box
         ref={containerRef}
         sx={{
-          height: "80vh",
+          height: "90vh",
           width: "100vw",
           overflowY: "auto",
           overflowX: "hidden",
