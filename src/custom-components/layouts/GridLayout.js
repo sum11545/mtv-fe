@@ -197,7 +197,7 @@ const GridLayout = ({
                 fontFamily: isAd
                   ? fontStyles.openSans.bold
                   : fontStyles.montserrat.bold,
-                marginLeft: !isMobile && "10px",
+                marginLeft: !isMobile && !isAd && "10px",
                 typography: isAd ? "advertisementTitle" : "sectionTitle",
                 overflow: "hidden",
                 textOverflow: "ellipsis",
