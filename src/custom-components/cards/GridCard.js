@@ -306,6 +306,7 @@ const GridCard = ({ video, id, sectionData, section }) => {
           boxShadow: "none",
           borderRadius: 0,
           background: "none",
+          mb: isAd && 2,
         }}
       >
         <Box
