@@ -457,7 +457,7 @@ const MobileFooter = (props) => {
                   },
                 }}
               >
-                {item.name}
+                {item.keyword + " - " + item.name}
               </Typography>
             );
           })}
@@ -899,7 +899,7 @@ const Footer = () => {
                     },
                   }}
                 >
-                  {item.name}
+                  {item.keyword + " - " + item.name}
                 </Typography>
               );
             })}
