@@ -17,6 +17,7 @@ const DynamicIcon = ({
     MU: "market-pillar",
     TI: "star-icon",
     T10P: "analytics-icon",
+    PIE: "pie",
     LN: "profile-icon",
     SETTINGS: "gear-icon",
     YOUTUBE: "youtube-icon",
