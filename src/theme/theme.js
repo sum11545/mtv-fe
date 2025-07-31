@@ -571,7 +571,7 @@ const typography = {
   },
 
   footerLinks: {
-    fontSize: "14px", // default
+    fontSize: "16px", // default
 
     "@media (min-width:960px)": {
       fontSize: "13.125px", // md (≥960px)
@@ -579,6 +579,38 @@ const typography = {
 
     "@media (min-width:1400px)": {
       fontSize: "13.125px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "16px", // xl (≥1920px)
+    },
+  },
+
+  footerKeyTopics: {
+    fontSize: "14px", // default
+
+    "@media (min-width:1920px)": {
+      fontSize: "16px", // xl (≥1920px)
+    },
+  },
+
+  footerCopyright: {
+    fontSize: "14px", // default
+
+    "@media (min-width:1920px)": {
+      fontSize: "16px", // xl (≥1920px)
+    },
+  },
+
+  footerHeader: {
+    fontSize: "16px", // default
+
+    "@media (min-width:960px)": {
+      fontSize: "14px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "14px", // lg (≥1400px)
     },
 
     "@media (min-width:1920px)": {
