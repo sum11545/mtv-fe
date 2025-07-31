@@ -50,8 +50,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   try {
                     // Set initial background to prevent white flash
                     const savedMode = localStorage.getItem('darkMode');
-                    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    const isDarkMode = savedMode !== null ? savedMode === 'true' : prefersDarkMode;
+                    // Default to light mode instead of checking system preference
+                    const isDarkMode = savedMode !== null ? savedMode === 'true' : false;
                     
                     // Set body background immediately
                     document.body.style.backgroundColor = isDarkMode ? '#040C38' : '#ffffff';
