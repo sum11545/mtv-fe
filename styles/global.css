@@ -16,8 +16,8 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Prevent white flash by setting a dark default background */
-  background-color: #040c38;
+  /* Prevent white flash by setting a light default background */
+  background-color: #ffffff;
   /* Smooth transitions for background color changes */
   transition: background-color 0.2s ease-in-out;
 }

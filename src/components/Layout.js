@@ -124,7 +124,7 @@ const BackButton = ({ onClick, label }) => {
 const Layout = ({ children }) => {
   const [mounted, setMounted] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [navigationHistory, setNavigationHistory] = useState([]);
   const [isNavigatingBack, setIsNavigatingBack] = useState(false);
   const [cachedBackLabel, setCachedBackLabel] = useState(null);
@@ -336,14 +336,10 @@ const Layout = ({ children }) => {
         document.body.style.backgroundColor =
           savedMode === "true" ? "#040C38" : "#ffffff";
       } else {
-        const prefersDarkMode = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-        setIsDarkMode(prefersDarkMode);
+        // Default to light mode instead of checking system preference
+        setIsDarkMode(false);
         // Set initial body background to prevent flash
-        document.body.style.backgroundColor = prefersDarkMode
-          ? "#040C38"
-          : "#ffffff";
+        document.body.style.backgroundColor = "#ffffff";
       }
     }
   }, []);
@@ -409,7 +405,7 @@ const Layout = ({ children }) => {
         >
           <Box sx={{ flex: 1 }}>{children}</Box>
           {/* Hide footer on mobile for shorts detail page */}
-        {!isShortsPage && <Footer />}
+          {!isShortsPage && <Footer />}
         </Main>
         <Sidebar
           open={sidebarOpen}
