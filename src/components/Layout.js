@@ -407,7 +407,7 @@ const Layout = ({ children }) => {
           isPrivacyPolicyPage={isPrivacyPolicyPage}
           isTermsPage={isTermsPage}
         >
-          {children}
+          <Box sx={{ flex: 1 }}>{children}</Box>
           {/* Hide footer on mobile for shorts detail page */}
         {!isShortsPage && <Footer />}
         </Main>

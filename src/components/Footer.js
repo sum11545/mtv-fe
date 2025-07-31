@@ -533,7 +533,7 @@ const Footer = () => {
           borderTop: 1,
           borderColor: "divider",
           px: {
-            xs: 2,
+            xs: 1.6,
             sm: 2,
             md: 3.5,
             lg: 3.5,
@@ -558,132 +558,7 @@ const Footer = () => {
 
       {/* Visible for desktop only */}
 
-      {!isMobile ? (
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            py: 1.5,
-            bgcolor:
-              theme.palette.mode === "dark"
-                ? palette.dark.background.default
-                : palette.light.background.footer,
-            borderTop: 1,
-            borderColor: "divider",
-            px: 5.5,
-          }}
-        >
-          <Typography
-            variant="footerCopyright"
-            sx={{
-              ...fontStyles.montserrat.regular,
-            }}
-          >
-            ©2025 Money TV. All Rights Reserved
-          </Typography>
-
-          <Stack direction="row" spacing={1}>
-            <IconButton
-              size="small"
-              onClick={() =>
-                window.open(getUrl("social", "footerYoutube"), "_blank")
-              }
-              sx={{
-                "& .MuiSvgIcon-root": {
-                  fontSize: fontSize.icon.medium,
-                  color: "primary.main",
-                },
-              }}
-            >
-              <DynamicIcon
-                width={"30px"}
-                height={"30px"}
-                keyword={config.footer.icons.youtube}
-                style={{
-                  color: isDarkMode ? palette?.dark?.primary?.main : "",
-                }}
-              />
-            </IconButton>
-            <IconButton
-              size="small"
-              onClick={() =>
-                window.open(getUrl("social", "footerInstagram"), "_blank")
-              }
-              sx={{
-                "& .MuiSvgIcon-root": {
-                  fontSize: fontSize.icon.medium,
-                  color: "primary.main",
-                },
-              }}
-            >
-              <DynamicIcon
-                keyword={config.footer.icons.instagram}
-                style={{
-                  color: isDarkMode ? palette?.dark?.primary?.main : "",
-                }}
-              />
-            </IconButton>
-            <IconButton
-              size="small"
-              onClick={() =>
-                window.open(getUrl("social", "footerTwitter"), "_blank")
-              }
-              sx={{
-                "& .MuiSvgIcon-root": {
-                  fontSize: fontSize.icon.medium,
-                  color: "primary.main",
-                },
-              }}
-            >
-              <DynamicIcon
-                keyword={config.footer.icons.twitter}
-                style={{
-                  color: isDarkMode ? palette?.dark?.primary?.main : "",
-                }}
-              />
-            </IconButton>
-            <IconButton
-              size="small"
-              onClick={() =>
-                window.open(getUrl("social", "footerLinkedin"), "_blank")
-              }
-              sx={{
-                "& .MuiSvgIcon-root": {
-                  fontSize: fontSize.icon.medium,
-                  color: "primary.main",
-                },
-              }}
-            >
-              <DynamicIcon
-                keyword={config.footer.icons.linkedin}
-                style={{
-                  color: isDarkMode ? palette?.dark?.primary?.main : "",
-                }}
-              />
-            </IconButton>
-            <IconButton
-              size="small"
-              onClick={() =>
-                window.open(getUrl("social", "footerFacebook"), "_blank")
-              }
-              sx={{
-                "& .MuiSvgIcon-root": {
-                  fontSize: fontSize.icon.medium,
-                  color: "primary.main",
-                },
-              }}
-            >
-              <DynamicIcon
-                keyword={config.footer.icons.facebook}
-                style={{
-                  color: isDarkMode ? palette?.dark?.primary?.main : "",
-                }}
-              />
-            </IconButton>
-          </Stack>
-        </Box>
-      ) : (
+      {isMobile ? (
         <Box
           sx={{
             display: "flex",
@@ -815,6 +690,131 @@ const Footer = () => {
           >
             ©2025 Money TV. All Rights Reserved
           </Typography>
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            py: 1.5,
+            bgcolor:
+              theme.palette.mode === "dark"
+                ? palette.dark.background.default
+                : palette.light.background.footer,
+            borderTop: 1,
+            borderColor: "divider",
+            px: 5.5,
+          }}
+        >
+          <Typography
+            variant="footerCopyright"
+            sx={{
+              ...fontStyles.montserrat.regular,
+            }}
+          >
+            ©2025 Money TV. All Rights Reserved
+          </Typography>
+
+          <Stack direction="row" spacing={1}>
+            <IconButton
+              size="small"
+              onClick={() =>
+                window.open(getUrl("social", "footerYoutube"), "_blank")
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
+                  color: "primary.main",
+                },
+              }}
+            >
+              <DynamicIcon
+                width={"30px"}
+                height={"30px"}
+                keyword={config.footer.icons.youtube}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() =>
+                window.open(getUrl("social", "footerInstagram"), "_blank")
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
+                  color: "primary.main",
+                },
+              }}
+            >
+              <DynamicIcon
+                keyword={config.footer.icons.instagram}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() =>
+                window.open(getUrl("social", "footerTwitter"), "_blank")
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
+                  color: "primary.main",
+                },
+              }}
+            >
+              <DynamicIcon
+                keyword={config.footer.icons.twitter}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() =>
+                window.open(getUrl("social", "footerLinkedin"), "_blank")
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
+                  color: "primary.main",
+                },
+              }}
+            >
+              <DynamicIcon
+                keyword={config.footer.icons.linkedin}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() =>
+                window.open(getUrl("social", "footerFacebook"), "_blank")
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
+                  color: "primary.main",
+                },
+              }}
+            >
+              <DynamicIcon
+                keyword={config.footer.icons.facebook}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+          </Stack>
         </Box>
       )}
     </>
