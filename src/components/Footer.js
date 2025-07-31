@@ -3,72 +3,74 @@ import {
   Box,
   Container,
   Typography,
-  TextField,
-  Button,
   Divider,
   Stack,
   IconButton,
   useTheme,
   useMediaQuery,
+  Grid,
 } from "@mui/material";
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  LinkedIn,
-  Feedback,
-  YouTube,
-} from "@mui/icons-material";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import { fontStyles, fontSize, palette } from "../theme/theme";
 import { DynamicIcon } from "./icons";
-import Link from "next/link";
 import { useContent } from "@/hooks/useContent";
 import { useMain } from "@/context/MainContext";
-
-const LogoWrapper = styled(Box)({
-  display: "flex",
-  alignItems: "center",
-  position: "relative",
-  width: "230px",
-  height: "43px",
-  marginLeft: " -25px",
-  // border: "1px solid green",
-});
+import { chunk } from "lodash"; // or write a simple custom chunk function
 
 // Mobile Footer Component
-const MobileFooter = (props) => {
-  const {
-    formData,
-    errors,
-    handleChange,
-    handleSubmit,
-    validateEmail,
-    validateForm,
-    sidebarItems,
-    sidebarClickHandler,
-  } = props;
+const MobileFooter = ({ sidebarItems, sidebarClickHandler }) => {
   const theme = useTheme();
-  const router = useRouter();
   const isDarkMode = theme.palette.mode === "dark";
   const { config, getUrl } = useContent();
 
   return (
     <Box
       sx={{
-        py: 4,
-        px: 4,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        pb: 4,
       }}
     >
-      {/* Logo first */}
-      <Box sx={{ mb: 4 }}>
-        <LogoWrapper>
+      <Box sx={{ textAlign: "center" }}>
+        <Typography
+          variant="footerKeyTopics"
+          sx={{ ...fontStyles.openSans.regular }}
+        >
+          <Typography
+            component={"span"}
+            variant="footerKeyTopics"
+            sx={{ ...fontStyles.openSans.bold }}
+          >
+            Key Topics:
+          </Typography>{" "}
+          Stock Market | Mutual Funds | Personal Finance | Financial Planning |
+          Passive Income | Stock Market For Beginners | Wealth Management | How
+          To | Invest In Stocks | Investment Strategies | Stock Analysis |
+          Retirement Planning | Financial Education | Market Analysis |
+          Systematic Investment Plan | Investment Tips | Tax Saving Investments
+          | Equity Investments | Investment Guide | Portfolio Management | Stock
+          Picks | Financial Literacy | Stock Market Trends | Small Cap Stocks |
+          Long Term Investment | Sector Trends | Mid Cap Stocks | Financial
+          Decision Making | SME IPO | Alternative Investment Funds | PMS
+          Investment
+        </Typography>
+      </Box>
+
+      {/* Logo */}
+      <Box sx={{ mt: 6, mb: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            position: "relative",
+            width: "300px",
+            height: "60px",
+          }}
+        >
           <Image
             src={
               isDarkMode
@@ -80,160 +82,13 @@ const MobileFooter = (props) => {
             style={{ objectFit: "cover" }}
             priority
           />
-        </LogoWrapper>
+        </Box>
       </Box>
 
-      {/* Form second */}
-      {/* <Box sx={{ mb: 4 }}>
-        <Typography
-          variant="h6"
-          sx={{
-            mb: 2,
-            display: "flex",
-            alignItems: "center",
-            gap: 1,
-            fontSize: fontSize.typography.body1,
-            ...fontStyles.openSans.semibold,
-          }}
-        >
-          <DynamicIcon
-            keyword={config.footer.icons.feedback}
-            width={"20px"}
-            height={"20px"}
-            style={{
-              color: isDarkMode
-                ? palette?.dark?.primary?.main
-                : palette?.light?.primary?.main,
-            }}
-          />
-          {config.footer.feedbackTitle}
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate>
-          <TextField
-            size="small"
-            label={config.forms.labels.name}
-            variant="standard"
-            fullWidth
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            error={Boolean(errors.name)}
-            helperText={errors.name}
-            sx={{
-              "& .MuiInput-underline:before": {
-                borderBottom:
-                  theme.palette.mode === "dark"
-                    ? "1px solid rgba(255, 255, 255, 0.42)"
-                    : "1px solid rgba(0, 0, 0, 0.42)",
-              },
-              "& .MuiInputLabel-root": {
-                fontSize: fontSize.form.label,
-                ...fontStyles.openSans.regular,
-              },
-              "& .MuiInputBase-input": {
-                fontSize: fontSize.form.label,
-                ...fontStyles.openSans.regular,
-              },
-              "& .MuiFormHelperText-root": {
-                fontSize: fontSize.form.helper,
-                marginTop: "3px",
-              },
-            }}
-          />
-          <TextField
-            size="small"
-            label={config.forms.labels.feedbackEmail}
-            type="email"
-            variant="standard"
-            fullWidth
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            error={Boolean(errors.email)}
-            helperText={errors.email}
-            sx={{
-              "& .MuiInput-underline:before": {
-                borderBottom:
-                  theme.palette.mode === "dark"
-                    ? "1px solid rgba(255, 255, 255, 0.42)"
-                    : "1px solid rgba(0, 0, 0, 0.42)",
-              },
-              "& .MuiInputLabel-root": {
-                fontSize: fontSize.form.label,
-                ...fontStyles.openSans.regular,
-              },
-              "& .MuiInputBase-input": {
-                fontSize: fontSize.form.label,
-                ...fontStyles.openSans.regular,
-              },
-              "& .MuiFormHelperText-root": {
-                fontSize: fontSize.form.helper,
-                marginTop: "3px",
-              },
-            }}
-          />
-          <TextField
-            size="small"
-            label={config.forms.labels.feedbackMessage}
-            multiline
-            rows={3}
-            variant="standard"
-            fullWidth
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            error={Boolean(errors.message)}
-            helperText={errors.message}
-            sx={{
-              mb: 2,
-              "& .MuiInput-underline:before": {
-                borderBottom:
-                  theme.palette.mode === "dark"
-                    ? "1px solid rgba(255, 255, 255, 0.42)"
-                    : "1px solid rgba(0, 0, 0, 0.42)",
-              },
-              "& .MuiInputLabel-root": {
-                fontSize: fontSize.form.label,
-                ...fontStyles.openSans.regular,
-              },
-              "& .MuiInputBase-input": {
-                fontSize: fontSize.form.label,
-                ...fontStyles.openSans.regular,
-              },
-              "& .MuiFormHelperText-root": {
-                fontSize: fontSize.form.helper,
-                marginTop: "3px",
-              },
-            }}
-          />
-          <Button
-            type="submit"
-            sx={{
-              minWidth: 150,
-              color: "text.primary",
-              backgroundColor: "transparent",
-              "&:hover": {
-                backgroundColor: "transparent",
-                color: "primary.main",
-              },
-              textTransform: "none",
-              p: 0,
-              width: "100%",
-              marginRight: "auto",
-              marginLeft: "auto",
-              fontSize: fontSize.button.medium,
-              ...fontStyles.sfPro.display.bold,
-            }}
-          >
-            {config.footer.sendMessage}
-          </Button>
-        </Box>
-      </Box> */}
-
       {/* Vertical Divider */}
-      <Divider orientation="horizontal" flexItem sx={{ mb: 2 }} />
+      {/* <Divider orientation="horizontal" flexItem sx={{ mb: 2 }} /> */}
 
-      {/* Links third */}
+      {/* Links Section */}
       <Box
         sx={{
           display: "flex",
@@ -242,19 +97,18 @@ const MobileFooter = (props) => {
           justifyContent: "center",
         }}
       >
-        {/* 1. Let's find true value here text */}
+        {/* Slogan */}
         <Typography
           variant="footerSlogan"
           color="primary.main"
           sx={{
-            mb: 1,
             ...fontStyles.montserrat.bold,
           }}
         >
           {config.footer.slogan}
         </Typography>
 
-        {/* 2. grow@moneytv.live link */}
+        {/* Contact Email */}
         <Typography
           color="primary.main"
           variant="footerEmail"
@@ -263,7 +117,6 @@ const MobileFooter = (props) => {
           }
           sx={{
             display: "block",
-            mb: 2,
             textDecoration: "underline",
             ...fontStyles.openSans.regular,
             cursor: "pointer",
@@ -275,272 +128,362 @@ const MobileFooter = (props) => {
           {getUrl("external", "contactEmail")}
         </Typography>
 
-        {/* 3. Social media icons */}
-        <Stack direction="row" spacing={1} sx={{ mb: 3 }}>
-          <IconButton
-            size="small"
-            onClick={() =>
-              window.open(getUrl("social", "footerYoutube"), "_blank")
-            }
-            sx={{
-              "& .MuiSvgIcon-root": {
-                fontSize: fontSize.icon.medium,
-                color: "primary.main",
-              },
-            }}
-          >
-            <DynamicIcon
-              width={"30px"}
-              height={"30px"}
-              keyword={config.footer.icons.youtube}
-              style={{
-                color: isDarkMode ? palette?.dark?.primary?.main : "",
-              }}
-            />
-          </IconButton>
-          <IconButton
-            size="small"
-            onClick={() =>
-              window.open(getUrl("social", "footerInstagram"), "_blank")
-            }
-            sx={{
-              "& .MuiSvgIcon-root": {
-                fontSize: fontSize.icon.medium,
-                color: "primary.main",
-              },
-            }}
-          >
-            <DynamicIcon
-              keyword={config.footer.icons.instagram}
-              style={{
-                color: isDarkMode ? palette?.dark?.primary?.main : "",
-              }}
-            />
-          </IconButton>
-          <IconButton
-            size="small"
-            onClick={() =>
-              window.open(getUrl("social", "footerTwitter"), "_blank")
-            }
-            sx={{
-              "& .MuiSvgIcon-root": {
-                fontSize: fontSize.icon.medium,
-                color: "primary.main",
-              },
-            }}
-          >
-            <DynamicIcon
-              keyword={config.footer.icons.twitter}
-              style={{
-                color: isDarkMode ? palette?.dark?.primary?.main : "",
-              }}
-            />
-          </IconButton>
-          <IconButton
-            size="small"
-            onClick={() =>
-              window.open(getUrl("social", "footerLinkedin"), "_blank")
-            }
-            sx={{
-              "& .MuiSvgIcon-root": {
-                fontSize: fontSize.icon.medium,
-                color: "primary.main",
-              },
-            }}
-          >
-            <DynamicIcon
-              keyword={config.footer.icons.linkedin}
-              style={{
-                color: isDarkMode ? palette?.dark?.primary?.main : "",
-              }}
-            />
-          </IconButton>
-          <IconButton
-            size="small"
-            onClick={() =>
-              window.open(getUrl("social", "footerFacebook"), "_blank")
-            }
-            sx={{
-              "& .MuiSvgIcon-root": {
-                fontSize: fontSize.icon.medium,
-                color: "primary.main",
-              },
-            }}
-          >
-            <DynamicIcon
-              keyword={config.footer.icons.facebook}
-              style={{
-                color: isDarkMode ? palette?.dark?.primary?.main : "",
-              }}
-            />
-          </IconButton>
-        </Stack>
+        {/* First Group of Links */}
 
-        {/* 5. Additional footer links - First group */}
-        <Stack
-          direction="column"
-          spacing={1.5}
-          sx={{ mt: 2, alignItems: "center" }}
-        >
-          {/* <Typography
-            color="primary.main"
-            variant="footerLinks"
-            onClick={() => {}}
-            sx={{
-              ...fontStyles.openSans.regular,
-              cursor: "pointer",
-              textDecoration: "underline",
-              "&:hover": {
-                color: "primary.dark",
-              },
-            }}
-          >
-            {config.footer.links.mpu}
-          </Typography>
-          <Typography
-            color="primary.main"
-            variant="footerLinks"
-            onClick={() => {}}
-            sx={{
-              ...fontStyles.openSans.regular,
-              cursor: "pointer",
-              textDecoration: "underline",
-              "&:hover": {
-                color: "primary.dark",
-              },
-            }}
-          >
-            {config.footer.links.sib}
-          </Typography>
-          <Typography
-            color="primary.main"
-            variant="footerLinks"
-            onClick={() => {}}
-            sx={{
-              ...fontStyles.openSans.regular,
-              cursor: "pointer",
-              textDecoration: "underline",
-              "&:hover": {
-                color: "primary.dark",
-              },
-            }}
-          >
-            {config.footer.links.kyp}
-          </Typography>
-          <Typography
-            color="primary.main"
-            variant="footerLinks"
-            onClick={() => {}}
-            sx={{
-              ...fontStyles.openSans.regular,
-              cursor: "pointer",
-              textDecoration: "underline",
-              "&:hover": {
-                color: "primary.dark",
-              },
-            }}
-          >
-            {config.footer.links.ray}
-          </Typography> */}
-          {sidebarItems?.map((item) => {
-            return (
+        <Grid container mt={5}>
+          <Grid item xs={12} sm={12} sx={{ textAlign: "center" }}>
+            <Typography
+              variant="footerHeader"
+              sx={{ textAlign: "center", ...fontStyles.openSans.bold }}
+            >
+              MONEY TV SERIES
+            </Typography>
+            <Stack
+              direction="column"
+              spacing={1.5}
+              sx={{ mt: 2, alignItems: "center" }}
+            >
+              {sidebarItems?.map((item) => (
+                <Typography
+                  key={item.keyword}
+                  color="primary.main"
+                  variant="footerLinks"
+                  onClick={() => sidebarClickHandler(item)}
+                  sx={{
+                    ...fontStyles.openSans.regular,
+                    cursor: "pointer",
+                    "&:hover": {
+                      color: "primary.dark",
+                    },
+                  }}
+                >
+                  {item.keyword + " - " + item.name}
+                </Typography>
+              ))}
+            </Stack>
+          </Grid>
+        </Grid>
+
+        {/* Horizontal Divider */}
+        {/* <Divider orientation="horizontal" flexItem sx={{ mt: 3, mb: 2 }} /> */}
+
+        {/* Second Group of Links */}
+        <Grid container mt={5}>
+          <Grid item xs={12} sm={12} sx={{ textAlign: "center" }}>
+            <Typography
+              variant="footerHeader"
+              sx={{ textAlign: "center", ...fontStyles.openSans.bold }}
+            >
+              COMPANY
+            </Typography>
+            <Stack
+              direction="column"
+              spacing={1.5}
+              sx={{ mt: 2, alignItems: "center" }}
+            >
               <Typography
                 color="primary.main"
                 variant="footerLinks"
-                onClick={() => sidebarClickHandler(item)}
+                onClick={() =>
+                  window.open("https://moneytv.live/about/", "_blank")
+                }
                 sx={{
                   ...fontStyles.openSans.regular,
                   cursor: "pointer",
-                  textDecoration: "underline",
                   "&:hover": {
                     color: "primary.dark",
                   },
                 }}
               >
-                {item.keyword + " - " + item.name}
+                {config.footer.links.aboutUs}
               </Typography>
-            );
-          })}
-        </Stack>
-
-        {/* Horizontal Divider between first and second group */}
-        <Divider orientation="horizontal" flexItem sx={{ mt: 3, mb: 2 }} />
-
-        {/* 7. Additional footer links - Second group */}
-        <Stack
-          direction="column"
-          spacing={1.5}
-          sx={{ mt: 1, alignItems: "center" }}
-        >
-          <Typography
-            color="primary.main"
-            variant="footerLinks"
-            onClick={() => window.open("https://moneytv.live/about/", "_blank")}
-            sx={{
-              ...fontStyles.openSans.regular,
-              cursor: "pointer",
-              textDecoration: "underline",
-              "&:hover": {
-                color: "primary.dark",
-              },
-            }}
-          >
-            {config.footer.links.aboutUs}
-          </Typography>
-          <Typography
-            color="primary.main"
-            variant="footerLinks"
-            onClick={() =>
-              window.open(
-                "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
-                "_blank"
-              )
-            }
-            sx={{
-              ...fontStyles.openSans.regular,
-              cursor: "pointer",
-              textDecoration: "underline",
-              "&:hover": {
-                color: "primary.dark",
-              },
-            }}
-          >
-            {config.footer.links.contactUs}
-          </Typography>
-          <Typography
-            color="primary.main"
-            variant="footerLinks"
-            onClick={() => window.open(getUrl("external", "privacy"), "_blank")}
-            sx={{
-              ...fontStyles.openSans.regular,
-              cursor: "pointer",
-              textDecoration: "underline",
-              "&:hover": {
-                color: "primary.dark",
-              },
-            }}
-          >
-            {config.footer.links.privacyPolicy}
-          </Typography>
-
-          <Typography
-            color="primary.main"
-            variant="footerLinks"
-            onClick={() => window.open(getUrl("external", "terms"), "_blank")}
-            sx={{
-              ...fontStyles.openSans.regular,
-              cursor: "pointer",
-              textDecoration: "underline",
-              "&:hover": {
-                color: "primary.dark",
-              },
-            }}
-          >
-            {config.footer.links.termsCondition}
-          </Typography>
-        </Stack>
+              <Typography
+                color="primary.main"
+                variant="footerLinks"
+                onClick={() =>
+                  window.open(
+                    "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
+                    "_blank"
+                  )
+                }
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "primary.dark",
+                  },
+                }}
+              >
+                {config.footer.links.contactUs}
+              </Typography>
+              <Typography
+                color="primary.main"
+                variant="footerLinks"
+                onClick={() =>
+                  window.open(getUrl("external", "privacy"), "_blank")
+                }
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "primary.dark",
+                  },
+                }}
+              >
+                {config.footer.links.privacyPolicy}
+              </Typography>
+              <Typography
+                color="primary.main"
+                variant="footerLinks"
+                onClick={() =>
+                  window.open(getUrl("external", "terms"), "_blank")
+                }
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "primary.dark",
+                  },
+                }}
+              >
+                {config.footer.links.termsCondition}
+              </Typography>
+            </Stack>
+          </Grid>
+        </Grid>
       </Box>
     </Box>
+  );
+};
+
+// Desktop Footer Component
+const DesktopFooter = ({ sidebarItems, sidebarClickHandler }) => {
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === "dark";
+  const { config, getUrl } = useContent();
+  const chunkedSidebarItems = chunk(sidebarItems, 4);
+  const columnCount = Math.ceil(sidebarItems.length / 4);
+  const gridMdSize = Math.min(columnCount * 2.5, 12);
+
+  return (
+    <>
+      <Box>
+        <Typography
+          variant="footerKeyTopics"
+          sx={{ ...fontStyles.openSans.regular }}
+        >
+          <Typography
+            component={"span"}
+            variant="footerKeyTopics"
+            sx={{ ...fontStyles.openSans.bold }}
+          >
+            Key Topics:
+          </Typography>{" "}
+          Stock Market | Mutual Funds | Personal Finance | Financial Planning |
+          Passive Income | Stock Market For Beginners | Wealth Management | How
+          To | Invest In Stocks | Investment Strategies | Stock Analysis |
+          Retirement Planning | Financial Education | Market Analysis |
+          Systematic Investment Plan | Investment Tips | Tax Saving Investments
+          | Equity Investments | Investment Guide | Portfolio Management | Stock
+          Picks | Financial Literacy | Stock Market Trends | Small Cap Stocks |
+          Long Term Investment | Sector Trends | Mid Cap Stocks | Financial
+          Decision Making | SME IPO | Alternative Investment Funds | PMS
+          Investment
+        </Typography>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 4,
+        }}
+      >
+        {/* Keywords */}
+
+        {/* First Section - Logo and Contact */}
+
+        <Grid container spacing={2} sx={{ pt: 4, pb: 0 }}>
+          <Grid item md={2.5}>
+            <Box sx={{ mb: 5 }}>
+              <Box
+                mt={0.5}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  position: "relative",
+                  width: "230px",
+                  height: "43px",
+                  marginLeft: " -25px",
+                }}
+              >
+                <Image
+                  src={
+                    isDarkMode
+                      ? "/images/logos/footer-logo-light.png"
+                      : "/images/logos/footer-logo-dark.png"
+                  }
+                  alt="Money TV Logo"
+                  fill
+                  style={{ objectFit: "cover" }}
+                  priority
+                />
+              </Box>
+            </Box>
+
+            <Box>
+              <Typography
+                color="primary.main"
+                variant="footerSlogan"
+                sx={{
+                  ...fontStyles.montserrat.bold,
+                }}
+              >
+                {config.footer.slogan}
+              </Typography>
+              <Typography
+                color="primary.main"
+                variant="footerEmail"
+                onClick={() =>
+                  window.open(
+                    `mailto:${getUrl("external", "contactEmail")}`,
+                    "_self"
+                  )
+                }
+                sx={{
+                  display: "block",
+                  mb: 3,
+                  textDecoration: "underline",
+                  ...fontStyles.openSans.regular,
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "primary.dark",
+                  },
+                }}
+              >
+                {getUrl("external", "contactEmail")}
+              </Typography>
+            </Box>
+          </Grid>
+
+          {/* Vertical Divider */}
+          {/* <Divider orientation="vertical" flexItem sx={{ mx: 2, my: 5 }} /> */}
+
+          {/* Second Section - First Group of Links */}
+          <Grid item md={gridMdSize}>
+            <Typography
+              variant="footerHeader"
+              sx={{ ...fontStyles.openSans.bold }}
+            >
+              MONEY TV SERIES
+            </Typography>
+
+            <Grid container spacing={4}>
+              {chunkedSidebarItems.map((group, colIndex) => (
+                <Grid item key={colIndex} sx={{ mt: 2 }}>
+                  <Stack spacing={1}>
+                    {group.map((item) => (
+                      <Typography
+                        key={item.keyword}
+                        color="primary.main"
+                        variant="footerLinks"
+                        onClick={() => sidebarClickHandler(item)}
+                        sx={{
+                          ...fontStyles.openSans.regular,
+                          cursor: "pointer",
+                          "&:hover": {
+                            color: "primary.dark",
+                          },
+                        }}
+                      >
+                        {item.keyword + " - " + item.name}
+                      </Typography>
+                    ))}
+                  </Stack>
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+
+          {/* COMPANY Section */}
+          <Grid item xs={12} md={2}>
+            <Typography
+              variant="footerHeader"
+              sx={{ ...fontStyles.openSans.bold }}
+            >
+              COMPANY
+            </Typography>
+            <Stack spacing={1} mt={1.5}>
+              <Typography
+                color="primary.main"
+                variant="footerLinks"
+                onClick={() =>
+                  window.open("https://moneytv.live/about/", "_blank")
+                }
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "primary.dark",
+                  },
+                }}
+              >
+                {config.footer.links.aboutUs}
+              </Typography>
+              <Typography
+                color="primary.main"
+                variant="footerLinks"
+                onClick={() =>
+                  window.open(
+                    "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
+                    "_blank"
+                  )
+                }
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "primary.dark",
+                  },
+                }}
+              >
+                {config.footer.links.contactUs}
+              </Typography>
+              <Typography
+                color="primary.main"
+                variant="footerLinks"
+                onClick={() =>
+                  window.open(getUrl("external", "privacy"), "_blank")
+                }
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "primary.dark",
+                  },
+                }}
+              >
+                {config.footer.links.privacyPolicy}
+              </Typography>
+              <Typography
+                color="primary.main"
+                variant="footerLinks"
+                onClick={() =>
+                  window.open(getUrl("external", "terms"), "_blank")
+                }
+                sx={{
+                  ...fontStyles.openSans.regular,
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "primary.dark",
+                  },
+                }}
+              >
+                {config.footer.links.termsCondition}
+              </Typography>
+            </Stack>
+          </Grid>
+        </Grid>
+      </Box>
+    </>
   );
 };
 
@@ -548,11 +491,11 @@ const MobileFooter = (props) => {
 const Footer = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isDarkMode = theme.palette.mode === "dark";
-  const { config, getUrl } = useContent();
   const router = useRouter();
   const { fetchSideBarData } = useMain();
   const [sidebarItems, setSidebarItems] = useState([]);
+  const { config, getUrl } = useContent();
+  const isDarkMode = theme.palette.mode === "dark";
 
   useEffect(() => {
     const SidebarData = async () => {
@@ -563,611 +506,318 @@ const Footer = () => {
     SidebarData();
   }, []);
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(email);
-  };
-
-  const validateForm = () => {
-    let tempErrors = {
-      name: "",
-      email: "",
-      message: "",
-    };
-    let isValid = true;
-
-    // Name validation
-    if (!formData.name.trim()) {
-      tempErrors.name = config.forms.validation.required;
-      isValid = false;
-    } else if (formData.name.length < 2) {
-      tempErrors.name = config.forms.validation.nameMinLength;
-      isValid = false;
-    }
-
-    // Email validation
-    if (!formData.email) {
-      tempErrors.email = config.forms.validation.required;
-      isValid = false;
-    } else if (!validateEmail(formData.email)) {
-      tempErrors.email = config.forms.validation.invalidEmail;
-      isValid = false;
-    }
-
-    // Message validation
-    if (!formData.message.trim()) {
-      tempErrors.message = config.forms.validation.required;
-      isValid = false;
-    } else if (formData.message.length < 10) {
-      tempErrors.message = config.forms.validation.messageMinLength;
-      isValid = false;
-    }
-
-    setErrors(tempErrors);
-    return isValid;
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-    }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      // Handle successful form submission here
-      console.log("Form submitted:", formData);
-      // Reset form after successful submission
-      setFormData({
-        name: "",
-        email: "",
-        message: "",
-      });
-    }
-  };
-
   const sidebarClickHandler = (item) => {
     if (item.section_slug) {
       router.push(`/${item.section_slug}`);
     }
   };
 
-  // Desktop Footer (original unchanged)
-  const renderDesktopFooter = () => {
-    return (
+  return (
+    <>
       <Box
+        mt={isMobile ? 7 : 8}
+        component="footer"
         sx={{
-          display: "flex",
-          gap: 4,
+          pt: {
+            xs: 4,
+            sm: 4,
+            md: 5,
+            lg: 5,
+            xl: 8,
+          },
+          pb: 2.5,
+          bgcolor:
+            theme.palette.mode === "dark"
+              ? palette.dark.background.default
+              : palette.light.background.footer,
+          borderTop: 1,
+          borderColor: "divider",
+          px: {
+            xs: 2,
+            sm: 2,
+            md: 3.5,
+            lg: 3.5,
+            xl: 6,
+          },
         }}
       >
-        {/* First Section - Logo and Contact */}
-        <Box sx={{ flex: 1, paddingY: 4 }}>
-          <Box sx={{ mb: 6 }}>
-            <LogoWrapper>
-              <Image
-                src={
-                  isDarkMode
-                    ? "/images/logos/footer-logo-light.png"
-                    : "/images/logos/footer-logo-dark.png"
-                }
-                alt="Money TV Logo"
-                fill
-                style={{ objectFit: "cover" }}
-                priority
-              />
-            </LogoWrapper>
-          </Box>
+        <Container maxWidth="xl">
+          {isMobile ? (
+            <MobileFooter
+              sidebarItems={sidebarItems}
+              sidebarClickHandler={sidebarClickHandler}
+            />
+          ) : (
+            <DesktopFooter
+              sidebarItems={sidebarItems}
+              sidebarClickHandler={sidebarClickHandler}
+            />
+          )}
+        </Container>
+      </Box>
 
-          <Box>
-            <Typography
-              color="primary.main"
-              variant="footerSlogan"
-              sx={{
-                ...fontStyles.montserrat.bold,
-              }}
-            >
-              {config.footer.slogan}
-            </Typography>
-            <Typography
-              color="primary.main"
-              variant="footerEmail"
-              onClick={() =>
-                window.open(
-                  `mailto:${getUrl("external", "contactEmail")}`,
-                  "_self"
-                )
-              }
-              sx={{
-                display: "block",
-                mb: 3,
-                textDecoration: "underline",
-                ...fontStyles.openSans.regular,
-                cursor: "pointer",
-                "&:hover": {
-                  color: "primary.dark",
-                },
-              }}
-            >
-              {getUrl("external", "contactEmail")}
-            </Typography>
+      {/* Visible for desktop only */}
 
-            <Stack direction="row" spacing={1}>
-              <IconButton
-                size="small"
-                onClick={() =>
-                  window.open(getUrl("social", "footerYoutube"), "_blank")
-                }
-                sx={{
-                  "& .MuiSvgIcon-root": {
-                    fontSize: fontSize.icon.medium,
-                    color: "primary.main",
-                  },
-                }}
-              >
-                <DynamicIcon
-                  width={"30px"}
-                  height={"30px"}
-                  keyword={config.footer.icons.youtube}
-                  style={{
-                    color: isDarkMode ? palette?.dark?.primary?.main : "",
-                  }}
-                />
-              </IconButton>
-              <IconButton
-                size="small"
-                onClick={() =>
-                  window.open(getUrl("social", "footerInstagram"), "_blank")
-                }
-                sx={{
-                  "& .MuiSvgIcon-root": {
-                    fontSize: fontSize.icon.medium,
-                    color: "primary.main",
-                  },
-                }}
-              >
-                <DynamicIcon
-                  keyword={config.footer.icons.instagram}
-                  style={{
-                    color: isDarkMode ? palette?.dark?.primary?.main : "",
-                  }}
-                />
-              </IconButton>
-              <IconButton
-                size="small"
-                onClick={() =>
-                  window.open(getUrl("social", "footerTwitter"), "_blank")
-                }
-                sx={{
-                  "& .MuiSvgIcon-root": {
-                    fontSize: fontSize.icon.medium,
-                    color: "primary.main",
-                  },
-                }}
-              >
-                <DynamicIcon
-                  keyword={config.footer.icons.twitter}
-                  style={{
-                    color: isDarkMode ? palette?.dark?.primary?.main : "",
-                  }}
-                />
-              </IconButton>
-              <IconButton
-                size="small"
-                onClick={() =>
-                  window.open(getUrl("social", "footerLinkedin"), "_blank")
-                }
-                sx={{
-                  "& .MuiSvgIcon-root": {
-                    fontSize: fontSize.icon.medium,
-                    color: "primary.main",
-                  },
-                }}
-              >
-                <DynamicIcon
-                  keyword={config.footer.icons.linkedin}
-                  style={{
-                    color: isDarkMode ? palette?.dark?.primary?.main : "",
-                  }}
-                />
-              </IconButton>
-              <IconButton
-                size="small"
-                onClick={() =>
-                  window.open(getUrl("social", "footerFacebook"), "_blank")
-                }
-                sx={{
-                  "& .MuiSvgIcon-root": {
-                    fontSize: fontSize.icon.medium,
-                    color: "primary.main",
-                  },
-                }}
-              >
-                <DynamicIcon
-                  keyword={config.footer.icons.facebook}
-                  style={{
-                    color: isDarkMode ? palette?.dark?.primary?.main : "",
-                  }}
-                />
-              </IconButton>
-            </Stack>
-          </Box>
-        </Box>
-        {/* Vertical Divider */}
-        <Divider orientation="vertical" flexItem sx={{ mx: 2, my: 5 }} />
-
-        {/* Second Section - First Group of Links */}
-        <Box sx={{ flex: 1, paddingTop: 7 }}>
-          <Stack spacing={2}>
-            {/* <Typography
-              color="primary.main"
-              variant="footerLinks"
-              onClick={() => {}}
-              sx={{
-                ...fontStyles.openSans.regular,
-                cursor: "pointer",
-                textDecoration: "underline",
-                "&:hover": {
-                  color: "primary.dark",
-                },
-              }}
-            >
-              {config.footer.links.mpu}
-            </Typography>
-
-            <Typography
-              color="primary.main"
-              variant="footerLinks"
-              onClick={() => {}}
-              sx={{
-                ...fontStyles.openSans.regular,
-                cursor: "pointer",
-                textDecoration: "underline",
-                "&:hover": {
-                  color: "primary.dark",
-                },
-              }}
-            >
-              {config.footer.links.sib}
-            </Typography>
-
-            <Typography
-              color="primary.main"
-              variant="footerLinks"
-              onClick={() => {}}
-              sx={{
-                ...fontStyles.openSans.regular,
-                cursor: "pointer",
-                textDecoration: "underline",
-                "&:hover": {
-                  color: "primary.dark",
-                },
-              }}
-            >
-              {config.footer.links.kyp}
-            </Typography>
-
-            <Typography
-              color="primary.main"
-              variant="footerLinks"
-              onClick={() => {}}
-              sx={{
-                ...fontStyles.openSans.regular,
-                cursor: "pointer",
-                textDecoration: "underline",
-                "&:hover": {
-                  color: "primary.dark",
-                },
-              }}
-            >
-              {config.footer.links.ray}
-            </Typography> */}
-            {sidebarItems?.map((item) => {
-              return (
-                <Typography
-                  color="primary.main"
-                  variant="footerLinks"
-                  onClick={() => sidebarClickHandler(item)}
-                  sx={{
-                    ...fontStyles.openSans.regular,
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                    "&:hover": {
-                      color: "primary.dark",
-                    },
-                  }}
-                >
-                  {item.keyword + " - " + item.name}
-                </Typography>
-              );
-            })}
-          </Stack>
-        </Box>
-
-        {/* Vertical Divider */}
-        <Divider orientation="vertical" flexItem sx={{ mx: 2, my: 5 }} />
-
-        {/* Third Section - Second Group of Links */}
-        <Box sx={{ flex: 1, paddingTop: 7 }}>
-          <Stack spacing={2}>
-            <Typography
-              color="primary.main"
-              variant="footerLinks"
-              onClick={() =>
-                window.open("https://moneytv.live/about/", "_blank")
-              }
-              sx={{
-                ...fontStyles.openSans.regular,
-                cursor: "pointer",
-                textDecoration: "underline",
-                "&:hover": {
-                  color: "primary.dark",
-                },
-              }}
-            >
-              {config.footer.links.aboutUs}
-            </Typography>
-
-            <Typography
-              color="primary.main"
-              variant="footerLinks"
-              onClick={() =>
-                window.open(
-                  "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
-                  "_blank"
-                )
-              }
-              sx={{
-                ...fontStyles.openSans.regular,
-                cursor: "pointer",
-                textDecoration: "underline",
-                "&:hover": {
-                  color: "primary.dark",
-                },
-              }}
-            >
-              {config.footer.links.contactUs}
-            </Typography>
-
-            <Typography
-              color="primary.main"
-              variant="footerLinks"
-              onClick={() =>
-                window.open(getUrl("external", "privacy"), "_blank")
-              }
-              sx={{
-                ...fontStyles.openSans.regular,
-                cursor: "pointer",
-                textDecoration: "underline",
-                "&:hover": {
-                  color: "primary.dark",
-                },
-              }}
-            >
-              {config.footer.links.privacyPolicy}
-            </Typography>
-
-            <Typography
-              color="primary.main"
-              variant="footerLinks"
-              onClick={() => window.open(getUrl("external", "terms"), "_blank")}
-              sx={{
-                ...fontStyles.openSans.regular,
-                cursor: "pointer",
-                textDecoration: "underline",
-                "&:hover": {
-                  color: "primary.dark",
-                },
-              }}
-            >
-              {config.footer.links.termsCondition}
-            </Typography>
-          </Stack>
-        </Box>
-        {/* Right Side - Feedback Form */}
-        {/* <Box sx={{ flex: 1, padding: 4 }}>
+      {!isMobile ? (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            py: 1.5,
+            bgcolor:
+              theme.palette.mode === "dark"
+                ? palette.dark.background.default
+                : palette.light.background.footer,
+            borderTop: 1,
+            borderColor: "divider",
+            px: 5.5,
+          }}
+        >
           <Typography
-            variant="h6"
+            variant="footerCopyright"
             sx={{
-              mb: 2,
-              display: "flex",
-              alignItems: "center",
-              gap: 1,
-              fontSize: fontSize.typography.h5,
-              ...fontStyles.openSans.semibold,
+              ...fontStyles.montserrat.regular,
             }}
           >
-            <DynamicIcon
-              keyword={config.footer.icons.feedback}
-              width={"20px"}
-              height={"20px"}
-              style={{
-                color: isDarkMode
-                  ? palette?.dark?.primary?.main
-                  : palette?.light?.primary?.main,
-              }}
-            />
-            {config.footer.feedbackTitle}
+            ©2025 Money TV. All Rights Reserved
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate>
-            <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
-              <TextField
-                size="small"
-                label={config.forms.labels.name}
-                variant="standard"
-                fullWidth
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                error={Boolean(errors.name)}
-                helperText={errors.name}
-                sx={{
-                  "& .MuiInput-underline:before": {
-                    borderBottom:
-                      theme.palette.mode === "dark"
-                        ? "1px solid rgba(255, 255, 255, 0.42)"
-                        : "1px solid rgba(0, 0, 0, 0.42)",
-                  },
-                  "& .MuiInputLabel-root": {
-                    fontSize: fontSize.form.label,
-                    ...fontStyles.openSans.regular,
-                  },
-                  "& .MuiInputBase-input": {
-                    fontSize: fontSize.form.label,
-                    ...fontStyles.openSans.regular,
-                  },
-                  "& .MuiFormHelperText-root": {
-                    fontSize: fontSize.form.helper,
-                    marginTop: "3px",
-                  },
-                }}
-              />
-              <TextField
-                size="small"
-                label={config.forms.labels.feedbackEmail}
-                type="email"
-                variant="standard"
-                fullWidth
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                error={Boolean(errors.email)}
-                helperText={errors.email}
-                sx={{
-                  "& .MuiInput-underline:before": {
-                    borderBottom:
-                      theme.palette.mode === "dark"
-                        ? "1px solid rgba(255, 255, 255, 0.42)"
-                        : "1px solid rgba(0, 0, 0, 0.42)",
-                  },
-                  "& .MuiInputLabel-root": {
-                    fontSize: fontSize.form.label,
-                    ...fontStyles.openSans.regular,
-                  },
-                  "& .MuiInputBase-input": {
-                    fontSize: fontSize.form.label,
-                    ...fontStyles.openSans.regular,
-                  },
-                  "& .MuiFormHelperText-root": {
-                    fontSize: fontSize.form.helper,
-                    marginTop: "3px",
-                  },
-                }}
-              />
-            </Box>
-            <TextField
+
+          <Stack direction="row" spacing={1}>
+            <IconButton
               size="small"
-              label={config.forms.labels.feedbackMessage}
-              multiline
-              rows={3}
-              variant="standard"
-              fullWidth
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              error={Boolean(errors.message)}
-              helperText={errors.message}
+              onClick={() =>
+                window.open(getUrl("social", "footerYoutube"), "_blank")
+              }
               sx={{
-                mb: 2,
-                "& .MuiInput-underline:before": {
-                  borderBottom:
-                    theme.palette.mode === "dark"
-                      ? "1px solid rgba(255, 255, 255, 0.42)"
-                      : "1px solid rgba(0, 0, 0, 0.42)",
-                },
-                "& .MuiInputLabel-root": {
-                  fontSize: fontSize.form.label,
-                  ...fontStyles.openSans.regular,
-                },
-                "& .MuiInputBase-input": {
-                  fontSize: fontSize.form.label,
-                  ...fontStyles.openSans.regular,
-                },
-                "& .MuiFormHelperText-root": {
-                  fontSize: fontSize.form.helper,
-                  marginTop: "3px",
-                },
-              }}
-            />
-            <Button
-              type="submit"
-              sx={{
-                minWidth: 150,
-                color: "text.primary",
-                backgroundColor: "transparent",
-                "&:hover": {
-                  backgroundColor: "transparent",
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
                   color: "primary.main",
                 },
-                textTransform: "none",
-                p: 0,
-                width: "100%",
-                marginRight: "auto",
-                marginLeft: "auto",
-                fontSize: fontSize.button.medium,
-                ...fontStyles.sfPro.display.bold,
               }}
             >
-              {config.footer.sendMessage}
-            </Button>
-          </Box>
-        </Box> */}
-      </Box>
-    );
-  };
-
-  return (
-    <Box
-      component="footer"
-      sx={{
-        py: 1,
-        bgcolor:
-          theme.palette.mode === "dark"
-            ? palette.dark.background.default
-            : palette.light.background.footer,
-        borderTop: 1,
-        borderColor: "divider",
-      }}
-    >
-      <Container maxWidth="lg">
-        {isMobile ? (
-          <MobileFooter
-            formData={formData}
-            errors={errors}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            validateEmail={validateEmail}
-            validateForm={validateForm}
-            sidebarItems={sidebarItems}
-            sidebarClickHandler={sidebarClickHandler}
-          />
-        ) : (
-          renderDesktopFooter()
-        )}
-      </Container>
-    </Box>
+              <DynamicIcon
+                width={"30px"}
+                height={"30px"}
+                keyword={config.footer.icons.youtube}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() =>
+                window.open(getUrl("social", "footerInstagram"), "_blank")
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
+                  color: "primary.main",
+                },
+              }}
+            >
+              <DynamicIcon
+                keyword={config.footer.icons.instagram}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() =>
+                window.open(getUrl("social", "footerTwitter"), "_blank")
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
+                  color: "primary.main",
+                },
+              }}
+            >
+              <DynamicIcon
+                keyword={config.footer.icons.twitter}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() =>
+                window.open(getUrl("social", "footerLinkedin"), "_blank")
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
+                  color: "primary.main",
+                },
+              }}
+            >
+              <DynamicIcon
+                keyword={config.footer.icons.linkedin}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() =>
+                window.open(getUrl("social", "footerFacebook"), "_blank")
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
+                  color: "primary.main",
+                },
+              }}
+            >
+              <DynamicIcon
+                keyword={config.footer.icons.facebook}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+          </Stack>
+        </Box>
+      ) : (
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            py: 2.5,
+            bgcolor:
+              theme.palette.mode === "dark"
+                ? palette.dark.background.default
+                : palette.light.background.footer,
+            borderTop: 1,
+            borderColor: "divider",
+            px: 5.5,
+            gap: 3,
+          }}
+        >
+          <Stack direction="row" spacing={2}>
+            <IconButton
+              size="small"
+              onClick={() =>
+                window.open(getUrl("social", "footerYoutube"), "_blank")
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
+                  color: "primary.main",
+                },
+              }}
+            >
+              <DynamicIcon
+                width={"38px"}
+                height={"38px"}
+                keyword={config.footer.icons.youtube}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() =>
+                window.open(getUrl("social", "footerInstagram"), "_blank")
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
+                  color: "primary.main",
+                },
+              }}
+            >
+              <DynamicIcon
+                width={"28px"}
+                height={"28px"}
+                keyword={config.footer.icons.instagram}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() =>
+                window.open(getUrl("social", "footerTwitter"), "_blank")
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
+                  color: "primary.main",
+                },
+              }}
+            >
+              <DynamicIcon
+                width={"28px"}
+                height={"28px"}
+                keyword={config.footer.icons.twitter}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() =>
+                window.open(getUrl("social", "footerLinkedin"), "_blank")
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
+                  color: "primary.main",
+                },
+              }}
+            >
+              <DynamicIcon
+                width={"28px"}
+                height={"28px"}
+                keyword={config.footer.icons.linkedin}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() =>
+                window.open(getUrl("social", "footerFacebook"), "_blank")
+              }
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  fontSize: fontSize.icon.medium,
+                  color: "primary.main",
+                },
+              }}
+            >
+              <DynamicIcon
+                width={"28px"}
+                height={"28px"}
+                keyword={config.footer.icons.facebook}
+                style={{
+                  color: isDarkMode ? palette?.dark?.primary?.main : "",
+                }}
+              />
+            </IconButton>
+          </Stack>
+          <Typography
+            variant="footerCopyright"
+            sx={{
+              ...fontStyles.montserrat.regular,
+            }}
+          >
+            ©2025 Money TV. All Rights Reserved
+          </Typography>
+        </Box>
+      )}
+    </>
   );
 };
 

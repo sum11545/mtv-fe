@@ -24,7 +24,7 @@ const Main = styled("main")(
   ({ theme, isShortsPageMobile, isPrivacyPolicyPage, isTermsPage }) => ({
     flexGrow: 1,
     width: `calc(100% - ${MINI_DRAWER_WIDTH}px)`,
-    minHeight: "80vh",
+    // minHeight: "80vh",
     backgroundColor: theme.palette.background.default,
     display: "flex",
     flexDirection: "column",
@@ -408,10 +408,9 @@ const Layout = ({ children }) => {
           isTermsPage={isTermsPage}
         >
           {children}
-          {/* <NoVideosPage /> */}
-        </Main>
-        {/* Hide footer on mobile for shorts detail page */}
+          {/* Hide footer on mobile for shorts detail page */}
         {!isShortsPage && <Footer />}
+        </Main>
         <Sidebar
           open={sidebarOpen}
           onClose={toggleSidebar}

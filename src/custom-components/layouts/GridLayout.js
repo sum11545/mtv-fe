@@ -152,7 +152,7 @@ const GridLayout = ({
         background: bgColor,
         px: router.pathname == "/" ? (isMobile ? "10px" : "20px") : "", // for alternate background color issue
         pb: {
-          md: 0,
+          md: 1,
           xs: router.pathname === "/" ? "25px" : 0,
         },
       }}
