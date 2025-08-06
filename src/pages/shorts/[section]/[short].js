@@ -693,7 +693,7 @@ const Short = () => {
   const getSEOData = () => {
     if (!selectedShort) return {};
 
-    const shortTitle = `${selectedShort.name} - MoneyTV`;
+    const shortTitle = `${selectedShort.content_details[0]?.name} - MoneyTV`;
     const shortDescription = selectedShort.description
       ? selectedShort.description.replace(/<[^>]*>/g, "") // Remove HTML tags
       : `Watch ${shortTitle} - a short financial video on Money TV. Get quick market insights and investment tips.`;
@@ -1114,45 +1114,55 @@ const Short = () => {
   // Mobile Layout
   if (isMobile) {
     return (
-      <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
-        {/* Main Container - Scrollable */}
-        <Box
-          ref={containerRef}
-          sx={{
-            flex: 1,
-            height: "100vh",
-            overflowY: "auto",
-            overflowX: "hidden",
-            scrollSnapType: "y mandatory",
-            scrollBehavior: "smooth",
-            WebkitOverflowScrolling: "touch", // Smooth scrolling on iOS
-          }}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          {allShorts.map((shortItem, index) => (
-            <ShortItem
-              key={shortItem.id}
-              short={shortItem}
-              index={index}
-              isActive={index === currentIndex}
-              onShare={handleShare}
-              onWhatsApp={handleWhatsApp}
-              onCopy={handleCopy}
-              isMobile={isMobile}
-              section={section}
-            />
-          ))}
-        </Box>
-
-        <ShareDialog
-          open={shareDialogOpen}
-          onClose={() => setShareDialogOpen(false)}
-          url={shareUrl}
-          videoUrl={selectedShort?.content_details[0]?.url}
+      <>
+        <SEO
+          title={seoData.title}
+          description={seoData.description}
+          keywords={seoData.keywords}
+          videoData={seoData.videoData}
+          type="video"
         />
-      </Box>
+        <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+          {/* Main Container - Scrollable */}
+          <Box
+            ref={containerRef}
+            sx={{
+              flex: 1,
+              height: "100vh",
+              overflowY: "auto",
+              overflowX: "hidden",
+              scrollSnapType: "y mandatory",
+              scrollBehavior: "smooth",
+              WebkitOverflowScrolling: "touch", // Smooth scrolling on iOS
+            }}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {allShorts.map((shortItem, index) => (
+              <ShortItem
+                key={shortItem.id}
+                short={shortItem}
+                index={index}
+                isActive={index === currentIndex}
+                onShare={handleShare}
+                onWhatsApp={handleWhatsApp}
+                onCopy={handleCopy}
+                isMobile={isMobile}
+                section={section}
+              />
+            ))}
+          </Box>
+
+          <ShareDialog
+            open={shareDialogOpen}
+            onClose={() => setShareDialogOpen(false)}
+            url={shareUrl}
+            title={selectedShort?.name}
+            videoUrl={selectedShort?.content_details[0]?.url}
+          />
+        </Box>
+      </>
     );
   }
 
