@@ -55,7 +55,7 @@ const StackLayout = ({ name, contents, id, sectionData, section }) => {
           >
             <Typography
               ref={textRef}
-              component="h1"
+              component="h2"
               variant="sectionTitleOfStackLayout"
               fontWeight="bold"
               sx={{

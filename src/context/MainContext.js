@@ -6,7 +6,6 @@ import React, {
   useEffect,
 } from "react";
 import createAxiosInstance from "../configs/axios";
-import _ from "lodash";
 
 const MainContext = createContext();
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import _ from "lodash";
+import { groupBy } from "lodash";
 import {
   InputBase,
   styled,
@@ -166,7 +166,7 @@ const PipeSeparator = () => {
 };
 const SearchResults = ({ searchResults, handleSearch, isMobile }) => {
   const theme = useTheme();
-  const mtvCodeGroup = _.groupBy(searchResults, "mtv_code");
+  const mtvCodeGroup = groupBy(searchResults, "mtv_code");
   return (
     <SearchResultWrapper>
       {Object.entries(mtvCodeGroup).map(([key, value]) => (

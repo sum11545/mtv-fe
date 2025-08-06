@@ -11,16 +11,25 @@ import {
 } from "@mui/material";
 import { fontStyles } from "@/theme/theme";
 import { Circle } from "@mui/icons-material";
+import SEO from "../components/SEO";
 
 const TermsAndConditions = () => {
   return (
+    <>
+      <SEO
+        title="Terms and Conditions - MoneyTV | User Agreement & Terms of Service"
+        description="Read Money TV's Terms and Conditions to understand the rules, rights, and responsibilities when using our platform. Learn about user agreements and terms of service."
+        keywords="terms and conditions, terms of service, user agreement, money tv terms, legal terms, platform rules, user rights, terms of use India"
+        type="website"
+      />
+
     <Container
       maxWidth="md"
       sx={{ py: 2, width: "800px", maxWidth: "100%", textAlign: "justify" }}
     >
       <Typography
         variant="h5"
-        component="h5"
+          component="h1"
         textAlign="center"
         color="text.primary"
         gutterBottom
@@ -1584,6 +1593,7 @@ const TermsAndConditions = () => {
         </ListItem>
       </List>
     </Container>
+    </>
   );
 };
 

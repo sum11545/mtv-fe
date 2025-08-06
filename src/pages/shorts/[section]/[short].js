@@ -38,6 +38,7 @@ import { ShortCopyMobileIcon } from "@/components/icons/ShortCopyMobileIcon";
 import ShortWhatsAppMobileIcon from "@/components/icons/ShortWhatsAppMobileIcon";
 import { DynamicIcon } from "@/components/icons";
 import { useContent } from "@/hooks/useContent";
+import SEO from "../../../components/SEO";
 
 const ActionButton = ({
   icon,
@@ -298,6 +299,7 @@ const ShortItem = React.memo(
               }}
             >
               <Typography
+                component={"h2"}
                 sx={{
                   color: "white",
                   fontSize: 18,
@@ -371,7 +373,7 @@ const ShortItem = React.memo(
               }}
             >
               <Typography
-                component="h2"
+                component="h1"
                 variant="h6"
                 sx={{
                   color: "white",
@@ -521,7 +523,7 @@ const ShortItem = React.memo(
           {/* Top: Video name and actions */}
           <Box sx={{ width: "100%" }}>
             <Typography
-              component="h2"
+              component="h1"
               variant="h6"
               sx={{
                 ...fontStyles.openSans.bold,
@@ -687,6 +689,33 @@ const Short = () => {
     useContent();
   const shareMessage = config.messages.shareMessage;
 
+  // Generate SEO data for short video page
+  const getSEOData = () => {
+    if (!selectedShort) return {};
+
+    const shortTitle = `${selectedShort.name} - MoneyTV`;
+    const shortDescription = selectedShort.description
+      ? selectedShort.description.replace(/<[^>]*>/g, "") // Remove HTML tags
+      : `Watch ${shortTitle} - a short financial video on Money TV. Get quick market insights and investment tips.`;
+
+    return {
+      title: `${shortTitle}`,
+      description:
+        shortDescription.length > 160
+          ? shortDescription.substring(0, 157) + "..."
+          : shortDescription,
+      keywords: `${shortTitle}, Financial education, investing, personal finance, wealth creation, money management, stock market India, mutual funds India, financial literacy, business news India, entrepreneurship, live shows, podcasts, webinars, financial advice India`,
+      videoData: {
+        title: shortTitle,
+        description: shortDescription,
+        thumbnail: selectedShort.content_details?.[0]?.thumbnail_url,
+        video_url: selectedShort.content_details?.[0]?.url,
+      },
+    };
+  };
+
+  const seoData = getSEOData();
+
   // Memoize action handlers to prevent re-creation
   const handleShare = useCallback((shortItem) => {
     setSelectedShort(shortItem);
@@ -770,6 +799,12 @@ const Short = () => {
             });
           }
         }, 100);
+
+        if (requestedIndex !== -1) {
+          setSelectedShort(shortsArray[requestedIndex]);
+        } else {
+          setSelectedShort(shortsArray[0]);
+        }
       } catch (err) {
         console.error("Error fetching shorts data:", err);
         lastFetchedShort.current = null;
@@ -779,6 +814,17 @@ const Short = () => {
 
     loadData();
   }, [short]);
+
+  // Update selectedShort when currentIndex changes
+  useEffect(() => {
+    if (
+      allShorts.length > 0 &&
+      currentIndex >= 0 &&
+      currentIndex < allShorts.length
+    ) {
+      setSelectedShort(allShorts[currentIndex]);
+    }
+  }, [currentIndex, allShorts]);
 
   // Set share URL only once
   useEffect(() => {
@@ -1113,6 +1159,14 @@ const Short = () => {
   // Desktop Layout - Scrollable with File1 Navigation Buttons
   return (
     <>
+      <SEO
+        title={seoData.title}
+        description={seoData.description}
+        keywords={seoData.keywords}
+        videoData={seoData.videoData}
+        type="video"
+      />
+
       {/* Main Container - Scrollable */}
       <Box
         ref={containerRef}
