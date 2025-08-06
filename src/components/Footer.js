@@ -49,7 +49,7 @@ const MobileFooter = ({ sidebarItems, sidebarClickHandler }) => {
           </Typography>{" "}
           Stock Market | Mutual Funds | Personal Finance | Financial Planning |
           Passive Income | Stock Market For Beginners | Wealth Management | How
-          To | Invest In Stocks | Investment Strategies | Stock Analysis |
+          To Invest In Stocks | Investment Strategies | Stock Analysis |
           Retirement Planning | Financial Education | Market Analysis |
           Systematic Investment Plan | Investment Tips | Tax Saving Investments
           | Equity Investments | Investment Guide | Portfolio Management | Stock
@@ -281,7 +281,7 @@ const DesktopFooter = ({ sidebarItems, sidebarClickHandler }) => {
           </Typography>{" "}
           Stock Market | Mutual Funds | Personal Finance | Financial Planning |
           Passive Income | Stock Market For Beginners | Wealth Management | How
-          To | Invest In Stocks | Investment Strategies | Stock Analysis |
+          To Invest In Stocks | Investment Strategies | Stock Analysis |
           Retirement Planning | Financial Education | Market Analysis |
           Systematic Investment Plan | Investment Tips | Tax Saving Investments
           | Equity Investments | Investment Guide | Portfolio Management | Stock
