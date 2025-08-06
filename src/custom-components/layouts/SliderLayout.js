@@ -94,7 +94,7 @@ const SliderLayout = ({
         >
           <CustomTooltip text={section.name}>
             <Typography
-              component="h1"
+              component={router.pathname === "/[section]" ? "h1" : "h2"}
               sx={{
                 color: router?.pathname === "/" ? "primary.main" : "inherit",
                 ...fontStyles.montserrat.bold,
@@ -232,6 +232,7 @@ const SliderLayout = ({
 
         {showRightScroll && !isMobile && (
           <IconButton
+            aria-label="Scroll right"
             sx={{
               position: "absolute",
               right: -20,

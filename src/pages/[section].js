@@ -13,12 +13,14 @@ import { useMain } from "@/context/MainContext";
 import AdSection from "@/custom-components/layouts/AdSection";
 import GridLayout from "@/custom-components/layouts/GridLayout";
 import SliderLayout from "@/custom-components/layouts/SliderLayout";
+import SEO from "../components/SEO";
 
 export default function SectionPage({ sectionSlug }) {
   const router = useRouter();
   const theme = useTheme();
   const { section } = router.query;
   const [sectionData, setSectionData] = useState(null);
+  const [currentSection, setCurrentSection] = useState(null);
   const { loading, error, fetchSectionPageData } = useMain();
   let sectionIndex = 1;
 
@@ -29,6 +31,11 @@ export default function SectionPage({ sectionSlug }) {
           const res = await fetchSectionPageData(section);
           const sections = res?.data?.response?.sections;
           setSectionData(sections);
+
+          // Get current section info for SEO
+          if (sections && sections.length > 0) {
+            setCurrentSection(sections[0]);
+          }
 
           // For showing the section name in back to button text in layout file
           let sec1 = JSON.parse(localStorage.getItem("sections")) || [];
@@ -68,8 +75,32 @@ export default function SectionPage({ sectionSlug }) {
     }
   };
 
+  // Generate SEO data for current section
+  const getSEOData = () => {
+    if (!currentSection) return {};
+
+    return {
+      title: `${currentSection.name} - MoneyTV`,
+      description: `Watch ${currentSection.name} videos on Money TV. Get the latest financial insights, market analysis, and investment strategies.`,
+      keywords: `${
+        currentSection.name
+      }, finance videos, market analysis, investment, ${currentSection.name.toLowerCase()}, financial education`,
+      sectionData: currentSection,
+    };
+  };
+
+  const seoData = getSEOData();
+
   return (
     <>
+      <SEO
+        title={seoData.title}
+        description={seoData.description}
+        keywords={seoData.keywords}
+        sectionData={seoData.sectionData}
+        type="website"
+      />
+
       <Backdrop
         sx={{
           backgroundColor: theme.palette.background.default,

@@ -11,9 +11,18 @@ import {
 } from "@mui/material";
 import { fontStyles } from "@/theme/theme";
 import { Circle } from "@mui/icons-material";
+import SEO from "../components/SEO";
 
 const PrivacyPolicy = () => {
   return (
+    <>
+      <SEO
+        title="Privacy Policy"
+        description="Read Money TV's Privacy Policy to understand how we collect, use, and protect your personal information. Learn about your privacy rights and data protection practices."
+        keywords="privacy policy, data protection, personal information, privacy rights, money tv privacy, data security, user privacy, privacy policy India"
+        type="website"
+      />
+
     <Container
       sx={{
         py: 2,
@@ -24,7 +33,7 @@ const PrivacyPolicy = () => {
     >
       <Typography
         variant="h5"
-        component="h5"
+          component="h1"
         textAlign="center"
         color="text.primary"
         gutterBottom
@@ -2545,6 +2554,7 @@ const PrivacyPolicy = () => {
         procedure prescribed by them.
       </Typography>
     </Container>
+    </>
   );
 };
 

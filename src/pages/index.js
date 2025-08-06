@@ -12,6 +12,7 @@ import SliderLayout from "../custom-components/layouts/SliderLayout";
 import AdSection from "../custom-components/layouts/AdSection";
 import { useMain } from "@/context/MainContext";
 import { useRouter } from "next/router";
+import SEO from "../components/SEO";
 
 export default function Home() {
   const [sectionData, setSectionData] = useState(null);
@@ -68,6 +69,13 @@ export default function Home() {
   };
   return (
     <>
+      <SEO
+        title="MoneyTV India: Financial Education, Investing, and Wealth Creation"
+        description="MoneyTV is your go-to source for financial education and live content on money, investing, and wealth creation in India. Tune into our live shows and podcasts for actionable insights on personal finance, stocks, mutual funds, and more. Our mission is to help you become financially literate and build a richer life."
+        keywords="Financial education, investing, personal finance, wealth creation, money management, stock market India, mutual funds India, financial literacy, business news India, entrepreneurship, live shows, podcasts, webinars, financial advice India"
+        type="website"
+      />
+
       <Backdrop
         sx={{ background: "transparent", zIndex: 100, height: "100vh" }}
         open={loading}

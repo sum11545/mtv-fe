@@ -1,17 +1,20 @@
-import React from 'react';
-import {
-  Container,
-  Typography,
-  Box,
-  Paper,
-  useTheme,
-} from '@mui/material';
-import { fontSize, fontStyles } from '../theme/theme';
+import React from "react";
+import { Container, Typography, Box, Paper, useTheme } from "@mui/material";
+import { fontSize, fontStyles } from "../theme/theme";
+import SEO from "../components/SEO";
 
 const Help = () => {
   const theme = useTheme();
   
   return (
+    <>
+      <SEO
+        title="Help & Support - MoneyTV | User Guide & FAQ"
+        description="Get help and support for using Money TV. Find answers to frequently asked questions, user guides, and contact information for technical support."
+        keywords="help, support, FAQ, user guide, money tv help, technical support, customer service, user assistance"
+        type="website"
+      />
+
     <Container maxWidth="md" sx={{ py: 4 }}>
       <Paper elevation={0} sx={{ p: 4, backgroundColor: 'background.paper' }}>
         {/* Page Title */}
@@ -55,6 +58,7 @@ const Help = () => {
         </Box>
       </Paper>
     </Container>
+    </>
   );
 };
 

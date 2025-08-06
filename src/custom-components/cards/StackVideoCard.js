@@ -193,6 +193,7 @@ const StackVideoCard = ({
           >
             <Typography
               variant="stackCardVideoTitle"
+              component={"h2"}
               ref={textRef}
               sx={{
                 overflow: "hidden",

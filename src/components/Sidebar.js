@@ -149,6 +149,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
           }}
         >
           {/* Top icons */}
+          <nav>
           <List>
             {sidebarItems.map((item) => (
               <ListItem key={item.text} disablePadding>
@@ -226,9 +227,10 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
               </ListItem>
             ))}
           </List>
+          </nav>
 
           {/* Bottom icons */}
-          <Box>
+          <nav>
             <List>
               <ListItem disablePadding>
                 <Tooltip title="About Us" placement="left" arrow>
@@ -531,7 +533,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                 </Tooltip>
               </ListItem>
             </List>
-          </Box>
+          </nav>
         </Drawer>
       )}
 
@@ -630,8 +632,8 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
         <Divider />
 
         {/* Main content */}
-        <Box
-          sx={{
+        <nav
+          style={{
             overflow: "auto",
             flexGrow: 1,
             display: "flex",
@@ -902,7 +904,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
               </Button>
             </ListItem>
           </Box>
-        </Box>
+        </nav>
       </Drawer>
     </>
   );

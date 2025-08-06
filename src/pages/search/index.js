@@ -15,7 +15,8 @@ import {
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import _ from "lodash";
+import { isEmpty } from "lodash";
+import SEO from "../../components/SEO";
 
 const SearchPage = () => {
   const axiosInstance = createAxiosInstance();
@@ -29,9 +30,35 @@ const SearchPage = () => {
     if (!text || text.length <= maxLength) return text;
     return text.substring(0, maxLength) + "...";
   };
+
+  // Generate SEO data for search page
+  const getSEOData = () => {
+    const searchQuery = router.query?.searchQuery
+      ? decodeURIComponent(router.query.searchQuery)
+      : null;
+
+    if (searchQuery) {
+      return {
+        title: `Search Results for "${searchQuery}" - MoneyTV`,
+        description: `Find financial videos, market analysis, and investment insights related to "${searchQuery}" on Money TV.`,
+        keywords: `${searchQuery}, Financial education, investing, personal finance, wealth creation, money management, stock market India, mutual funds India, financial literacy, business news India, entrepreneurship, live shows, podcasts, webinars, financial advice India`,
+      };
+    } else {
+      return {
+        title: "Search - MoneyTV",
+        description:
+          "Search for financial videos, market analysis, and investment insights on Money TV.",
+        keywords:
+          "Financial education, investing, personal finance, wealth creation, money management, stock market India, mutual funds India, financial literacy, business news India, entrepreneurship, live shows, podcasts, webinars, financial advice India",
+      };
+    }
+  };
+
+  const seoData = getSEOData();
+
   useEffect(() => {
     const fetchSearchResults = async () => {
-      if (!_.isEmpty(router.query)) {
+      if (!isEmpty(router.query)) {
         try {
           const query = router.query;
           let searchQueryParams = {};
@@ -60,102 +87,113 @@ const SearchPage = () => {
     fetchSearchResults();
   }, [router.query]);
 
-  return sectionData.length == 0 && !loading ? (
+  return (
     <>
-      <Typography
-        variant={"h6"}
-        component="h2"
-        sx={{
-          ml: 5.5,
-          color: "primary.main",
-          fontFamily: { ...fontStyles.montserrat.bold },
-          wordBreak: "break-word",
-          overflowWrap: "break-word",
-          typography: "searchResultText",
-        }}
-        title={
-          router.query?.searchQuery
-            ? `Search Results for: ${decodeURIComponent(
-                router.query.searchQuery
-              )}`
-            : "Search Results"
-        }
-      >
-        Search Results{" "}
-        {router.query?.searchQuery &&
-          `for "${truncateText(
-            decodeURIComponent(router.query.searchQuery),
-            30
-          )}"`}
-      </Typography>
-      <NoVideosFound
-        searchQuery={decodeURIComponent(router.query?.searchQuery)}
-        mtvCode={router.query?.mtvCode}
+      <SEO
+        title={seoData.title}
+        description={seoData.description}
+        keywords={seoData.keywords}
+        type="website"
       />
-    </>
-  ) : (
-    <>
-      <Backdrop
-        sx={{
-          backgroundColor: theme.palette.background.default,
-          zIndex: 100,
-          height: "100vh",
-        }}
-        open={loading}
-      >
-        <CircularProgress />
-      </Backdrop>
-      <Container
-        maxWidth="xl"
-        disableGutters={true}
-        sx={{
-          width: "100%",
-          maxWidth: "100% !important",
-        }}
-      >
-        {sectionData?.map((section, index) => {
-          switch (section.layout_type) {
-            case "LGRID":
-              return (
-                <GridLayout
-                  section={section}
-                  sectionData={sectionData}
-                  key={`${section.type}-${index}`}
-                />
-              );
-            case "LSLIDER":
-              return (
-                <SliderLayout
-                  name={section.name}
-                  section={section}
-                  key={`${section.type}-${index}`}
-                  sectionData={sectionData}
-                />
-              );
-            case "LSTACK":
-              return (
-                <StackLayout
-                  key={`${section.type}-${index}`}
-                  video={section.contents}
-                  section={section}
-                  sectionData={sectionData}
-                />
-              );
-            case "ad":
-              return (
-                <AdSection
-                  key={`${section.type}-${index}`}
-                  name={section.name}
-                  ads={section.contents}
-                  section={section}
-                  sectionData={sectionData}
-                />
-              );
-            default:
-              return null;
-          }
-        })}
-      </Container>
+
+      {sectionData.length == 0 && !loading ? (
+        <>
+          <Typography
+            variant={"h6"}
+            component="h1"
+            sx={{
+              ml: 5.5,
+              color: "primary.main",
+              fontFamily: { ...fontStyles.montserrat.bold },
+              wordBreak: "break-word",
+              overflowWrap: "break-word",
+              typography: "searchResultText",
+            }}
+            title={
+              router.query?.searchQuery
+                ? `Search Results for: ${decodeURIComponent(
+                    router.query.searchQuery
+                  )}`
+                : "Search Results"
+            }
+          >
+            Search Results{" "}
+            {router.query?.searchQuery &&
+              `for "${truncateText(
+                decodeURIComponent(router.query.searchQuery),
+                30
+              )}"`}
+          </Typography>
+          <NoVideosFound
+            searchQuery={decodeURIComponent(router.query?.searchQuery)}
+            mtvCode={router.query?.mtvCode}
+          />
+        </>
+      ) : (
+        <>
+          <Backdrop
+            sx={{
+              backgroundColor: theme.palette.background.default,
+              zIndex: 100,
+              height: "100vh",
+            }}
+            open={loading}
+          >
+            <CircularProgress />
+          </Backdrop>
+          <Container
+            maxWidth="xl"
+            disableGutters={true}
+            sx={{
+              width: "100%",
+              maxWidth: "100% !important",
+            }}
+          >
+            {sectionData?.map((section, index) => {
+              switch (section.layout_type) {
+                case "LGRID":
+                  return (
+                    <GridLayout
+                      section={section}
+                      sectionData={sectionData}
+                      key={`${section.type}-${index}`}
+                    />
+                  );
+                case "LSLIDER":
+                  return (
+                    <SliderLayout
+                      name={section.name}
+                      section={section}
+                      key={`${section.type}-${index}`}
+                      sectionData={sectionData}
+                    />
+                  );
+                case "LSTACK":
+                  return (
+                    <StackLayout
+                      key={`${section.type}-${index}`}
+                      video={section.contents}
+                      section={section}
+                      sectionData={sectionData}
+                    />
+                  );
+                case "ad":
+                  return (
+                    <AdSection
+                      key={`${section.type}-${index}`}
+                      name={section.name}
+                      ads={section.contents}
+                      section={section}
+                      sectionData={sectionData}
+                    />
+                  );
+                default:
+                  return null;
+              }
+            })}
+          </Container>
+        </>
+      )}
     </>
   );
 };

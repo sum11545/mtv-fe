@@ -130,13 +130,14 @@ export const CONTENT_CONFIG = {
 
   // SEO and Meta Content
   seo: {
-    defaultTitle: "Money TV - Your Financial Video Hub",
+    defaultTitle:
+      "MoneyTV India: Financial Education, Investing, and Wealth Creation",
     defaultDescription:
-      "Watch the latest financial videos, market analysis, and investment insights on Money TV.",
+      "MoneyTV is your go-to source for financial education and live content on money, investing, and wealth creation in India. Tune into our live shows and podcasts for actionable insights on personal finance, stocks, mutual funds, and more. Our mission is to help you become financially literate and build a richer life.",
     defaultKeywords:
-      "finance, videos, market analysis, investment, money, financial education",
-    ogImage: "/assets/images/og-image.jpg",
-    twitterCard: "summary_large_image",
+      "Financial education, investing, personal finance, wealth creation, money management, stock market India, mutual funds India, financial literacy, business news India, entrepreneurship, live shows, podcasts, webinars, financial advice India",
+    ogImage: "https://www.moneytv.live/about/img/shared_image.jfif",
+    // twitterCard: "summary_large_image",
   },
 
   // Feature Toggles

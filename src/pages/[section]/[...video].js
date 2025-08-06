@@ -35,6 +35,7 @@ import { useContent } from "@/hooks/useContent";
 import { LanguageComponet } from "@/custom-components/LanguageComponet";
 import truncate from "truncate-html";
 import DOMPurify from "dompurify";
+import SEO from "../../components/SEO";
 
 const ActionButton = ({
   icon,
@@ -161,6 +162,33 @@ const VideoDetailPage = () => {
     shouldTruncate && !showMore
       ? truncate(cleanHtml, maxChars, { byWords: false })
       : cleanHtml;
+
+  // Generate SEO data for video page
+  const getSEOData = () => {
+    if (!selectedContent) return {};
+
+    const videoTitle = selectedContent.name;
+    const videoDescription = selectedContent.description
+      ? selectedContent.description.replace(/<[^>]*>/g, "") // Remove HTML tags
+      : `Watch ${videoTitle} on Money TV. Get the latest financial insights and market analysis.`;
+
+    return {
+      title: `${videoTitle} - MoneyTV`,
+      description:
+        videoDescription.length > 160
+          ? videoDescription.substring(0, 157) + "..."
+          : videoDescription,
+      keywords: `${videoTitle}, Financial education, investing, personal finance, wealth creation, money management, stock market India, mutual funds India, financial literacy, business news India, entrepreneurship, live shows, podcasts, webinars, financial advice India`,
+      videoData: {
+        title: videoTitle,
+        description: videoDescription,
+        thumbnail: selectedContent.thumbnail_url,
+        video_url: selectedContent.url,
+      },
+    };
+  };
+
+  const seoData = getSEOData();
 
   const toggleShowMore = () => {
     setShowMore((prev) => !prev);
@@ -329,6 +357,14 @@ const VideoDetailPage = () => {
 
   return (
     <>
+      <SEO
+        title={seoData.title}
+        description={seoData.description}
+        keywords={seoData.keywords}
+        videoData={seoData.videoData}
+        type="video"
+      />
+
       <Backdrop
         sx={{ background: "transparent", zIndex: 100, height: "100vh" }}
         open={loading}
@@ -418,7 +454,7 @@ const VideoDetailPage = () => {
                     // fontWeight="bold"
                     // color="text.secondary"
                     // sx={{ whiteSpace: "nowrap" }} // prevent title from wrapping
-                    component="h1"
+                    component="h2"
                     variant="sectionTitleOfVideoDetailPage"
                     sx={{
                       mb: 1,
@@ -496,7 +532,7 @@ const VideoDetailPage = () => {
               {/* Video Title */}
               <Typography
                 variant="h5"
-                component="h2"
+                component="h1"
                 sx={{
                   mb: 1,
                   ...fontStyles.openSans.bold,
@@ -708,7 +744,7 @@ const VideoDetailPage = () => {
                       }}
                     />
                     <Box
-                      sx={{
+                    sx={{
                         position: "absolute",
                         bottom: 0,
                         left: 0,
@@ -724,8 +760,8 @@ const VideoDetailPage = () => {
                       </Typography>
                       <Typography variant="body2">
                         {adData.description}
-                      </Typography>
-                    </Box>
+                  </Typography>
+                </Box>
                   </Paper>
                 </Link>
               </Box>

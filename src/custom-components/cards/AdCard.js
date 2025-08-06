@@ -45,6 +45,7 @@ const AdCard = ({ ad }) => {
           image={ad.content_details[0].thumbnail_url}
           poster={ad.content_details[0].thumbnail_url}
           controls
+          alt="Ad image"
         />
       );
     case "ATT":

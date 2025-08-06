@@ -116,7 +116,7 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
           <CardMedia
             component="img"
             image={getThumbnailUrl()}
-            alt={short.title}
+            alt={short.name}
             sx={{
               height: "100%",
               objectFit: "cover",

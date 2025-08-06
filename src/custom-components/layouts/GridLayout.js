@@ -189,7 +189,7 @@ const GridLayout = ({
         >
           <CustomTooltip text={section.name}>
             <Typography
-              component={isAd ? "h4" : "h1"}
+              component={router.pathname === "/[section]" ? "h1" : "h2"}
               sx={{
                 color: isAd
                   ? theme.palette.custom.advertisementColor
@@ -388,7 +388,7 @@ const GridLayout = ({
                     >
                       <CustomTooltip text={video.name}>
                         <Typography
-                          component={video.is_ad ? "h4" : "h1"}
+                          component={"h2"}
                           variant={
                             video.is_ad ? "advertisementTitle" : "sectionTitle"
                           }
@@ -523,6 +523,7 @@ const GridLayout = ({
                           variant={
                             video.is_ad ? "advertisementTitle" : "sectionTitle"
                           }
+                          component={"h2"}
                           sx={{
                             color: video.is_ad
                               ? theme.palette.custom.advertisementColor

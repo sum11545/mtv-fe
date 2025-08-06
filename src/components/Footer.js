@@ -41,9 +41,9 @@ const MobileFooter = ({ sidebarItems, sidebarClickHandler }) => {
           sx={{ ...fontStyles.openSans.regular }}
         >
           <Typography
-            component={"span"}
+            component={"h1"}
             variant="footerKeyTopics"
-            sx={{ ...fontStyles.openSans.bold }}
+            sx={{ ...fontStyles.openSans.bold, display: "inline" }}
           >
             Key Topics:
           </Typography>{" "}
@@ -273,9 +273,9 @@ const DesktopFooter = ({ sidebarItems, sidebarClickHandler }) => {
           sx={{ ...fontStyles.openSans.regular }}
         >
           <Typography
-            component={"span"}
+            component={"h1"}
             variant="footerKeyTopics"
-            sx={{ ...fontStyles.openSans.bold }}
+            sx={{ ...fontStyles.openSans.bold, display: "inline" }}
           >
             Key Topics:
           </Typography>{" "}

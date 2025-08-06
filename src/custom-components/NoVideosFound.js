@@ -146,6 +146,7 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum", mtvCode }) => {
           </Box>
           <Typography
             variant="noVideosFoundText"
+            component={"h2"}
             align="center"
             sx={{
               ...fontStyles.sfPro.display.regular,
