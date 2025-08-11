@@ -797,6 +797,22 @@ const typography = {
     },
     // wordSpacing: "0.2rem",
   },
+
+  pageTitle: {
+    fontSize: "16px", // default
+
+    "@media (min-width:960px)": {
+      fontSize: "20px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "20px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "25px", // xl (≥1920px)
+    },
+  },
 };
 
 const customHeightsForGridCard = {
