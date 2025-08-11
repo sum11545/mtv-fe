@@ -202,7 +202,15 @@ const GridCard = ({ video, id, sectionData, section }) => {
       // If content type is short then i am redirecting it to static shorts/id page i.e. short detail page
       if (isShort) {
         let shortId = video?.id;
-        router.push(`/shorts/${section.slug}/${shortId}`);
+
+        // if we get guest name or organization name then adding that in the url else not.
+        const OrgGuest = (video?.org_guest_url || "").replace(/^\/|\/$/g, "");
+
+        const fullPath = `/shorts/${section?.slug}${
+          OrgGuest ? `/${OrgGuest}` : ""
+        }/${shortId}`;
+
+        router.push(fullPath);
       } else {
         // If content type is not short then i am redirecting it to dynamic section/contentId page i.e. video detail page
 
