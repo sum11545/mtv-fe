@@ -21,7 +21,14 @@ import { useContent } from "@/hooks/useContent";
 const MINI_DRAWER_WIDTH = 70;
 
 const Main = styled("main")(
-  ({ theme, isShortsPageMobile, isPrivacyPolicyPage, isTermsPage }) => ({
+  ({
+    theme,
+    isShortsPageMobile,
+    isPrivacyPolicyPage,
+    isTermsPage,
+    isHomePage,
+    isSectionListPage,
+  }) => ({
     flexGrow: 1,
     width: `calc(100% - ${MINI_DRAWER_WIDTH}px)`,
     // minHeight: "80vh",
@@ -34,6 +41,10 @@ const Main = styled("main")(
         ? 0
         : isPrivacyPolicyPage || isTermsPage
         ? 55
+        : isHomePage
+        ? theme.spacing(21)
+        : isSectionListPage
+        ? theme.spacing(19)
         : theme.spacing(15),
     },
   })
@@ -52,7 +63,7 @@ const TabsContainer = styled(Box)(({ theme }) => ({
   },
 }));
 
-const BackButtonContainer = styled(Box)(({ theme }) => ({
+const BackButtonContainer = styled(Box)(({ theme, isSectionListPage }) => ({
   position: "fixed",
   top: "64px",
   left: 0,
@@ -61,7 +72,7 @@ const BackButtonContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   padding: theme.spacing(1, 2),
   [theme.breakpoints.down("sm")]: {
-    top: "64px",
+    top: isSectionListPage ? "112px" : "64px",
     right: 0,
     left: 0,
     zIndex: theme.zIndex.appBar + 1,
@@ -71,9 +82,11 @@ const BackButtonContainer = styled(Box)(({ theme }) => ({
 const BackButton = ({ onClick, label }) => {
   const [isHovered, setIsHovered] = useState(false);
   const { getColor, isDarkMode } = useContent();
+  const router = useRouter();
+  const isSectionListPage = router.pathname == "/[section]";
 
   return (
-    <BackButtonContainer>
+    <BackButtonContainer isSectionListPage={isSectionListPage}>
       <Button
         startIcon={
           <DynamicIcon
@@ -136,6 +149,8 @@ const Layout = ({ children }) => {
 
   const isPrivacyPolicyPage = router.pathname.includes("/privacy-policy");
   const isTermsPage = router.pathname.includes("/terms-of-use");
+  const isHomePage = router.pathname == "/";
+  const isSectionListPage = router.pathname == "/[section]";
 
   // Get the previous route from navigation history
   const getPreviousRoute = () => {
@@ -407,6 +422,8 @@ const Layout = ({ children }) => {
           }}
           isPrivacyPolicyPage={isPrivacyPolicyPage}
           isTermsPage={isTermsPage}
+          isHomePage={isHomePage}
+          isSectionListPage={isSectionListPage}
         >
           <Box sx={{ flex: 1 }}>{children}</Box>
           {/* Hide footer on mobile for shorts detail page */}

@@ -189,7 +189,8 @@ const GridLayout = ({
         >
           <CustomTooltip text={section.name}>
             <Typography
-              component={router.pathname === "/[section]" ? "h1" : "h2"}
+              // component={router.pathname === "/[section]" ? "h1" : "h2"}
+              component={"h2"}
               sx={{
                 color: isAd
                   ? theme.palette.custom.advertisementColor

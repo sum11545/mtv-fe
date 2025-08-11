@@ -94,7 +94,8 @@ const SliderLayout = ({
         >
           <CustomTooltip text={section.name}>
             <Typography
-              component={router.pathname === "/[section]" ? "h1" : "h2"}
+              // component={router.pathname === "/[section]" ? "h1" : "h2"}
+              component={"h2"}
               sx={{
                 color: router?.pathname === "/" ? "primary.main" : "inherit",
                 ...fontStyles.montserrat.bold,
