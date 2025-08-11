@@ -153,8 +153,17 @@ export const getServerSideProps = async ({ res }) => {
                         video.content_details[0].content_type_id === "CTSR";
 
                       if (isShortVideo) {
-                        // For shorts, use the video ID directly
-                        const shortUrl = `${baseUrl}/shorts/${section.slug}/${video.id}`;
+                        // For shorts, include guest name and organization in the URL path
+                        let shortUrl = `${baseUrl}/shorts/${section.slug}`;
+
+                        // Add org_guest_path if it exists
+                        if (orgGuestPath) {
+                          shortUrl += `/${orgGuestPath}`;
+                        }
+
+                        // Add video ID
+                        shortUrl += `/${video.id}`;
+
                         if (!urlSet.has(shortUrl)) {
                           urlSet.add(shortUrl);
                           dynamicUrls.push({

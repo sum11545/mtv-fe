@@ -163,7 +163,7 @@ const Layout = ({ children }) => {
       let section = storedSections?.find((item) => item.slug == query.section);
       return section?.name;
     }
-    if (pathname === "/shorts/[short]") return "Shorts";
+    if (pathname === "/shorts/[section]/[...short]") return "Shorts";
     if (pathname === "/privacy-policy") return "Privacy Policy";
     if (pathname === "/terms-of-service") return "Terms of Service";
     if (pathname === "/help") return "Help";
@@ -199,8 +199,13 @@ const Layout = ({ children }) => {
           language: query.language,
         },
       });
-    } else if (pathname === "/shorts/[short]" && query.short) {
-      router.push(`/shorts/${query.short}`);
+    } else if (
+      pathname === "/shorts/[section]/[...short]" &&
+      query.section &&
+      query.short
+    ) {
+      // router.push(`/shorts/${query.section}/${query.short}`);
+      router.back();
     } else {
       router.push(pathname);
     }
@@ -215,7 +220,7 @@ const Layout = ({ children }) => {
     // Show back button for pages that should have navigation
     const shouldShowBackButton = [
       "/[section]/[...video]",
-      // "/shorts/[section]/[short]",
+      // "/shorts/[section]/[...short]",
       "/[section]",
       "/search",
       "/terms-of-service",

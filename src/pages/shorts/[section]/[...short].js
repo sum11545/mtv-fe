@@ -764,7 +764,11 @@ const Short = () => {
         lastFetchedShort.current = short;
         console.log("Fetching data for short:", short);
 
-        const res = await fetchShortDetailPageData(section, short);
+        // here 'short.length - 1' is short id as the last item from query params short
+        const res = await fetchShortDetailPageData(
+          section,
+          short[short.length - 1]
+        );
 
         let shortsArray = [];
         if (
@@ -879,11 +883,16 @@ const Short = () => {
       // Update URL without triggering data refetch
       const newShort = allShorts[index];
       if (newShort && newShort.id !== short) {
-        window.history.replaceState(
-          null,
-          "",
-          `/shorts/${section}/${newShort.id}`
+        // if we get guest name or organization name then adding that in the url else not.
+        const OrgGuest = (newShort?.org_guest_url || "").replace(
+          /^\/|\/$/g,
+          ""
         );
+        const fullPath = `/shorts/${section}${OrgGuest ? `/${OrgGuest}` : ""}/${
+          newShort.id
+        }`;
+
+        window.history.replaceState(null, "", fullPath);
       }
 
       setTimeout(() => {
@@ -947,11 +956,16 @@ const Short = () => {
 
       const newShort = allShorts[newIndex];
       if (newShort && newShort.id !== short) {
-        window.history.replaceState(
-          null,
-          "",
-          `/shorts/${section}/${newShort.id}`
+        // if we get guest name or organization name then adding that in the url else not.
+        const OrgGuest = (newShort?.org_guest_url || "").replace(
+          /^\/|\/$/g,
+          ""
         );
+        const fullPath = `/shorts/${section}${OrgGuest ? `/${OrgGuest}` : ""}/${
+          newShort.id
+        }`;
+
+        window.history.replaceState(null, "", fullPath);
       }
     }
 
