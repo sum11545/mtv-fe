@@ -3,17 +3,27 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Typography,
   Stack,
   useTheme,
   IconButton,
+  Snackbar,
+  useMediaQuery,
+  Typography,
+  Tooltip,
 } from "@mui/material";
 import { formatDistanceToNow } from "date-fns";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useMain } from "@/context/MainContext";
-import { fontSize, fontStyles } from "@/theme/theme";
+import { fontSize } from "@/theme/theme";
 import { DynamicIcon } from "@/components/icons";
+import Image from "next/image";
+import ShareShortMobileIcon from "@/components/icons/ShareShortMobileIcon";
+import { ShortCopyMobileIcon } from "@/components/icons/ShortCopyMobileIcon";
+import ShortWhatsAppMobileIcon from "@/components/icons/ShortWhatsAppMobileIcon";
+import useContent from "@/hooks/useContent";
+import ShareDialog from "../ShareDialog";
+import { fontStyles } from "@/theme/theme";
 
 const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
   const router = useRouter();
@@ -24,6 +34,27 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
   const dims = theme.customDimensionForSliderCard;
 
   let isShort = short?.content_details[0]?.content_type_id == "CTSR"; // CTSR  is for shorts.
+
+  const [showTooltip, setShowTooltip] = useState(false);
+  const titleRef = React.useRef(null);
+
+  // Check if text is overflowing to show tooltip conditionally
+  useEffect(() => {
+    const checkOverflow = () => {
+      if (titleRef.current) {
+        const element = titleRef.current;
+        const isOverflowing = element.scrollHeight > element.clientHeight;
+        setShowTooltip(isOverflowing);
+      }
+    };
+
+    // Check on mount and when content changes
+    checkOverflow();
+
+    // Add resize listener to recheck on window resize
+    window.addEventListener("resize", checkOverflow);
+    return () => window.removeEventListener("resize", checkOverflow);
+  }, [short?.name]);
 
   const getThumbnailUrl = () => {
     const details = short?.content_details?.[0];
@@ -157,6 +188,78 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
           )} */}
         </Box>
       </Card>
+
+      <Box
+        sx={{
+          minHeight: "3em", // Fixed height to ensure consistent button positioning
+          display: "flex",
+          alignItems: "flex-start", // Align title to top of container
+          pt: "14px",
+          width: {
+            xs: dims.xs.width,
+            sm: dims.sm.width,
+            md: dims.md.width,
+            lg: dims.lg.width,
+            xl: dims.xl.width,
+          },
+        }}
+      >
+        {showTooltip ? (
+          <Tooltip title={short?.name} arrow placement="top">
+            <Typography
+              component="h2"
+              sx={{
+                overflow: "hidden",
+                display: "-webkit-box",
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: "vertical",
+                textOverflow: "ellipsis",
+                cursor: "pointer",
+                ...fontStyles.openSans.bold,
+              }}
+              variant="videoTitle"
+              onClick={handleCardClick}
+              ref={titleRef}
+            >
+              {short?.content_details[0]?.name}
+            </Typography>
+          </Tooltip>
+        ) : (
+          <Typography
+            component="h2"
+            sx={{
+              overflow: "hidden",
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              textOverflow: "ellipsis",
+              cursor: "pointer",
+              ...fontStyles.openSans.bold,
+            }}
+            variant="videoTitle"
+            onClick={handleCardClick}
+            ref={titleRef}
+          >
+            {short?.content_details[0]?.name}
+          </Typography>
+        )}
+      </Box>
+
+      {/* <ShareDialog
+        open={shareDialogOpen}
+        onClose={() => setShareDialogOpen(false)}
+        url={shareUrl}
+        title={short?.name}
+        videoUrl={short?.content_details[0]?.url}
+      />
+
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={snackbarDuration}
+        onClose={handleSnackbarClose}
+        message={successMessage}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      /> */}
     </>
   );
 };
