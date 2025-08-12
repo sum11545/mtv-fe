@@ -22,7 +22,7 @@ import SearchBar from "./SearchBar";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-const Header = ({ toggleSidebar }) => {
+const Header = ({ toggleSidebar, pageTitle }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isDarkMode = theme.palette.mode === "dark";
@@ -37,47 +37,6 @@ const Header = ({ toggleSidebar }) => {
     // border: "1px solid green",
     marginLeft: isMobile ? "-10px" : " -25px",
   });
-
-  // Function to get the appropriate h1 title based on current route
-  const getPageTitle = () => {
-    const { pathname, query } = router;
-
-    // Home page
-    if (pathname === "/") {
-      return "MoneyTV.Live: Insights on Stock Market, Mutual Funds & Financial Education";
-    }
-
-    // Section pages
-    if (pathname === "/[section]" && query.section) {
-      const sectionSlug = query.section;
-
-      // Map section slugs to their titles
-      const sectionTitles = {
-        wew: "Most Watched Expert Videos on Stock Market & Financial Education",
-        lfy: "Latest Videos on Stock Market, Mutual Funds & Financial Education",
-        mpu: "Expert Insights on Stock Market, Mutual Funds & Financial Education",
-        pie: "Industry Voices on Finance, Markets & What Lies Ahead",
-        shorts: "Quick Stock Market Insights: Watch Our Latest Shorts",
-      };
-
-      return sectionTitles[sectionSlug];
-    }
-
-    // // Shorts pages - return null to hide title
-    // if (pathname.startsWith("/shorts/")) {
-    //   return "Quick Stock Market Insights: Watch Our Latest Shorts";
-    // }
-
-    // // Search page
-    // if (pathname === "/search") {
-    //   return "Search Results - MoneyTV";
-    // }
-
-    // Default fallback
-    // return "MoneyTV.Live: Insights on Stock Market, Mutual Funds & Financial Education";
-  };
-
-  const pageTitle = getPageTitle();
 
   // const LogoWrapper = styled(Box)({
   //   display: "flex",
@@ -173,31 +132,37 @@ const Header = ({ toggleSidebar }) => {
           {/* Bottom row with search bar */}
           {/* <Box sx={{ width: "100%", px: { xs: 0.5, sm: 1 } }}>
             <SearchBar />
+          </Box> */}
 
-          {/* Page title */}
+          {/* Mobile Page title */}
           {pageTitle && (
-          <Box
-            sx={{
-              display: "flex",
-              width: "100%",
-              textAlign: "start",
-              marginLeft: isMobile && "-10px",
-            }}
-          >
-            <Typography
-              component="h1"
-              variant="pageTitle"
+            <Box
               sx={{
-                ...fontStyles.montserrat.bold,
-                lineHeight: 1.3,
-                color: "#535353",
-                maxWidth: "100%",
+                display: "flex",
+                width: "100%",
+                textAlign: "start",
+                marginLeft: isMobile && "-10px",
+                // maxWidth: "100%",
+                // overflow: "hidden",
               }}
             >
-              {pageTitle}
-            </Typography>
+              <Typography
+                component="h1"
+                variant="pageTitle"
+                sx={{
+                  ...fontStyles.montserrat.bold,
+                  lineHeight: 1.3,
+                  color: "#535353",
+                  maxWidth: "100%",
+                  // overflow: "hidden",
+                  // textOverflow: "ellipsis",
+                  // whiteSpace: "nowrap",
+                }}
+              >
+                {pageTitle}
+              </Typography>
             </Box>
-            )}
+          )}
         </Toolbar>
       </AppBar>
     );
@@ -254,32 +219,34 @@ const Header = ({ toggleSidebar }) => {
           {/* Search Bar */}
           {/* <SearchBar /> */}
 
-          {/* Page Title */}
+          {/* Desktop Page Title */}
           {pageTitle && (
-          <Box
-            sx={{
-              display: "flex",
-              flex: 1,
-              textAlign: "start",
-            }}
-          >
-            <Typography
-              component="h1"
-              variant="pageTitle"
+            <Box
               sx={{
-                ...fontStyles.montserrat.bold,
-                lineHeight: 1.3,
-                color: "#535353",
-                // maxWidth: "800px",
+                display: "flex",
+                flex: 1,
+                textAlign: "start",
+                maxWidth: "calc(100vw - 300px)", // Reserve space for logo and menu button
                 overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
               }}
             >
-              {pageTitle}
-            </Typography>
+              <Typography
+                component="h1"
+                variant="pageTitle"
+                sx={{
+                  ...fontStyles.montserrat.bold,
+                  lineHeight: 1.3,
+                  color: "#535353",
+                  maxWidth: "100%",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {pageTitle}
+              </Typography>
             </Box>
-            )}
+          )}
         </Box>
 
         {/* Right side icons */}

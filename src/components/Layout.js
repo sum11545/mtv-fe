@@ -17,6 +17,7 @@ import createAppTheme from "@/theme/theme";
 import { fontSize, fontStyles } from "@/theme/theme";
 import { DynamicIcon } from "@/components/icons";
 import { useContent } from "@/hooks/useContent";
+import { useMain } from "@/context/MainContext";
 
 const MINI_DRAWER_WIDTH = 70;
 
@@ -42,9 +43,9 @@ const Main = styled("main")(
         : isPrivacyPolicyPage || isTermsPage
         ? 55
         : isHomePage
-        ? theme.spacing(21)
+        ? theme.spacing(20)
         : isSectionListPage
-        ? theme.spacing(19)
+        ? theme.spacing(18.5)
         : theme.spacing(15),
     },
   })
@@ -63,30 +64,35 @@ const TabsContainer = styled(Box)(({ theme }) => ({
   },
 }));
 
-const BackButtonContainer = styled(Box)(({ theme, isSectionListPage }) => ({
-  position: "fixed",
-  top: "64px",
-  left: 0,
-  right: MINI_DRAWER_WIDTH,
-  zIndex: theme.zIndex.appBar - 1,
-  backgroundColor: theme.palette.background.default,
-  padding: theme.spacing(1, 2),
-  [theme.breakpoints.down("sm")]: {
-    top: isSectionListPage ? "112px" : "64px",
-    right: 0,
+const BackButtonContainer = styled(Box)(
+  ({ theme, isSectionListPage, pageTitle }) => ({
+    position: "fixed",
+    top: "64px",
     left: 0,
-    zIndex: theme.zIndex.appBar + 1,
-  },
-}));
+    right: MINI_DRAWER_WIDTH,
+    zIndex: theme.zIndex.appBar - 1,
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing(1, 2),
+    [theme.breakpoints.down("sm")]: {
+      top: isSectionListPage && pageTitle ? "112px" : "64px",
+      right: 0,
+      left: 0,
+      zIndex: theme.zIndex.appBar + 1,
+    },
+  })
+);
 
-const BackButton = ({ onClick, label }) => {
+const BackButton = ({ onClick, label, pageTitle }) => {
   const [isHovered, setIsHovered] = useState(false);
   const { getColor, isDarkMode } = useContent();
   const router = useRouter();
   const isSectionListPage = router.pathname == "/[section]";
 
   return (
-    <BackButtonContainer isSectionListPage={isSectionListPage}>
+    <BackButtonContainer
+      isSectionListPage={isSectionListPage}
+      pageTitle={pageTitle}
+    >
       <Button
         startIcon={
           <DynamicIcon
@@ -151,6 +157,7 @@ const Layout = ({ children }) => {
   const isTermsPage = router.pathname.includes("/terms-of-use");
   const isHomePage = router.pathname == "/";
   const isSectionListPage = router.pathname == "/[section]";
+  // const { currentSection } = useMain();
 
   // Get the previous route from navigation history
   const getPreviousRoute = () => {
@@ -384,6 +391,48 @@ const Layout = ({ children }) => {
 
   const currentTheme = createAppTheme(isDarkMode ? "dark" : "light");
 
+  // Function to get the appropriate h1 title based on current route
+  const getPageTitle = () => {
+    const { pathname, query } = router;
+
+    // Home page
+    if (pathname === "/") {
+      return "MoneyTV.Live: Insights on Stock Market, Mutual Funds & Financial Education";
+    }
+
+    // Section pages
+    if (pathname === "/[section]" && query.section) {
+      const sectionSlug = query.section;
+
+      // Map section slugs to their titles
+      const sectionTitles = {
+        wew: "Most Watched Expert Videos on Stock Market & Financial Education",
+        lfy: "Latest Videos on Stock Market, Mutual Funds & Financial Education",
+        mpu: "Expert Insights on Stock Market, Mutual Funds & Financial Education",
+        pie: "Industry Voices on Finance, Markets & What Lies Ahead",
+        shorts: "Quick Stock Market Insights: Watch Our Latest Shorts",
+      };
+
+      return sectionTitles[sectionSlug];
+      // return sectionTitles[currentSection?.section_keyword] || null;
+    }
+
+    // // Shorts pages - return null to hide title
+    // if (pathname.startsWith("/shorts/")) {
+    //   return "Quick Stock Market Insights: Watch Our Latest Shorts";
+    // }
+
+    // // Search page
+    // if (pathname === "/search") {
+    //   return "Search Results - MoneyTV";
+    // }
+
+    // Default fallback
+    // return "MoneyTV.Live: Insights on Stock Market, Mutual Funds & Financial Education";
+  };
+
+  const pageTitle = getPageTitle();
+
   return (
     <ThemeProvider theme={currentTheme}>
       <Box
@@ -395,12 +444,13 @@ const Layout = ({ children }) => {
           flexDirection: "column",
         }}
       >
-        <Header toggleSidebar={toggleSidebar} />
+        <Header toggleSidebar={toggleSidebar} pageTitle={pageTitle} />
         {/* Back Button */}
         {backButtonInfo.show && (
           <BackButton
             onClick={backButtonInfo.action}
             label={backButtonInfo.label}
+            pageTitle={pageTitle}
           />
         )}
         {/* Hide category tabs on mobile for shorts detail page */}
