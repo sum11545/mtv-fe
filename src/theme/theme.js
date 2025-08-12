@@ -799,7 +799,7 @@ const typography = {
   },
 
   pageTitle: {
-    fontSize: "16px", // default
+    fontSize: "14px", // default
 
     "@media (min-width:960px)": {
       fontSize: "20px", // md (≥960px)

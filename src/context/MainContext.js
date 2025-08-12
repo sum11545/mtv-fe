@@ -20,6 +20,7 @@ export const useMain = () => {
 export const MainProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [currentSection, setCurrentSection] = useState(null);
 
   const axiosInstance = createAxiosInstance();
   const fetchHomePageData = async () => {
@@ -42,6 +43,7 @@ export const MainProvider = ({ children }) => {
       setLoading(true);
       setError(null);
       const response = await axiosInstance.get(`/sectionPage/${sectionName}`);
+      setCurrentSection(response.data.response.sections[0]);
       return response;
     } catch (err) {
       setError(err.message);
@@ -105,6 +107,7 @@ export const MainProvider = ({ children }) => {
     fetchVideoDetailPageData,
     fetchShortDetailPageData,
     fetchSideBarData,
+    currentSection,
   };
 
   return <MainContext.Provider value={value}>{children}</MainContext.Provider>;
