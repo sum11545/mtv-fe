@@ -152,7 +152,7 @@ const Header = ({ toggleSidebar, pageTitle }) => {
                 sx={{
                   ...fontStyles.montserrat.bold,
                   lineHeight: 1.3,
-                  color: "#535353",
+                  color: isDarkMode ? "#fff" : "#535353",
                   maxWidth: "100%",
                   // overflow: "hidden",
                   // textOverflow: "ellipsis",
@@ -236,7 +236,7 @@ const Header = ({ toggleSidebar, pageTitle }) => {
                 sx={{
                   ...fontStyles.montserrat.bold,
                   lineHeight: 1.3,
-                  color: "#535353",
+                  color: isDarkMode ? "#fff" : "#535353",
                   maxWidth: "100%",
                   overflow: "hidden",
                   textOverflow: "ellipsis",
