@@ -1,21 +1,26 @@
+# Robots.txt for https://www.moneytv.live
+ 
+# Apply to all crawlers (Google ignores Crawl-delay)
 User-agent: *
 Allow: /
-
-# Sitemap
-Sitemap: https://www.moneytv.live/sitemap.xml
-
-# Disallow admin and private areas
 Disallow: /admin/
 Disallow: /api/
 Disallow: /_next/
 Disallow: /static/
-
-# Allow important pages
-Allow: /
+ 
 Allow: /search
 Allow: /privacy-policy
 Allow: /terms-of-use
 Allow: /help
-
-# Crawl delay (optional)
-Crawl-delay: 1 
+ 
+Sitemap: https://www.moneytv.live/sitemap.xml
+ 
+# Specific rules for Bing, Yahoo, Yandex (supports Crawl-delay)
+User-agent: Bingbot
+Crawl-delay: 1
+ 
+User-agent: Slurp
+Crawl-delay: 1
+ 
+User-agent: Yandex
+Crawl-delay: 1

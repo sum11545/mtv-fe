@@ -40,14 +40,7 @@ export const getServerSideProps = async ({ res }) => {
       loc: baseUrl,
       lastmod: new Date().toISOString(),
       changefreq: "daily",
-      priority: "1.0",
-      images: [],
-    },
-    {
-      loc: `${baseUrl}/search`,
-      lastmod: new Date().toISOString(),
-      changefreq: "daily",
-      priority: "0.8",
+      priority: "1",
       images: [],
     },
     {
@@ -62,13 +55,6 @@ export const getServerSideProps = async ({ res }) => {
       lastmod: new Date().toISOString(),
       changefreq: "monthly",
       priority: "0.3",
-      images: [],
-    },
-    {
-      loc: `${baseUrl}/help`,
-      lastmod: new Date().toISOString(),
-      changefreq: "monthly",
-      priority: "0.5",
       images: [],
     },
   ];
@@ -169,8 +155,8 @@ export const getServerSideProps = async ({ res }) => {
                           dynamicUrls.push({
                             loc: shortUrl,
                             lastmod: new Date().toISOString(),
-                            changefreq: "weekly",
-                            priority: "0.7",
+                            changefreq: "monthly",
+                            priority: "0.5",
                             images: videoImages,
                           });
                         }
@@ -204,8 +190,8 @@ export const getServerSideProps = async ({ res }) => {
                                   dynamicUrls.push({
                                     loc: videoUrl,
                                     lastmod: new Date().toISOString(),
-                                    changefreq: "weekly",
-                                    priority: "0.7",
+                                    changefreq: "monthly",
+                                    priority: "0.5",
                                     images: videoImages,
                                   });
                                 }
@@ -234,8 +220,8 @@ export const getServerSideProps = async ({ res }) => {
                             dynamicUrls.push({
                               loc: videoUrl,
                               lastmod: new Date().toISOString(),
-                              changefreq: "weekly",
-                              priority: "0.7",
+                              changefreq: "monthly",
+                              priority: "0.5",
                               images: videoImages,
                             });
                           }
