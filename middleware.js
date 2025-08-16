@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 
 export async function middleware(request) {
   const userAgent = request.headers.get("user-agent");
+  // Debug header to verify middleware is running in prod
+  const debugRes = NextResponse.next();
+  debugRes.headers.set("x-debug-middleware", "hit");
 
   const bots = [
     "googlebot",
