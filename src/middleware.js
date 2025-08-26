@@ -112,14 +112,9 @@ export async function middleware(request) {
   }
 
   if (isBot) {
-    console.log({ BASE_URL });
-    console.log({ API_URL });
-
     const fullUrl = `${BASE_URL}${request.nextUrl.pathname}${request.nextUrl.search}`;
 
     const apiUrl = `${API_URL}/prerender?url=${encodeURIComponent(fullUrl)}`;
-
-    console.log({ apiUrl });
 
     try {
       const res = await fetch(apiUrl, {
@@ -128,12 +123,9 @@ export async function middleware(request) {
         },
       });
 
-      console.log({ res });
-
       const html = await res.text(); // Lambda returns prerendered HTML
 
       if (html) {
-        console.log({ html });
         const headers = new Headers(res.headers);
         headers.set("Content-Type", "text/html");
         headers.set("x-redirected-from", fullUrl);
