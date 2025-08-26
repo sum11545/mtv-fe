@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 
 export async function middleware(request) {
   const userAgent = request.headers.get("user-agent");
+  // As middleware is not able to fetch the env variables i am adding this fallback.
+  const BASE_URL = process.env.PRERENDER_BASE_URL || "https://moneytv.live";
+  const API_URL =
+    process.env.PRERENDER_API_BASE_URL || "https://moneytv.live/api/v1";
 
   const bots = [
     "googlebot",
@@ -108,11 +112,9 @@ export async function middleware(request) {
   }
 
   if (isBot) {
-    const fullUrl = `${process.env.PRERENDER_BASE_URL}${request.nextUrl.pathname}${request.nextUrl.search}`;
+    const fullUrl = `${BASE_URL}${request.nextUrl.pathname}${request.nextUrl.search}`;
 
-    const apiUrl = `${
-      process.env.PRERENDER_API_BASE_URL
-    }/prerender?url=${encodeURIComponent(fullUrl)}`;
+    const apiUrl = `${API_URL}/prerender?url=${encodeURIComponent(fullUrl)}`;
 
     try {
       const res = await fetch(apiUrl, {
