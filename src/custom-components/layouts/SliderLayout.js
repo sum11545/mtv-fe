@@ -92,7 +92,13 @@ const SliderLayout = ({
             width: isMobile ? "calc(100% - 120px)" : "calc(100% - 150px)",
           }}
         >
-          <CustomTooltip text={section.name}>
+          <CustomTooltip
+            text={
+              section.section_keyword
+                ? section.section_keyword + " - " + section.name
+                : section.name
+            }
+          >
             <Typography
               // component={router.pathname === "/[section]" ? "h1" : "h2"}
               component={"h2"}
@@ -107,7 +113,9 @@ const SliderLayout = ({
                 display: "inline",
               }}
             >
-              {section.name}
+              {section.section_keyword
+                ? section.section_keyword + " - " + section.name
+                : section.name}
             </Typography>
           </CustomTooltip>
         </Box>

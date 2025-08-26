@@ -44,7 +44,8 @@ const DynamicIcon = ({
     CAM: "star-icon",
     RAY: "analytics-icon",
     KYP: "profile-icon",
-    ENLARGE: "expand",
+    EXPAND: "expand",
+    COMPRESS: "compress",
   };
 
   useEffect(() => {

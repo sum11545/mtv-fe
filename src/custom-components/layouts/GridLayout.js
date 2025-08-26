@@ -187,7 +187,13 @@ const GridLayout = ({
                 : "", // for alternate background color issue
           }}
         >
-          <CustomTooltip text={section.name}>
+          <CustomTooltip
+            text={
+              section.section_keyword
+                ? section.section_keyword + " - " + section.name
+                : section.name
+            }
+          >
             <Typography
               // component={router.pathname === "/[section]" ? "h1" : "h2"}
               component={"h2"}
@@ -207,7 +213,9 @@ const GridLayout = ({
                 display: "inline",
               }}
             >
-              {section.name}
+              {section.section_keyword
+                ? section.section_keyword + " - " + section.name
+                : section.name}
             </Typography>
           </CustomTooltip>
         </Box>

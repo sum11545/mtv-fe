@@ -1,7 +1,36 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="30.223" height="30.264" viewBox="0 0 30.223 30.264">
-  <g id="Group_7805" data-name="Group 7805" transform="translate(-1619.888 -60.74)">
-    <path id="形状" d="M31.544,3a1.679,1.679,0,0,1,1.668,1.483l.011.2v8.4a1.679,1.679,0,0,1-3.347.2l-.011-.2V8.733L21.817,16.78A1.679,1.679,0,0,1,19.3,14.564l.14-.158L27.49,6.358H23.148a1.679,1.679,0,0,1-.2-3.347l.2-.011Z" transform="translate(1669.063 78.012) rotate(180)"/>
-    <path id="形状-2" data-name="形状" d="M14.406,19.443a1.679,1.679,0,0,1,2.514,2.216l-.14.158L8.733,29.865h4.342a1.679,1.679,0,0,1,.2,3.347l-.2.011h-8.4a1.679,1.679,0,0,1-1.668-1.483L3,31.544v-8.4a1.679,1.679,0,0,1,3.347-.2l.011.2V27.49Z" transform="translate(1637.16 109.914) rotate(-180)"/>
-    <path id="Subtraction_5" data-name="Subtraction 5" d="M-22917,186h-10.5v-2h10.5a2,2,0,0,0,2-2V171.5h2V182A4.006,4.006,0,0,1-22917,186Zm-24-14.5h-2V160a4,4,0,0,1,3.994-4h10.5v2h-10.5a2,2,0,0,0-2,2v11.5Z" transform="translate(24563 -95)"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="33.223" height="33.264" viewBox="0 0 33.223 33.264">
+  <defs>
+    <filter id="形状" x="15.951" y="0" width="17.272" height="17.272" filterUnits="userSpaceOnUse">
+      <feOffset dx="1" dy="1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="0.5" result="blur"/>
+      <feFlood/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="形状-2" x="0" y="15.951" width="17.272" height="17.272" filterUnits="userSpaceOnUse">
+      <feOffset dx="1" dy="1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="0.5" result="blur-2"/>
+      <feFlood/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Subtraction_5" x="0.11" y="0.259" width="32.998" height="33.005" filterUnits="userSpaceOnUse">
+      <feOffset dx="1" dy="1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="0.5" result="blur-3"/>
+      <feFlood/>
+      <feComposite operator="in" in2="blur-3"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_7803" data-name="Group 7803" transform="translate(-330.395 -2034.454)">
+    <g transform="matrix(1, 0, 0, 1, 330.39, 2034.45)" filter="url(#形状)">
+      <path id="形状-3" data-name="形状" d="M31.544,3a1.679,1.679,0,0,1,1.668,1.483l.011.2v8.4a1.679,1.679,0,0,1-3.347.2l-.011-.2V8.733L21.817,16.78A1.679,1.679,0,0,1,19.3,14.564l.14-.158L27.49,6.358H23.148a1.679,1.679,0,0,1-.2-3.347l.2-.011Z" transform="translate(-2.5 -2.5)" fill="#fff"/>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 330.39, 2034.45)" filter="url(#形状-2)">
+      <path id="形状-4" data-name="形状" d="M14.406,19.443a1.679,1.679,0,0,1,2.514,2.216l-.14.158L8.733,29.865h4.342a1.679,1.679,0,0,1,.2,3.347l-.2.011h-8.4a1.679,1.679,0,0,1-1.668-1.483L3,31.544v-8.4a1.679,1.679,0,0,1,3.347-.2l.011.2V27.49Z" transform="translate(-2.5 -2.5)" fill="#fff"/>
+    </g>
+    <g transform="matrix(1, 0, 0, 1, 330.39, 2034.45)" filter="url(#Subtraction_5)">
+      <path id="Subtraction_5-2" data-name="Subtraction 5" d="M-22917,186h-10.5v-2h10.5a2,2,0,0,0,2-2V171.5h2V182A4.006,4.006,0,0,1-22917,186Zm-24-14.5h-2V160a4,4,0,0,1,3.994-4h10.5v2h-10.5a2,2,0,0,0-2,2v11.5Z" transform="translate(22943.61 -155.24)" fill="#fff"/>
+    </g>
   </g>
 </svg>

@@ -36,6 +36,7 @@ import { LanguageComponet } from "@/custom-components/LanguageComponet";
 import truncate from "truncate-html";
 import DOMPurify from "dompurify";
 import SEO from "../../components/SEO";
+import NoVideosFound from "../../custom-components/NoVideosFound";
 
 const ActionButton = ({
   icon,
@@ -130,6 +131,7 @@ const VideoDetailPage = () => {
   const [isCopyHovered, setIsCopyHovered] = useState(false);
   const [langaugeList, setLanguageList] = useState([]);
   const [videoDetailData, setVideoDetailData] = useState(null);
+  const [videoNotFound, setVideoNotFound] = useState(false);
   const { fetchVideoDetailPageData, loading } = useMain();
   const [selectedContent, setSelectedContent] = useState(null);
   const [leftContentHeight, setLeftContentHeight] = useState(0);
@@ -240,12 +242,27 @@ const VideoDetailPage = () => {
   }, []);
   useEffect(() => {
     const loadData = async () => {
+      // Check if router query parameters are available
+      if (!router.isReady) {
+        return;
+      }
+
       try {
         // here 'video.length - 1' is video id as the last item from query params video
         const res = await fetchVideoDetailPageData(
           section,
           video[video.length - 1]
         );
+        // Check if we have valid video data
+        if (
+          !res?.data?.response ||
+          !res?.data?.response?.content_details ||
+          res?.data?.response?.content_details.length === 0
+        ) {
+          setVideoNotFound(true);
+          return;
+        }
+
         setVideoDetailData(res?.data?.response);
         setLanguageList(
           res?.data?.response?.content_details?.map((v) => {
@@ -277,11 +294,12 @@ const VideoDetailPage = () => {
         localStorage.setItem("sections", JSON.stringify(mergedSections));
       } catch (err) {
         console.error("Error fetching home data:", err);
+        setVideoNotFound(true);
       }
     };
 
     loadData();
-  }, [router.query]);
+  }, [router.isReady, router.query]);
 
   // Function to convert video URL to embed URL
   const getEmbedUrl = (url) => {
@@ -354,6 +372,27 @@ const VideoDetailPage = () => {
         return "'Open Sans', sans-serif";
     }
   };
+
+  // Show video not found page
+  if (videoNotFound) {
+    return (
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          mt: { xs: 5, sm: 6 },
+          pb: 4,
+        }}
+      >
+        <Container maxWidth="lg">
+          <NoVideosFound
+            searchQuery={`Video ID: ${video?.[video.length - 1] || "Unknown"}`}
+            isVideoDetailPage={true}
+          />
+        </Container>
+      </Box>
+    );
+  }
 
   return (
     <>

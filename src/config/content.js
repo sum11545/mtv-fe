@@ -83,7 +83,7 @@ export const CONTENT_CONFIG = {
     },
     api: {
       baseUrl:
-        process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3700/api/v1",
+        process.env.NEXT_PUBLIC_API_BASE_URL || "https://moneytv.live/api/v1",
       videos: "/api/videos",
       sections: "/api/sections",
       search: "/api/search",

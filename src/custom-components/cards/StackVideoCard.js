@@ -9,6 +9,7 @@ import {
 import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import { LanguageComponet } from "../LanguageComponet";
+import Image from "next/image";
 
 const StackVideoCard = ({
   video,
@@ -44,11 +45,19 @@ const StackVideoCard = ({
     if (!details || details.platform !== "PY")
       return "/images/404-not-found.jpg";
 
+    // If backend already provides a thumbnail, use it
+    if (details.thumbnail_url) {
+      return details.thumbnail_url;
+    }
+
+    // else use youtubes URL
     const url = details.url;
     let videoId = "";
 
     try {
-      const youtubeRegex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?/]+)/;
+      const youtubeRegex =
+        /(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([^&?/]+)/;
+
       const match = url.match(youtubeRegex);
       videoId = match?.[1] ?? "";
     } catch (err) {
@@ -162,19 +171,14 @@ const StackVideoCard = ({
           position: "relative",
         }}
       >
-        <Box
-          component={"img"}
+        <Image
           src={getThumbnailUrl()}
-          alt={selectedContent.name}
-          sx={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            borderRadius: 2,
+          alt={selectedContent?.name}
+          fill
+          style={{
+            borderRadius: "8px",
           }}
+          priority
         />
       </Box>
       <Box

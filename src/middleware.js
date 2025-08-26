@@ -49,6 +49,7 @@ export async function middleware(request) {
 
   const IGNORE_EXTENSIONS = [
     ".js",
+    ".json",
     ".css",
     ".xml",
     ".less",
@@ -87,6 +88,7 @@ export async function middleware(request) {
     ".m4v",
     ".torrent",
     ".woff",
+    ".woff2",
     ".ttf",
     ".svg",
     ".webmanifest",
@@ -103,43 +105,41 @@ export async function middleware(request) {
     (extension.length && IGNORE_EXTENSIONS.includes(extension))
   ) {
     return NextResponse.next();
-  } else {
-    // Check if request is coming from a bot
-    if (isBot) {
-      const newURL = `https://service.prerender.io/${request.url}`;
-      const newHeaders = new Headers(request.headers);
-      newHeaders.set("X-Prerender-Token", process.env.PRERENDER_TOKEN);
-      newHeaders.set("X-Prerender-Int-Type", "NextJS");
+  }
 
-      try {
-        const res = await fetch(
-          new Request(newURL, {
-            headers: newHeaders,
-            redirect: "manual",
-          })
-        );
+  if (isBot) {
+    const fullUrl = `${process.env.PRERENDER_BASE_URL}${request.nextUrl.pathname}${request.nextUrl.search}`;
 
-        const responseHeaders = new Headers(res.headers);
-        responseHeaders.set("X-Redirected-From", request.url);
+    const apiUrl = `${
+      process.env.PRERENDER_API_BASE_URL
+    }/prerender?url=${encodeURIComponent(fullUrl)}`;
 
-        // Create a ReadableStream from the response body
-        const { readable, writable } = new TransformStream();
-        res.body.pipeTo(writable);
+    try {
+      const res = await fetch(apiUrl, {
+        headers: {
+          "User-Agent": userAgent, // forward bot UA
+        },
+      });
 
-        const response = new NextResponse(readable, {
+      const html = await res.text(); // Lambda returns prerendered HTML
+
+      if (html) {
+        const headers = new Headers(res.headers);
+        headers.set("Content-Type", "text/html");
+        headers.set("x-redirected-from", fullUrl);
+
+        return new NextResponse(html, {
           status: res.status,
-          statusText: res.statusText,
-          headers: responseHeaders,
+          headers,
         });
-
-        return response;
-      } catch (error) {
-        return NextResponse.next();
       }
-    } else {
-      console.log("Not a bot, proceeding normally");
+    } catch (err) {
+      console.error("Prerender fetch failed:", err);
     }
 
+    // fallback if prerender fails
     return NextResponse.next();
   }
+
+  return NextResponse.next();
 }

@@ -18,7 +18,11 @@ import sadAnimationDataWhite from "../../public/assets/animated-icons/sad-animat
 import { fontSize, fontStyles } from "@/theme/theme";
 import createAxiosInstance from "@/configs/axios";
 
-const NoVideosFound = ({ searchQuery = "Lorem Ipsum", mtvCode }) => {
+const NoVideosFound = ({
+  searchQuery = "Lorem Ipsum",
+  mtvCode,
+  isVideoDetailPage,
+}) => {
   const axiosInstance = createAxiosInstance();
   const theme = useTheme();
   const isDarkMode = theme.palette.mode === "dark";
@@ -144,33 +148,51 @@ const NoVideosFound = ({ searchQuery = "Lorem Ipsum", mtvCode }) => {
           >
             <SadEmoji />
           </Box>
-          <Typography
-            variant="noVideosFoundText"
-            component={"h2"}
-            align="center"
-            sx={{
-              ...fontStyles.sfPro.display.regular,
-              mt: 0, // Remove any top margin
-              position: "relative",
-              zIndex: 2,
-            }}
-          >
-            No Videos found for
-          </Typography>
-          <Typography
-            variant="noVideosFoundText"
-            gutterBottom
-            align="center"
-            color="primary"
-            sx={{
-              ...fontStyles.sfPro.display.bold,
-              wordBreak: "break-word", // Handle very long words
-              overflowWrap: "break-word", // Handle overflow
-            }}
-            title={searchQuery} // Show full text on hover
-          >
-            "{truncateSearchQuery(searchQuery, isMobile ? 20 : 30)}"
-          </Typography>
+          {isVideoDetailPage ? (
+            <Typography
+              variant="noVideosFoundText"
+              component={"h2"}
+              align="center"
+              sx={{
+                ...fontStyles.sfPro.display.regular,
+                mt: 0, // Remove any top margin
+                position: "relative",
+                zIndex: 2,
+              }}
+            >
+              Video Not Found
+            </Typography>
+          ) : (
+            <>
+              <Typography
+                variant="noVideosFoundText"
+                component={"h2"}
+                align="center"
+                sx={{
+                  ...fontStyles.sfPro.display.regular,
+                  mt: 0, // Remove any top margin
+                  position: "relative",
+                  zIndex: 2,
+                }}
+              >
+                No Videos found for
+              </Typography>
+              <Typography
+                variant="noVideosFoundText"
+                gutterBottom
+                align="center"
+                color="primary"
+                sx={{
+                  ...fontStyles.sfPro.display.bold,
+                  wordBreak: "break-word", // Handle very long words
+                  overflowWrap: "break-word", // Handle overflow
+                }}
+                title={searchQuery} // Show full text on hover
+              >
+                "{truncateSearchQuery(searchQuery, isMobile ? 20 : 30)}"
+              </Typography>
+            </>
+          )}
         </Grid>
 
         {/* Right side */}
