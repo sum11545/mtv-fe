@@ -6,8 +6,8 @@ const ShortWhatsAppMobileIcon = (props) => {
       src="/assets/icons/short-whatsapp-icon.svg"
       alt="Shorts WhatsApp Mobile"
       style={{
-        width: "35px",
-        height: "35px",
+        width: props.width ?? "35px",
+        height: props.height ?? "35px",
         filter: props.style?.color
           ? `brightness(0) saturate(100%) invert(${
               props.style.color === "#  " ? "100%" : "0%"

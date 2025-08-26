@@ -184,7 +184,10 @@ const MobileFooter = ({ sidebarItems, sidebarClickHandler }) => {
                 color="primary.main"
                 variant="footerLinks"
                 onClick={() =>
-                  window.open("https://moneytv.live/about/", "_blank")
+                  window.open(
+                    `${process.env.NEXT_PUBLIC_BASE_URL}/about/`,
+                    "_blank"
+                  )
                 }
                 sx={{
                   ...fontStyles.openSans.regular,
@@ -201,7 +204,7 @@ const MobileFooter = ({ sidebarItems, sidebarClickHandler }) => {
                 variant="footerLinks"
                 onClick={() =>
                   window.open(
-                    "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
+                    `${process.env.NEXT_PUBLIC_BASE_URL}/about/index.html#contact_area`,
                     "_blank"
                   )
                 }
@@ -414,7 +417,10 @@ const DesktopFooter = ({ sidebarItems, sidebarClickHandler }) => {
                 color="primary.main"
                 variant="footerLinks"
                 onClick={() =>
-                  window.open("https://moneytv.live/about/", "_blank")
+                  window.open(
+                    `${process.env.NEXT_PUBLIC_BASE_URL}/about/`,
+                    "_blank"
+                  )
                 }
                 sx={{
                   ...fontStyles.openSans.regular,
@@ -431,7 +437,7 @@ const DesktopFooter = ({ sidebarItems, sidebarClickHandler }) => {
                 variant="footerLinks"
                 onClick={() =>
                   window.open(
-                    "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
+                    `${process.env.NEXT_PUBLIC_BASE_URL}/about/index.html#contact_area`,
                     "_blank"
                   )
                 }

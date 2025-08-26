@@ -444,6 +444,12 @@ const ShortItem = React.memo(
       );
     }
 
+    const router = useRouter();
+
+    const handleCompressClick = () => {
+      router.back();
+    };
+
     // Desktop Layout - Using File1 Grid Layout with scrollable capability
     return (
       <Grid
@@ -514,7 +520,7 @@ const ShortItem = React.memo(
             flexDirection: "column",
             justifyContent: "flex-start",
             alignItems: "flex-start",
-            pt: { xs: 2, md: 4 },
+            // pt: { xs: 2, md: 4 },
             pb: { md: 30 },
             height: "100%",
             pr: { md: 8, lg: 10 },
@@ -522,6 +528,21 @@ const ShortItem = React.memo(
         >
           {/* Top: Video name and actions */}
           <Box sx={{ width: "100%" }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "flex-end",
+                justifyContent: "flex-end",
+              }}
+            >
+              <DynamicIcon
+                keyword="COMPRESS"
+                height="20px"
+                width="20px"
+                onClick={handleCompressClick}
+                style={{ cursor: "pointer", color: isDarkMode ? "#fff" : "" }}
+              />
+            </Box>
             <Typography
               component="h1"
               variant="h6"
@@ -531,6 +552,7 @@ const ShortItem = React.memo(
                 typography: "shortTitleOfShortDetailPage",
                 textAlign: "left",
                 pl: 3,
+                mt: 2,
               }}
             >
               {short?.content_details[0]?.name}

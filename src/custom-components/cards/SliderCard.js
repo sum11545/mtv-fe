@@ -1,9 +1,7 @@
 import {
   Box,
   Card,
-  CardContent,
   CardMedia,
-  Stack,
   useTheme,
   IconButton,
   Snackbar,
@@ -11,11 +9,8 @@ import {
   Typography,
   Tooltip,
 } from "@mui/material";
-import { formatDistanceToNow } from "date-fns";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useMain } from "@/context/MainContext";
-import { fontSize } from "@/theme/theme";
 import { DynamicIcon } from "@/components/icons";
 import Image from "next/image";
 import ShareShortMobileIcon from "@/components/icons/ShareShortMobileIcon";
@@ -27,11 +22,10 @@ import { fontStyles } from "@/theme/theme";
 
 const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
   const router = useRouter();
-  const [formattedDate, setFormattedDate] = useState("recently");
-  const [mounted, setMounted] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const theme = useTheme();
   const dims = theme.customDimensionForSliderCard;
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   let isShort = short?.content_details[0]?.content_type_id == "CTSR"; // CTSR  is for shorts.
 
@@ -61,8 +55,13 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
     if (!details || details.platform !== "PY")
       return "/images/404-not-found.jpg";
 
+    // If backend already provides a thumbnail, use it
+    if (details.thumbnail_url) {
+      return details.thumbnail_url;
+    }
+
+    // else use youtubes URL
     const url = details.url;
-    let videoId = "";
 
     try {
       const youtubeRegex =
@@ -76,17 +75,6 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
       return "/images/404-not-found.jpg";
     }
   };
-  useEffect(() => {
-    setMounted(true);
-    try {
-      const date = formatDistanceToNow(new Date(short.uploadDate), {
-        addSuffix: true,
-      });
-      setFormattedDate(date);
-    } catch (error) {
-      setFormattedDate("recently");
-    }
-  }, [short.uploadDate]);
 
   const handleCardClick = () => {
     // if video type is ad then don't redirect it to any ad url
@@ -124,6 +112,68 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
     }
   };
 
+  const { getSocialUrl, config, getSuccessMessage, snackbarDuration } =
+    useContent();
+  const shareMessage = config.messages.shareMessage;
+  const successMessage = getSuccessMessage("linkCopied");
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [shareUrl, setShareUrl] = useState("");
+
+  useEffect(() => {
+    setShareUrl(window.location.href);
+  }, []);
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
+  };
+
+  const handleShare = () => {
+    setShareDialogOpen(true);
+  };
+
+  const handleWhatsApp = () => {
+    const shareUrl = getSocialUrl(
+      "whatsapp",
+      window.location.href,
+      `${shareMessage}${short?.content_details?.[0]?.url}`
+    );
+    window.open(shareUrl, "_blank");
+  };
+
+  const handleCopy = () => {
+    let text = `${shareMessage} ${short?.content_details[0]?.url}`;
+    navigator.clipboard?.writeText(text);
+    setSnackbarOpen(true);
+  };
+
+  const MobileActionButton = React.memo(({ icon, onClick, label }) => {
+    const handleClick = (e) => {
+      e.stopPropagation();
+      onClick();
+    };
+
+    return (
+      <>
+        <Box
+          onClick={handleClick}
+          onTouchStart={(e) => {
+            e.stopPropagation();
+          }}
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "flex-end",
+            cursor: "pointer",
+            mt: label == "Share" && "-5px",
+          }}
+        >
+          <IconButton>{icon}</IconButton>
+        </Box>
+      </>
+    );
+  });
+
   return (
     <>
       <Card
@@ -152,40 +202,112 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
         onMouseLeave={() => setIsHovered(false)}
       >
         <Box sx={{ position: "relative", height: "100%" }}>
-          <CardMedia
-            component="img"
-            image={getThumbnailUrl()}
+          <Image
+            src={getThumbnailUrl()}
             alt={short.name}
-            sx={{
-              height: "100%",
-              objectFit: "cover",
+            fill
+            style={{
+              objectFit: isShort ? "cover" : "fill",
             }}
+            priority
           />
-
           {/* Copy Icon - Top Right (visible on hover) */}
-          {/* {isHovered && (
+          <Box
+            sx={{
+              position: "absolute",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              height: "100%",
+              width: "100%",
+              top: 0,
+              right: 0,
+              opacity: {
+                xs: 1, // Always visible on mobile
+                sm: 1, // Always visible on small screens
+                md: isHovered ? 1 : 0, // Hover effect only on medium and larger screens
+              },
+              transform: {
+                xs: "translateY(0)", // No transform on mobile
+                sm: "translateY(0)", // No transform on small screens
+                md: isHovered ? "translateY(0)" : "translateY(10px)", // Transform only on medium and larger screens
+              },
+              transition: {
+                xs: "none", // No transition on mobile
+                sm: "none", // No transition on small screens
+                md: "opacity 0.8s ease-in-out, transform 0.8s ease-in-out", // Transition only on medium and larger screens
+              },
+              pointerEvents: {
+                xs: "auto", // Always clickable on mobile
+                sm: "auto", // Always clickable on small screens
+                md: isHovered ? "auto" : "none", // Clickable only on hover for medium and larger screens
+              },
+            }}
+          >
             <Box
               sx={{
-                position: "absolute",
-                top: 8,
-                right: 8,
-                backgroundColor: "rgba(255, 255, 255, 0.9)",
-                borderRadius: "50%",
-                width: 32,
-                height: 32,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
+                alignSelf: "flex-end",
+                pt: 1.5,
+                pr: 1.3,
               }}
             >
-              <DynamicIcon
-                keyword="ENLARGE"
-                height="16px"
-                width="16px"
-                style={{ color: "#666" }}
+              {!isMobile && (
+                <DynamicIcon
+                  keyword="EXPAND"
+                  height={isMobile && router.pathname !== "/" ? "30px" : "23px"}
+                  width={isMobile && router.pathname !== "/" ? "30px" : "23px"}
+                  onClick={handleCardClick}
+                  style={{ cursor: "pointer" }}
+                />
+              )}
+            </Box>
+
+            <Box sx={{ pb: 0.2, marginLeft: "auto", pr: 0.2 }}>
+              <MobileActionButton
+                icon={
+                  <ShortWhatsAppMobileIcon
+                    height={
+                      isMobile && router.pathname !== "/" ? "35px" : "25px"
+                    }
+                    width={
+                      isMobile && router.pathname !== "/" ? "35px" : "25px"
+                    }
+                  />
+                }
+                onClick={handleWhatsApp}
+                label="WhatsApp"
+              />
+              <MobileActionButton
+                icon={
+                  <ShortCopyMobileIcon
+                    height={
+                      isMobile && router.pathname !== "/" ? "35px" : "25px"
+                    }
+                    width={
+                      isMobile && router.pathname !== "/" ? "35px" : "25px"
+                    }
+                  />
+                }
+                onClick={handleCopy}
+                label="Copy"
+                isCopyButton={true}
+              />
+              <MobileActionButton
+                icon={
+                  <ShareShortMobileIcon
+                    height={
+                      isMobile && router.pathname !== "/" ? "35px" : "25px"
+                    }
+                    width={
+                      isMobile && router.pathname !== "/" ? "35px" : "25px"
+                    }
+                  />
+                }
+                onClick={handleShare}
+                label="Share"
               />
             </Box>
-          )} */}
+          </Box>
         </Box>
       </Card>
 
@@ -245,7 +367,7 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
         )}
       </Box>
 
-      {/* <ShareDialog
+      <ShareDialog
         open={shareDialogOpen}
         onClose={() => setShareDialogOpen(false)}
         url={shareUrl}
@@ -259,7 +381,7 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
         onClose={handleSnackbarClose}
         message={successMessage}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      /> */}
+      />
     </>
   );
 };

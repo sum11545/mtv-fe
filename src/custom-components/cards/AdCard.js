@@ -8,6 +8,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { fontStyles, fontSize } from "@/theme/theme";
+import Image from "next/image";
 
 const AdCard = ({ ad }) => {
   const theme = useTheme();
@@ -21,31 +22,35 @@ const AdCard = ({ ad }) => {
     case "ATV":
       // Ad type is ad-video
       return (
-        <CardMedia
-          sx={{
-            background: "green",
-            height: "100%",
-            width: "100%",
+        <Image
+          src={ad.content_details[0].thumbnail_url}
+          alt={ad?.content_details[0]?.name}
+          fill
+          style={{
+            border: !ad.content_details[0].thumbnail_url
+              ? `1px solid ${theme.palette.divider}`
+              : "",
+            background: "#FAFAFA",
+            objectFit: "fill",
           }}
-          component="img"
-          image={ad.content_details[0].thumbnail_url}
-          alt="Ad image"
+          priority
         />
       );
     case "ATI":
       // Ad type is ad-image
       return (
-        <CardMedia
-          sx={{
-            background: "blue",
-            height: "100%",
-            width: "100%",
+        <Image
+          src={ad.content_details[0].url}
+          alt={ad?.content_details[0]?.name}
+          fill
+          style={{
+            border: !ad.content_details[0]?.url
+              ? `1px solid ${theme.palette.divider}`
+              : "",
+            background: "#FAFAFA",
+            objectFit: "fill",
           }}
-          component="img"
-          image={ad.content_details[0].thumbnail_url}
-          poster={ad.content_details[0].thumbnail_url}
-          controls
-          alt="Ad image"
+          priority
         />
       );
     case "ATT":

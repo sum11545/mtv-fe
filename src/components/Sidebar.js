@@ -236,7 +236,10 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                 <Tooltip title="About Us" placement="left" arrow>
                   <ListItemButton
                     onClick={() =>
-                      window.open("https://moneytv.live/about/", "_blank")
+                      window.open(
+                        `${process.env.NEXT_PUBLIC_BASE_URL}/about/`,
+                        "_blank"
+                      )
                     }
                     sx={{
                       minHeight:
@@ -298,7 +301,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                   <ListItemButton
                     onClick={() =>
                       window.open(
-                        "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
+                        `${process.env.NEXT_PUBLIC_BASE_URL}/about/index.html#contact_area`,
                         "_blank"
                       )
                     }
@@ -695,7 +698,10 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
               <ListItem disablePadding>
                 <ListItemButton
                   onClick={() =>
-                    window.open("https://moneytv.live/about/", "_blank")
+                    window.open(
+                      `${process.env.NEXT_PUBLIC_BASE_URL}/about/`,
+                      "_blank"
+                    )
                   }
                 >
                   <ListItemIcon
@@ -734,7 +740,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                 <ListItemButton
                   onClick={() =>
                     window.open(
-                      "http://money-tv-dev.s3-website.ap-south-1.amazonaws.com/MTV-Web/index.html#contact_area",
+                      `${process.env.NEXT_PUBLIC_BASE_URL}/about/index.html#contact_area`,
                       "_blank"
                     )
                   }
