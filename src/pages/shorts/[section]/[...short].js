@@ -18,6 +18,9 @@ import {
   Backdrop,
   CircularProgress,
   Snackbar,
+  Dialog,
+  DialogContent,
+  Slide,
 } from "@mui/material";
 import {
   WhatsApp,
@@ -26,6 +29,7 @@ import {
   ArrowDownward,
   ContentCopy,
   ArrowBack,
+  Close,
 } from "@mui/icons-material";
 import { useMain } from "@/context/MainContext";
 import CopyButton from "@/custom-components/CopyButton";
@@ -39,6 +43,12 @@ import ShortWhatsAppMobileIcon from "@/components/icons/ShortWhatsAppMobileIcon"
 import { DynamicIcon } from "@/components/icons";
 import { useContent } from "@/hooks/useContent";
 import SEO from "../../../components/SEO";
+import DOMPurify from "dompurify";
+
+// Slide transition for mobile popup
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const ActionButton = ({
   icon,
@@ -232,6 +242,8 @@ const ShortItem = React.memo(
     isMobile,
     index,
     section,
+    onOpenDescriptionPopup,
+    isDescriptionPopupOpen,
   }) => {
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === "dark";
@@ -252,6 +264,28 @@ const ShortItem = React.memo(
       [getButtonConfig]
     );
 
+    // Process description HTML
+    const cleanHtml = useMemo(() => {
+      if (!short?.content_details?.[0]?.description) return "";
+      return DOMPurify.sanitize(short.content_details[0].description, {
+        ALLOWED_TAGS: [
+          "b",
+          "i",
+          "em",
+          "strong",
+          "a",
+          "ul",
+          "ol",
+          "li",
+          "p",
+          "br",
+        ],
+        ALLOWED_ATTR: ["href", "target", "rel"],
+        // Add default attributes for links
+        ADD_ATTR: ["target", "rel"],
+      });
+    }, [short?.content_details?.[0]?.description]);
+
     // Memoize handlers to prevent re-creation on every render
     const handleShare = useCallback(() => onShare(short), [onShare, short]);
     const handleWhatsApp = useCallback(
@@ -259,6 +293,11 @@ const ShortItem = React.memo(
       [onWhatsApp, short]
     );
     const handleCopy = useCallback(() => onCopy(short), [onCopy, short]);
+    const handleOpenDescription = useCallback(() => {
+      if (onOpenDescriptionPopup) {
+        onOpenDescriptionPopup(short);
+      }
+    }, [onOpenDescriptionPopup, short]);
 
     if (isMobile) {
       return (
@@ -277,11 +316,12 @@ const ShortItem = React.memo(
           <Box
             sx={{
               width: "100vw",
-              height: "100vh",
+              height: isDescriptionPopupOpen ? "60vh" : "100vh", // Shrink video when popup is open
               position: "relative",
               bgcolor: "black",
               overflow: "hidden",
               mx: "auto", // Center horizontally
+              transition: "height 0.3s ease-in-out", // Smooth transition
             }}
           >
             {/* ADD THIS NEW SECTION HERE - "Shorts" text - Top Left */}
@@ -318,12 +358,14 @@ const ShortItem = React.memo(
               <Box
                 sx={{
                   width: "100vw",
-                  height: "100vh",
+                  height: isDescriptionPopupOpen ? "60vh" : "100vh", // Shrink video when popup is open
                   position: "absolute",
-                  top: 15,
+                  top: isDescriptionPopupOpen ? 60 : 15,
                   left: 0,
                   bgcolor: "black",
                   pointerEvents: "none", // Prevent iframe from capturing touch events
+                  transition: "height 0.3s ease-in-out", // Smooth transition
+                  zIndex: 1, // Lower z-index to ensure overlays are above
                 }}
               >
                 <iframe
@@ -336,109 +378,138 @@ const ShortItem = React.memo(
                   playsInline
                   style={{
                     width: "100vw",
-                    height: "100vh",
+                    height: isDescriptionPopupOpen ? "60vh" : "100vh", // Shrink video when popup is open
                     border: 0,
                     objectFit: "cover",
                     position: "absolute",
                     top: 0,
                     left: 0,
                     pointerEvents: "auto", // Re-enable pointer events on the iframe itself
+                    transition: "height 0.3s ease-in-out", // Smooth transition
                   }}
                 />
               </Box>
             )}
 
-            {/* Video Name Overlay - Bottom Center (File1 style) */}
-            <Box
-              sx={{
-                position: "absolute",
-                bottom: "11vh", // Use viewport height for consistent bottom positioning
-                zIndex: 4,
-                maxWidth: "100%%", // Increased for better text display
-                textAlign: "center",
-                pointerEvents: "none",
-                px: 1.5, // Add horizontal padding
-                width: "100%",
-                mx: "auto",
-                //  // Fallback for older browsers
-                //  "@media (max-width: 480px)": {
-                //   bottom: "70px",
-                // },
-                // "@media (min-width: 481px) and (max-width: 768px)": {
-                //   bottom: "80px",
-                // },
-                // "@media (min-width: 769px) and (max-width: 1024px)": {
-                //   bottom: "90px",
-                // },
-              }}
-            >
-              <Typography
-                component="h1"
-                variant="h6"
+            {/* Video Name Overlay - Bottom Center (File1 style) - Now Clickable */}
+            {!isDescriptionPopupOpen && (
+              <Box
+                className="video-name-overlay"
                 sx={{
-                  color: "white",
-                  ...fontStyles.openSans.bold,
-                  textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
-                  lineHeight: 1.3,
-                  typography: "shortTitleOfShortDetailPage",
+                  position: "absolute",
+                  bottom: isDescriptionPopupOpen ? "6vh" : "11vh", // Adjust position when popup is open
+                  zIndex: 10, // Increased z-index to ensure it's above iframe
+                  maxWidth: "100%%", // Increased for better text display
                   textAlign: "center",
-                  display: "-webkit-box",
-                  WebkitLineClamp: 2, // Limit to 3 lines
-                  WebkitBoxOrient: "vertical",
-                  overflow: "hidden",
+                  pointerEvents: "auto", // Changed to auto to make clickable
+                  px: 1.5, // Add horizontal padding
+                  py: 1.5, // Add vertical padding for better touch target
+                  width: "100%",
+                  mx: "auto",
+                  cursor: "pointer", // Add cursor pointer
+                  transition: "bottom 0.3s ease-in-out", // Smooth transition
+                  // Add touch-action to prevent conflicts
+                  touchAction: "manipulation",
+                  //  // Fallback for older browsers
+                  //  "@media (max-width: 480px)": {
+                  //   bottom: "70px",
+                  // },
+                  // "@media (min-width: 481px) and (max-width: 768px)": {
+                  //   bottom: "80px",
+                  // },
+                  // "@media (min-width: 769px) and (max-width: 1024px)": {
+                  //   bottom: "90px",
+                  // },
+                }}
+                onClick={handleOpenDescription}
+                onTouchEnd={(e) => {
+                  // Prevent touch events from bubbling up to parent
+                  e.stopPropagation();
+                }}
+                onTouchStart={(e) => {
+                  // Prevent touch events from bubbling up to parent
+                  e.stopPropagation();
                 }}
               >
-                {short?.content_details[0]?.name}
-              </Typography>
-            </Box>
+                <Typography
+                  component="h1"
+                  variant="h6"
+                  sx={{
+                    color: "white",
+                    ...fontStyles.openSans.bold,
+                    textShadow: "2px 2px 4px rgba(0,0,0,0.8)",
+                    lineHeight: 1.3,
+                    typography: "shortTitleOfShortDetailPage",
+                    textAlign: "center",
+                    display: "-webkit-box",
+                    WebkitLineClamp: 2, // Limit to 3 lines
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
+                    cursor: "pointer", // Add cursor pointer
+                    pointerEvents: "auto", // Ensure pointer events work
+                    userSelect: "none", // Prevent text selection
+                    "&:hover": {
+                      opacity: 0.8, // Add hover effect
+                    },
+                    "&:active": {
+                      opacity: 0.6, // Add active state
+                    },
+                  }}
+                >
+                  {short?.content_details[0]?.name}
+                </Typography>
+              </Box>
+            )}
 
             {/* Action Buttons - Bottom Right (File1 style) */}
-            <Box
-              className="action-button-container" // Add class for touch event filtering
-              sx={{
-                position: "absolute",
-                bottom: "15vh", // Use viewport height for consistent positioning above video name
-                right: 20,
-                display: "flex",
-                flexDirection: "column",
-                gap: 1,
-                zIndex: 10,
-                pointerEvents: "auto", // Ensure buttons are clickable on mobile
-                // // Fallback for older browsers
-                // "@media (max-width: 480px)": {
-                //   bottom: "110px",
-                // },
-                // "@media (min-width: 481px) and (max-width: 768px)": {
-                //   bottom: "120px",
-                // },
-                // "@media (min-width: 769px) and (max-width: 1024px)": {
-                //   bottom: "130px",
-                // },
-              }}
-            >
-              {isFeatureEnabled("enableWhatsAppSharing") && (
-                <MobileActionButton
-                  icon={<ShortWhatsAppMobileIcon />}
-                  onClick={handleWhatsApp}
-                  label="WhatsApp"
-                />
-              )}
-              {isFeatureEnabled("enableCopyLink") && (
-                <MobileActionButton
-                  icon={<ShortCopyMobileIcon />}
-                  onClick={handleCopy}
-                  label="Copy"
-                  isCopyButton={true}
-                />
-              )}
-              {isFeatureEnabled("enableSharing") && (
-                <MobileActionButton
-                  icon={<ShareShortMobileIcon />}
-                  onClick={handleShare}
-                  label="Share"
-                />
-              )}
-            </Box>
+            {!isDescriptionPopupOpen && (
+              <Box
+                className="action-button-container" // Add class for touch event filtering
+                sx={{
+                  position: "absolute",
+                  bottom: "15vh", // Adjust position when popup is open
+                  right: 20,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 1,
+                  zIndex: 10,
+                  pointerEvents: "auto", // Ensure buttons are clickable on mobile
+                  // // Fallback for older browsers
+                  // "@media (max-width: 480px)": {
+                  //   bottom: "110px",
+                  // },
+                  // "@media (min-width: 481px) and (max-width: 768px)": {
+                  //   bottom: "120px",
+                  // },
+                  // "@media (min-width: 769px) and (max-width: 1024px)": {
+                  //   bottom: "130px",
+                  // },
+                }}
+              >
+                {isFeatureEnabled("enableWhatsAppSharing") && (
+                  <MobileActionButton
+                    icon={<ShortWhatsAppMobileIcon />}
+                    onClick={handleWhatsApp}
+                    label="WhatsApp"
+                  />
+                )}
+                {isFeatureEnabled("enableCopyLink") && (
+                  <MobileActionButton
+                    icon={<ShortCopyMobileIcon />}
+                    onClick={handleCopy}
+                    label="Copy"
+                    isCopyButton={true}
+                  />
+                )}
+                {isFeatureEnabled("enableSharing") && (
+                  <MobileActionButton
+                    icon={<ShareShortMobileIcon />}
+                    onClick={handleShare}
+                    label="Share"
+                  />
+                )}
+              </Box>
+            )}
           </Box>
         </Box>
       );
@@ -464,13 +535,13 @@ const ShortItem = React.memo(
         }}
       >
         {/* Left Empty Space */}
-        <Grid item xs={12} md={5} />
+        <Grid item xs={12} md={4} />
 
         {/* Center: Video - File1 dimensions */}
         <Grid
           item
           xs={12}
-          md={3}
+          md={3.5}
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -486,7 +557,8 @@ const ShortItem = React.memo(
               bgcolor: "black",
               overflow: "hidden",
               borderRadius: 2,
-              mx: "auto",
+              // mx: "auto",
+              ml: "auto",
               // height: "642px",
               width: "361px",
             }}
@@ -495,7 +567,7 @@ const ShortItem = React.memo(
               <iframe
                 key={`desktop-${short.id}-${index}`}
                 src={getEmbedUrl(short?.content_details[0]?.url)} // should be an "embed" URL
-                title={short?.name}
+                title={short?.content_details[0]?.name}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
@@ -551,7 +623,7 @@ const ShortItem = React.memo(
                 mb: 2,
                 typography: "shortTitleOfShortDetailPage",
                 textAlign: "left",
-                pl: 3,
+                pl: 3.5,
                 mt: 2,
               }}
             >
@@ -564,8 +636,7 @@ const ShortItem = React.memo(
                 justifyContent: "space-between",
                 alignItems: "center",
                 width: "100%",
-                px: 3,
-                py: 1,
+                px: 2.5,
               }}
             >
               <Box>
@@ -676,6 +747,54 @@ const ShortItem = React.memo(
                 </Box>
               )}
             </Box>
+
+            {/* Description Section - Desktop */}
+            {short?.content_details?.[0]?.description && (
+              <Box
+                sx={{
+                  pl: 3.5,
+                  pr: 1,
+                  mt: 2.5,
+                  width: "100%",
+                }}
+              >
+                <Box
+                  sx={{
+                    maxHeight: "65vh", // Limit height to prevent overflow
+                    overflowY: "auto", // Make scrollable when content is too long
+                    pr: 1,
+                    "&::-webkit-scrollbar": {
+                      width: "0px",
+                      height: "0px",
+                    },
+                  }}
+                >
+                  <Typography
+                    variant="shortDescriptionOfShortDetailPage"
+                    sx={{
+                      whiteSpace: "pre-wrap",
+                      fontStyle: fontStyles.openSans.regular,
+                      color: theme.palette.background.shortDetailDescription,
+                      // Add styles for clickable links/hashtags
+                      "& a": {
+                        color: isDarkMode ? "#fff" : "#1976d2",
+                        textDecoration: "underline",
+                        cursor: "pointer",
+                        transition: "color 0.2s ease-in-out",
+                        "&:hover": {
+                          color: isDarkMode ? "#fff" : "#1565C0",
+                          textDecoration: "underline",
+                        },
+                        "&:active": {
+                          color: isDarkMode ? "#fff" : "#0D47A1",
+                        },
+                      },
+                    }}
+                    dangerouslySetInnerHTML={{ __html: cleanHtml }}
+                  />
+                </Box>
+              </Box>
+            )}
           </Box>
         </Grid>
       </Grid>
@@ -695,6 +814,8 @@ const Short = () => {
   const [shareUrl, setShareUrl] = useState("");
   const [selectedShort, setSelectedShort] = useState(null);
   const [dataLoaded, setDataLoaded] = useState(false);
+  const [descriptionPopupOpen, setDescriptionPopupOpen] = useState(false);
+  const [selectedShortForPopup, setSelectedShortForPopup] = useState(null);
 
   // Refs
   const containerRef = useRef(null);
@@ -710,6 +831,43 @@ const Short = () => {
   const { getSocialUrl, getButtonConfig, isFeatureEnabled, config } =
     useContent();
   const shareMessage = config.messages.shareMessage;
+
+  // Handle opening description popup for mobile
+  const handleOpenDescriptionPopup = useCallback((shortItem) => {
+    setSelectedShortForPopup(shortItem);
+    setDescriptionPopupOpen(true);
+  }, []);
+
+  // Handle closing description popup
+  const handleCloseDescriptionPopup = useCallback(() => {
+    setDescriptionPopupOpen(false);
+    setSelectedShortForPopup(null);
+  }, []);
+
+  // Process description HTML for mobile popup
+  const mobilePopupCleanHtml = useMemo(() => {
+    if (!selectedShortForPopup?.content_details?.[0]?.description) return "";
+    return DOMPurify.sanitize(
+      selectedShortForPopup.content_details[0].description,
+      {
+        ALLOWED_TAGS: [
+          "b",
+          "i",
+          "em",
+          "strong",
+          "a",
+          "ul",
+          "ol",
+          "li",
+          "p",
+          "br",
+        ],
+        ALLOWED_ATTR: ["href", "target", "rel"],
+        // Add default attributes for links
+        ADD_ATTR: ["target", "rel"],
+      }
+    );
+  }, [selectedShortForPopup?.content_details?.[0]?.description]);
 
   // Generate SEO data for short video page
   const getSEOData = () => {
@@ -1035,12 +1193,13 @@ const Short = () => {
 
   const handleTouchStart = useCallback((e) => {
     const target = e.target;
-    // Check if the touch is on an action button
+    // Check if the touch is on an action button or video name overlay
     if (
       target.closest(".action-button-container") ||
-      target.closest(".MuiIconButton-root")
+      target.closest(".MuiIconButton-root") ||
+      target.closest(".video-name-overlay")
     ) {
-      return; // Allow default behavior for buttons
+      return; // Allow default behavior for buttons and video name
     }
     e.preventDefault();
     touchStartY.current = e.touches[0].clientY;
@@ -1050,9 +1209,10 @@ const Short = () => {
     const target = e.target;
     if (
       target.closest(".action-button-container") ||
-      target.closest(".MuiIconButton-root")
+      target.closest(".MuiIconButton-root") ||
+      target.closest(".video-name-overlay")
     ) {
-      return; // Allow default behavior for buttons
+      return; // Allow default behavior for buttons and video name
     }
     e.preventDefault();
     touchEndY.current = e.touches[0].clientY;
@@ -1063,9 +1223,10 @@ const Short = () => {
       const target = e.target;
       if (
         target.closest(".action-button-container") ||
-        target.closest(".MuiIconButton-root")
+        target.closest(".MuiIconButton-root") ||
+        target.closest(".video-name-overlay")
       ) {
-        return; // Allow default behavior for buttons
+        return; // Allow default behavior for buttons and video name
       }
       e.preventDefault();
 
@@ -1186,15 +1347,134 @@ const Short = () => {
                 onCopy={handleCopy}
                 isMobile={isMobile}
                 section={section}
+                onOpenDescriptionPopup={handleOpenDescriptionPopup}
+                isDescriptionPopupOpen={descriptionPopupOpen}
               />
             ))}
           </Box>
+
+          {/* Mobile Description Popup */}
+          <Dialog
+            open={descriptionPopupOpen}
+            onClose={handleCloseDescriptionPopup}
+            TransitionComponent={Transition}
+            fullScreen
+            sx={{
+              "& .MuiDialog-paper": {
+                margin: 0,
+                maxHeight: "348px", // height based on design
+                // minHeight: "35vh",
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                right: 0,
+                width: "100%",
+                p: 2,
+              },
+            }}
+          >
+            <DialogContent
+              sx={{
+                p: 0,
+                position: "relative",
+                display: "flex",
+                flexDirection: "column",
+                height: "100%",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "flex-start",
+                  justifyContent: "space-between",
+                  width: "100%",
+                }}
+              >
+                {/* Short Title */}
+                <Typography
+                  component="h1"
+                  variant="h6"
+                  sx={{
+                    color: isDarkMode ? "#fff" : "#000",
+                    ...fontStyles.openSans.bold,
+                    mb: 2,
+                    lineHeight: 1.3,
+                    typography: "shortTitleOfShortDetailPage",
+                    width: "85%",
+                  }}
+                >
+                  {selectedShortForPopup?.content_details[0]?.name}
+                </Typography>
+
+                {/* Close Icon */}
+                <IconButton
+                  onClick={handleCloseDescriptionPopup}
+                  sx={{
+                    color: isDarkMode ? "white" : "#000",
+                    padding: 0,
+                  }}
+                >
+                  <Close sx={{ fontSize: 25 }} />
+                </IconButton>
+              </Box>
+              <Divider />
+
+              {/* Content */}
+              <Box
+                sx={{
+                  pt: 2,
+                  overflowY: "auto",
+                  "&::-webkit-scrollbar": {
+                    width: "0px",
+                  },
+                }}
+              >
+                {/* Description */}
+                {mobilePopupCleanHtml ? (
+                  <Typography
+                    variant="shortDescriptionOfShortDetailPage"
+                    sx={{
+                      whiteSpace: "pre-wrap",
+                      fontStyle: fontStyles.openSans.regular,
+                      color: theme.palette.background.shortDetailDescription,
+                      // Add styles for clickable links/hashtags
+                      "& a": {
+                        color: isDarkMode ? "#fff" : "#1976d2",
+                        textDecoration: "underline",
+                        cursor: "pointer",
+                        transition: "color 0.2s ease-in-out",
+                        "&:hover": {
+                          color: isDarkMode ? "#fff" : "#1565C0",
+                          textDecoration: "underline",
+                        },
+                        "&:active": {
+                          color: isDarkMode ? "#fff" : "#0D47A1",
+                        },
+                      },
+                    }}
+                    dangerouslySetInnerHTML={{ __html: mobilePopupCleanHtml }}
+                  />
+                ) : (
+                  <Typography
+                    variant="shortDescriptionOfShortDetailPage"
+                    sx={{
+                      whiteSpace: "pre-wrap",
+                      fontStyle: fontStyles.openSans.regular,
+                      color: theme.palette.background.shortDetailDescription,
+                    }}
+                  >
+                    No description available for this short.
+                  </Typography>
+                )}
+              </Box>
+            </DialogContent>
+          </Dialog>
 
           <ShareDialog
             open={shareDialogOpen}
             onClose={() => setShareDialogOpen(false)}
             url={shareUrl}
-            title={selectedShort?.name}
+            title={selectedShort?.content_details[0]?.name}
             videoUrl={selectedShort?.content_details[0]?.url}
           />
         </Box>
@@ -1236,6 +1516,8 @@ const Short = () => {
             onWhatsApp={handleWhatsApp}
             onCopy={handleCopy}
             isMobile={isMobile}
+            onOpenDescriptionPopup={handleOpenDescriptionPopup}
+            isDescriptionPopupOpen={descriptionPopupOpen}
           />
         ))}
       </Box>
@@ -1340,6 +1622,7 @@ const Short = () => {
         open={shareDialogOpen}
         onClose={() => setShareDialogOpen(false)}
         url={shareUrl}
+        title={selectedShort?.content_details[0]?.name}
         videoUrl={selectedShort?.content_details[0]?.url}
       />
     </>

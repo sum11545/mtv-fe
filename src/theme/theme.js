@@ -249,6 +249,7 @@ export const palette = {
       videoDetailSectionBg: "#F2F2F2",
       language: "#F3F3F3",
       videoDetailDescription: "#000000",
+      shortDetailDescription: "#000000",
     },
     text: {
       primary: "#000000",
@@ -285,6 +286,7 @@ export const palette = {
       videoDetailSectionBg: "#03092B",
       language: "#1a2152",
       videoDetailDescription: "#D6D8E0",
+      shortDetailDescription: "#D6D8E0",
     },
     text: {
       primary: "#ffffff",
@@ -699,6 +701,22 @@ const typography = {
 
     "@media (min-width:1920px)": {
       fontSize: "24px !important", // xl (≥1920px)
+    },
+  },
+
+  shortDescriptionOfShortDetailPage: {
+    fontSize: "14px", // default
+
+    "@media (min-width:960px)": {
+      fontSize: "14px", // md (≥960px)
+    },
+
+    "@media (min-width:1400px)": {
+      fontSize: "14px", // lg (≥1400px)
+    },
+
+    "@media (min-width:1920px)": {
+      fontSize: "18px", // xl (≥1920px)
     },
   },
 
