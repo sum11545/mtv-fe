@@ -156,6 +156,8 @@ const VideoDetailPage = () => {
   const cleanHtml = DOMPurify.sanitize(selectedContent?.description, {
     ALLOWED_TAGS: ["b", "i", "em", "strong", "a", "ul", "ol", "li", "p", "br"],
     ALLOWED_ATTR: ["href", "target", "rel"],
+    // Add default attributes for links
+    ADD_ATTR: ["target", "rel"],
   });
 
   const shouldTruncate = isMobile && cleanHtml.length > maxChars;
@@ -692,6 +694,20 @@ const VideoDetailPage = () => {
                     whiteSpace: "pre-wrap",
                     ...fontStyles.sfPro.display.regular,
                     color: theme.palette.background.videoDetailDescription,
+                    // Add styles for clickable links/hashtags
+                    "& a": {
+                      color: isDarkMode ? "#fff" : "#1976d2",
+                      textDecoration: "underline",
+                      cursor: "pointer",
+                      transition: "color 0.2s ease-in-out",
+                      "&:hover": {
+                        color: isDarkMode ? "#fff" : "#1565C0",
+                        textDecoration: "underline",
+                      },
+                      "&:active": {
+                        color: isDarkMode ? "#fff" : "#0D47A1",
+                      },
+                    },
                   }}
                   dangerouslySetInnerHTML={{ __html: displayText }}
                 ></Typography>
