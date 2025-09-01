@@ -527,13 +527,11 @@ const ShortItem = React.memo(
               <IconButton
                 onClick={handleMuteToggleWithPostMessage}
                 sx={{
-                  color: "white",
-                  bgcolor: "rgba(0, 0, 0, 0.6)",
-                  backdropFilter: "blur(8px)",
+                  color: "#fff",
                   width: 44,
                   height: 44,
                   "&:hover": {
-                    bgcolor: "rgba(0, 0, 0, 0.8)",
+                    opacity: 0.8,
                   },
                   "&:active": {
                     transform: "scale(0.95)",
@@ -542,9 +540,9 @@ const ShortItem = React.memo(
                 }}
               >
                 {isMuted ? (
-                  <VolumeOff sx={{ fontSize: 24 }} />
+                  <VolumeOff sx={{ fontSize: 30 }} />
                 ) : (
-                  <VolumeUp sx={{ fontSize: 24 }} />
+                  <VolumeUp sx={{ fontSize: 30 }} />
                 )}
               </IconButton>
             </Box>
