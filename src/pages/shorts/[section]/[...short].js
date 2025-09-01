@@ -30,6 +30,8 @@ import {
   ContentCopy,
   ArrowBack,
   Close,
+  VolumeOff,
+  VolumeUp,
 } from "@mui/icons-material";
 import { useMain } from "@/context/MainContext";
 import CopyButton from "@/custom-components/CopyButton";
@@ -223,10 +225,9 @@ const getEmbedUrl = (url) => {
       videoId = url.split("shorts/")[1];
     }
     videoId = videoId.split(/[?&]/)[0];
-    // Add mute=1 for iOS, exclude for Android
+    // Always mute for iOS, no mute for Android
     const muteParam = isIOS ? "&mute=1" : "";
-    // return `https://www.youtube.com/embed/${videoId}?autoplay=1${muteParam}&loop=1&playlist=${videoId}&controls=1&rel=0&playsinline=1`;
-    return `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}&controls=1&rel=0&playsinline=1`;
+    return `https://www.youtube.com/embed/${videoId}?autoplay=1${muteParam}&loop=1&playlist=${videoId}&controls=1&rel=0&playsinline=1&enablejsapi=1&origin=${window.location.origin}`;
   }
   return url;
 };
@@ -244,12 +245,91 @@ const ShortItem = React.memo(
     section,
     onOpenDescriptionPopup,
     isDescriptionPopupOpen,
+    isMuted, // Receive from parent
+    onMuteToggle, // Receive from parent
   }) => {
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === "dark";
     const [isWhatsAppHovered, setIsWhatsAppHovered] = useState(false);
     const [isShareHovered, setIsShareHovered] = useState(false);
     const [isCopyHovered, setIsCopyHovered] = useState(false);
+
+    // Ref for iframe to send postMessage
+    const iframeRef = useRef(null);
+    const [iframeLoaded, setIframeLoaded] = useState(false);
+
+    // Listen for messages from YouTube iframe
+    useEffect(() => {
+      const handleMessage = (event) => {
+        // Only handle messages from YouTube
+        if (event.origin !== "https://www.youtube.com") return;
+
+        try {
+          const data = JSON.parse(event.data);
+          if (data.event === "onStateChange") {
+            // YouTube player state changed
+            console.log("YouTube player state:", data.info);
+          }
+        } catch (error) {
+          // Ignore non-JSON messages
+        }
+      };
+
+      window.addEventListener("message", handleMessage);
+      return () => window.removeEventListener("message", handleMessage);
+    }, []);
+
+    // Reset iframeLoaded when video changes
+    useEffect(() => {
+      if (isActive) {
+        setIframeLoaded(false);
+      }
+    }, [short?.content_details?.[0]?.url, isActive]);
+
+    // Sync mute state with iframe when global state changes or video becomes active
+    useEffect(() => {
+      if (
+        isActive &&
+        iframeRef.current &&
+        iframeRef.current.contentWindow &&
+        iframeLoaded
+      ) {
+        // Try multiple times to ensure the command is applied
+        const applyMuteState = () => {
+          try {
+            console.log("Syncing mute state:", isMuted ? "mute" : "unmute");
+            iframeRef.current.contentWindow.postMessage(
+              JSON.stringify({
+                event: "command",
+                func: isMuted ? "mute" : "unMute",
+                args: [],
+              }),
+              "*"
+            );
+          } catch (error) {
+            console.warn("Failed to sync mute state with iframe:", error);
+          }
+        };
+
+        // Apply immediately
+        applyMuteState();
+
+        // Apply again after 500ms
+        const timeoutId1 = setTimeout(applyMuteState, 500);
+
+        // Apply again after 1 second
+        const timeoutId2 = setTimeout(applyMuteState, 1000);
+
+        // Apply again after 2 seconds
+        const timeoutId3 = setTimeout(applyMuteState, 2000);
+
+        return () => {
+          clearTimeout(timeoutId1);
+          clearTimeout(timeoutId2);
+          clearTimeout(timeoutId3);
+        };
+      }
+    }, [isMuted, isActive, iframeLoaded]);
 
     const { getButtonConfig, isFeatureEnabled, config } = useContent();
     const shareMessage = config.messages.shareMessage;
@@ -298,6 +378,44 @@ const ShortItem = React.memo(
         onOpenDescriptionPopup(short);
       }
     }, [onOpenDescriptionPopup, short]);
+
+    // Mute toggle handler using YouTube postMessage API
+    const handleMuteToggleWithPostMessage = useCallback(() => {
+      console.log(
+        "Mute toggle clicked, current state:",
+        isMuted,
+        "iframeLoaded:",
+        iframeLoaded
+      );
+
+      if (iframeRef.current && iframeRef.current.contentWindow) {
+        const iframe = iframeRef.current;
+        const newMutedState = !isMuted;
+
+        try {
+          console.log(
+            "Sending postMessage:",
+            newMutedState ? "mute" : "unMute"
+          );
+          // Send postMessage to YouTube iframe to mute/unmute
+          iframe.contentWindow.postMessage(
+            JSON.stringify({
+              event: "command",
+              func: newMutedState ? "mute" : "unMute",
+              args: [],
+            }),
+            "*"
+          );
+        } catch (error) {
+          console.warn("Failed to send mute command to iframe:", error);
+        }
+      } else {
+        console.warn("Iframe not ready for postMessage");
+      }
+
+      // Call parent's mute toggle handler to update global state
+      onMuteToggle();
+    }, [isMuted, onMuteToggle, iframeLoaded]);
 
     if (isMobile) {
       return (
@@ -369,6 +487,7 @@ const ShortItem = React.memo(
                 }}
               >
                 <iframe
+                  ref={iframeRef}
                   key={`mobile-${short.id}-${index}`}
                   src={getEmbedUrl(short?.content_details[0]?.url)}
                   title={short?.content_details[0]?.name}
@@ -376,6 +495,7 @@ const ShortItem = React.memo(
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                   allowFullScreen
                   playsInline
+                  onLoad={() => setIframeLoaded(true)}
                   style={{
                     width: "100vw",
                     height: isDescriptionPopupOpen ? "60vh" : "100vh", // Shrink video when popup is open
@@ -390,6 +510,44 @@ const ShortItem = React.memo(
                 />
               </Box>
             )}
+
+            {/* Mute/Unmute Button - Top Right (Always Visible on Mobile) */}
+            <Box
+              sx={{
+                position: "absolute",
+                top: 80,
+                right: 20,
+                zIndex: 1000,
+                pointerEvents: "auto",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <IconButton
+                onClick={handleMuteToggleWithPostMessage}
+                sx={{
+                  color: "white",
+                  bgcolor: "rgba(0, 0, 0, 0.6)",
+                  backdropFilter: "blur(8px)",
+                  width: 44,
+                  height: 44,
+                  "&:hover": {
+                    bgcolor: "rgba(0, 0, 0, 0.8)",
+                  },
+                  "&:active": {
+                    transform: "scale(0.95)",
+                  },
+                  transition: "all 0.2s ease-in-out",
+                }}
+              >
+                {isMuted ? (
+                  <VolumeOff sx={{ fontSize: 24 }} />
+                ) : (
+                  <VolumeUp sx={{ fontSize: 24 }} />
+                )}
+              </IconButton>
+            </Box>
 
             {/* Video Name Overlay - Bottom Center (File1 style) - Now Clickable */}
             {!isDescriptionPopupOpen && (
@@ -565,6 +723,7 @@ const ShortItem = React.memo(
           >
             {isActive && (
               <iframe
+                ref={iframeRef}
                 key={`desktop-${short.id}-${index}`}
                 src={getEmbedUrl(short?.content_details[0]?.url)} // should be an "embed" URL
                 title={short?.content_details[0]?.name}
@@ -572,6 +731,7 @@ const ShortItem = React.memo(
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
                 playsInline
+                onLoad={() => setIframeLoaded(true)}
                 style={{
                   width: "100%",
                   height: "100%",
@@ -799,6 +959,29 @@ const ShortItem = React.memo(
         </Grid>
       </Grid>
     );
+  },
+
+  // Below code is for the issue because short was showing blank screen and only audio was playing
+  // when you switch from dark to light mode while video was playing
+  // Custom comparison function to prevent re-rendering when only theme changes
+  (prevProps, nextProps) => {
+    // Only re-render if props that affect the iframe content change
+    return (
+      prevProps.short?.id === nextProps.short?.id &&
+      prevProps.short?.content_details?.[0]?.url ===
+        nextProps.short?.content_details?.[0]?.url &&
+      prevProps.isActive === nextProps.isActive &&
+      prevProps.isMobile === nextProps.isMobile &&
+      prevProps.index === nextProps.index &&
+      prevProps.section === nextProps.section &&
+      prevProps.onOpenDescriptionPopup === nextProps.onOpenDescriptionPopup &&
+      prevProps.isDescriptionPopupOpen === nextProps.isDescriptionPopupOpen &&
+      prevProps.isMuted === nextProps.isMuted &&
+      prevProps.onMuteToggle === nextProps.onMuteToggle &&
+      prevProps.onShare === nextProps.onShare &&
+      prevProps.onWhatsApp === nextProps.onWhatsApp &&
+      prevProps.onCopy === nextProps.onCopy
+    );
   }
 );
 
@@ -816,6 +999,13 @@ const Short = () => {
   const [dataLoaded, setDataLoaded] = useState(false);
   const [descriptionPopupOpen, setDescriptionPopupOpen] = useState(false);
   const [selectedShortForPopup, setSelectedShortForPopup] = useState(null);
+
+  // Global mute state - shared across all videos
+  const isIOS =
+    /(iPhone|iPad|iPod|Macintosh;.*OS X.*Version\/[\d.]+.*Safari)/i.test(
+      navigator.userAgent
+    );
+  const [isMuted, setIsMuted] = useState(isIOS); // Always muted for iOS, unmuted for Android
 
   // Refs
   const containerRef = useRef(null);
@@ -921,6 +1111,12 @@ const Short = () => {
       .catch((err) => console.error("Failed to copy URL: ", err));
   }, []);
 
+  // Global mute toggle handler - shared across all videos
+  const handleMuteToggle = useCallback(() => {
+    // Allow toggle on both iOS and Android
+    setIsMuted((prev) => !prev);
+  }, []);
+
   // Load data - Prevent infinite API calls
   useEffect(() => {
     if (!short || !section) {
@@ -1007,8 +1203,13 @@ const Short = () => {
       currentIndex < allShorts.length
     ) {
       setSelectedShort(allShorts[currentIndex]);
+
+      // On iOS, reset to muted state when switching videos for autoplay compatibility
+      if (isIOS) {
+        setIsMuted(true);
+      }
     }
-  }, [currentIndex, allShorts]);
+  }, [currentIndex, allShorts, isIOS]);
 
   // Set share URL only once
   useEffect(() => {
@@ -1349,6 +1550,8 @@ const Short = () => {
                 section={section}
                 onOpenDescriptionPopup={handleOpenDescriptionPopup}
                 isDescriptionPopupOpen={descriptionPopupOpen}
+                isMuted={isMuted}
+                onMuteToggle={handleMuteToggle}
               />
             ))}
           </Box>
@@ -1518,6 +1721,8 @@ const Short = () => {
             isMobile={isMobile}
             onOpenDescriptionPopup={handleOpenDescriptionPopup}
             isDescriptionPopupOpen={descriptionPopupOpen}
+            isMuted={isMuted}
+            onMuteToggle={handleMuteToggle}
           />
         ))}
       </Box>
