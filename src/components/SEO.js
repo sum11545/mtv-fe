@@ -29,7 +29,7 @@ const SEO = ({
   const seoDescription = description || defaultDescription;
   const seoKeywords = keywords || defaultKeywords;
   const seoImage = image || defaultImage;
-  const seoUrl = url || `${baseUrl}${router.asPath.split("?")[0]}`;
+  const seoUrl = url || `${baseUrl}${router.asPath}`;
 
   // Generate structured data for video pages
   const generateVideoStructuredData = () => {
