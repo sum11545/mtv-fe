@@ -62,7 +62,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
         const mappedItems = data.map((item) => ({
           text: item.name,
           section_slug: item.section_slug,
-          icon: <DynamicIcon keyword={item.icon} style={iconStyle} />, // Use DynamicIcon with theme-aware color
+          icon: item.icon, // Store just the keyword, we'll render the icon dynamically
           keyword: item.keyword,
         }));
 
@@ -78,23 +78,23 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
         setSidebarItems([
           {
             text: "TV",
-            icon: <DynamicIcon keyword="TV" style={fallbackIconStyle} />,
+            icon: "TV",
           },
           {
             text: "Market Update",
-            icon: <DynamicIcon keyword="MU" style={fallbackIconStyle} />,
+            icon: "MU",
           },
           {
             text: "Technical Indicators",
-            icon: <DynamicIcon keyword="TI" style={fallbackIconStyle} />,
+            icon: "TI",
           },
           {
             text: "Top 10 Picks",
-            icon: <DynamicIcon keyword="T10P" style={fallbackIconStyle} />,
+            icon: "T10P",
           },
           {
             text: "Latest News",
-            icon: <DynamicIcon keyword="LN" style={fallbackIconStyle} />,
+            icon: "LN",
           },
         ]);
       } finally {
@@ -102,7 +102,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
       }
     };
     SidebarData();
-  }, [isDarkMode]);
+  }, []);
 
   const handleIconClick = (section_slug) => {
     console.log(section_slug);
@@ -150,83 +150,84 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
         >
           {/* Top icons */}
           <nav>
-          <List>
-            {sidebarItems.map((item) => (
-              <ListItem key={item.text} disablePadding>
-                <Tooltip title={item.text} placement="left" arrow>
-                  <ListItemButton
-                    onClick={() => handleIconClick(item.section_slug)}
-                    sx={{
-                      minHeight:
-                        theme.layout?.spacing?.buttonHeight?.topIconsCompact ||
-                        layout.spacing.buttonHeight.topIconsCompact,
-                      justifyContent: "center",
-                      px:
-                        theme.layout?.spacing?.padding?.xsmall ||
-                        layout.spacing.padding.xsmall,
-                      py:
-                        theme.layout?.spacing?.padding?.xsmall ||
-                        layout.spacing.padding.xsmall,
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
-                  >
-                    <Box
+            <List>
+              {sidebarItems.map((item) => (
+                <ListItem key={item.text} disablePadding>
+                  <Tooltip title={item.text} placement="left" arrow>
+                    <ListItemButton
+                      onClick={() => handleIconClick(item.section_slug)}
                       sx={{
-                        display: "flex",
+                        minHeight:
+                          theme.layout?.spacing?.buttonHeight
+                            ?.topIconsCompact ||
+                          layout.spacing.buttonHeight.topIconsCompact,
+                        justifyContent: "center",
+                        px:
+                          theme.layout?.spacing?.padding?.xsmall ||
+                          layout.spacing.padding.xsmall,
+                        py:
+                          theme.layout?.spacing?.padding?.xsmall ||
+                          layout.spacing.padding.xsmall,
                         flexDirection: "column",
                         alignItems: "center",
-                        justifyContent: "center",
-                        gap:
-                          theme.layout?.spacing?.gap?.xxsmall ||
-                          layout.spacing.gap.xxsmall,
                       }}
                     >
                       <Box
                         sx={{
                           display: "flex",
-                          justifyContent: "center",
+                          flexDirection: "column",
                           alignItems: "center",
-                          "& img": {
-                            width:
-                              theme.fontSize?.icon?.medium ||
-                              fontSize.icon.medium,
-                            height:
-                              theme.fontSize?.icon?.medium ||
-                              fontSize.icon.medium,
-                          },
-                          cursor: "pointer",
-                          "&:hover": {
-                            opacity: 0.8,
-                          },
+                          justifyContent: "center",
+                          gap:
+                            theme.layout?.spacing?.gap?.xxsmall ||
+                            layout.spacing.gap.xxsmall,
                         }}
                       >
-                        {item.icon}
+                        <Box
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            "& img": {
+                              width:
+                                theme.fontSize?.icon?.medium ||
+                                fontSize.icon.medium,
+                              height:
+                                theme.fontSize?.icon?.medium ||
+                                fontSize.icon.medium,
+                            },
+                            cursor: "pointer",
+                            "&:hover": {
+                              opacity: 0.8,
+                            },
+                          }}
+                        >
+                          <DynamicIcon keyword={item.icon} style={iconStyle} />
+                        </Box>
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            ...fontStyles.barlowCondensed.regular,
+                            typography: "menuItems",
+                            textTransform: "uppercase",
+                            textAlign: "center",
+                            lineHeight:
+                              theme.layout?.text?.lineHeight?.tight ||
+                              layout.text.lineHeight.tight,
+                            maxWidth:
+                              theme.layout?.text?.maxWidth?.iconLabel ||
+                              layout.text.maxWidth.iconLabel,
+                            wordWrap: "break-word",
+                          }}
+                        >
+                          {item.keyword}
+                        </Typography>
                       </Box>
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          ...fontStyles.barlowCondensed.regular,
-                          typography: "menuItems",
-                          textTransform: "uppercase",
-                          textAlign: "center",
-                          lineHeight:
-                            theme.layout?.text?.lineHeight?.tight ||
-                            layout.text.lineHeight.tight,
-                          maxWidth:
-                            theme.layout?.text?.maxWidth?.iconLabel ||
-                            layout.text.maxWidth.iconLabel,
-                          wordWrap: "break-word",
-                        }}
-                      >
-                        {item.keyword}
-                      </Typography>
-                    </Box>
-                  </ListItemButton>
-                </Tooltip>
-              </ListItem>
-            ))}
-          </List>
+                    </ListItemButton>
+                  </Tooltip>
+                </ListItem>
+              ))}
+            </List>
           </nav>
 
           {/* Bottom icons */}
@@ -668,7 +669,7 @@ const Sidebar = ({ open, onClose, isDarkMode, onToggleTheme }) => {
                       },
                     }}
                   >
-                    {item.icon}
+                    <DynamicIcon keyword={item.icon} style={iconStyle} />
                   </ListItemIcon>
                   <ListItemText
                     primary={item.text}

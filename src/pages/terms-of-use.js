@@ -703,12 +703,13 @@ const TermsAndConditions = () => {
         </List>
 
         <Typography
-          variant="termsText"
+          // variant="termsText"
           sx={{
             ...fontStyles.openSans.regular,
             fontWeight: 700,
             fontSize: isMobile && "1rem",
-            mb: isMobile ? 1.5 : 2,
+            mb: isMobile ? 0 : 2,
+            textAlign: { xs: "left", sm: "left" },
           }}
         >
           3. Copyright & No Retransmission of Information
@@ -1443,6 +1444,7 @@ const TermsAndConditions = () => {
                   sx={{
                     ...fontStyles.openSans.regular,
                     textAlign: "justify",
+                    display: "inline",
                     mb: 0,
                     fontSize: isMobile ? "1rem" : "1rem",
                   }}
@@ -1450,13 +1452,16 @@ const TermsAndConditions = () => {
                 >
                   8.1.{" "}
                   <Typography
-                    variant="termsText"
+                    // variant="termsText"
                     sx={{
                       ...fontStyles.openSans.regular,
                       fontWeight: 700,
+                      display: "inline",
                       fontSize: isMobile ? "1rem" : "1rem",
+                      textAlign: { xs: "left", sm: "left" },
                     }}
                   >
+                    {" "}
                     "Confidential Information"
                   </Typography>{" "}
                   means all information provided by a party to other party,
