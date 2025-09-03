@@ -325,9 +325,9 @@ const VideoDetailPage = () => {
       // Remove any additional parameters (e.g., ?si=...)
       videoId = videoId.split(/[?&]/)[0];
       // Add mute=1 for iOS, exclude for Android
-      const muteParam = isIOS ? "&mute=1" : "";
-      // return `https://www.youtube.com/embed/${videoId}?autoplay=1${muteParam}&playsinline=1`;
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1`;
+      const muteParam = isIOS && isMobile ? "&mute=1" : "";
+      return `https://www.youtube.com/embed/${videoId}?autoplay=1${muteParam}&playsinline=1`;
+      // return `https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1`;
     }
 
     // Handle other video platforms here if needed
