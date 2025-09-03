@@ -35,6 +35,7 @@ const PrivacyPolicy = () => {
           width: "800px",
           maxWidth: "100%",
           textAlign: "justify",
+          // textAlign: { xs: "left", sm: "justify" },
         }}
       >
         <Typography
@@ -240,6 +241,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             Data Privacy Disclaimer
@@ -278,6 +280,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             What personal data do we collect about you?
@@ -396,7 +399,8 @@ const PrivacyPolicy = () => {
                   sx={{
                     ...fontStyles.openSans.regular,
                     mb: 0,
-                    textAlign: "justify",
+                    // textAlign: "justify",
+                    textAlign: { xs: "left", sm: "left" },
                   }}
                   variant="privacyPolicyText"
                   paragraph
@@ -563,6 +567,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             How do we collect your personal data?
@@ -592,6 +597,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             Information you directly provide to us:
@@ -832,6 +838,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             Information you provide to us voluntarily:
@@ -875,6 +882,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             Information we collect automatically:
@@ -963,7 +971,8 @@ const PrivacyPolicy = () => {
                   sx={{
                     ...fontStyles.openSans.regular,
                     mb: 0,
-                    textAlign: "justify",
+                    // textAlign: "justify",
+                    textAlign: { xs: "left", sm: "left" },
                   }}
                   variant="privacyPolicyText"
                   paragraph
@@ -1048,6 +1057,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             Information we collect from other sources:
@@ -1223,6 +1233,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             Lawful basis for processing your personal data
@@ -1477,6 +1488,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             How do we use your personal data?
@@ -1529,6 +1541,7 @@ const PrivacyPolicy = () => {
           variant="privacyPolicyText"
           sx={{
             ...fontStyles.openSans.regular,
+            textAlign: { xs: "left", sm: "left" },
           }}
           pl={{ xs: 3, sm: 7 }}
         >
@@ -1856,6 +1869,7 @@ const PrivacyPolicy = () => {
           variant="privacyPolicyText"
           sx={{
             ...fontStyles.openSans.regular,
+            textAlign: { xs: "left", sm: "left" },
           }}
           pl={{ xs: 3, sm: 7 }}
         >
@@ -1963,6 +1977,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             How do we protect your personal data
@@ -2022,6 +2037,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             Your rights in connection with your personal data
@@ -2046,6 +2062,7 @@ const PrivacyPolicy = () => {
           sx={{
             ...fontStyles.openSans.regular,
             fontWeight: 700,
+            textAlign: { xs: "left", sm: "left" },
           }}
           pl={{ xs: 2, sm: 4 }}
           mb={1}
@@ -2071,6 +2088,7 @@ const PrivacyPolicy = () => {
                       ...fontStyles.openSans.regular,
                       fontWeight: 700,
                       mb: 0,
+                      textAlign: { xs: "left", sm: "left" },
                     }}
                     variant="privacyPolicyText"
                     paragraph
@@ -2119,6 +2137,7 @@ const PrivacyPolicy = () => {
                       ...fontStyles.openSans.regular,
                       fontWeight: 700,
                       mb: 0,
+                      textAlign: { xs: "left", sm: "left" },
                     }}
                     variant="privacyPolicyText"
                     paragraph
@@ -2244,6 +2263,7 @@ const PrivacyPolicy = () => {
                       ...fontStyles.openSans.regular,
                       fontWeight: 700,
                       mb: 0,
+                      textAlign: { xs: "left", sm: "left" },
                     }}
                     variant="privacyPolicyText"
                     paragraph
@@ -2390,6 +2410,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             Will your information be shared with anyone
@@ -2439,6 +2460,7 @@ const PrivacyPolicy = () => {
         <Typography
           sx={{
             ...fontStyles.openSans.regular,
+            textAlign: { xs: "left", sm: "left" },
           }}
           pl={{ xs: 2, sm: 5 }}
           mb={1}
@@ -2747,6 +2769,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             Personal data transfer, storage and processing
@@ -2785,6 +2808,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             How long do we keep your information
@@ -2854,6 +2878,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             How to delete your account
@@ -2882,8 +2907,8 @@ const PrivacyPolicy = () => {
                   paragraph
                 >
                   You may choose to delete Your account at any point of time by
-                  making such choice through Site/Platform or you can send an
-                  email to{" "}
+                  making such choice through Site/Platform or you can send email
+                  to{" "}
                   <Link
                     href="mailto:grow@moneytv.live"
                     color="primary.main"
@@ -3055,6 +3080,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             Do we collect information from minors
@@ -3112,6 +3138,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             Do we make updates to this Policy
@@ -3155,6 +3182,7 @@ const PrivacyPolicy = () => {
             sx={{
               ...fontStyles.openSans.regular,
               fontWeight: 700,
+              textAlign: { xs: "left", sm: "left" },
             }}
           >
             Contact information

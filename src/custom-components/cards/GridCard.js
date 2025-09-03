@@ -114,6 +114,7 @@ const GridCard = ({ video, id, sectionData, section }) => {
   const theme = useTheme();
   const router = useRouter();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isXl = useMediaQuery(theme.breakpoints.up("xl"));
   const [shareUrl, setShareUrl] = useState("");
   const [isWhatsAppHovered, setIsWhatsAppHovered] = useState(false);
   const [isShareHovered, setIsShareHovered] = useState(false);
@@ -383,7 +384,19 @@ const GridCard = ({ video, id, sectionData, section }) => {
               lgPlus: heightMap.lgPlus,
               xl: heightMap.xl,
             },
+            // aspectRatio: "9/16",
+            // if we give aspectRatio to shorts and remove the above height then the thumbnail showing extra
+            // spaces gets resolved but the problem is it doesn't take height and width from design
             position: "relative",
+            ...(isShort &&
+              isMobile && {
+                aspectRatio: "9/16",
+                maxWidth: "210px",
+                mx: "auto",
+                width: "210px",
+                borderRadius: "12px",
+                overflow: "hidden",
+              }),
           }}
         >
           {/* if my content is ad then i am showing ad card */}
@@ -445,12 +458,8 @@ const GridCard = ({ video, id, sectionData, section }) => {
                     {!isMobile && (
                       <DynamicIcon
                         keyword="EXPAND"
-                        height={
-                          isMobile && router.pathname !== "/" ? "30px" : "23px"
-                        }
-                        width={
-                          isMobile && router.pathname !== "/" ? "30px" : "23px"
-                        }
+                        height={isXl ? "32px" : "23px"}
+                        width={isXl ? "32px" : "23px"}
                         onClick={handleCardClick}
                         style={{ cursor: "pointer" }}
                       />
@@ -461,16 +470,8 @@ const GridCard = ({ video, id, sectionData, section }) => {
                     <MobileActionButton
                       icon={
                         <ShortWhatsAppMobileIcon
-                          height={
-                            isMobile && router.pathname !== "/"
-                              ? "35px"
-                              : "25px"
-                          }
-                          width={
-                            isMobile && router.pathname !== "/"
-                              ? "35px"
-                              : "25px"
-                          }
+                          height={isXl ? "35px" : "25px"}
+                          width={isXl ? "35px" : "25px"}
                         />
                       }
                       onClick={handleWhatsApp}
@@ -479,16 +480,8 @@ const GridCard = ({ video, id, sectionData, section }) => {
                     <MobileActionButton
                       icon={
                         <ShortCopyMobileIcon
-                          height={
-                            isMobile && router.pathname !== "/"
-                              ? "35px"
-                              : "25px"
-                          }
-                          width={
-                            isMobile && router.pathname !== "/"
-                              ? "35px"
-                              : "25px"
-                          }
+                          height={isXl ? "35px" : "25px"}
+                          width={isXl ? "35px" : "25px"}
                         />
                       }
                       onClick={handleCopy}
@@ -498,16 +491,8 @@ const GridCard = ({ video, id, sectionData, section }) => {
                     <MobileActionButton
                       icon={
                         <ShareShortMobileIcon
-                          height={
-                            isMobile && router.pathname !== "/"
-                              ? "35px"
-                              : "25px"
-                          }
-                          width={
-                            isMobile && router.pathname !== "/"
-                              ? "35px"
-                              : "25px"
-                          }
+                          height={isXl ? "35px" : "25px"}
+                          width={isXl ? "35px" : "25px"}
                         />
                       }
                       onClick={handleShare}
@@ -533,6 +518,8 @@ const GridCard = ({ video, id, sectionData, section }) => {
               position: "relative",
               zIndex: 5,
               flexDirection: "column",
+              maxWidth: isShort && isMobile ? "210px" : "none",
+              mx: isShort && isMobile ? "auto" : "none",
               "&:last-child": {
                 paddingBottom: 1.5,
               },
@@ -540,7 +527,7 @@ const GridCard = ({ video, id, sectionData, section }) => {
           >
             <Box
               sx={{
-                minHeight: "3em", // Fixed height to ensure consistent button positioning
+                minHeight: isShort && isMobile ? "auto" : "3em", // Fixed height to ensure consistent button positioning
                 display: "flex",
                 alignItems: "flex-start", // Align title to top of container
                 mb: 1, // Add margin bottom for spacing

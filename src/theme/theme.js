@@ -843,7 +843,7 @@ const customHeightsForGridCard = {
     xl: "140px",
   },
   short: {
-    xs: "80vh",
+    // xs: "auto",
     sm: "550px",
     md: "480px",
     lg: "420px",

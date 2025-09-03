@@ -26,6 +26,7 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
   const theme = useTheme();
   const dims = theme.customDimensionForSliderCard;
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isXl = useMediaQuery(theme.breakpoints.up("xl"));
 
   let isShort = short?.content_details[0]?.content_type_id == "CTSR"; // CTSR  is for shorts.
 
@@ -254,8 +255,8 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
               {!isMobile && (
                 <DynamicIcon
                   keyword="EXPAND"
-                  height={isMobile && router.pathname !== "/" ? "30px" : "23px"}
-                  width={isMobile && router.pathname !== "/" ? "30px" : "23px"}
+                  height={isXl ? "32px" : "23px"}
+                  width={isXl ? "32px" : "23px"}
                   onClick={handleCardClick}
                   style={{ cursor: "pointer" }}
                 />
@@ -266,12 +267,8 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
               <MobileActionButton
                 icon={
                   <ShortWhatsAppMobileIcon
-                    height={
-                      isMobile && router.pathname !== "/" ? "35px" : "25px"
-                    }
-                    width={
-                      isMobile && router.pathname !== "/" ? "35px" : "25px"
-                    }
+                    height={isXl ? "35px" : "25px"}
+                    width={isXl ? "35px" : "25px"}
                   />
                 }
                 onClick={handleWhatsApp}
@@ -280,12 +277,8 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
               <MobileActionButton
                 icon={
                   <ShortCopyMobileIcon
-                    height={
-                      isMobile && router.pathname !== "/" ? "35px" : "25px"
-                    }
-                    width={
-                      isMobile && router.pathname !== "/" ? "35px" : "25px"
-                    }
+                    height={isXl ? "35px" : "25px"}
+                    width={isXl ? "35px" : "25px"}
                   />
                 }
                 onClick={handleCopy}
@@ -295,12 +288,8 @@ const SliderCard = ({ short, sectionIndex, id, sectionData, section }) => {
               <MobileActionButton
                 icon={
                   <ShareShortMobileIcon
-                    height={
-                      isMobile && router.pathname !== "/" ? "35px" : "25px"
-                    }
-                    width={
-                      isMobile && router.pathname !== "/" ? "35px" : "25px"
-                    }
+                    height={isXl ? "35px" : "25px"}
+                    width={isXl ? "35px" : "25px"}
                   />
                 }
                 onClick={handleShare}

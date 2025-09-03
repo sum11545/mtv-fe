@@ -885,15 +885,15 @@ const VideoDetailPage = () => {
             >
               {videoDetailData?.sections?.map((section, index) => {
                 switch (section.layout_type) {
-                  case "LGRID":
-                    return (
-                      <GridLayout
-                        key={`${section.type}-${index}`}
-                        video={section.contents}
-                        section={section}
-                        sectionData={section.contents}
-                      />
-                    );
+                  // case "LGRID":
+                  //   return (
+                  //     <GridLayout
+                  //       key={`${section.type}-${index}`}
+                  //       video={section.contents}
+                  //       section={section}
+                  //       sectionData={section.contents}
+                  //     />
+                  //   );
                   case "LSTACK":
                     return (
                       <StackLayout
