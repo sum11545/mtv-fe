@@ -46,7 +46,7 @@ export const mainArr = [
         uploadDate: createStaticDate(1),
         views: 110000,
         duration: "14:45",
-        channelName: "MONEY TV",
+        channelName: "MONEY ",
       },
       {
         id: 3,
